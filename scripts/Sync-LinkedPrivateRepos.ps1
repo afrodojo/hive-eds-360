@@ -1,5 +1,5 @@
 ﻿param(
-    [string]$GithubToken = $env:GH_PRIVATE_REPOS_PAT,
+    [string]$GithubToken = "$env:GH_PRIVATE_REPOS_PAT",
     [string]$TargetDir   = "$env:USERPROFILE\hive-eds-360\linked_repos"
 )
 
@@ -51,3 +51,5 @@ $jsonPath = "$env:USERPROFILE\hive-eds-360\trackers\linked_repos.json"
 $RepoSummaryList | ConvertTo-Json -Depth 4 | Set-Content -Path $jsonPath -Encoding UTF8
 
 Write-Host "[SUCCESS] All 4 repositories synchronized and indexed into local RAG schema!" -ForegroundColor Green
+
+
