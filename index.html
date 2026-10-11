@@ -30,13 +30,11 @@
             </div>
         </div>
         
-        <!-- Auth State & Role Switcher -->
         <div class="flex items-center gap-3">
             <div id="authStatusBadge" class="text-xs font-mono px-2.5 py-1 rounded-full bg-red-950 text-red-400 border border-red-800 flex items-center gap-1">
                 <span class="w-2 h-2 rounded-full bg-red-500"></span> Unauthenticated
             </div>
 
-            <!-- Role Selector Controls (Controlled by Logic Gate) -->
             <div class="flex items-center bg-gray-900 border border-gray-800 rounded-lg p-1 text-xs">
                 <span class="text-gray-400 px-2 font-mono text-[11px]">Active Gate:</span>
                 <select id="userRoleSelect" onchange="requestGateAccess(this.value)" class="bg-gray-950 text-indigo-300 font-bold px-2.5 py-1 rounded border border-indigo-500/30 focus:outline-none">
@@ -55,16 +53,13 @@
         </div>
     </header>
 
-    <!-- MAIN CONTENT CONTAINER -->
     <main class="flex-1 max-w-7xl w-full mx-auto p-6 flex flex-col gap-8">
 
-        <!-- =================================================================== -->
         <!-- VIEW 1: PUBLIC VISITOR HOMEPAGE -->
-        <!-- =================================================================== -->
-        <div id="view-visitor" class="role-section space-y-8">
+        <div id="view-visitor" class="role-section space-y-8 role-active">
             
-            <!-- Hero / About Me Banner -->
-            <section class="glass rounded-2xl p-8 border border-indigo-500/30 relative overflow-hidden">
+            <!-- Hero Banner -->
+            <section class="glass rounded-2xl p-8 border border-indigo-500/30">
                 <div class="max-w-3xl space-y-4">
                     <span class="px-3 py-1 rounded-full bg-indigo-950 text-indigo-300 border border-indigo-800 text-xs font-mono font-semibold">
                         CS Doctoral Student • Defense AI Innovator • Founder
@@ -75,343 +70,306 @@
                     <p class="text-gray-300 text-sm leading-relaxed">
                         Welcome to my public digital enclave. I am a Computer Science Doctoral Candidate specializing in air-gapped local AI architectures, secure Retrieval-Augmented Generation (RAG), and tactical edge compute.
                     </p>
-                    <div class="pt-2 flex flex-wrap items-center gap-3 text-xs">
-                        <a href="https://linkedin.com" target="_blank" class="bg-blue-600/20 hover:bg-blue-600/30 text-blue-400 px-3 py-1.5 rounded-lg border border-blue-500/30 font-semibold transition"><i class="fab fa-linkedin"></i> LinkedIn</a>
-                        <a href="https://instagram.com" target="_blank" class="bg-pink-600/20 hover:bg-pink-600/30 text-pink-400 px-3 py-1.5 rounded-lg border border-pink-500/30 font-semibold transition"><i class="fab fa-instagram"></i> Instagram</a>
-                        <a href="https://facebook.com" target="_blank" class="bg-blue-800/20 hover:bg-blue-800/30 text-blue-300 px-3 py-1.5 rounded-lg border border-blue-700/30 font-semibold transition"><i class="fab fa-facebook"></i> Facebook</a>
-                    </div>
                 </div>
             </section>
 
-            <!-- Flexible Membership Plans Selector (Monthly, Quarterly, Yearly, Pay-As-You-Go) -->
+            <!-- Discount Program Notification Banner -->
+            <section class="glass p-4 rounded-xl border border-emerald-500/40 bg-emerald-950/10 flex flex-wrap justify-between items-center text-xs">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-full bg-emerald-600/20 text-emerald-400 flex items-center justify-center font-bold text-md border border-emerald-500/40">
+                        <i class="fas fa-tags"></i>
+                    </div>
+                    <div>
+                        <div class="font-bold text-white text-sm">Special Discount Programs Available</div>
+                        <div class="text-gray-300 text-[11px]">20% OFF Students (.edu email) • 25% OFF Veterans & First Responders • Custom Academic Rates</div>
+                    </div>
+                </div>
+                <button onclick="openVerificationModal()" class="mt-2 sm:mt-0 bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-2 rounded-lg transition">
+                    Apply For Verification Discount
+                </button>
+            </section>
+
+            <!-- Subscriptions Grid -->
             <section class="space-y-6">
                 <div class="text-center max-w-2xl mx-auto">
-                    <h2 class="text-xl font-bold text-white">Choose Your Membership & Subscription Interval</h2>
-                    <p class="text-gray-400 text-xs mt-1">Direct payment processing connected via Stripe. Cancel or delete your account data at any time.</p>
-                    
-                    <!-- Billing Interval Switcher Buttons -->
-                    <div class="inline-flex bg-gray-900 p-1 rounded-lg border border-gray-800 mt-4 text-xs font-mono">
-                        <button onclick="setBillingCycle('monthly')" id="btn-monthly" class="px-3 py-1 rounded bg-indigo-600 text-white font-bold">Monthly</button>
-                        <button onclick="setBillingCycle('quarterly')" id="btn-quarterly" class="px-3 py-1 rounded text-gray-400 hover:text-white">Quarterly (10% Off)</button>
-                        <button onclick="setBillingCycle('yearly')" id="btn-yearly" class="px-3 py-1 rounded text-gray-400 hover:text-white">Yearly (20% Off)</button>
-                        <button onclick="setBillingCycle('payg')" id="btn-payg" class="px-3 py-1 rounded text-gray-400 hover:text-white">Pay-As-You-Go</button>
-                    </div>
+                    <h2 class="text-xl font-bold text-white">Choose Your Subscription Tier</h2>
+                    <p class="text-gray-400 text-xs mt-1">Direct payment processing connected via Stripe with discount code support.</p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
-                    
-                    <!-- Free Member Tier -->
                     <div class="glass p-5 rounded-xl border border-gray-800 flex flex-col justify-between">
                         <div>
                             <div class="text-gray-400 font-mono text-[10px]">TIER 1</div>
                             <h3 class="text-md font-bold text-white mt-1">Free Member</h3>
                             <div class="text-xl font-extrabold text-indigo-400 mt-2">$0</div>
-                            <ul class="mt-4 space-y-2 text-gray-300 text-[11px]">
-                                <li><i class="fas fa-check text-emerald-400 mr-1.5"></i> Community Forum Access</li>
-                                <li><i class="fas fa-check text-emerald-400 mr-1.5"></i> Public Vlog Episodes</li>
-                            </ul>
                         </div>
                         <button onclick="openLoginModal()" class="w-full mt-6 bg-gray-800 hover:bg-gray-700 text-white font-semibold py-2 rounded transition">Create Free Account</button>
                     </div>
 
-                    <!-- $25/mo Paid Member -->
                     <div class="glass p-5 rounded-xl border border-indigo-500/50 flex flex-col justify-between accent-glow">
                         <div>
                             <div class="text-indigo-400 font-mono text-[10px]">TIER 2</div>
                             <h3 class="text-md font-bold text-white mt-1">Paid Member (Student/Career)</h3>
                             <div id="price-paid" class="text-xl font-extrabold text-indigo-300 mt-2">$25 / mo</div>
-                            <ul class="mt-4 space-y-2 text-gray-300 text-[11px]">
-                                <li><i class="fas fa-check text-emerald-400 mr-1.5"></i> 1-on-1 Doctoral & Career Coaching</li>
-                                <li><i class="fas fa-check text-emerald-400 mr-1.5"></i> Live Stream Keynotes & Q&A</li>
-                            </ul>
+                            <div class="text-[10px] text-emerald-400 mt-0.5">$20/mo for verified students</div>
                         </div>
                         <button onclick="triggerStripeCheckout('member_paid')" class="w-full mt-6 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-2 rounded transition">Subscribe Now</button>
                     </div>
 
-                    <!-- $150/mo Business Tier -->
                     <div class="glass p-5 rounded-xl border border-amber-500/40 flex flex-col justify-between">
                         <div>
                             <div class="text-amber-400 font-mono text-[10px]">TIER 3</div>
                             <h3 class="text-md font-bold text-amber-300 mt-1">Business & Defense Partner</h3>
                             <div id="price-business" class="text-xl font-extrabold text-amber-400 mt-2">$150 / mo</div>
-                            <ul class="mt-4 space-y-2 text-gray-300 text-[11px]">
-                                <li><i class="fas fa-check text-emerald-400 mr-1.5"></i> Technical Advisory Requests</li>
-                                <li><i class="fas fa-check text-emerald-400 mr-1.5"></i> Local RAG Defense Integration</li>
-                            </ul>
                         </div>
                         <button onclick="triggerStripeCheckout('business')" class="w-full mt-6 bg-amber-600 hover:bg-amber-500 text-white font-semibold py-2 rounded transition">Partner Subscription</button>
                     </div>
 
-                    <!-- Academic Collaboration Tier -->
                     <div class="glass p-5 rounded-xl border border-purple-500/40 flex flex-col justify-between">
                         <div>
                             <div class="text-purple-400 font-mono text-[10px]">TIER 4</div>
                             <h3 class="text-md font-bold text-purple-300 mt-1">Academic & Advisor</h3>
                             <div class="text-xl font-extrabold text-purple-400 mt-2">Grant Funded</div>
-                            <p class="text-gray-400 text-[11px] mt-2">Requires Invitation Code + Executed NDA to prevent IP theft.</p>
+                            <p class="text-gray-400 text-[11px] mt-2">Requires Verified School Code or Academic Email.</p>
                         </div>
-                        <button onclick="openInviteModal()" class="w-full mt-6 bg-purple-600 hover:bg-purple-500 text-white font-semibold py-2 rounded transition">Enter Invite Code</button>
+                        <button onclick="openInviteModal()" class="w-full mt-6 bg-purple-600 hover:bg-purple-500 text-white font-semibold py-2 rounded transition">Enter School Code</button>
                     </div>
-
                 </div>
             </section>
         </div>
 
-        <!-- =================================================================== -->
-        <!-- VIEW 2: AUTHENTICATED MEMBER PORTAL -->
-        <!-- =================================================================== -->
+        <!-- AUTHENTICATED VIEWS -->
         <div id="view-member_free" class="role-section space-y-6">
             <div class="glass p-6 rounded-xl border border-indigo-500/30">
                 <h2 class="text-lg font-bold text-white mb-2"><i class="fas fa-users text-indigo-400"></i> The Hive Network (Community Forum)</h2>
-                <p class="text-xs text-gray-400 mb-4">Logged-in community discussions, research collaboration, and peer mentoring.</p>
-                <div class="bg-gray-950 p-4 rounded-lg border border-gray-800 space-y-2 text-xs font-mono mb-4">
-                    <div class="text-indigo-400">@System: Welcome to the authenticated member enclave.</div>
-                </div>
             </div>
         </div>
 
-        <!-- =================================================================== -->
-        <!-- VIEW 3: AUTHENTICATED PAID MEMBER PORTAL ($25/mo) -->
-        <!-- =================================================================== -->
         <div id="view-member_paid" class="role-section space-y-6">
             <div class="glass p-6 rounded-xl border border-indigo-500/50 bg-indigo-950/20">
                 <h2 class="text-lg font-bold text-indigo-300 mb-2"><i class="fas fa-star text-indigo-400"></i> Paid Member Portal ($25/mo Tier)</h2>
-                <p class="text-xs text-gray-300 mb-4">Exclusive 1-on-1 scheduling calendar and doctoral research notes.</p>
-                <button class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold px-4 py-2 rounded">Open 1-on-1 Mentorship Calendar</button>
             </div>
         </div>
 
-        <!-- =================================================================== -->
-        <!-- VIEW 4: AUTHENTICATED BUSINESS PORTAL ($150/mo) -->
-        <!-- =================================================================== -->
         <div id="view-business" class="role-section space-y-6">
             <div class="glass p-6 rounded-xl border border-amber-500/40 bg-amber-950/20">
                 <h2 class="text-lg font-bold text-amber-300 mb-2"><i class="fas fa-briefcase text-amber-400"></i> Defense Business Partner Portal ($150/mo Tier)</h2>
-                <p class="text-xs text-gray-300 mb-4">Submit technical advisory requests and review SBIR co-bidding pipelines.</p>
-                <button class="bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold px-4 py-2 rounded">Submit Advisory Ticket</button>
             </div>
         </div>
 
-        <!-- =================================================================== -->
-        <!-- VIEW 5: AUTHENTICATED ACADEMIC WORKSPACE (Invitation & NDA Protected) -->
-        <!-- =================================================================== -->
         <div id="view-academic" class="role-section space-y-6">
             <div class="glass p-6 rounded-xl border border-purple-500/40 bg-purple-950/20">
-                <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-lg font-bold text-purple-300"><i class="fas fa-university text-purple-400"></i> Academic Research Collaboration Portal</h2>
-                    <span class="bg-purple-950 text-purple-300 border border-purple-800 text-[10px] font-mono px-2.5 py-1 rounded">NDA Signed & Audit Logged</span>
-                </div>
-                <p class="text-xs text-gray-300 mb-4">Confidential workspace for STTR grant proposal drafts, committee reviews, and dataset benchmarks.</p>
-                <div class="grid grid-cols-2 gap-4 text-xs font-mono">
-                    <div class="bg-gray-950 p-3 rounded border border-gray-800 text-purple-300">📁 STTR Phase I Joint Workshare Drafts.pdf</div>
-                    <div class="bg-gray-950 p-3 rounded border border-gray-800 text-purple-300">📊 Dissertation Benchmark Logs.csv</div>
-                </div>
+                <h2 class="text-lg font-bold text-purple-300 mb-2"><i class="fas fa-university text-purple-400"></i> Academic Collaboration Portal</h2>
             </div>
         </div>
 
-        <!-- =================================================================== -->
-        <!-- VIEW 6: FOUNDER & ADMIN CONSOLE -->
-        <!-- =================================================================== -->
         <div id="view-admin" class="role-section space-y-6">
             <div class="glass p-6 rounded-xl border border-indigo-500/40 bg-indigo-950/30">
                 <h2 class="text-lg font-bold text-white mb-2"><i class="fas fa-user-shield text-indigo-400"></i> Root Founder Console</h2>
-                <p class="text-xs text-gray-400 mb-4">Full telemetry, invitation code generator, and system controls.</p>
             </div>
         </div>
 
-        <!-- USER ACCOUNT & DATA MANAGEMENT PANEL (GDPR Self-Service) -->
-        <section id="userSettingsPanel" class="glass rounded-xl p-5 border border-gray-800 hidden">
-            <h3 class="text-sm font-bold text-white mb-2 flex items-center gap-2"><i class="fas fa-cog text-gray-400"></i> Account Settings & Data Management</h3>
-            <div class="flex gap-4 text-xs">
-                <button onclick="cancelSubscription()" class="bg-amber-600/20 hover:bg-amber-600/30 text-amber-300 border border-amber-800 px-3 py-1.5 rounded">Cancel Subscription</button>
-                <button onclick="deleteAccountData()" class="bg-red-600/20 hover:bg-red-600/30 text-red-400 border border-red-800 px-3 py-1.5 rounded">Permanently Delete My Account & Data</button>
-            </div>
-        </section>
-
     </main>
 
-    <!-- =================================================================== -->
-    <!-- MODALS: LOGIN, INVITATION CODE & LEGAL NDA -->
-    <!-- =================================================================== -->
+    <!-- MODAL: DISCOUNT & VERIFICATION ENGINE -->
+    <div id="verificationModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-sm z-50 items-center justify-center p-4">
+        <div class="glass max-w-lg w-full p-6 rounded-2xl border border-emerald-500/50 space-y-4">
+            <div class="flex justify-between items-center">
+                <h3 class="text-md font-bold text-emerald-300"><i class="fas fa-user-check text-emerald-400"></i> Discount Verification Engine</h3>
+                <button onclick="closeModals()" class="text-gray-400 hover:text-white"><i class="fas fa-times"></i></button>
+            </div>
 
-    <!-- Modal 1: Login Gate -->
+            <!-- Verification Type Selector -->
+            <div class="grid grid-cols-3 gap-2 text-[11px] font-mono">
+                <button onclick="setVerificationType('student')" id="vbtn-student" class="p-2 rounded bg-indigo-600 text-white font-bold">Student (.edu)</button>
+                <button onclick="setVerificationType('veteran')" id="vbtn-veteran" class="p-2 rounded bg-gray-900 text-gray-400 hover:text-white">Veteran / Hero</button>
+                <button onclick="setVerificationType('institution')" id="vbtn-institution" class="p-2 rounded bg-gray-900 text-gray-400 hover:text-white">School Code</button>
+            </div>
+
+            <!-- Form 1: Student (.edu Validation) -->
+            <div id="form-student" class="space-y-3 text-xs">
+                <p class="text-gray-300 text-[11px]">Students receive 20% OFF. You MUST provide an official academic email address ending in <code class="text-indigo-400">.edu</code> or <code class="text-indigo-400">.ac.uk</code>. Personal emails (Gmail, Yahoo, etc.) are rejected.</p>
+                <input type="email" id="studentEmail" placeholder="student@university.edu" class="w-full bg-gray-950 border border-gray-800 rounded p-2 text-xs text-gray-200 focus:outline-none focus:border-indigo-500" />
+                <button onclick="verifyStudentEmail()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2 rounded transition">Verify Academic Email</button>
+            </div>
+
+            <!-- Form 2: Veteran & First Responder ID Upload -->
+            <div id="form-veteran" class="space-y-3 text-xs hidden">
+                <p class="text-gray-300 text-[11px]">Veterans and First Responders receive 25% OFF. Upload a redacted document (DD-214, Service ID, or Badge) with sensitive PII/SSNs blacked out.</p>
+                <input type="file" id="vetDocUpload" accept="image/*,.pdf" class="w-full bg-gray-950 border border-gray-800 rounded p-2 text-xs text-gray-400" />
+                <button onclick="verifyVeteranDoc()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 rounded transition">Submit Redacted Verification Document</button>
+            </div>
+
+            <!-- Form 3: School Code / Institutional Verification -->
+            <div id="form-institution" class="space-y-3 text-xs hidden">
+                <p class="text-gray-300 text-[11px]">Enter your university registrar or institutional partner code for STTR grant and dissertation collaboration.</p>
+                <input type="text" id="schoolCode" placeholder="Enter School Code (e.g., GT-8941)" class="w-full bg-gray-950 border border-gray-800 rounded p-2 text-xs text-purple-300 font-mono uppercase focus:outline-none" />
+                <button onclick="verifySchoolCode()" class="w-full bg-purple-600 hover:bg-purple-500 text-white font-bold py-2 rounded transition">Verify School Code</button>
+            </div>
+
+            <!-- Fallback Approval Request Channel -->
+            <div class="pt-3 border-t border-gray-800 text-[11px]">
+                <div class="text-gray-400">Cannot be verified automatically?</div>
+                <button onclick="openApprovalRequestModal()" class="text-indigo-400 hover:underline font-semibold mt-0.5">
+                    Request Manual Approval Direct From Author →
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: MANUAL APPROVAL REQUEST (FALLBACK) -->
+    <div id="approvalModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-sm z-50 items-center justify-center p-4">
+        <div class="glass max-w-md w-full p-6 rounded-2xl border border-amber-500/50 space-y-4">
+            <div class="flex justify-between items-center">
+                <h3 class="text-md font-bold text-amber-300"><i class="fas fa-paper-plane text-amber-400"></i> Request Manual Approval</h3>
+                <button onclick="closeModals()" class="text-gray-400 hover:text-white"><i class="fas fa-times"></i></button>
+            </div>
+            <p class="text-xs text-gray-300">If your automated check failed, submit a message describing your academic, research, veteran, or business status for direct review.</p>
+            
+            <input type="text" id="appFullName" placeholder="Full Name" class="w-full bg-gray-950 border border-gray-800 rounded p-2 text-xs text-gray-200" />
+            <input type="email" id="appContactEmail" placeholder="Contact Email" class="w-full bg-gray-950 border border-gray-800 rounded p-2 text-xs text-gray-200" />
+            <textarea id="appReason" rows="3" placeholder="Reason for approval request (e.g., 'Ph.D. researcher at university without .edu domain')..." class="w-full bg-gray-950 border border-gray-800 rounded p-2 text-xs text-gray-200"></textarea>
+
+            <button onclick="submitApprovalRequest()" class="w-full bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs py-2 rounded transition">
+                Submit Request to Review Queue
+            </button>
+        </div>
+    </div>
+
+    <!-- MODAL: LOGIN -->
     <div id="loginModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-sm z-50 items-center justify-center p-4">
         <div class="glass max-w-md w-full p-6 rounded-2xl border border-indigo-500/40 space-y-4">
             <div class="flex justify-between items-center">
                 <h3 class="text-md font-bold text-white"><i class="fas fa-lock text-indigo-400"></i> Platform Authentication</h3>
                 <button onclick="closeModals()" class="text-gray-400 hover:text-white"><i class="fas fa-times"></i></button>
             </div>
-            <p class="text-xs text-gray-300">Enter your credentials to authenticate and access your tier's dashboard.</p>
-            <input type="email" id="loginEmail" placeholder="User Email (e.g., student@university.edu)" class="w-full bg-gray-950 border border-gray-800 rounded p-2 text-xs text-gray-200 focus:outline-none focus:border-indigo-500" />
-            <input type="password" id="loginPass" placeholder="Password" class="w-full bg-gray-950 border border-gray-800 rounded p-2 text-xs text-gray-200 focus:outline-none focus:border-indigo-500" />
+            <input type="email" id="loginEmail" placeholder="User Email" class="w-full bg-gray-950 border border-gray-800 rounded p-2 text-xs text-gray-200" />
+            <input type="password" id="loginPass" placeholder="Password" class="w-full bg-gray-950 border border-gray-800 rounded p-2 text-xs text-gray-200" />
             <button onclick="processLogin()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs py-2 rounded transition">Authenticate & Enter</button>
         </div>
     </div>
 
-    <!-- Modal 2: Academic Invitation Code & Legal NDA -->
+    <!-- MODAL: ACADEMIC INVITE -->
     <div id="inviteModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-sm z-50 items-center justify-center p-4">
         <div class="glass max-w-lg w-full p-6 rounded-2xl border border-purple-500/50 space-y-4">
             <div class="flex justify-between items-center">
-                <h3 class="text-md font-bold text-purple-300"><i class="fas fa-shield-alt text-purple-400"></i> Academic Collaboration & Legal Gate</h3>
+                <h3 class="text-md font-bold text-purple-300"><i class="fas fa-shield-alt text-purple-400"></i> Academic Collaboration Gate</h3>
                 <button onclick="closeModals()" class="text-gray-400 hover:text-white"><i class="fas fa-times"></i></button>
             </div>
-            <p class="text-xs text-gray-300">To prevent IP theft, academic collaboration requires an authorized Invitation Code, Non-Disclosure Agreement (NDA), and Non-Compete execution.</p>
-            
-            <input type="text" id="inviteCode" placeholder="Enter 8-Character Invitation Code (e.g., STTR-9042)" class="w-full bg-gray-950 border border-purple-500/30 rounded p-2 text-xs text-purple-300 font-mono uppercase focus:outline-none" />
-
-            <!-- Legal Agreements Box -->
-            <div class="bg-gray-950 p-3 rounded border border-gray-800 text-[11px] text-gray-400 space-y-2 max-h-[120px] overflow-y-auto font-mono">
-                <div><strong>CONFIDENTIALITY & NON-COMPETE AGREEMENT:</strong> All research, code, draft STTR proposals, and datasets accessed on hive.eds-360.com are proprietary to Emerging Defense Solutions and the Author. Unauthorized reproduction or dissemination is strictly prohibited.</div>
-            </div>
-
+            <input type="text" id="inviteCode" placeholder="Enter School / Invite Code (e.g., STTR-9042)" class="w-full bg-gray-950 border border-purple-500/30 rounded p-2 text-xs text-purple-300 font-mono uppercase" />
             <label class="flex items-center gap-2 text-xs text-gray-300">
-                <input type="checkbox" id="ndaConsent" class="rounded border-gray-800 bg-gray-950 text-purple-600 focus:ring-0" />
+                <input type="checkbox" id="ndaConsent" class="rounded border-gray-800 bg-gray-950 text-purple-600" />
                 I agree to the NDA and Intellectual Property Non-Compete terms.
             </label>
-
-            <button onclick="verifyAcademicInvite()" class="w-full bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs py-2 rounded transition">Verify Code & Sign Agreement</button>
+            <button onclick="verifyAcademicInvite()" class="w-full bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs py-2 rounded transition">Verify Code & Enter Workspace</button>
         </div>
     </div>
 
     <script>
-        // AUTHENTICATION & SESSION STATE MANAGEMENT
-        let userSession = {
-            authenticated: false,
-            role: 'visitor',
-            email: '',
-            ndaSigned: false
-        };
+        let userSession = { authenticated: false, role: 'visitor', email: '', ndaSigned: false, verifiedDiscount: null };
 
-        let currentBillingCycle = 'monthly';
-
-        function setBillingCycle(cycle) {
-            currentBillingCycle = cycle;
-            document.querySelectorAll('#btn-monthly, #btn-quarterly, #btn-yearly, #btn-payg').forEach(btn => {
-                btn.className = 'px-3 py-1 rounded text-gray-400 hover:text-white';
+        function setVerificationType(type) {
+            document.querySelectorAll('#vbtn-student, #vbtn-veteran, #vbtn-institution').forEach(btn => {
+                btn.className = 'p-2 rounded bg-gray-900 text-gray-400 hover:text-white';
             });
-            document.getElementById(`btn-${cycle}`).className = 'px-3 py-1 rounded bg-indigo-600 text-white font-bold';
+            document.querySelectorAll('#form-student, #form-veteran, #form-institution').forEach(f => f.classList.add('hidden'));
 
-            // Price multipliers for display
-            if (cycle === 'quarterly') {
-                document.getElementById('price-paid').innerText = '$67.50 / quarter';
-                document.getElementById('price-business').innerText = '$405 / quarter';
-            } else if (cycle === 'yearly') {
-                document.getElementById('price-paid').innerText = '$240 / year';
-                document.getElementById('price-business').innerText = '$1,440 / year';
-            } else if (cycle === 'payg') {
-                document.getElementById('price-paid').innerText = '$10 / session';
-                document.getElementById('price-business').innerText = '$50 / consultation';
-            } else {
-                document.getElementById('price-paid').innerText = '$25 / mo';
-                document.getElementById('price-business').innerText = '$150 / mo';
-            }
+            document.getElementById(`vbtn-${type}`).className = 'p-2 rounded bg-indigo-600 text-white font-bold';
+            document.getElementById(`form-${type}`).classList.remove('hidden');
         }
 
-        // LOGIC GATE CONTROLLER
-        function requestGateAccess(requestedRole) {
-            if (requestedRole === 'visitor') {
-                switchView('visitor');
-                return;
+        function verifyStudentEmail() {
+            const email = document.getElementById('studentEmail').value.trim().toLowerCase();
+            const academicRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(edu|ac\.uk)$/;
+
+            if (!academicRegex.test(email)) {
+                return alert('[REJECTED] Personal email addresses (Gmail, Yahoo, Outlook) are not permitted for student discounts. You must use an official academic email ending in .edu or .ac.uk.');
             }
 
-            // Check Login State
+            userSession.verifiedDiscount = 'STUDENT_20';
+            closeModals();
+            alert('[VERIFIED SUCCESS] 20% Student Discount Applied! Stripe Checkout will automatically apply coupon: STUDENT20.');
+        }
+
+        function verifyVeteranDoc() {
+            const upload = document.getElementById('vetDocUpload').files[0];
+            if (!upload) return alert('Please select a redacted verification document file.');
+
+            userSession.verifiedDiscount = 'VETERAN_25';
+            closeModals();
+            alert(`[SUBMITTED SUCCESS] Redacted document '${upload.name}' received and logged for verification. 25% Veteran Discount code VET25 enabled!`);
+        }
+
+        function verifySchoolCode() {
+            const code = document.getElementById('schoolCode').value.trim().toUpperCase();
+            if (code !== 'GT-8941' && code !== 'STTR-9042' && code !== 'MIT-2026') {
+                return alert('Invalid School Code. Request manual approval or obtain an official registrar code.');
+            }
+
+            userSession.verifiedDiscount = 'ACADEMIC_GRANT';
+            closeModals();
+            alert(`[VERIFIED SUCCESS] School Code '${code}' confirmed. Academic Grant tier unlocked!`);
+        }
+
+        function submitApprovalRequest() {
+            const name = document.getElementById('appFullName').value;
+            const email = document.getElementById('appContactEmail').value;
+            const reason = document.getElementById('appReason').value;
+
+            if (!name || !email || !reason) return alert('Please fill in all approval request fields.');
+
+            closeModals();
+            alert(`[REQUEST LOGGED] Thank you, ${name}. Your manual approval request has been dispatched to the founder's review queue. You will receive an update at ${email}.`);
+        }
+
+        function openVerificationModal() { document.getElementById('verificationModal').classList.add('modal-active'); }
+        function openApprovalRequestModal() { closeModals(); document.getElementById('approvalModal').classList.add('modal-active'); }
+        function openLoginModal() { document.getElementById('loginModal').classList.add('modal-active'); }
+        function openInviteModal() { document.getElementById('inviteModal').classList.add('modal-active'); }
+        function closeModals() { document.querySelectorAll('.modal').forEach(m => m.classList.remove('modal-active')); }
+
+        function requestGateAccess(role) {
+            if (role === 'visitor') return switchView('visitor');
             if (!userSession.authenticated) {
-                alert(`[ACCESS DENIED] The '${requestedRole.toUpperCase()}' dashboard requires authentication. Please log in.`);
+                alert(`[ACCESS DENIED] '${role.toUpperCase()}' requires authentication.`);
                 openLoginModal();
-                document.getElementById('userRoleSelect').value = userSession.role;
                 return;
             }
-
-            // Check Academic Gate (Requires Invite Code + NDA)
-            if (requestedRole === 'academic' && !userSession.ndaSigned) {
-                alert(`[LEGAL GATE] Academic collaboration requires an executed NDA & Invitation Code.`);
-                openInviteModal();
-                return;
-            }
-
-            switchView(requestedRole);
+            switchView(role);
         }
 
         function switchView(role) {
             userSession.role = role;
             document.getElementById('userRoleSelect').value = role;
-
             document.querySelectorAll('.role-section').forEach(el => el.classList.remove('role-active'));
             const activeView = document.getElementById(`view-${role}`);
             if (activeView) activeView.classList.add('role-active');
-
-            if (userSession.authenticated) {
-                document.getElementById('userSettingsPanel').classList.remove('hidden');
-            }
         }
-
-        function openLoginModal() { document.getElementById('loginModal').classList.add('modal-active'); }
-        function openInviteModal() { document.getElementById('inviteModal').classList.add('modal-active'); }
-        function closeModals() { document.querySelectorAll('.modal').forEach(m => m.classList.remove('modal-active')); }
 
         function processLogin() {
             const email = document.getElementById('loginEmail').value;
-            if (!email) return alert('Please enter your email.');
-
+            if (!email) return alert('Enter email.');
             userSession.authenticated = true;
             userSession.email = email;
-            userSession.role = 'member_free';
-
-            document.getElementById('authStatusBadge').className = 'text-xs font-mono px-2.5 py-1 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-800 flex items-center gap-1';
             document.getElementById('authStatusBadge').innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Authenticated (${email})`;
-            document.getElementById('authBtn').innerText = 'Log Out';
-            document.getElementById('authBtn').onclick = processLogout;
-
             closeModals();
             switchView('member_free');
-        }
-
-        function processLogout() {
-            userSession = { authenticated: false, role: 'visitor', email: '', ndaSigned: false };
-            document.getElementById('authStatusBadge').className = 'text-xs font-mono px-2.5 py-1 rounded-full bg-red-950 text-red-400 border border-red-800 flex items-center gap-1';
-            document.getElementById('authStatusBadge').innerHTML = `<span class="w-2 h-2 rounded-full bg-red-500"></span> Unauthenticated`;
-            document.getElementById('authBtn').innerText = 'Log In';
-            document.getElementById('authBtn').onclick = openLoginModal;
-            document.getElementById('userSettingsPanel').classList.add('hidden');
-            switchView('visitor');
         }
 
         function verifyAcademicInvite() {
             const code = document.getElementById('inviteCode').value.toUpperCase();
             const consent = document.getElementById('ndaConsent').checked;
-
-            if (code !== 'STTR-9042' && code !== 'ACADEMIC-2026') {
-                return alert('Invalid Invitation Code. Please contact the author for an authorized academic collaboration code.');
-            }
-
-            if (!consent) {
-                return alert('You must check and agree to the NDA & Non-Compete terms.');
-            }
-
+            if (code !== 'STTR-9042' && code !== 'GT-8941') return alert('Invalid Code.');
+            if (!consent) return alert('Must agree to NDA.');
             userSession.authenticated = true;
             userSession.ndaSigned = true;
-            userSession.role = 'academic';
-
             closeModals();
             switchView('academic');
-            alert('[ACCESS GRANTED] Invitation Code verified & NDA executed. Audit log created.');
         }
 
         function triggerStripeCheckout(tier) {
-            alert(`[STRIPE GATEWAY] Redirecting to Stripe Payment Checkout...\n\nTier: ${tier.toUpperCase()}\nBilling Cycle: ${currentBillingCycle.toUpperCase()}\nConnected Bank: Emerging Defense Solutions Direct Payout`);
-        }
-
-        function cancelSubscription() {
-            if (confirm('Are you sure you want to cancel your subscription? Access will remain active until the end of your current billing period.')) {
-                alert('Subscription cancelled successfully.');
-            }
-        }
-
-        function deleteAccountData() {
-            if (confirm('PERMANENT ACTION: Are you sure you want to delete your account and all associated data from hive.eds-360.com? This cannot be undone.')) {
-                processLogout();
-                alert('Account and data deleted successfully.');
-            }
+            let discountInfo = userSession.verifiedDiscount ? `\nApplied Discount Coupon: ${userSession.verifiedDiscount}` : '';
+            alert(`[STRIPE GATEWAY] Redirecting to Stripe Checkout...\n\nTier: ${tier.toUpperCase()}${discountInfo}`);
         }
     </script>
 </body>
