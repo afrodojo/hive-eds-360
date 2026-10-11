@@ -1,0 +1,162 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Journey as a Doctoral Student | Emerging Defense Solutions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #0b0f19; color: #f3f4f6; font-family: system-ui, sans-serif; }
+        .glass { background: rgba(17, 24, 39, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .accent-glow { box-shadow: 0 0 20px rgba(99, 102, 241, 0.25); }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- Header Navigation -->
+    <header class="glass sticky top-0 z-50 border-b border-gray-800 px-6 py-4 flex justify-between items-center">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-lg bg-indigo-600 flex items-center justify-center font-bold text-xl text-white accent-glow">
+                DS
+            </div>
+            <div>
+                <h1 class="text-lg font-bold text-white leading-none">My Journey as a Doctoral Student</h1>
+                <p class="text-xs text-indigo-400 font-mono mt-0.5">hive.eds-360.com | CS Ph.D. & Emerging Defense Solutions</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-4">
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-950 text-emerald-400 border border-emerald-800">
+                <span class="w-2 h-2 mr-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Local Enclave Active
+            </span>
+        </div>
+    </header>
+
+    <!-- Main Content Grid -->
+    <main class="flex-1 max-w-7xl w-full mx-auto p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+        <!-- Left Column: Interactive RAG Search Engine (7 Cols) -->
+        <section class="lg:col-span-7 flex flex-col gap-6">
+            
+            <!-- Dual-Mode Local AI Console -->
+            <div class="glass rounded-xl p-5 border border-indigo-500/20">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-md font-semibold text-white flex items-center gap-2">
+                        <i class="fas fa-terminal text-indigo-400"></i> Air-Gapped Local RAG Console
+                    </h2>
+                    <select id="ragMode" class="bg-gray-900 text-xs text-indigo-300 border border-indigo-500/30 rounded-lg px-3 py-1.5 font-mono focus:outline-none">
+                        <option value="defense">Mode: Defense Research (Llama-3)</option>
+                        <option value="academic">Mode: Academic Repo & Gemini Notes</option>
+                    </select>
+                </div>
+
+                <!-- Input Box -->
+                <div class="relative mb-3">
+                    <textarea id="queryInput" rows="3" placeholder="Enter query (e.g., 'Check upcoming SBIR proposal requirements' or 'Summarize CS 8000 paper annotations')..."
+                        class="w-full bg-gray-950 border border-gray-800 rounded-lg p-3 text-sm text-gray-200 placeholder-gray-500 focus:outline-none focus:border-indigo-500 font-mono"></textarea>
+                    <button onclick="executeQuery()" class="absolute bottom-3 right-3 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold px-4 py-1.5 rounded-md transition flex items-center gap-1.5">
+                        <i class="fas fa-paper-plane"></i> Execute
+                    </button>
+                </div>
+
+                <!-- Output Display Window -->
+                <div id="outputWindow" class="bg-gray-950 rounded-lg p-4 font-mono text-xs text-gray-300 border border-gray-900 min-h-[160px] max-h-[300px] overflow-y-auto">
+                    <span class="text-gray-600">// Local PowerShell API response will stream here...</span>
+                </div>
+            </div>
+
+            <!-- SBIR Pipeline Tracker -->
+            <div class="glass rounded-xl p-5">
+                <h2 class="text-md font-semibold text-white mb-3 flex items-center gap-2">
+                    <i class="fas fa-shield-halved text-emerald-400"></i> Emerging Defense Solutions (EDS) - SBIR Grants
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                    <div class="bg-gray-900/80 p-3 rounded-lg border border-gray-800">
+                        <div class="flex justify-between items-start">
+                            <span class="font-bold text-gray-200">AFWERX Open Topic (Phase I)</span>
+                            <span class="px-2 py-0.5 rounded bg-amber-950 text-amber-400 border border-amber-800 text-[10px]">In Progress</span>
+                        </div>
+                        <p class="text-gray-400 mt-1">Sovereign Air-Gapped RAG for Tactical Enclaves</p>
+                        <div class="mt-2 text-[11px] text-indigo-400">TRL 3 → Target TRL 5</div>
+                    </div>
+                    <div class="bg-gray-900/80 p-3 rounded-lg border border-gray-800">
+                        <div class="flex justify-between items-start">
+                            <span class="font-bold text-gray-200">DARPA Edge AI Call</span>
+                            <span class="px-2 py-0.5 rounded bg-blue-950 text-blue-400 border border-blue-800 text-[10px]">Abstract Drafted</span>
+                        </div>
+                        <p class="text-gray-400 mt-1">Local Quantized LLM Inference on Edge Hardware</p>
+                        <div class="mt-2 text-[11px] text-indigo-400">TRL 2 → Target TRL 4</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Right Column: Academic Schedule & Media Feed (5 Cols) -->
+        <section class="lg:col-span-5 flex flex-col gap-6">
+
+            <!-- Ph.D. Academic Tracker -->
+            <div class="glass rounded-xl p-5">
+                <h2 class="text-md font-semibold text-white mb-3 flex items-center gap-2">
+                    <i class="fas fa-graduation-cap text-indigo-400"></i> Academic & Class Schedule
+                </h2>
+                <ul class="space-y-2 text-xs">
+                    <li class="bg-gray-900/60 p-2.5 rounded border border-gray-800/60 flex justify-between items-center">
+                        <div>
+                            <div class="font-semibold text-gray-200">Qualifying Exam Literature Review</div>
+                            <div class="text-gray-400">CS Doctoral Milestone</div>
+                        </div>
+                        <span class="text-indigo-400 font-mono">Due Fri</span>
+                    </li>
+                    <li class="bg-gray-900/60 p-2.5 rounded border border-gray-800/60 flex justify-between items-center">
+                        <div>
+                            <div class="font-semibold text-gray-200">Vector Search Ingestion Benchmark</div>
+                            <div class="text-gray-400">CS 8000 Lab Assignment</div>
+                        </div>
+                        <span class="text-indigo-400 font-mono">Completed</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- YouTube / Content Hub -->
+            <div class="glass rounded-xl p-5">
+                <h2 class="text-md font-semibold text-white mb-3 flex items-center gap-2">
+                    <i class="fab fa-youtube text-red-500"></i> Media Series & Content
+                </h2>
+                <div class="bg-gray-900/90 rounded-lg p-3 border border-gray-800 text-xs">
+                    <div class="font-semibold text-gray-200">Episode 01: Building Secure RAG Stacks for Defense</div>
+                    <p class="text-gray-400 mt-1">Behind the scenes of running air-gapped LLMs on local compute during my CS Ph.D.</p>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <script>
+        async function executeQuery() {
+            const query = document.getElementById('queryInput').value;
+            const mode = document.getElementById('ragMode').value;
+            const output = document.getElementById('outputWindow');
+
+            if (!query) return;
+
+            output.innerHTML = `<span class="text-indigo-400">[Executing Query to Local PowerShell Gateway on Port 8443...]</span>`;
+
+            try {
+                const response = await fetch('https://localhost:8443/api/v1/rag-query', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer DEFENSE_LOCAL_SECRET_KEY_2026'
+                    },
+                    body: JSON.stringify({ query: query, mode: mode })
+                });
+
+                const data = await response.json();
+                output.innerHTML = `<span class="text-emerald-400">[STATUS ${data.status}]</span>\n\n${data.response}`;
+            } catch (err) {
+                output.innerHTML = `<span class="text-amber-400">[DEMO MODE - Local PowerShell listener offline]</span>\n\nQuery Received: "${query}"\nTarget Mode: ${mode.toUpperCase()}\n\nTo connect live data: Run scripts/Start-DefenseRagGateway.ps1 on your workstation.`;
+            }
+        }
+    </script>
+</body>
+</html>
