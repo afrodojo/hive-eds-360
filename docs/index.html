@@ -5,17 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Journey as a Doctoral Student | Emerging Defense Solutions</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://js.stripe.com/v3/"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         body { background-color: #0b0f19; color: #f3f4f6; font-family: system-ui, sans-serif; }
         .glass { background: rgba(17, 24, 39, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
         .accent-glow { box-shadow: 0 0 20px rgba(99, 102, 241, 0.25); }
+        .role-section { display: none; }
+        .role-active { display: block !important; }
+        .modal { display: none; }
+        .modal-active { display: flex !important; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
 
-    <!-- Header Navigation -->
-    <header class="glass sticky top-0 z-50 border-b border-gray-800 px-6 py-4 flex justify-between items-center">
+    <!-- Header Navigation Bar -->
+    <header class="glass sticky top-0 z-50 border-b border-gray-800 px-6 py-4 flex flex-wrap justify-between items-center gap-4">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-lg bg-indigo-600 flex items-center justify-center font-bold text-xl text-white accent-glow">
                 DS
@@ -25,118 +30,413 @@
                 <p class="text-xs text-indigo-400 font-mono mt-0.5">hive.eds-360.com | CS Ph.D. & Emerging Defense Solutions</p>
             </div>
         </div>
-        <div class="flex items-center gap-4">
-            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-950 text-emerald-400 border border-emerald-800">
-                <span class="w-2 h-2 mr-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Local Enclave Active
-            </span>
+        
+        <div class="flex items-center gap-3">
+            <button onclick="openDonateModal()" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold px-3 py-1.5 rounded-lg transition flex items-center gap-1.5 shadow">
+                <i class="fas fa-heart text-amber-300"></i> Donate / Support Research
+            </button>
+
+            <div id="authStatusBadge" class="text-xs font-mono px-2.5 py-1 rounded-full bg-red-950 text-red-400 border border-red-800 flex items-center gap-1">
+                <span class="w-2 h-2 rounded-full bg-red-500"></span> Public
+            </div>
+
+            <div class="flex items-center bg-gray-900 border border-gray-800 rounded-lg p-1 text-xs">
+                <span class="text-gray-400 px-2 font-mono text-[11px]">Active Gate:</span>
+                <select id="userRoleSelect" onchange="requestGateAccess(this.value)" class="bg-gray-950 text-indigo-300 font-bold px-2.5 py-1 rounded border border-indigo-500/30 focus:outline-none">
+                    <option value="visitor">🌐 Public Visitor Homepage</option>
+                    <option value="member_free">👥 Member Portal (Free Login)</option>
+                    <option value="member_paid">⭐ Paid Member ($25/mo Tier)</option>
+                    <option value="business">💼 Business & Defense ($150/mo Tier)</option>
+                    <option value="academic">🎓 Academic & Advisor (Invite Code)</option>
+                    <option value="admin">🔒 Founder & Admin (Root Password)</option>
+                </select>
+            </div>
+
+            <button id="authBtn" onclick="openLoginModal()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold px-4 py-1.5 rounded-lg transition accent-glow">
+                Log In
+            </button>
         </div>
     </header>
 
-    <!-- Main Content Grid -->
-    <main class="flex-1 max-w-7xl w-full mx-auto p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+    <main class="flex-1 max-w-7xl w-full mx-auto p-6 flex flex-col gap-8">
 
-        <!-- Left Column: Interactive RAG Search Engine (7 Cols) -->
-        <section class="lg:col-span-7 flex flex-col gap-6">
+        <!-- VIEW 1: PUBLIC VISITOR HOMEPAGE -->
+        <div id="view-visitor" class="role-section space-y-8 role-active">
             
-            <!-- Dual-Mode Local AI Console -->
-            <div class="glass rounded-xl p-5 border border-indigo-500/20">
-                <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-md font-semibold text-white flex items-center gap-2">
-                        <i class="fas fa-terminal text-indigo-400"></i> Air-Gapped Local RAG Console
+            <!-- Hero / About Me Banner -->
+            <section class="glass rounded-2xl p-8 border border-indigo-500/30">
+                <div class="max-w-3xl space-y-4">
+                    <span class="px-3 py-1 rounded-full bg-indigo-950 text-indigo-300 border border-indigo-800 text-xs font-mono font-semibold">
+                        CS Doctoral Student • Defense AI Innovator • Founder
+                    </span>
+                    <h1 class="text-3xl font-extrabold text-white tracking-tight sm:text-4xl">
+                        Documenting My Computer Science Ph.D. & Sovereign Defense AI Journey
+                    </h1>
+                    <p class="text-gray-300 text-sm leading-relaxed">
+                        Welcome to my public digital enclave. I am a Computer Science Doctoral Candidate specializing in air-gapped local AI architectures, secure Retrieval-Augmented Generation (RAG), and tactical edge compute. Through <strong>Emerging Defense Solutions (EDS)</strong>, I integrate doctoral research, SBIR grant acquisition, and student mentorship.
+                    </p>
+                    <div class="pt-2 flex flex-wrap items-center gap-3 text-xs">
+                        <a href="https://linkedin.com" target="_blank" class="bg-blue-600/20 hover:bg-blue-600/30 text-blue-400 px-3 py-1.5 rounded-lg border border-blue-500/30 font-semibold transition"><i class="fab fa-linkedin"></i> LinkedIn</a>
+                        <a href="https://instagram.com" target="_blank" class="bg-pink-600/20 hover:bg-pink-600/30 text-pink-400 px-3 py-1.5 rounded-lg border border-pink-500/30 font-semibold transition"><i class="fab fa-instagram"></i> Instagram</a>
+                        <a href="https://facebook.com" target="_blank" class="bg-blue-800/20 hover:bg-blue-800/30 text-blue-300 px-3 py-1.5 rounded-lg border border-blue-700/30 font-semibold transition"><i class="fab fa-facebook"></i> Facebook</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Support Research Banner -->
+            <section class="glass p-6 rounded-xl border border-emerald-500/40 bg-emerald-950/10 flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="space-y-1">
+                    <h2 class="text-md font-bold text-white flex items-center gap-2">
+                        <i class="fas fa-hand-holding-dollar text-emerald-400"></i> Support Open-Source Defense AI & Doctoral Research
                     </h2>
-                    <select id="ragMode" class="bg-gray-900 text-xs text-indigo-300 border border-indigo-500/30 rounded-lg px-3 py-1.5 font-mono focus:outline-none">
-                        <option value="defense">Mode: Defense Research (Llama-3)</option>
-                        <option value="academic">Mode: Academic Repo & Gemini Notes</option>
-                    </select>
+                    <p class="text-xs text-gray-300 max-w-2xl">
+                        Your direct contributions fund air-gapped CUDA hardware benchmarks, academic open-access fees, and student mentorship initiatives.
+                    </p>
+                </div>
+                <button onclick="openDonateModal()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-5 py-2.5 rounded-xl transition shadow-lg flex items-center gap-2 whitespace-nowrap">
+                    <i class="fas fa-credit-card"></i> Make a Donation
+                </button>
+            </section>
+
+            <!-- Membership Subscriptions Grid -->
+            <section class="space-y-6">
+                <div class="text-center max-w-2xl mx-auto">
+                    <h2 class="text-xl font-bold text-white">Membership Tiers & Access Channels</h2>
+                    <p class="text-gray-400 text-xs mt-1">Direct payment processing connected via Stripe.</p>
                 </div>
 
-                <!-- Input Box -->
-                <div class="relative mb-3">
-                    <textarea id="queryInput" rows="3" placeholder="Enter query (e.g., 'Check upcoming SBIR proposal requirements' or 'Summarize CS 8000 paper annotations')..."
-                        class="w-full bg-gray-950 border border-gray-800 rounded-lg p-3 text-sm text-gray-200 placeholder-gray-500 focus:outline-none focus:border-indigo-500 font-mono"></textarea>
-                    <button onclick="executeQuery()" class="absolute bottom-3 right-3 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold px-4 py-1.5 rounded-md transition flex items-center gap-1.5">
-                        <i class="fas fa-paper-plane"></i> Execute
-                    </button>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+                    <div class="glass p-5 rounded-xl border border-gray-800 flex flex-col justify-between">
+                        <div>
+                            <div class="text-gray-400 font-mono text-[10px]">TIER 1</div>
+                            <h3 class="text-md font-bold text-white mt-1">Free Member</h3>
+                            <div class="text-xl font-extrabold text-indigo-400 mt-2">$0</div>
+                            <ul class="mt-4 space-y-2 text-gray-300 text-[11px]">
+                                <li><i class="fas fa-check text-emerald-400 mr-1.5"></i> Community Forum Access</li>
+                                <li><i class="fas fa-check text-emerald-400 mr-1.5"></i> Public Vlog Episodes</li>
+                            </ul>
+                        </div>
+                        <button onclick="openLoginModal()" class="w-full mt-6 bg-gray-800 hover:bg-gray-700 text-white font-semibold py-2 rounded transition">Create Free Account</button>
+                    </div>
+
+                    <div class="glass p-5 rounded-xl border border-indigo-500/50 flex flex-col justify-between accent-glow">
+                        <div>
+                            <div class="text-indigo-400 font-mono text-[10px]">TIER 2</div>
+                            <h3 class="text-md font-bold text-white mt-1">Paid Member (Student/Career)</h3>
+                            <div class="text-xl font-extrabold text-indigo-300 mt-2">$25 / mo</div>
+                            <ul class="mt-4 space-y-2 text-gray-300 text-[11px]">
+                                <li><i class="fas fa-check text-emerald-400 mr-1.5"></i> 1-on-1 Doctoral & Career Coaching</li>
+                                <li><i class="fas fa-check text-emerald-400 mr-1.5"></i> Direct Cell Phone Access</li>
+                            </ul>
+                        </div>
+                        <button onclick="triggerStripeCheckout('member_paid')" class="w-full mt-6 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-2 rounded transition">Subscribe Now ($25/mo)</button>
+                    </div>
+
+                    <div class="glass p-5 rounded-xl border border-amber-500/40 flex flex-col justify-between">
+                        <div>
+                            <div class="text-amber-400 font-mono text-[10px]">TIER 3</div>
+                            <h3 class="text-md font-bold text-amber-300 mt-1">Business & Defense Partner</h3>
+                            <div class="text-xl font-extrabold text-amber-400 mt-2">$150 / mo</div>
+                            <ul class="mt-4 space-y-2 text-gray-300 text-[11px]">
+                                <li><i class="fas fa-check text-emerald-400 mr-1.5"></i> Technical Advisory Requests</li>
+                                <li><i class="fas fa-check text-emerald-400 mr-1.5"></i> Local RAG Integration Support</li>
+                            </ul>
+                        </div>
+                        <button onclick="triggerStripeCheckout('business')" class="w-full mt-6 bg-amber-600 hover:bg-amber-500 text-white font-semibold py-2 rounded transition">Partner Subscription ($150/mo)</button>
+                    </div>
+
+                    <div class="glass p-5 rounded-xl border border-purple-500/40 flex flex-col justify-between">
+                        <div>
+                            <div class="text-purple-400 font-mono text-[10px]">TIER 4</div>
+                            <h3 class="text-md font-bold text-purple-300 mt-1">Academic & Advisor</h3>
+                            <div class="text-xl font-extrabold text-purple-400 mt-2">Grant Funded</div>
+                            <ul class="mt-4 space-y-2 text-gray-300 text-[11px]">
+                                <li><i class="fas fa-check text-emerald-400 mr-1.5"></i> STTR Proposal Collaboration</li>
+                                <li><i class="fas fa-check text-emerald-400 mr-1.5"></i> Requires School Code & NDA</li>
+                            </ul>
+                        </div>
+                        <button onclick="triggerStripeCheckout('academic')" class="w-full mt-6 bg-purple-600 hover:bg-purple-500 text-white font-semibold py-2 rounded transition">Academic Portal Link</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4 Connected Private Research Repositories Grid -->
+            <section class="glass p-6 rounded-xl border border-indigo-500/40 bg-indigo-950/10">
+                <div class="flex justify-between items-center mb-4">
+                    <div>
+                        <h2 class="text-md font-bold text-white flex items-center gap-2">
+                            <i class="fas fa-network-wired text-indigo-400"></i> Connected Research Repositories (4 Nodes)
+                        </h2>
+                        <p class="text-xs text-gray-400">Automated vector ingestion from synced GitHub repositories into local RAG engine.</p>
+                    </div>
+                    <span class="px-2.5 py-1 rounded bg-emerald-950 text-emerald-400 border border-emerald-800 text-xs font-mono">4 / 4 Nodes Synced</span>
                 </div>
 
-                <!-- Output Display Window -->
-                <div id="outputWindow" class="bg-gray-950 rounded-lg p-4 font-mono text-xs text-gray-300 border border-gray-900 min-h-[160px] max-h-[300px] overflow-y-auto">
-                    <span class="text-gray-600">// Local PowerShell API response will stream here...</span>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                    <div class="bg-gray-900/90 p-4 rounded-lg border border-gray-800">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <span class="font-bold text-indigo-300 text-sm">afrodojo / eds-formal-rag</span>
+                                <div class="text-[10px] text-gray-400 font-mono mt-0.5">Target: das.eds-360.com</div>
+                            </div>
+                            <span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800 text-[10px]">Vector Indexed</span>
+                        </div>
+                        <p class="text-gray-300 mt-2 text-[11px]">Formal RAG architecture specifications, air-gapped security boundaries, and defense AI logic.</p>
+                    </div>
+
+                    <div class="bg-gray-900/90 p-4 rounded-lg border border-gray-800">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <span class="font-bold text-indigo-300 text-sm">afrodojo / cyber-dojo-sensei</span>
+                                <div class="text-[10px] text-gray-400 font-mono mt-0.5">Target: cyberdojosensei.eds-360.com</div>
+                            </div>
+                            <span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800 text-[10px]">Vector Indexed</span>
+                        </div>
+                        <p class="text-gray-300 mt-2 text-[11px]">Cyber range scenarios, defense training modules, and tactical exercise scripts.</p>
+                    </div>
+
+                    <div class="bg-gray-900/90 p-4 rounded-lg border border-gray-800">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <span class="font-bold text-indigo-300 text-sm">afrodojo / sensei-phd</span>
+                                <div class="text-[10px] text-gray-400 font-mono mt-0.5">Target: hive.eds-360.com</div>
+                            </div>
+                            <span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800 text-[10px]">Vector Indexed</span>
+                        </div>
+                        <p class="text-gray-300 mt-2 text-[11px]">Doctoral dissertation research logs, literature reviews, course trackers, and milestone notes.</p>
+                    </div>
+
+                    <div class="bg-gray-900/90 p-4 rounded-lg border border-gray-800">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <span class="font-bold text-indigo-300 text-sm">afrodojo / AI-Lab-Hybrid-DASSensei</span>
+                                <div class="text-[10px] text-gray-400 font-mono mt-0.5">Target: dassensei.eda-360.com</div>
+                            </div>
+                            <span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800 text-[10px]">Vector Indexed</span>
+                        </div>
+                        <p class="text-gray-300 mt-2 text-[11px]">Hybrid AI laboratory compute configurations, CUDA benchmarks, and local model weights management.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Public Contact Channel -->
+            <section class="glass p-6 rounded-xl border border-gray-800">
+                <h2 class="text-md font-bold text-white mb-2 flex items-center gap-2">
+                    <i class="fas fa-envelope text-indigo-400"></i> Public Contact & Support
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                    <div class="bg-gray-900/90 p-4 rounded-lg border border-gray-800">
+                        <div class="text-gray-400 font-mono text-[10px]">GENERAL ENQUIRIES & ISSUES</div>
+                        <div class="text-white font-bold text-sm mt-1">info@eds-360.com</div>
+                    </div>
+                    <div class="bg-gray-900/90 p-4 rounded-lg border border-gray-800">
+                        <div class="text-gray-400 font-mono text-[10px]">OFFICE PHONE</div>
+                        <div class="text-white font-bold text-sm mt-1">540-498-8350</div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- VIEW 2: AUTHENTICATED MEMBER PORTAL -->
+        <div id="view-member_free" class="role-section space-y-6">
+            <div class="glass p-6 rounded-xl border border-indigo-500/30">
+                <h2 class="text-lg font-bold text-white mb-2"><i class="fas fa-users text-indigo-400"></i> Member Communication Hub</h2>
+                <div class="bg-gray-900/90 p-4 rounded-lg border border-gray-800 text-xs">
+                    <div class="text-gray-400 font-mono text-[10px]">MEMBER SUPPORT EMAIL</div>
+                    <div class="text-indigo-300 font-bold text-sm mt-1">cyberdojosensei@gmail.com</div>
+                    <div class="text-gray-400 mt-2">Office Phone: 540-498-8350</div>
                 </div>
             </div>
+        </div>
 
-            <!-- SBIR Pipeline Tracker -->
-            <div class="glass rounded-xl p-5">
-                <h2 class="text-md font-semibold text-white mb-3 flex items-center gap-2">
-                    <i class="fas fa-shield-halved text-emerald-400"></i> Emerging Defense Solutions (EDS) - SBIR Grants
-                </h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-                    <div class="bg-gray-900/80 p-3 rounded-lg border border-gray-800">
-                        <div class="flex justify-between items-start">
-                            <span class="font-bold text-gray-200">AFWERX Open Topic (Phase I)</span>
-                            <span class="px-2 py-0.5 rounded bg-amber-950 text-amber-400 border border-amber-800 text-[10px]">In Progress</span>
-                        </div>
-                        <p class="text-gray-400 mt-1">Sovereign Air-Gapped RAG for Tactical Enclaves</p>
-                        <div class="mt-2 text-[11px] text-indigo-400">TRL 3 → Target TRL 5</div>
+        <!-- VIEW 3: AUTHENTICATED PAID MEMBER PORTAL -->
+        <div id="view-member_paid" class="role-section space-y-6">
+            <div class="glass p-6 rounded-xl border border-indigo-500/50 bg-indigo-950/20">
+                <h2 class="text-lg font-bold text-indigo-300 mb-2"><i class="fas fa-star text-indigo-400"></i> Paid Member Priority Contact Node ($25/mo)</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                    <div class="bg-gray-900/90 p-4 rounded-lg border border-gray-800">
+                        <div class="text-gray-400 font-mono text-[10px]">DIRECT CELL PHONE (PAID TIER ONLY)</div>
+                        <div class="text-indigo-300 font-bold text-sm mt-1">657-658-5859</div>
                     </div>
-                    <div class="bg-gray-900/80 p-3 rounded-lg border border-gray-800">
-                        <div class="flex justify-between items-start">
-                            <span class="font-bold text-gray-200">DARPA Edge AI Call</span>
-                            <span class="px-2 py-0.5 rounded bg-blue-950 text-blue-400 border border-blue-800 text-[10px]">Abstract Drafted</span>
-                        </div>
-                        <p class="text-gray-400 mt-1">Local Quantized LLM Inference on Edge Hardware</p>
-                        <div class="mt-2 text-[11px] text-indigo-400">TRL 2 → Target TRL 4</div>
+                    <div class="bg-gray-900/90 p-4 rounded-lg border border-gray-800">
+                        <div class="text-gray-400 font-mono text-[10px]">PAID MEMBER EMAIL</div>
+                        <div class="text-indigo-300 font-bold text-sm mt-1">cyberdojosensei@gmail.com</div>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- VIEW 4: AUTHENTICATED BUSINESS PORTAL -->
+        <div id="view-business" class="role-section space-y-6">
+            <div class="glass p-6 rounded-xl border border-amber-500/40 bg-amber-950/20">
+                <h2 class="text-lg font-bold text-amber-300 mb-2"><i class="fas fa-briefcase text-amber-400"></i> Corporate & Defense Direct Line ($150/mo)</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                    <div class="bg-gray-900/90 p-4 rounded-lg border border-gray-800">
+                        <div class="text-gray-400 font-mono text-[10px]">FOUNDER DEFENSE EMAIL</div>
+                        <div class="text-amber-300 font-bold text-sm mt-1">asaad.morman@emergingdefensesolutions.com</div>
+                    </div>
+                    <div class="bg-gray-900/90 p-4 rounded-lg border border-gray-800">
+                        <div class="text-gray-400 font-mono text-[10px]">EXECUTIVE CELL PHONE</div>
+                        <div class="text-amber-300 font-bold text-sm mt-1">657-658-5859</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW 5: AUTHENTICATED ACADEMIC PORTAL -->
+        <div id="view-academic" class="role-section space-y-6">
+            <div class="glass p-6 rounded-xl border border-purple-500/40 bg-purple-950/20">
+                <h2 class="text-lg font-bold text-purple-300 mb-2"><i class="fas fa-university text-purple-400"></i> Academic & Doctoral Advisor Node</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                    <div class="bg-gray-900/90 p-4 rounded-lg border border-gray-800">
+                        <div class="text-gray-400 font-mono text-[10px]">RESEARCH & STTR EMAIL</div>
+                        <div class="text-purple-300 font-bold text-sm mt-1">asaad.morman@emergingdefensesolutions.com</div>
+                    </div>
+                    <div class="bg-gray-900/90 p-4 rounded-lg border border-gray-800">
+                        <div class="text-gray-400 font-mono text-[10px]">DIRECT RESEARCH CELL</div>
+                        <div class="text-purple-300 font-bold text-sm mt-1">657-658-5859</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW 6: FOUNDER & ADMIN CONSOLE -->
+        <div id="view-admin" class="role-section space-y-6">
+            <div class="glass p-6 rounded-xl border border-indigo-500/40 bg-indigo-950/30">
+                <h2 class="text-lg font-bold text-white mb-2"><i class="fas fa-user-shield text-indigo-400"></i> Root Founder Operations Console</h2>
+                <div class="text-xs text-gray-300 font-mono">Root Privileges Active. All 4 repositories connected and synced.</div>
+            </div>
+        </div>
+
+        <!-- SHARED LOCAL RAG CONSOLE -->
+        <section class="glass rounded-xl p-5 border border-indigo-500/20">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-md font-semibold text-white flex items-center gap-2">
+                    <i class="fas fa-terminal text-indigo-400"></i> Air-Gapped Local RAG Console
+                </h2>
+                <select id="ragMode" class="bg-gray-900 text-xs text-indigo-300 border border-indigo-500/30 rounded-lg px-3 py-1.5 font-mono focus:outline-none">
+                    <option value="defense">Mode: Defense Research (Llama-3)</option>
+                    <option value="academic">Mode: Academic Repo & Gemini Notes</option>
+                </select>
+            </div>
+
+            <div class="relative mb-3">
+                <textarea id="queryInput" rows="3" placeholder="Enter query (e.g., 'Check upcoming SBIR proposal requirements' or 'Summarize CS 8000 paper annotations')..."
+                    class="w-full bg-gray-950 border border-gray-800 rounded-lg p-3 text-sm text-gray-200 placeholder-gray-500 focus:outline-none focus:border-indigo-500 font-mono"></textarea>
+                <button onclick="executeQuery()" class="absolute bottom-3 right-3 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold px-4 py-1.5 rounded-md transition flex items-center gap-1.5">
+                    <i class="fas fa-paper-plane"></i> Execute Query
+                </button>
+            </div>
+
+            <div id="outputWindow" class="bg-gray-950 rounded-lg p-4 font-mono text-xs text-gray-300 border border-gray-900 min-h-[120px] max-h-[250px] overflow-y-auto">
+                <span class="text-gray-600">// Local PowerShell API response will stream here...</span>
             </div>
         </section>
 
-        <!-- Right Column: Academic Schedule & Media Feed (5 Cols) -->
-        <section class="lg:col-span-5 flex flex-col gap-6">
-
-            <!-- Ph.D. Academic Tracker -->
-            <div class="glass rounded-xl p-5">
-                <h2 class="text-md font-semibold text-white mb-3 flex items-center gap-2">
-                    <i class="fas fa-graduation-cap text-indigo-400"></i> Academic & Class Schedule
-                </h2>
-                <ul class="space-y-2 text-xs">
-                    <li class="bg-gray-900/60 p-2.5 rounded border border-gray-800/60 flex justify-between items-center">
-                        <div>
-                            <div class="font-semibold text-gray-200">Qualifying Exam Literature Review</div>
-                            <div class="text-gray-400">CS Doctoral Milestone</div>
-                        </div>
-                        <span class="text-indigo-400 font-mono">Due Fri</span>
-                    </li>
-                    <li class="bg-gray-900/60 p-2.5 rounded border border-gray-800/60 flex justify-between items-center">
-                        <div>
-                            <div class="font-semibold text-gray-200">Vector Search Ingestion Benchmark</div>
-                            <div class="text-gray-400">CS 8000 Lab Assignment</div>
-                        </div>
-                        <span class="text-indigo-400 font-mono">Completed</span>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- YouTube / Content Hub -->
-            <div class="glass rounded-xl p-5">
-                <h2 class="text-md font-semibold text-white mb-3 flex items-center gap-2">
-                    <i class="fab fa-youtube text-red-500"></i> Media Series & Content
-                </h2>
-                <div class="bg-gray-900/90 rounded-lg p-3 border border-gray-800 text-xs">
-                    <div class="font-semibold text-gray-200">Episode 01: Building Secure RAG Stacks for Defense</div>
-                    <p class="text-gray-400 mt-1">Behind the scenes of running air-gapped LLMs on local compute during my CS Ph.D.</p>
-                </div>
-            </div>
-
-        </section>
     </main>
 
+    <footer class="glass border-t border-gray-800 px-6 py-4 text-center text-xs text-gray-400 flex flex-wrap justify-between items-center">
+        <div>© 2026 Emerging Defense Solutions (EDS). All Rights Reserved.</div>
+        <div class="flex gap-4">
+            <button onclick="openPrivacyModal()" class="hover:text-indigo-400 transition">Privacy Policy & Encryption Specs</button>
+        </div>
+    </footer>
+
+    <!-- MODALS -->
+    <div id="donateModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-sm z-50 items-center justify-center p-4">
+        <div class="glass max-w-md w-full p-6 rounded-2xl border border-emerald-500/50 space-y-4">
+            <div class="flex justify-between items-center">
+                <h3 class="text-md font-bold text-emerald-300"><i class="fas fa-heart text-amber-400"></i> Research & Open-Source Donation</h3>
+                <button onclick="closeModals()" class="text-gray-400 hover:text-white"><i class="fas fa-times"></i></button>
+            </div>
+            <p class="text-xs text-gray-300">Your contributions fund doctoral research, SBIR prototyping, and air-gapped software development.</p>
+            <button onclick="processStripeDonation()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs py-2.5 rounded-lg transition shadow-lg flex items-center justify-center gap-2">
+                <i class="fas fa-lock"></i> Open Stripe Secure Donation Portal
+            </button>
+        </div>
+    </div>
+
+    <div id="privacyModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-sm z-50 items-center justify-center p-4">
+        <div class="glass max-w-2xl w-full p-6 rounded-2xl border border-indigo-500/40 space-y-4 max-h-[85vh] overflow-y-auto text-xs">
+            <div class="flex justify-between items-center border-b border-gray-800 pb-2">
+                <h3 class="text-md font-bold text-white"><i class="fas fa-lock text-indigo-400"></i> Data Privacy & Encryption Policy</h3>
+                <button onclick="closeModals()" class="text-gray-400 hover:text-white"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="space-y-3 text-gray-300 font-mono">
+                <div><strong class="text-indigo-400">1. Data Encryption in Transit:</strong> TLS 1.3 encryption across all HTTPS endpoints.</div>
+                <div><strong class="text-indigo-400">2. Data Encryption at Rest:</strong> AES-256 bit filesystem encryption for local vector stores.</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="loginModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-sm z-50 items-center justify-center p-4">
+        <div class="glass max-w-md w-full p-6 rounded-2xl border border-indigo-500/40 space-y-4">
+            <div class="flex justify-between items-center">
+                <h3 class="text-md font-bold text-white"><i class="fas fa-lock text-indigo-400"></i> Platform Authentication</h3>
+                <button onclick="closeModals()" class="text-gray-400 hover:text-white"><i class="fas fa-times"></i></button>
+            </div>
+            <input type="email" id="loginEmail" placeholder="User Email" class="w-full bg-gray-950 border border-gray-800 rounded p-2 text-xs text-gray-200" />
+            <input type="password" id="loginPass" placeholder="Password" class="w-full bg-gray-950 border border-gray-800 rounded p-2 text-xs text-gray-200" />
+            <button onclick="processLogin()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs py-2 rounded transition">Authenticate & Enter</button>
+        </div>
+    </div>
+
     <script>
+        const STRIPE_PAYMENT_LINKS = {
+            member_paid: 'https://buy.stripe.com/4gM28leW294M9FjbsR5os01',
+            business:    'https://buy.stripe.com/4gM7sF5lsa8Q04J9kJ5os02',
+            academic:    'https://buy.stripe.com/3cIbIVbJQep6dVz7cB5os03',
+            donation:    'https://donate.stripe.com/9B6bIVaFMep68BfgNb5os04'
+        };
+
+        function triggerStripeCheckout(tier) {
+            const targetUrl = STRIPE_PAYMENT_LINKS[tier];
+            if (targetUrl) window.location.href = targetUrl;
+        }
+
+        function processStripeDonation() {
+            window.location.href = STRIPE_PAYMENT_LINKS['donation'];
+        }
+
+        let userSession = { authenticated: false, role: 'visitor', email: '' };
+
+        function openDonateModal() { document.getElementById('donateModal').classList.add('modal-active'); }
+        function openLoginModal() { document.getElementById('loginModal').classList.add('modal-active'); }
+        function openPrivacyModal() { document.getElementById('privacyModal').classList.add('modal-active'); }
+        function closeModals() { document.querySelectorAll('.modal').forEach(m => m.classList.remove('modal-active')); }
+
+        function requestGateAccess(role) {
+            if (role === 'visitor') return switchView('visitor');
+            if (!userSession.authenticated) {
+                alert(`[ACCESS DENIED] '${role.toUpperCase()}' requires authentication.`);
+                openLoginModal();
+                return;
+            }
+            switchView(role);
+        }
+
+        function switchView(role) {
+            userSession.role = role;
+            document.getElementById('userRoleSelect').value = role;
+            document.querySelectorAll('.role-section').forEach(el => el.classList.remove('role-active'));
+            const activeView = document.getElementById(`view-${role}`);
+            if (activeView) activeView.classList.add('role-active');
+        }
+
+        function processLogin() {
+            const email = document.getElementById('loginEmail').value;
+            if (!email) return alert('Enter email.');
+            userSession.authenticated = true;
+            userSession.email = email;
+            document.getElementById('authStatusBadge').innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Authenticated (${email})`;
+            closeModals();
+            switchView('member_free');
+        }
+
         async function executeQuery() {
             const query = document.getElementById('queryInput').value;
             const mode = document.getElementById('ragMode').value;
             const output = document.getElementById('outputWindow');
-
             if (!query) return;
 
             output.innerHTML = `<span class="text-indigo-400">[Executing Query to Local PowerShell Gateway on Port 8443...]</span>`;
@@ -144,13 +444,9 @@
             try {
                 const response = await fetch('https://localhost:8443/api/v1/rag-query', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': 'Bearer DEFENSE_LOCAL_SECRET_KEY_2026'
-                    },
+                    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer DEFENSE_LOCAL_SECRET_KEY_2026' },
                     body: JSON.stringify({ query: query, mode: mode })
                 });
-
                 const data = await response.json();
                 output.innerHTML = `<span class="text-emerald-400">[STATUS ${data.status}]</span>\n\n${data.response}`;
             } catch (err) {
