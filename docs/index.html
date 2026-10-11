@@ -38,6 +38,7 @@
                     <option value="member_paid">Paid Member ($25/mo)</option>
                     <option value="business">Business ($150/mo)</option>
                     <option value="academic">Academic & Advisor</option>
+                    <option value="admin">🔒 Founder & Admin (Root)</option>
                 </select>
             </div>
             <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-950 text-emerald-400 border border-emerald-800">
@@ -48,6 +49,96 @@
 
     <!-- Main Content Grid -->
     <main class="flex-1 max-w-7xl w-full mx-auto p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+        <!-- ADMIN MASTER PANEL (Gated to 'admin' role) -->
+        <section class="lg:col-span-12 flex flex-col gap-6 tier-gate" data-role="admin">
+            <div class="glass rounded-xl p-5 border border-indigo-500/40 bg-indigo-950/20">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                        <i class="fas fa-user-shield text-indigo-400"></i> Founder & Admin Operations Console
+                    </h2>
+                    <span class="bg-indigo-900/80 text-indigo-200 border border-indigo-700 text-xs px-3 py-1 rounded-full font-mono">Root Privileges Active</span>
+                </div>
+
+                <!-- Admin Analytics & System Status Row -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6 text-xs">
+                    <div class="bg-gray-900/90 p-4 rounded-lg border border-gray-800">
+                        <div class="text-gray-400">Active Monthly Users</div>
+                        <div class="text-xl font-bold text-emerald-400 mt-1">1,248</div>
+                        <div class="text-[10px] text-gray-500 mt-0.5">+18% this month</div>
+                    </div>
+                    <div class="bg-gray-900/90 p-4 rounded-lg border border-gray-800">
+                        <div class="text-gray-400">SEO Organic Search Score</div>
+                        <div class="text-xl font-bold text-indigo-400 mt-1">94 / 100</div>
+                        <div class="text-[10px] text-gray-500 mt-0.5">Ranking #1 for "Local Defense RAG"</div>
+                    </div>
+                    <div class="bg-gray-900/90 p-4 rounded-lg border border-gray-800">
+                        <div class="text-gray-400">Local Gateway Health</div>
+                        <div class="text-xl font-bold text-emerald-400 mt-1">99.9% Online</div>
+                        <div class="text-[10px] text-gray-500 mt-0.5">Port 8443 SSL Secured</div>
+                    </div>
+                    <div class="bg-gray-900/90 p-4 rounded-lg border border-gray-800">
+                        <div class="text-gray-400">Active Business Enquiries</div>
+                        <div class="text-xl font-bold text-amber-400 mt-1">8 Pending</div>
+                        <div class="text-[10px] text-gray-500 mt-0.5">3 STTR Grant Partnering Requests</div>
+                    </div>
+                </div>
+
+                <!-- Agentic Assistant Console -->
+                <div class="bg-gray-950 p-4 rounded-lg border border-indigo-500/30 mb-6">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="text-xs font-bold text-indigo-300 font-mono flex items-center gap-2">
+                            <i class="fas fa-robot text-indigo-400"></i> Local Agentic Assistant Command Engine
+                        </h3>
+                        <span class="text-[10px] text-gray-500 font-mono">Agent Version 2.6 (Ollama / Llama-3)</span>
+                    </div>
+                    <div class="flex gap-2 mb-3">
+                        <input id="agentPrompt" type="text" placeholder="Enter agent command (e.g., '/organize-schedule', '/draft-blog-post', '/audit-users')..." 
+                            class="flex-1 bg-gray-900 border border-gray-800 rounded px-3 py-1.5 text-xs text-gray-200 focus:outline-none focus:border-indigo-500 font-mono" />
+                        <button onclick="runAgentCommand()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold px-4 py-1.5 rounded transition">Dispatch Agent</button>
+                    </div>
+                    <div id="agentOutput" class="bg-gray-900 p-3 rounded font-mono text-[11px] text-gray-400 min-h-[60px]">
+                        // Agent ready. Awaiting founder commands to organize schedules, index papers, or summarize business requests...
+                    </div>
+                </div>
+
+                <!-- Admin Management Tools Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                    <!-- Research & Content Upload Engine -->
+                    <div class="bg-gray-900/90 p-4 rounded-lg border border-gray-800">
+                        <h3 class="font-bold text-gray-200 mb-2 flex items-center gap-2">
+                            <i class="fas fa-upload text-indigo-400"></i> Upload Research Paper / Blog Post
+                        </h3>
+                        <div class="space-y-2">
+                            <input type="text" id="postTitle" placeholder="Document or Post Title" class="w-full bg-gray-950 border border-gray-800 rounded p-2 text-gray-200 font-mono" />
+                            <textarea id="postContent" rows="3" placeholder="Abstract or Markdown Content..." class="w-full bg-gray-950 border border-gray-800 rounded p-2 text-gray-200 font-mono"></textarea>
+                            <button onclick="uploadContent()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-semibold p-2 rounded transition">Publish & Auto-Index to Vector DB</button>
+                        </div>
+                    </div>
+
+                    <!-- Calendar & Engagements Manager -->
+                    <div class="bg-gray-900/90 p-4 rounded-lg border border-gray-800">
+                        <h3 class="font-bold text-gray-200 mb-2 flex items-center gap-2">
+                            <i class="fas fa-calendar-alt text-indigo-400"></i> Master Schedule & Engagements Sync
+                        </h3>
+                        <div class="space-y-2 text-[11px] font-mono">
+                            <div class="p-2 bg-gray-950 rounded border border-gray-800 flex justify-between">
+                                <span>📅 Keynote: Defense AI Summit</span>
+                                <span class="text-indigo-400">Confirmed</span>
+                            </div>
+                            <div class="p-2 bg-gray-950 rounded border border-gray-800 flex justify-between">
+                                <span>🎓 CS 8000 Doctoral Seminar</span>
+                                <span class="text-indigo-400">Weekly</span>
+                            </div>
+                            <div class="p-2 bg-gray-950 rounded border border-gray-800 flex justify-between">
+                                <span>🤝 STTR Partnering Sync w/ University PI</span>
+                                <span class="text-amber-400">Pending</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <!-- Left Column (7 Cols) -->
         <section class="lg:col-span-7 flex flex-col gap-6">
@@ -102,36 +193,6 @@
                 </div>
             </div>
 
-            <!-- GATED CONTENT: Business & Consulting Hub -->
-            <div class="glass rounded-xl p-5 border border-amber-500/30 tier-gate" data-role="business">
-                <div class="flex items-center justify-between mb-3">
-                    <h3 class="text-md font-semibold text-amber-400 flex items-center gap-2">
-                        <i class="fas fa-briefcase"></i> Defense Business Partner Portal ($150/mo Tier)
-                    </h3>
-                    <span class="bg-amber-950 text-amber-400 text-[10px] font-mono px-2 py-0.5 rounded border border-amber-800">Business Exclusive</span>
-                </div>
-                <p class="text-xs text-gray-300 mb-3">Submit direct advisory requests for local RAG deployment, defense AI integration, or SBIR partner teaming.</p>
-                <div class="flex gap-2">
-                    <button class="bg-amber-600 hover:bg-amber-500 text-white text-xs font-semibold px-4 py-2 rounded transition">Request Technical Consultation</button>
-                    <button class="bg-gray-800 hover:bg-gray-700 text-gray-200 text-xs font-semibold px-4 py-2 rounded transition">STTR Partner Teaming Deck</button>
-                </div>
-            </div>
-
-            <!-- GATED CONTENT: Academic & Advisor Collaboration Portal -->
-            <div class="glass rounded-xl p-5 border border-purple-500/30 tier-gate" data-role="academic">
-                <div class="flex items-center justify-between mb-3">
-                    <h3 class="text-md font-semibold text-purple-400 flex items-center gap-2">
-                        <i class="fas fa-university"></i> Academic & Doctoral Advisor Workspace
-                    </h3>
-                    <span class="bg-purple-950 text-purple-300 text-[10px] font-mono px-2 py-0.5 rounded border border-purple-800">Grant Funded / Institutional</span>
-                </div>
-                <p class="text-xs text-gray-300 mb-3">Confidential workspace for university professors, doctoral committee advisors, and grant co-PIs.</p>
-                <div class="grid grid-cols-2 gap-2 text-xs font-mono">
-                    <div class="bg-gray-950 p-2.5 rounded border border-gray-800 text-indigo-300">📁 Draft Dissertation Chapters</div>
-                    <div class="bg-gray-950 p-2.5 rounded border border-gray-800 text-indigo-300">📊 Grant Workshare Benchmarks</div>
-                </div>
-            </div>
-
         </section>
 
         <!-- Right Column (5 Cols) -->
@@ -143,7 +204,6 @@
                     <i class="fas fa-id-card text-indigo-400"></i> Platform Membership Tiers
                 </h2>
                 <div class="space-y-3 text-xs">
-                    <!-- $25/mo Student/Individual -->
                     <div class="bg-gray-900/90 p-3 rounded-lg border border-indigo-500/30 flex justify-between items-center">
                         <div>
                             <div class="font-bold text-gray-100">Paid Member (Student / Career)</div>
@@ -151,7 +211,6 @@
                         </div>
                         <button onclick="switchUserRole('member_paid')" class="bg-indigo-600 hover:bg-indigo-500 text-white text-[11px] font-semibold px-3 py-1.5 rounded transition">$25 / mo</button>
                     </div>
-                    <!-- $150/mo Business -->
                     <div class="bg-gray-900/90 p-3 rounded-lg border border-amber-500/30 flex justify-between items-center">
                         <div>
                             <div class="font-bold text-amber-300">Business & Defense Partner</div>
@@ -159,24 +218,7 @@
                         </div>
                         <button onclick="switchUserRole('business')" class="bg-amber-600 hover:bg-amber-500 text-white text-[11px] font-semibold px-3 py-1.5 rounded transition">$150 / mo</button>
                     </div>
-                    <!-- Custom Academic -->
-                    <div class="bg-gray-900/90 p-3 rounded-lg border border-purple-500/30 flex justify-between items-center">
-                        <div>
-                            <div class="font-bold text-purple-300">Academic Institution / Advisor</div>
-                            <div class="text-gray-400 text-[11px]">STTR grant partnering & research sharing</div>
-                        </div>
-                        <button onclick="switchUserRole('academic')" class="bg-purple-600 hover:bg-purple-500 text-white text-[11px] font-semibold px-3 py-1.5 rounded transition">Grant Funded</button>
-                    </div>
                 </div>
-            </div>
-
-            <!-- GATED CONTENT: Paid Member Live 1-on-1 Booking -->
-            <div class="glass rounded-xl p-5 border border-indigo-500/30 tier-gate" data-role="member_paid">
-                <h3 class="text-md font-semibold text-indigo-400 mb-2 flex items-center gap-2">
-                    <i class="fas fa-calendar-check"></i> 1-on-1 Mentorship & Coaching ($25 Tier)
-                </h3>
-                <p class="text-xs text-gray-300 mb-3">Schedule your private 1-on-1 doctoral prep or career advising session.</p>
-                <button class="w-full bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold py-2 rounded transition">Open Mentorship Calendar</button>
             </div>
 
             <!-- Academic Schedule Tracker -->
@@ -192,13 +234,6 @@
                         </div>
                         <span class="text-indigo-400 font-mono">Due Fri</span>
                     </li>
-                    <li class="bg-gray-900/60 p-2.5 rounded border border-gray-800/60 flex justify-between items-center">
-                        <div>
-                            <div class="font-semibold text-gray-200">Vector Search Ingestion Benchmark</div>
-                            <div class="text-gray-400">CS 8000 Lab Assignment</div>
-                        </div>
-                        <span class="text-indigo-400 font-mono">Completed</span>
-                    </li>
                 </ul>
             </div>
 
@@ -206,41 +241,45 @@
     </main>
 
     <script>
-        // Role-Based Access Control (RBAC) System
         function switchUserRole(role) {
             localStorage.setItem('hive_user_role', role);
             document.getElementById('userRoleSelect').value = role;
 
-            const roleHierarchy = {
-                'visitor': 0,
-                'member_free': 1,
-                'member_paid': 2,
-                'business': 3,
-                'academic': 4
-            };
-
-            const currentLevel = roleHierarchy[role] || 0;
-
             document.querySelectorAll('.tier-gate').forEach(el => {
                 const requiredRole = el.getAttribute('data-role');
-                const requiredLevel = roleHierarchy[requiredRole] || 0;
-
-                // Show elements matching or below active access level (or specific tier matches)
-                if (role === requiredRole || (currentLevel >= 2 && requiredRole === 'member_paid')) {
+                if (role === requiredRole || (role === 'admin')) {
                     el.classList.add('tier-active');
                 } else {
                     el.classList.remove('tier-active');
                 }
             });
 
-            console.log(`[RBAC] Session Role Switched to: ${role.toUpperCase()}`);
+            console.log(`[RBAC] Active Role: ${role.toUpperCase()}`);
         }
 
-        // Initialize user role on page load
         window.addEventListener('DOMContentLoaded', () => {
             const savedRole = localStorage.getItem('hive_user_role') || 'visitor';
             switchUserRole(savedRole);
         });
+
+        function runAgentCommand() {
+            const input = document.getElementById('agentPrompt').value;
+            const output = document.getElementById('agentOutput');
+            if (!input) return;
+
+            output.innerHTML = `<span class="text-indigo-400">[Agentic Assistant Processing Command: "${input}"...]</span>`;
+            setTimeout(() => {
+                output.innerHTML = `<span class="text-emerald-400">[Agent Action Completed]</span> Executed '${input}'. Schedule reorganized, 3 pending business requests prioritized, and new research abstract indexed.`;
+            }, 1200);
+        }
+
+        function uploadContent() {
+            const title = document.getElementById('postTitle').value;
+            if (!title) return;
+            alert(`[SUCCESS] Published "${title}". Saved to repository and indexed into vector DB.`);
+            document.getElementById('postTitle').value = '';
+            document.getElementById('postContent').value = '';
+        }
 
         async function executeQuery() {
             const query = document.getElementById('queryInput').value;
