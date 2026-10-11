@@ -12,6 +12,8 @@
         .accent-glow { box-shadow: 0 0 20px rgba(99, 102, 241, 0.25); }
         .role-section { display: none; }
         .role-active { display: block !important; }
+        .modal { display: none; }
+        .modal-active { display: flex !important; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -28,30 +30,36 @@
             </div>
         </div>
         
-        <!-- Role / View Selector Controls -->
+        <!-- Auth State & Role Switcher -->
         <div class="flex items-center gap-3">
+            <div id="authStatusBadge" class="text-xs font-mono px-2.5 py-1 rounded-full bg-red-950 text-red-400 border border-red-800 flex items-center gap-1">
+                <span class="w-2 h-2 rounded-full bg-red-500"></span> Unauthenticated
+            </div>
+
+            <!-- Role Selector Controls (Controlled by Logic Gate) -->
             <div class="flex items-center bg-gray-900 border border-gray-800 rounded-lg p-1 text-xs">
-                <span class="text-gray-400 px-2 font-mono text-[11px]">View Experience:</span>
-                <select id="userRoleSelect" onchange="switchUserRole(this.value)" class="bg-gray-950 text-indigo-300 font-bold px-2.5 py-1 rounded border border-indigo-500/30 focus:outline-none">
+                <span class="text-gray-400 px-2 font-mono text-[11px]">Active Gate:</span>
+                <select id="userRoleSelect" onchange="requestGateAccess(this.value)" class="bg-gray-950 text-indigo-300 font-bold px-2.5 py-1 rounded border border-indigo-500/30 focus:outline-none">
                     <option value="visitor">🌐 Public Visitor Homepage</option>
-                    <option value="member_free">👥 Member Dashboard (Free)</option>
-                    <option value="member_paid">⭐ Paid Member Portal ($25/mo)</option>
-                    <option value="business">💼 Business & Defense ($150/mo)</option>
-                    <option value="academic">🎓 Academic & Advisor Workspace</option>
-                    <option value="admin">🔒 Founder & Admin (Root)</option>
+                    <option value="member_free">👥 Member Portal (Free Login)</option>
+                    <option value="member_paid">⭐ Paid Member ($25/mo Tier)</option>
+                    <option value="business">💼 Business & Defense ($150/mo Tier)</option>
+                    <option value="academic">🎓 Academic & Advisor (Invite Code)</option>
+                    <option value="admin">🔒 Founder & Admin (Root Password)</option>
                 </select>
             </div>
-            <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-950 text-emerald-400 border border-emerald-800">
-                <span class="w-2 h-2 mr-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Local Enclave Active
-            </span>
+
+            <button id="authBtn" onclick="openLoginModal()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold px-4 py-1.5 rounded-lg transition accent-glow">
+                Log In
+            </button>
         </div>
     </header>
 
-    <!-- MAIN CONTAINER -->
+    <!-- MAIN CONTENT CONTAINER -->
     <main class="flex-1 max-w-7xl w-full mx-auto p-6 flex flex-col gap-8">
 
         <!-- =================================================================== -->
-        <!-- VIEW 1: PUBLIC VISITOR HOMEPAGE (Default View) -->
+        <!-- VIEW 1: PUBLIC VISITOR HOMEPAGE -->
         <!-- =================================================================== -->
         <div id="view-visitor" class="role-section space-y-8">
             
@@ -65,32 +73,29 @@
                         Documenting My Computer Science Ph.D. & Sovereign Defense AI Journey
                     </h1>
                     <p class="text-gray-300 text-sm leading-relaxed">
-                        Welcome to my public digital enclave. I am a Computer Science Doctoral Candidate specializing in air-gapped local AI architectures, secure Retrieval-Augmented Generation (RAG), and tactical edge compute. Through <strong class="text-indigo-400">Emerging Defense Solutions (EDS)</strong>, I bridge academic research with sovereign defense innovation, applying for SBIR/STTR grants and mentoring the next generation of engineers.
+                        Welcome to my public digital enclave. I am a Computer Science Doctoral Candidate specializing in air-gapped local AI architectures, secure Retrieval-Augmented Generation (RAG), and tactical edge compute.
                     </p>
-                    
-                    <!-- Social Links Bar -->
                     <div class="pt-2 flex flex-wrap items-center gap-3 text-xs">
-                        <a href="https://linkedin.com" target="_blank" class="bg-blue-600/20 hover:bg-blue-600/30 text-blue-400 px-3 py-1.5 rounded-lg border border-blue-500/30 font-semibold transition flex items-center gap-1.5">
-                            <i class="fab fa-linkedin"></i> LinkedIn
-                        </a>
-                        <a href="https://instagram.com" target="_blank" class="bg-pink-600/20 hover:bg-pink-600/30 text-pink-400 px-3 py-1.5 rounded-lg border border-pink-500/30 font-semibold transition flex items-center gap-1.5">
-                            <i class="fab fa-instagram"></i> Instagram
-                        </a>
-                        <a href="https://facebook.com" target="_blank" class="bg-blue-800/20 hover:bg-blue-800/30 text-blue-300 px-3 py-1.5 rounded-lg border border-blue-700/30 font-semibold transition flex items-center gap-1.5">
-                            <i class="fab fa-facebook"></i> Facebook
-                        </a>
-                        <button onclick="switchUserRole('member_free')" class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-1.5 rounded-lg font-bold transition flex items-center gap-1.5 accent-glow">
-                            <i class="fas fa-users"></i> Join The Hive Network (Community Forum)
-                        </button>
+                        <a href="https://linkedin.com" target="_blank" class="bg-blue-600/20 hover:bg-blue-600/30 text-blue-400 px-3 py-1.5 rounded-lg border border-blue-500/30 font-semibold transition"><i class="fab fa-linkedin"></i> LinkedIn</a>
+                        <a href="https://instagram.com" target="_blank" class="bg-pink-600/20 hover:bg-pink-600/30 text-pink-400 px-3 py-1.5 rounded-lg border border-pink-500/30 font-semibold transition"><i class="fab fa-instagram"></i> Instagram</a>
+                        <a href="https://facebook.com" target="_blank" class="bg-blue-800/20 hover:bg-blue-800/30 text-blue-300 px-3 py-1.5 rounded-lg border border-blue-700/30 font-semibold transition"><i class="fab fa-facebook"></i> Facebook</a>
                     </div>
                 </div>
             </section>
 
-            <!-- Membership Tiers Overview Grid -->
-            <section class="space-y-4">
+            <!-- Flexible Membership Plans Selector (Monthly, Quarterly, Yearly, Pay-As-You-Go) -->
+            <section class="space-y-6">
                 <div class="text-center max-w-2xl mx-auto">
-                    <h2 class="text-xl font-bold text-white">Platform Membership Tiers & Access</h2>
-                    <p class="text-gray-400 text-xs mt-1">Select a tier to engage with research, receive 1-on-1 mentorship, or collaborate on SBIR grant proposals.</p>
+                    <h2 class="text-xl font-bold text-white">Choose Your Membership & Subscription Interval</h2>
+                    <p class="text-gray-400 text-xs mt-1">Direct payment processing connected via Stripe. Cancel or delete your account data at any time.</p>
+                    
+                    <!-- Billing Interval Switcher Buttons -->
+                    <div class="inline-flex bg-gray-900 p-1 rounded-lg border border-gray-800 mt-4 text-xs font-mono">
+                        <button onclick="setBillingCycle('monthly')" id="btn-monthly" class="px-3 py-1 rounded bg-indigo-600 text-white font-bold">Monthly</button>
+                        <button onclick="setBillingCycle('quarterly')" id="btn-quarterly" class="px-3 py-1 rounded text-gray-400 hover:text-white">Quarterly (10% Off)</button>
+                        <button onclick="setBillingCycle('yearly')" id="btn-yearly" class="px-3 py-1 rounded text-gray-400 hover:text-white">Yearly (20% Off)</button>
+                        <button onclick="setBillingCycle('payg')" id="btn-payg" class="px-3 py-1 rounded text-gray-400 hover:text-white">Pay-As-You-Go</button>
+                    </div>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
@@ -100,30 +105,27 @@
                         <div>
                             <div class="text-gray-400 font-mono text-[10px]">TIER 1</div>
                             <h3 class="text-md font-bold text-white mt-1">Free Member</h3>
-                            <div class="text-xl font-extrabold text-indigo-400 mt-2">$0 <span class="text-xs font-normal text-gray-400">/ forever</span></div>
+                            <div class="text-xl font-extrabold text-indigo-400 mt-2">$0</div>
                             <ul class="mt-4 space-y-2 text-gray-300 text-[11px]">
-                                <li><i class="fas fa-check text-emerald-400 mr-1.5"></i> Access to member-only video archive</li>
-                                <li><i class="fas fa-check text-emerald-400 mr-1.5"></i> "The Hive" Community Discussion Forum</li>
-                                <li><i class="fas fa-check text-emerald-400 mr-1.5"></i> Public research paper summaries</li>
+                                <li><i class="fas fa-check text-emerald-400 mr-1.5"></i> Community Forum Access</li>
+                                <li><i class="fas fa-check text-emerald-400 mr-1.5"></i> Public Vlog Episodes</li>
                             </ul>
                         </div>
-                        <button onclick="switchUserRole('member_free')" class="w-full mt-6 bg-gray-800 hover:bg-gray-700 text-white font-semibold py-2 rounded transition">Explore Free View</button>
+                        <button onclick="openLoginModal()" class="w-full mt-6 bg-gray-800 hover:bg-gray-700 text-white font-semibold py-2 rounded transition">Create Free Account</button>
                     </div>
 
-                    <!-- $25/mo Paid Student & Career Tier -->
-                    <div class="glass p-5 rounded-xl border border-indigo-500/50 relative flex flex-col justify-between accent-glow">
-                        <span class="absolute -top-2.5 right-4 bg-indigo-600 text-white text-[9px] font-bold px-2 py-0.5 rounded-full">MOST POPULAR</span>
+                    <!-- $25/mo Paid Member -->
+                    <div class="glass p-5 rounded-xl border border-indigo-500/50 flex flex-col justify-between accent-glow">
                         <div>
                             <div class="text-indigo-400 font-mono text-[10px]">TIER 2</div>
                             <h3 class="text-md font-bold text-white mt-1">Paid Member (Student/Career)</h3>
-                            <div class="text-xl font-extrabold text-indigo-300 mt-2">$25 <span class="text-xs font-normal text-gray-400">/ month</span></div>
+                            <div id="price-paid" class="text-xl font-extrabold text-indigo-300 mt-2">$25 / mo</div>
                             <ul class="mt-4 space-y-2 text-gray-300 text-[11px]">
                                 <li><i class="fas fa-check text-emerald-400 mr-1.5"></i> 1-on-1 Doctoral & Career Coaching</li>
-                                <li><i class="fas fa-check text-emerald-400 mr-1.5"></i> Invitations to live Q&A & Keynotes</li>
-                                <li><i class="fas fa-check text-emerald-400 mr-1.5"></i> Direct access to code repos & notes</li>
+                                <li><i class="fas fa-check text-emerald-400 mr-1.5"></i> Live Stream Keynotes & Q&A</li>
                             </ul>
                         </div>
-                        <button onclick="switchUserRole('member_paid')" class="w-full mt-6 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-2 rounded transition">Explore $25 View</button>
+                        <button onclick="triggerStripeCheckout('member_paid')" class="w-full mt-6 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-2 rounded transition">Subscribe Now</button>
                     </div>
 
                     <!-- $150/mo Business Tier -->
@@ -131,29 +133,24 @@
                         <div>
                             <div class="text-amber-400 font-mono text-[10px]">TIER 3</div>
                             <h3 class="text-md font-bold text-amber-300 mt-1">Business & Defense Partner</h3>
-                            <div class="text-xl font-extrabold text-amber-400 mt-2">$150 <span class="text-xs font-normal text-gray-400">/ month</span></div>
+                            <div id="price-business" class="text-xl font-extrabold text-amber-400 mt-2">$150 / mo</div>
                             <ul class="mt-4 space-y-2 text-gray-300 text-[11px]">
-                                <li><i class="fas fa-check text-emerald-400 mr-1.5"></i> On-Demand Technical Consultations</li>
-                                <li><i class="fas fa-check text-emerald-400 mr-1.5"></i> Local RAG & Edge AI Integration Support</li>
-                                <li><i class="fas fa-check text-emerald-400 mr-1.5"></i> Defense SBIR Teaming Channels</li>
+                                <li><i class="fas fa-check text-emerald-400 mr-1.5"></i> Technical Advisory Requests</li>
+                                <li><i class="fas fa-check text-emerald-400 mr-1.5"></i> Local RAG Defense Integration</li>
                             </ul>
                         </div>
-                        <button onclick="switchUserRole('business')" class="w-full mt-6 bg-amber-600 hover:bg-amber-500 text-white font-semibold py-2 rounded transition">Explore Business View</button>
+                        <button onclick="triggerStripeCheckout('business')" class="w-full mt-6 bg-amber-600 hover:bg-amber-500 text-white font-semibold py-2 rounded transition">Partner Subscription</button>
                     </div>
 
-                    <!-- Academic Tier -->
+                    <!-- Academic Collaboration Tier -->
                     <div class="glass p-5 rounded-xl border border-purple-500/40 flex flex-col justify-between">
                         <div>
                             <div class="text-purple-400 font-mono text-[10px]">TIER 4</div>
                             <h3 class="text-md font-bold text-purple-300 mt-1">Academic & Advisor</h3>
                             <div class="text-xl font-extrabold text-purple-400 mt-2">Grant Funded</div>
-                            <ul class="mt-4 space-y-2 text-gray-300 text-[11px]">
-                                <li><i class="fas fa-check text-emerald-400 mr-1.5"></i> STTR Proposal Collaboration Workspace</li>
-                                <li><i class="fas fa-check text-emerald-400 mr-1.5"></i> Confidential Committee Review Docs</li>
-                                <li><i class="fas fa-check text-emerald-400 mr-1.5"></i> Shared Research Datasets</li>
-                            </ul>
+                            <p class="text-gray-400 text-[11px] mt-2">Requires Invitation Code + Executed NDA to prevent IP theft.</p>
                         </div>
-                        <button onclick="switchUserRole('academic')" class="w-full mt-6 bg-purple-600 hover:bg-purple-500 text-white font-semibold py-2 rounded transition">Explore Academic View</button>
+                        <button onclick="openInviteModal()" class="w-full mt-6 bg-purple-600 hover:bg-purple-500 text-white font-semibold py-2 rounded transition">Enter Invite Code</button>
                     </div>
 
                 </div>
@@ -161,275 +158,259 @@
         </div>
 
         <!-- =================================================================== -->
-        <!-- VIEW 2: FREE MEMBER PORTAL & COMMUNITY NETWORK -->
+        <!-- VIEW 2: AUTHENTICATED MEMBER PORTAL -->
         <!-- =================================================================== -->
         <div id="view-member_free" class="role-section space-y-6">
             <div class="glass p-6 rounded-xl border border-indigo-500/30">
-                <div class="flex justify-between items-center mb-4">
-                    <div>
-                        <h2 class="text-lg font-bold text-white flex items-center gap-2">
-                            <i class="fas fa-comments text-indigo-400"></i> The Hive Network (Member Community Forum)
-                        </h2>
-                        <p class="text-xs text-gray-400">Public research discussions, doctoral student networking, and Q&A.</p>
-                    </div>
-                    <span class="px-2.5 py-1 rounded bg-indigo-950 text-indigo-300 border border-indigo-800 text-xs font-mono">Free Member View</span>
-                </div>
-
-                <!-- Live Community Chat Box -->
-                <div class="bg-gray-950 p-4 rounded-lg border border-gray-800 space-y-3 mb-4 max-h-[300px] overflow-y-auto text-xs">
-                    <div class="p-2.5 bg-gray-900 rounded border border-gray-800">
-                        <span class="font-bold text-indigo-400">@Alex_CS_Grad:</span>
-                        <span class="text-gray-300 ml-2">What vector embedding model are you using locally for the defense stack?</span>
-                    </div>
-                    <div class="p-2.5 bg-gray-900 rounded border border-gray-800">
-                        <span class="font-bold text-emerald-400">@Founder_Asaad (Admin):</span>
-                        <span class="text-gray-300 ml-2">Currently running BAAI/bge-large-en-v1.5 locally via Hugging Face inside the PowerShell enclave!</span>
-                    </div>
-                </div>
-
-                <div class="flex gap-2">
-                    <input type="text" id="communityMsg" placeholder="Post a message or question to the member community..." class="flex-1 bg-gray-950 border border-gray-800 rounded px-3 py-2 text-xs text-gray-200 focus:outline-none focus:border-indigo-500" />
-                    <button onclick="postCommunityMsg()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold px-4 py-2 rounded transition">Post Message</button>
+                <h2 class="text-lg font-bold text-white mb-2"><i class="fas fa-users text-indigo-400"></i> The Hive Network (Community Forum)</h2>
+                <p class="text-xs text-gray-400 mb-4">Logged-in community discussions, research collaboration, and peer mentoring.</p>
+                <div class="bg-gray-950 p-4 rounded-lg border border-gray-800 space-y-2 text-xs font-mono mb-4">
+                    <div class="text-indigo-400">@System: Welcome to the authenticated member enclave.</div>
                 </div>
             </div>
         </div>
 
         <!-- =================================================================== -->
-        <!-- VIEW 3: PAID MEMBER PORTAL ($25/mo) -->
+        <!-- VIEW 3: AUTHENTICATED PAID MEMBER PORTAL ($25/mo) -->
         <!-- =================================================================== -->
         <div id="view-member_paid" class="role-section space-y-6">
-            <div class="glass p-6 rounded-xl border border-indigo-500/50 bg-indigo-950/10">
-                <div class="flex justify-between items-center mb-4">
-                    <div>
-                        <h2 class="text-lg font-bold text-indigo-300 flex items-center gap-2">
-                            <i class="fas fa-calendar-check text-indigo-400"></i> Paid Member 1-on-1 Coaching & Masterclasses ($25/mo)
-                        </h2>
-                        <p class="text-xs text-gray-300">Book private coaching sessions, access raw code repos, and join live research streams.</p>
-                    </div>
-                    <span class="px-2.5 py-1 rounded bg-indigo-900 text-indigo-200 border border-indigo-700 text-xs font-mono font-bold">$25/mo Subscriber</span>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-                    <div class="bg-gray-900/90 p-4 rounded-lg border border-gray-800">
-                        <h3 class="font-bold text-white mb-2">Book 1-on-1 Mentorship Session</h3>
-                        <p class="text-gray-400 mb-3">Schedule 30 minutes to discuss CS doctoral applications, research strategy, or career growth.</p>
-                        <button class="bg-indigo-600 hover:bg-indigo-500 text-white font-semibold px-4 py-2 rounded transition">Open Booking Calendar</button>
-                    </div>
-                    <div class="bg-gray-900/90 p-4 rounded-lg border border-gray-800">
-                        <h3 class="font-bold text-white mb-2">Exclusive Code & Research Repository</h3>
-                        <p class="text-gray-400 mb-3">Download complete PowerShell local RAG gateways and Gemini notebook templates.</p>
-                        <button class="bg-gray-800 hover:bg-gray-700 text-indigo-300 font-semibold px-4 py-2 rounded transition">Access Member GitHub Repos</button>
-                    </div>
-                </div>
+            <div class="glass p-6 rounded-xl border border-indigo-500/50 bg-indigo-950/20">
+                <h2 class="text-lg font-bold text-indigo-300 mb-2"><i class="fas fa-star text-indigo-400"></i> Paid Member Portal ($25/mo Tier)</h2>
+                <p class="text-xs text-gray-300 mb-4">Exclusive 1-on-1 scheduling calendar and doctoral research notes.</p>
+                <button class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold px-4 py-2 rounded">Open 1-on-1 Mentorship Calendar</button>
             </div>
         </div>
 
         <!-- =================================================================== -->
-        <!-- VIEW 4: BUSINESS & DEFENSE PARTNER PORTAL ($150/mo) -->
+        <!-- VIEW 4: AUTHENTICATED BUSINESS PORTAL ($150/mo) -->
         <!-- =================================================================== -->
         <div id="view-business" class="role-section space-y-6">
-            <div class="glass p-6 rounded-xl border border-amber-500/40 bg-amber-950/10">
-                <div class="flex justify-between items-center mb-4">
-                    <div>
-                        <h2 class="text-lg font-bold text-amber-300 flex items-center gap-2">
-                            <i class="fas fa-briefcase text-amber-400"></i> Defense Business & Advisory Partner Portal ($150/mo)
-                        </h2>
-                        <p class="text-xs text-gray-300">Technical consultations, local RAG defense integrations, and SBIR co-bidding.</p>
-                    </div>
-                    <span class="px-2.5 py-1 rounded bg-amber-950 text-amber-300 border border-amber-800 text-xs font-mono font-bold">$150/mo Partner</span>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-                    <div class="bg-gray-900/90 p-4 rounded-lg border border-gray-800">
-                        <h3 class="font-bold text-amber-300 mb-2">Request Technical Advisory</h3>
-                        <p class="text-gray-400 mb-3">Submit direct requests for air-gapped local AI enclave architecture reviews and consulting.</p>
-                        <button class="bg-amber-600 hover:bg-amber-500 text-white font-semibold px-4 py-2 rounded transition">Submit Advisory Request</button>
-                    </div>
-                    <div class="bg-gray-900/90 p-4 rounded-lg border border-gray-800">
-                        <h3 class="font-bold text-amber-300 mb-2">SBIR Teaming & Commercialization</h3>
-                        <p class="text-gray-400 mb-3">Collaborate with Emerging Defense Solutions (EDS) on dual-use defense innovation calls.</p>
-                        <button class="bg-gray-800 hover:bg-gray-700 text-amber-300 font-semibold px-4 py-2 rounded transition">View Active Bidding Topics</button>
-                    </div>
-                </div>
+            <div class="glass p-6 rounded-xl border border-amber-500/40 bg-amber-950/20">
+                <h2 class="text-lg font-bold text-amber-300 mb-2"><i class="fas fa-briefcase text-amber-400"></i> Defense Business Partner Portal ($150/mo Tier)</h2>
+                <p class="text-xs text-gray-300 mb-4">Submit technical advisory requests and review SBIR co-bidding pipelines.</p>
+                <button class="bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold px-4 py-2 rounded">Submit Advisory Ticket</button>
             </div>
         </div>
 
         <!-- =================================================================== -->
-        <!-- VIEW 5: ACADEMIC & DOCTORAL ADVISOR WORKSPACE -->
+        <!-- VIEW 5: AUTHENTICATED ACADEMIC WORKSPACE (Invitation & NDA Protected) -->
         <!-- =================================================================== -->
         <div id="view-academic" class="role-section space-y-6">
-            <div class="glass p-6 rounded-xl border border-purple-500/40 bg-purple-950/10">
+            <div class="glass p-6 rounded-xl border border-purple-500/40 bg-purple-950/20">
                 <div class="flex justify-between items-center mb-4">
-                    <div>
-                        <h2 class="text-lg font-bold text-purple-300 flex items-center gap-2">
-                            <i class="fas fa-university text-purple-400"></i> Academic & Doctoral Advisor Collaboration Workspace
-                        </h2>
-                        <p class="text-xs text-gray-300">Confidential workspace for university PIs, professors, and committee members.</p>
-                    </div>
-                    <span class="px-2.5 py-1 rounded bg-purple-950 text-purple-300 border border-purple-800 text-xs font-mono font-bold">Grant-Funded Partner</span>
+                    <h2 class="text-lg font-bold text-purple-300"><i class="fas fa-university text-purple-400"></i> Academic Research Collaboration Portal</h2>
+                    <span class="bg-purple-950 text-purple-300 border border-purple-800 text-[10px] font-mono px-2.5 py-1 rounded">NDA Signed & Audit Logged</span>
                 </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-                    <div class="bg-gray-900/90 p-4 rounded-lg border border-gray-800">
-                        <h3 class="font-bold text-purple-300 mb-2">STTR Grant Collaboration Folder</h3>
-                        <p class="text-gray-400 mb-3">Review workshare agreements, university technology transfer, and joint proposals.</p>
-                        <button class="bg-purple-600 hover:bg-purple-500 text-white font-semibold px-4 py-2 rounded transition">Open STTR Proposal Workspace</button>
-                    </div>
-                    <div class="bg-gray-900/90 p-4 rounded-lg border border-gray-800">
-                        <h3 class="font-bold text-purple-300 mb-2">Dissertation & Benchmark Logs</h3>
-                        <p class="text-gray-400 mb-3">Access raw experiment logs, benchmark performance charts, and paper drafts.</p>
-                        <button class="bg-gray-800 hover:bg-gray-700 text-purple-300 font-semibold px-4 py-2 rounded transition">View Dissertation Benchmarks</button>
-                    </div>
+                <p class="text-xs text-gray-300 mb-4">Confidential workspace for STTR grant proposal drafts, committee reviews, and dataset benchmarks.</p>
+                <div class="grid grid-cols-2 gap-4 text-xs font-mono">
+                    <div class="bg-gray-950 p-3 rounded border border-gray-800 text-purple-300">📁 STTR Phase I Joint Workshare Drafts.pdf</div>
+                    <div class="bg-gray-950 p-3 rounded border border-gray-800 text-purple-300">📊 Dissertation Benchmark Logs.csv</div>
                 </div>
             </div>
         </div>
 
         <!-- =================================================================== -->
-        <!-- VIEW 6: FOUNDER & ADMIN OPERATIONS CONSOLE -->
+        <!-- VIEW 6: FOUNDER & ADMIN CONSOLE -->
         <!-- =================================================================== -->
         <div id="view-admin" class="role-section space-y-6">
-            <div class="glass rounded-xl p-6 border border-indigo-500/40 bg-indigo-950/20">
-                <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-lg font-bold text-white flex items-center gap-2">
-                        <i class="fas fa-user-shield text-indigo-400"></i> Founder & Admin Operations Console
-                    </h2>
-                    <span class="bg-indigo-900/80 text-indigo-200 border border-indigo-700 text-xs px-3 py-1 rounded-full font-mono">Root Privileges Active</span>
-                </div>
-
-                <!-- Admin Analytics Row -->
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6 text-xs">
-                    <div class="bg-gray-900/90 p-4 rounded-lg border border-gray-800">
-                        <div class="text-gray-400">Active Monthly Users</div>
-                        <div class="text-xl font-bold text-emerald-400 mt-1">1,248</div>
-                    </div>
-                    <div class="bg-gray-900/90 p-4 rounded-lg border border-gray-800">
-                        <div class="text-gray-400">SEO Organic Search Score</div>
-                        <div class="text-xl font-bold text-indigo-400 mt-1">94 / 100</div>
-                    </div>
-                    <div class="bg-gray-900/90 p-4 rounded-lg border border-gray-800">
-                        <div class="text-gray-400">Local Gateway Health</div>
-                        <div class="text-xl font-bold text-emerald-400 mt-1">99.9% Online</div>
-                    </div>
-                    <div class="bg-gray-900/90 p-4 rounded-lg border border-gray-800">
-                        <div class="text-gray-400">Active Business Enquiries</div>
-                        <div class="text-xl font-bold text-amber-400 mt-1">8 Pending</div>
-                    </div>
-                </div>
-
-                <!-- Agentic Assistant Console -->
-                <div class="bg-gray-950 p-4 rounded-lg border border-indigo-500/30 mb-4">
-                    <div class="flex items-center justify-between mb-2">
-                        <h3 class="text-xs font-bold text-indigo-300 font-mono flex items-center gap-2">
-                            <i class="fas fa-robot text-indigo-400"></i> Local Agentic Assistant Command Engine
-                        </h3>
-                    </div>
-                    <div class="flex gap-2 mb-3">
-                        <input id="agentPrompt" type="text" placeholder="Enter command (e.g., '/organize-schedule', '/draft-blog-post')..." 
-                            class="flex-1 bg-gray-900 border border-gray-800 rounded px-3 py-1.5 text-xs text-gray-200 focus:outline-none focus:border-indigo-500 font-mono" />
-                        <button onclick="runAgentCommand()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold px-4 py-1.5 rounded transition">Dispatch Agent</button>
-                    </div>
-                    <div id="agentOutput" class="bg-gray-900 p-3 rounded font-mono text-[11px] text-gray-400 min-h-[50px]">
-                        // Agent ready. Awaiting founder commands...
-                    </div>
-                </div>
+            <div class="glass p-6 rounded-xl border border-indigo-500/40 bg-indigo-950/30">
+                <h2 class="text-lg font-bold text-white mb-2"><i class="fas fa-user-shield text-indigo-400"></i> Root Founder Console</h2>
+                <p class="text-xs text-gray-400 mb-4">Full telemetry, invitation code generator, and system controls.</p>
             </div>
         </div>
 
-        <!-- =================================================================== -->
-        <!-- SHARED SECTION: LOCAL AIR-GAPPED RAG CONSOLE (Visible across all tiers) -->
-        <!-- =================================================================== -->
-        <section class="glass rounded-xl p-5 border border-indigo-500/20">
-            <div class="flex justify-between items-center mb-4">
-                <h2 class="text-md font-semibold text-white flex items-center gap-2">
-                    <i class="fas fa-terminal text-indigo-400"></i> Air-Gapped Local RAG Console
-                </h2>
-                <select id="ragMode" class="bg-gray-900 text-xs text-indigo-300 border border-indigo-500/30 rounded-lg px-3 py-1.5 font-mono focus:outline-none">
-                    <option value="defense">Mode: Defense Research (Llama-3)</option>
-                    <option value="academic">Mode: Academic Repo & Gemini Notes</option>
-                </select>
-            </div>
-
-            <div class="relative mb-3">
-                <textarea id="queryInput" rows="3" placeholder="Enter query (e.g., 'Check upcoming SBIR proposal requirements' or 'Summarize CS 8000 paper annotations')..."
-                    class="w-full bg-gray-950 border border-gray-800 rounded-lg p-3 text-sm text-gray-200 placeholder-gray-500 focus:outline-none focus:border-indigo-500 font-mono"></textarea>
-                <button onclick="executeQuery()" class="absolute bottom-3 right-3 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold px-4 py-1.5 rounded-md transition flex items-center gap-1.5">
-                    <i class="fas fa-paper-plane"></i> Execute Query
-                </button>
-            </div>
-
-            <div id="outputWindow" class="bg-gray-950 rounded-lg p-4 font-mono text-xs text-gray-300 border border-gray-900 min-h-[120px] max-h-[250px] overflow-y-auto">
-                <span class="text-gray-600">// Local PowerShell API response will stream here...</span>
+        <!-- USER ACCOUNT & DATA MANAGEMENT PANEL (GDPR Self-Service) -->
+        <section id="userSettingsPanel" class="glass rounded-xl p-5 border border-gray-800 hidden">
+            <h3 class="text-sm font-bold text-white mb-2 flex items-center gap-2"><i class="fas fa-cog text-gray-400"></i> Account Settings & Data Management</h3>
+            <div class="flex gap-4 text-xs">
+                <button onclick="cancelSubscription()" class="bg-amber-600/20 hover:bg-amber-600/30 text-amber-300 border border-amber-800 px-3 py-1.5 rounded">Cancel Subscription</button>
+                <button onclick="deleteAccountData()" class="bg-red-600/20 hover:bg-red-600/30 text-red-400 border border-red-800 px-3 py-1.5 rounded">Permanently Delete My Account & Data</button>
             </div>
         </section>
 
     </main>
 
+    <!-- =================================================================== -->
+    <!-- MODALS: LOGIN, INVITATION CODE & LEGAL NDA -->
+    <!-- =================================================================== -->
+
+    <!-- Modal 1: Login Gate -->
+    <div id="loginModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-sm z-50 items-center justify-center p-4">
+        <div class="glass max-w-md w-full p-6 rounded-2xl border border-indigo-500/40 space-y-4">
+            <div class="flex justify-between items-center">
+                <h3 class="text-md font-bold text-white"><i class="fas fa-lock text-indigo-400"></i> Platform Authentication</h3>
+                <button onclick="closeModals()" class="text-gray-400 hover:text-white"><i class="fas fa-times"></i></button>
+            </div>
+            <p class="text-xs text-gray-300">Enter your credentials to authenticate and access your tier's dashboard.</p>
+            <input type="email" id="loginEmail" placeholder="User Email (e.g., student@university.edu)" class="w-full bg-gray-950 border border-gray-800 rounded p-2 text-xs text-gray-200 focus:outline-none focus:border-indigo-500" />
+            <input type="password" id="loginPass" placeholder="Password" class="w-full bg-gray-950 border border-gray-800 rounded p-2 text-xs text-gray-200 focus:outline-none focus:border-indigo-500" />
+            <button onclick="processLogin()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs py-2 rounded transition">Authenticate & Enter</button>
+        </div>
+    </div>
+
+    <!-- Modal 2: Academic Invitation Code & Legal NDA -->
+    <div id="inviteModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-sm z-50 items-center justify-center p-4">
+        <div class="glass max-w-lg w-full p-6 rounded-2xl border border-purple-500/50 space-y-4">
+            <div class="flex justify-between items-center">
+                <h3 class="text-md font-bold text-purple-300"><i class="fas fa-shield-alt text-purple-400"></i> Academic Collaboration & Legal Gate</h3>
+                <button onclick="closeModals()" class="text-gray-400 hover:text-white"><i class="fas fa-times"></i></button>
+            </div>
+            <p class="text-xs text-gray-300">To prevent IP theft, academic collaboration requires an authorized Invitation Code, Non-Disclosure Agreement (NDA), and Non-Compete execution.</p>
+            
+            <input type="text" id="inviteCode" placeholder="Enter 8-Character Invitation Code (e.g., STTR-9042)" class="w-full bg-gray-950 border border-purple-500/30 rounded p-2 text-xs text-purple-300 font-mono uppercase focus:outline-none" />
+
+            <!-- Legal Agreements Box -->
+            <div class="bg-gray-950 p-3 rounded border border-gray-800 text-[11px] text-gray-400 space-y-2 max-h-[120px] overflow-y-auto font-mono">
+                <div><strong>CONFIDENTIALITY & NON-COMPETE AGREEMENT:</strong> All research, code, draft STTR proposals, and datasets accessed on hive.eds-360.com are proprietary to Emerging Defense Solutions and the Author. Unauthorized reproduction or dissemination is strictly prohibited.</div>
+            </div>
+
+            <label class="flex items-center gap-2 text-xs text-gray-300">
+                <input type="checkbox" id="ndaConsent" class="rounded border-gray-800 bg-gray-950 text-purple-600 focus:ring-0" />
+                I agree to the NDA and Intellectual Property Non-Compete terms.
+            </label>
+
+            <button onclick="verifyAcademicInvite()" class="w-full bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs py-2 rounded transition">Verify Code & Sign Agreement</button>
+        </div>
+    </div>
+
     <script>
-        // Switch between role views cleanly
-        function switchUserRole(role) {
-            localStorage.setItem('hive_user_role', role);
-            document.getElementById('userRoleSelect').value = role;
+        // AUTHENTICATION & SESSION STATE MANAGEMENT
+        let userSession = {
+            authenticated: false,
+            role: 'visitor',
+            email: '',
+            ndaSigned: false
+        };
 
-            // Hide all views first
-            document.querySelectorAll('.role-section').forEach(el => {
-                el.classList.remove('role-active');
+        let currentBillingCycle = 'monthly';
+
+        function setBillingCycle(cycle) {
+            currentBillingCycle = cycle;
+            document.querySelectorAll('#btn-monthly, #btn-quarterly, #btn-yearly, #btn-payg').forEach(btn => {
+                btn.className = 'px-3 py-1 rounded text-gray-400 hover:text-white';
             });
+            document.getElementById(`btn-${cycle}`).className = 'px-3 py-1 rounded bg-indigo-600 text-white font-bold';
 
-            // Activate chosen view
-            const activeView = document.getElementById(`view-${role}`);
-            if (activeView) {
-                activeView.classList.add('role-active');
+            // Price multipliers for display
+            if (cycle === 'quarterly') {
+                document.getElementById('price-paid').innerText = '$67.50 / quarter';
+                document.getElementById('price-business').innerText = '$405 / quarter';
+            } else if (cycle === 'yearly') {
+                document.getElementById('price-paid').innerText = '$240 / year';
+                document.getElementById('price-business').innerText = '$1,440 / year';
+            } else if (cycle === 'payg') {
+                document.getElementById('price-paid').innerText = '$10 / session';
+                document.getElementById('price-business').innerText = '$50 / consultation';
+            } else {
+                document.getElementById('price-paid').innerText = '$25 / mo';
+                document.getElementById('price-business').innerText = '$150 / mo';
+            }
+        }
+
+        // LOGIC GATE CONTROLLER
+        function requestGateAccess(requestedRole) {
+            if (requestedRole === 'visitor') {
+                switchView('visitor');
+                return;
             }
 
-            console.log(`[VIEW SWITCH] Active View: ${role.toUpperCase()}`);
+            // Check Login State
+            if (!userSession.authenticated) {
+                alert(`[ACCESS DENIED] The '${requestedRole.toUpperCase()}' dashboard requires authentication. Please log in.`);
+                openLoginModal();
+                document.getElementById('userRoleSelect').value = userSession.role;
+                return;
+            }
+
+            // Check Academic Gate (Requires Invite Code + NDA)
+            if (requestedRole === 'academic' && !userSession.ndaSigned) {
+                alert(`[LEGAL GATE] Academic collaboration requires an executed NDA & Invitation Code.`);
+                openInviteModal();
+                return;
+            }
+
+            switchView(requestedRole);
         }
 
-        window.addEventListener('DOMContentLoaded', () => {
-            const savedRole = localStorage.getItem('hive_user_role') || 'visitor';
-            switchUserRole(savedRole);
-        });
+        function switchView(role) {
+            userSession.role = role;
+            document.getElementById('userRoleSelect').value = role;
 
-        function postCommunityMsg() {
-            const msg = document.getElementById('communityMsg').value;
-            if (!msg) return;
-            alert(`Message posted to The Hive Network: "${msg}"`);
-            document.getElementById('communityMsg').value = '';
+            document.querySelectorAll('.role-section').forEach(el => el.classList.remove('role-active'));
+            const activeView = document.getElementById(`view-${role}`);
+            if (activeView) activeView.classList.add('role-active');
+
+            if (userSession.authenticated) {
+                document.getElementById('userSettingsPanel').classList.remove('hidden');
+            }
         }
 
-        function runAgentCommand() {
-            const input = document.getElementById('agentPrompt').value;
-            const output = document.getElementById('agentOutput');
-            if (!input) return;
+        function openLoginModal() { document.getElementById('loginModal').classList.add('modal-active'); }
+        function openInviteModal() { document.getElementById('inviteModal').classList.add('modal-active'); }
+        function closeModals() { document.querySelectorAll('.modal').forEach(m => m.classList.remove('modal-active')); }
 
-            output.innerHTML = `<span class="text-indigo-400">[Agentic Assistant Processing Command: "${input}"...]</span>`;
-            setTimeout(() => {
-                output.innerHTML = `<span class="text-emerald-400">[Agent Action Completed]</span> Executed '${input}'. Tasks organized and indexed into local vector database.`;
-            }, 1000);
+        function processLogin() {
+            const email = document.getElementById('loginEmail').value;
+            if (!email) return alert('Please enter your email.');
+
+            userSession.authenticated = true;
+            userSession.email = email;
+            userSession.role = 'member_free';
+
+            document.getElementById('authStatusBadge').className = 'text-xs font-mono px-2.5 py-1 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-800 flex items-center gap-1';
+            document.getElementById('authStatusBadge').innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Authenticated (${email})`;
+            document.getElementById('authBtn').innerText = 'Log Out';
+            document.getElementById('authBtn').onclick = processLogout;
+
+            closeModals();
+            switchView('member_free');
         }
 
-        async function executeQuery() {
-            const query = document.getElementById('queryInput').value;
-            const mode = document.getElementById('ragMode').value;
-            const output = document.getElementById('outputWindow');
+        function processLogout() {
+            userSession = { authenticated: false, role: 'visitor', email: '', ndaSigned: false };
+            document.getElementById('authStatusBadge').className = 'text-xs font-mono px-2.5 py-1 rounded-full bg-red-950 text-red-400 border border-red-800 flex items-center gap-1';
+            document.getElementById('authStatusBadge').innerHTML = `<span class="w-2 h-2 rounded-full bg-red-500"></span> Unauthenticated`;
+            document.getElementById('authBtn').innerText = 'Log In';
+            document.getElementById('authBtn').onclick = openLoginModal;
+            document.getElementById('userSettingsPanel').classList.add('hidden');
+            switchView('visitor');
+        }
 
-            if (!query) return;
+        function verifyAcademicInvite() {
+            const code = document.getElementById('inviteCode').value.toUpperCase();
+            const consent = document.getElementById('ndaConsent').checked;
 
-            output.innerHTML = `<span class="text-indigo-400">[Executing Query to Local PowerShell Gateway on Port 8443...]</span>`;
+            if (code !== 'STTR-9042' && code !== 'ACADEMIC-2026') {
+                return alert('Invalid Invitation Code. Please contact the author for an authorized academic collaboration code.');
+            }
 
-            try {
-                const response = await fetch('https://localhost:8443/api/v1/rag-query', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': 'Bearer DEFENSE_LOCAL_SECRET_KEY_2026'
-                    },
-                    body: JSON.stringify({ query: query, mode: mode })
-                });
+            if (!consent) {
+                return alert('You must check and agree to the NDA & Non-Compete terms.');
+            }
 
-                const data = await response.json();
-                output.innerHTML = `<span class="text-emerald-400">[STATUS ${data.status}]</span>\n\n${data.response}`;
-            } catch (err) {
-                output.innerHTML = `<span class="text-amber-400">[DEMO MODE - Local PowerShell listener offline]</span>\n\nQuery Received: "${query}"\nTarget Mode: ${mode.toUpperCase()}\n\nTo connect live data: Run scripts/Start-DefenseRagGateway.ps1 on your workstation.`;
+            userSession.authenticated = true;
+            userSession.ndaSigned = true;
+            userSession.role = 'academic';
+
+            closeModals();
+            switchView('academic');
+            alert('[ACCESS GRANTED] Invitation Code verified & NDA executed. Audit log created.');
+        }
+
+        function triggerStripeCheckout(tier) {
+            alert(`[STRIPE GATEWAY] Redirecting to Stripe Payment Checkout...\n\nTier: ${tier.toUpperCase()}\nBilling Cycle: ${currentBillingCycle.toUpperCase()}\nConnected Bank: Emerging Defense Solutions Direct Payout`);
+        }
+
+        function cancelSubscription() {
+            if (confirm('Are you sure you want to cancel your subscription? Access will remain active until the end of your current billing period.')) {
+                alert('Subscription cancelled successfully.');
+            }
+        }
+
+        function deleteAccountData() {
+            if (confirm('PERMANENT ACTION: Are you sure you want to delete your account and all associated data from hive.eds-360.com? This cannot be undone.')) {
+                processLogout();
+                alert('Account and data deleted successfully.');
             }
         }
     </script>
