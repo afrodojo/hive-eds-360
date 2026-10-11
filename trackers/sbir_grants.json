@@ -1,0 +1,18 @@
+﻿[
+  {
+    "agency": "AFWERX",
+    "topic": "Open Topic Phase I - Tactical Edge RAG",
+    "status": "Proposal Drafted",
+    "trl": 3,
+    "pricing_model": "Grant Funded",
+    "target_partner": "Academic & Defense Business"
+  },
+  {
+    "agency": "DARPA",
+    "topic": "Sovereign AI Enclaves for Defense",
+    "status": "Abstract Under Review",
+    "trl": 2,
+    "pricing_model": "Grant Funded",
+    "target_partner": "University Co-PI"
+  }
+]
