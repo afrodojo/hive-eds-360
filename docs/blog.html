@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Research Blog & Member Dispatch | The Hive Network</title>
+    <title>Research Blog & Early Access Member Dispatch | The Hive Network</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -18,88 +18,91 @@
 
     <main class="flex-grow max-w-7xl w-full mx-auto p-6 space-y-8">
         
-        <!-- HERO SECTION & NEWSLETTER INTAKE -->
+        <!-- HERO SECTION & EARLY ACCESS NEWSLETTER INTAKE -->
         <section class="glass p-8 rounded-2xl border border-indigo-500/30 flex flex-col lg:flex-row justify-between items-center gap-8 accent-glow">
             <div class="space-y-3 max-w-2xl">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-950/80 border border-indigo-800 text-indigo-400 text-xs font-mono">
-                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                    Sovereign AI & Research Dispatch
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-950/80 border border-amber-800 text-amber-400 text-xs font-mono">
+                    <i class="fas fa-bolt text-amber-400"></i>
+                    48-Hour Member Early Access Enabled
                 </div>
-                <h2 class="text-3xl font-bold text-white leading-tight">The Hive Research Log & Member Newsletter</h2>
+                <h2 class="text-3xl font-bold text-white leading-tight">The Hive Research Log & Early-Access Dispatch</h2>
                 <p class="text-xs text-gray-300 leading-relaxed">
-                    Direct technical briefings on air-gapped RAG, zero-trust REST gateways, adversarial machine learning, and CS Ph.D. dissertation progress delivered directly to partners, sponsors, and members.
+                    Paid members and defense partners receive technical briefings, air-gapped RAG research notes, and security audit logs <strong class="text-indigo-300">48 hours before public release</strong>.
                 </p>
             </div>
 
             <!-- NEWSLETTER SUBSCRIPTION FORM -->
             <div class="w-full lg:w-96 glass p-5 rounded-xl border border-gray-800 space-y-3">
                 <h3 class="text-xs font-bold text-white font-mono uppercase tracking-wider flex items-center gap-2">
-                    <i class="fas fa-paper-plane text-indigo-400"></i> Join Partner Newsletter
+                    <i class="fas fa-lock text-amber-400"></i> Join Early Access List
                 </h3>
                 <form id="newsletterForm" onsubmit="subscribeUser(event)" class="space-y-2">
                     <input type="email" id="subscriberEmail" required placeholder="Enter partner email (e.g. user@domain.com)" class="w-full bg-gray-950 border border-gray-800 rounded-lg px-3.5 py-2 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
                     <select id="subscriberTier" class="w-full bg-gray-950 border border-gray-800 rounded-lg px-3.5 py-2 text-xs text-gray-300 focus:outline-none focus:border-indigo-500 font-mono">
-                        <option value="Basic">Basic Subscriber ($10/mo Tier)</option>
-                        <option value="Defense">Defense / SBIR Partner ($250/mo Tier)</option>
-                        <option value="Academic">Academic Institution ($500/mo Tier)</option>
-                        <option value="Free">Public Dispatch (Free)</option>
+                        <option value="Basic">Basic Subscriber ($10/mo Tier) - Early Access</option>
+                        <option value="Defense">Defense / SBIR Partner ($250/mo Tier) - Priority Access</option>
+                        <option value="Academic">Academic Institution ($500/mo Tier) - Priority Access</option>
+                        <option value="Free">Public Dispatch (Standard Delivery)</option>
                     </select>
-                    <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs py-2.5 rounded-lg transition accent-glow flex items-center justify-center gap-2">
-                        <span>Subscribe to Updates</span>
-                        <i class="fas fa-arrow-right text-[10px]"></i>
+                    <button type="submit" class="w-full bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs py-2.5 rounded-lg transition shadow flex items-center justify-center gap-2">
+                        <i class="fas fa-key text-xs"></i>
+                        <span>Subscribe for Early Access</span>
                     </button>
                 </form>
                 <div id="subscribeSuccess" class="hidden text-[11px] font-mono text-emerald-400 bg-emerald-950/50 border border-emerald-800 p-2 rounded text-center">
-                    ✓ Subscribed! Encrypted dispatch preference saved.
+                    ✓ Early Access preference saved! Updates queued.
                 </div>
             </div>
         </section>
 
-        <!-- BLOG ARTICLES & FILTERS -->
+        <!-- BLOG ARTICLES WITH ACCESS LEVEL STATUS -->
         <section class="space-y-6">
             <div class="flex flex-wrap justify-between items-center gap-4 border-b border-gray-800 pb-4">
                 <h3 class="text-lg font-bold text-white font-mono flex items-center gap-2">
                     <i class="fas fa-rss text-indigo-400"></i> Technical Dispatch Log
                 </h3>
                 <div class="flex gap-2 text-xs font-mono">
-                    <button onclick="filterPosts('all')" class="bg-indigo-900/60 text-indigo-300 px-3 py-1 rounded border border-indigo-700">All Posts</button>
-                    <button onclick="filterPosts('edge')" class="bg-gray-900 text-gray-400 hover:text-white px-3 py-1 rounded border border-gray-800">#Edge-RAG</button>
-                    <button onclick="filterPosts('defense')" class="bg-gray-900 text-gray-400 hover:text-white px-3 py-1 rounded border border-gray-800">#Cyber-Defense</button>
-                    <button onclick="filterPosts('dissertation')" class="bg-gray-900 text-gray-400 hover:text-white px-3 py-1 rounded border border-gray-800">#Dissertation</button>
+                    <button class="bg-indigo-900/60 text-indigo-300 px-3 py-1 rounded border border-indigo-700">All Posts</button>
+                    <button class="bg-amber-950/60 text-amber-300 px-3 py-1 rounded border border-amber-800 flex items-center gap-1">
+                        <i class="fas fa-star text-[10px]"></i> Early Access Only
+                    </button>
                 </div>
             </div>
 
-            <!-- BLOG POSTS GRID -->
+            <!-- POSTS GRID -->
             <div id="blogGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 
-                <!-- POST 1 -->
-                <article class="glass p-6 rounded-2xl border border-gray-800 space-y-4 flex flex-col justify-between hover:border-indigo-500/40 transition">
+                <!-- EARLY ACCESS POST (MEMBERS ONLY) -->
+                <article class="glass p-6 rounded-2xl border border-amber-500/40 space-y-4 flex flex-col justify-between relative accent-glow">
+                    <span class="absolute -top-3 right-4 bg-amber-600 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider flex items-center gap-1">
+                        <i class="fas fa-clock"></i> 48H Member Early Access
+                    </span>
                     <div class="space-y-3">
                         <div class="flex justify-between items-center text-[10px] font-mono text-gray-400">
-                            <span class="text-indigo-400 font-bold">#Edge-RAG</span>
+                            <span class="text-amber-400 font-bold">#Edge-RAG</span>
                             <span>Oct 11, 2026</span>
                         </div>
-                        <h4 class="text-base font-bold text-white leading-snug hover:text-indigo-300 transition">
+                        <h4 class="text-base font-bold text-white leading-snug">
                             Air-Gapped Vector Indexing: Eliminating Cloud Latency & Data Leaks
                         </h4>
                         <p class="text-xs text-gray-400 leading-relaxed">
-                            A deep dive into zero-trust local vector storage models, showing how quantized schema files operate 100% offline on tactical edge hardware.
+                            Quantized schema files operating 100% offline on tactical edge hardware with formal mathematical retrieval bounds.
                         </p>
                     </div>
                     <div class="pt-4 border-t border-gray-800/80 flex justify-between items-center text-xs font-mono">
-                        <span class="text-gray-500">By DASSensei</span>
-                        <a href="RAG-console.html" class="text-indigo-400 hover:underline">Read & Test →</a>
+                        <span class="text-amber-300 font-bold flex items-center gap-1"><i class="fas fa-lock"></i> Paid Members Only</span>
+                        <a href="pricing.html" class="bg-amber-600 hover:bg-amber-500 text-white px-3 py-1 rounded font-bold text-[11px] transition">Unlock Now</a>
                     </div>
                 </article>
 
-                <!-- POST 2 -->
+                <!-- PUBLIC POST 1 -->
                 <article class="glass p-6 rounded-2xl border border-gray-800 space-y-4 flex flex-col justify-between hover:border-indigo-500/40 transition">
                     <div class="space-y-3">
                         <div class="flex justify-between items-center text-[10px] font-mono text-gray-400">
                             <span class="text-emerald-400 font-bold">#Cyber-Defense</span>
                             <span>Oct 09, 2026</span>
                         </div>
-                        <h4 class="text-base font-bold text-white leading-snug hover:text-emerald-300 transition">
+                        <h4 class="text-base font-bold text-white leading-snug">
                             Mitigating Prompt Injection in Local PowerShell REST Gateways
                         </h4>
                         <p class="text-xs text-gray-400 leading-relaxed">
@@ -107,28 +110,28 @@
                         </p>
                     </div>
                     <div class="pt-4 border-t border-gray-800/80 flex justify-between items-center text-xs font-mono">
-                        <span class="text-gray-500">By DASSensei</span>
-                        <a href="research.html" class="text-emerald-400 hover:underline">Read & Test →</a>
+                        <span class="text-emerald-400">Public Access</span>
+                        <a href="research.html" class="text-indigo-400 hover:underline">Read Research →</a>
                     </div>
                 </article>
 
-                <!-- POST 3 -->
+                <!-- PUBLIC POST 2 -->
                 <article class="glass p-6 rounded-2xl border border-gray-800 space-y-4 flex flex-col justify-between hover:border-indigo-500/40 transition">
                     <div class="space-y-3">
                         <div class="flex justify-between items-center text-[10px] font-mono text-gray-400">
-                            <span class="text-amber-400 font-bold">#Dissertation</span>
+                            <span class="text-indigo-400 font-bold">#Dissertation</span>
                             <span>Oct 05, 2026</span>
                         </div>
-                        <h4 class="text-base font-bold text-white leading-snug hover:text-amber-300 transition">
+                        <h4 class="text-base font-bold text-white leading-snug">
                             Formal Mathematical Bounds for Semantic Vector Retrieval
                         </h4>
                         <p class="text-xs text-gray-400 leading-relaxed">
-                            Extracts from doctoral dissertation notes detailing provable accuracy metrics for embedded chunking algorithms in air-gapped environments.
+                            Extracts from doctoral dissertation notes detailing provable accuracy metrics for embedded chunking algorithms.
                         </p>
                     </div>
                     <div class="pt-4 border-t border-gray-800/80 flex justify-between items-center text-xs font-mono">
-                        <span class="text-gray-500">By DASSensei</span>
-                        <a href="pricing.html" class="text-amber-400 hover:underline">Read & Test →</a>
+                        <span class="text-indigo-400">Public Access</span>
+                        <a href="RAG-console.html" class="text-indigo-400 hover:underline">Open Terminal →</a>
                     </div>
                 </article>
 
@@ -154,17 +157,12 @@
             const email = document.getElementById('subscriberEmail').value;
             const tier = document.getElementById('subscriberTier').value;
 
-            // Store in local browser storage fallback
             const subs = JSON.parse(localStorage.getItem('hive_subscribers') || '[]');
-            subs.push({ email, tier, date: new Date().toISOString() });
+            subs.push({ email, tier, early_access: tier !== 'Free', date: new Date().toISOString() });
             localStorage.setItem('hive_subscribers', JSON.stringify(subs));
 
             document.getElementById('subscribeSuccess').classList.remove('hidden');
             document.getElementById('subscriberEmail').value = '';
-        }
-
-        function filterPosts(category) {
-            console.log('Filtering blog post categories: ' + category);
         }
     </script>
 </body>

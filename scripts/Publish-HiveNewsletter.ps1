@@ -1,37 +1,40 @@
 ﻿param(
     [string]$TemplateName = "newsletter_default.html",
-    [string]$Subject = "The Hive Network Technical Dispatch",
-    [string]$BodyContent = "Custom research notes and security audit updates.",
-    [string]$ActionText = "Explore RAG Terminal",
-    [string]$ActionUrl = "https://hive.eds-360.com/RAG-console.html",
-    [string]$TargetTier = "All"
+    [string]$Subject = "Early Access Dispatch: Sovereign AI Updates",
+    [string]$BodyContent = "Exclusive 48-hour early preview of our latest RAG benchmarks for paid members.",
+    [string]$ActionText = "Access Member Portal",
+    [string]$ActionUrl = "https://hive.eds-360.com/portal.html",
+    [string]$TargetTier = "PaidOnly" # Options: PaidOnly, All, Defense, Academic
 )
 
 Write-Host "==========================================================" -ForegroundColor Cyan
-Write-Host "   PROCESSING DYNAMIC HIVE NEWSLETTER CUSTOMIZATION" -ForegroundColor Cyan
+Write-Host "   PROCESSING EARLY ACCESS NEWSLETTER DISPATCH" -ForegroundColor Cyan
 Write-Host "==========================================================" -ForegroundColor Cyan
 
 $templatePath = "$env:USERPROFILE\hive-eds-360\templates\$TemplateName"
 if (-not (Test-Path $templatePath)) {
-    Write-Host "[ERROR] Template file $TemplateName not found!" -ForegroundColor Red
+    Write-Host "[ERROR] Template $TemplateName not found!" -ForegroundColor Red
     return
 }
 
-$rawTemplate = Get-Content $templatePath -Raw
-
-# Load Subscribers
+$rawTemplate = Get-Content$templatePath -Raw
 $subscriberFile = "$env:USERPROFILE\hive-eds-360\trackers\newsletter_subscribers.json"
-if (-not (Test-Path $subscriberFile)) {
-    $initialSubs = @(
-        @{ email = "dassenseibsu@pm.me"; tier = "Defense"; joined = (Get-Date).ToString("o") }
+if (-not (Test-Path $subscriberFile)) {$initialSubs = @(
+        @{ email = "dassenseibsu@pm.me"; tier = "Defense"; early_access = $true; joined = (Get-Date).ToString("o") }
     )
-    $initialSubs | ConvertTo-Json | Set-Content -Path $subscriberFile -Encoding UTF8
+    $initialSubs \vert{} ConvertTo-Json \vert{} Set-Content -Path$subscriberFile -Encoding UTF8
 }
 
-$subscribers = Get-Content $subscriberFile | ConvertFrom-Json
+$subscribers = Get-Content$subscriberFile | ConvertFrom-Json
 
-# Compile Rendered Output
-$renderedHtml = $rawTemplate -replace '\{\{SUBJECT\}\}', $Subject `
+# Filter Subscribers by Access Level
+if ($TargetTier -eq "PaidOnly") {
+    $recipients = $subscribers \vert{} Where-Object {$_.tier -in @("Basic", "Defense", "Academic") }
+} else {
+    $recipients =$subscribers
+}
+
+$renderedHtml = $rawTemplate -replace '\{\{SUBJECT\}\}', "[EARLY ACCESS] $Subject" `
                              -replace '\{\{BODY_CONTENT\}\}', $BodyContent `
                              -replace '\{\{ACTION_TEXT\}\}', $ActionText `
                              -replace '\{\{ACTION_URL\}\}', $ActionUrl `
@@ -39,15 +42,14 @@ $renderedHtml = $rawTemplate -replace '\{\{SUBJECT\}\}', $Subject `
 
 $dispatchPayload = @{
     timestamp = (Get-Date).ToString("yyyy-MM-dd HH:mm:ss")
-    template_used = $TemplateName
-    subject = $Subject
+    embargo_status = "48_HOUR_EARLY_ACCESS"
     target_tier = $TargetTier
+    recipients_queued = $recipients.Count
     rendered_html = $renderedHtml
-    recipients_queued = $subscribers.Count
 }
 
 $outputPath = "$env:USERPROFILE\hive-eds-360\trackers\latest_dispatch.json"
-$dispatchPayload | ConvertTo-Json -Depth 5 | Set-Content -Path $outputPath -Encoding UTF8
+$dispatchPayload \vert{} ConvertTo-Json -Depth 5 \vert{} Set-Content -Path$outputPath -Encoding UTF8
 
-Write-Host "[SUCCESS] Rendered custom newsletter compiled!" -ForegroundColor Green
-Write-Host "[LOG] Preview output saved to trackers/latest_dispatch.json" -ForegroundColor Yellow
+Write-Host "[SUCCESS] Early access newsletter generated for $(${recipients}.Count) paid members!" -ForegroundColor Green
+Write-Host "[LOG] Dispatch payload saved to trackers/latest_dispatch.json" -ForegroundColor Yellow
