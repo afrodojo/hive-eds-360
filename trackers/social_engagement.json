@@ -1,10 +1,16 @@
 ﻿{
-    "timestamp":  "2026-10-11T21:46:10Z",
+    "local_research_logs":  {
+                                "chunks":  [
+
+                                           ],
+                                "notes_folder":  "research_notes/",
+                                "files_indexed":  0
+                            },
+    "timestamp":  "2026-10-11T22:56:30Z",
     "metrics":  {
-                    "youtube_subscribers":  0,
-                    "last_ingested_content":  "Air-Gapped RAG Architectures for Sovereign Defense AI",
-                    "total_likes_recorded":  1040,
-                    "total_comments_indexed":  185
+                    "total_chunks_indexed":  4120,
+                    "total_comments_logged":  340,
+                    "last_ingested_source":  "Local Research Notes \u0026 YouTube Feed"
                 },
     "primary_email":  "dassenseibsu@pm.me",
     "profiles":  {
@@ -13,12 +19,11 @@
                                       "status":  "Connected"
                                   },
                      "youtube":  {
-                                     "channel_name":  "DAS Sensei - Sovereign Defense AI \u0026 Ph.D.",
                                      "status":  "Connected",
-                                     "contact_email":  "dassenseibsu@pm.me"
+                                     "channel":  "@DASSensei",
+                                     "contact":  "dassenseibsu@pm.me"
                                  },
                      "instagram":  {
-                                       "url":  "https://www.instagram.com/eds_360",
                                        "status":  "Connected",
                                        "handle":  "eds_360"
                                    },

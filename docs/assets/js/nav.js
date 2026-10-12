@@ -23,7 +23,7 @@
             <button onclick="triggerStripeCheckout('donation')" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold px-3.5 py-2 rounded-lg transition flex items-center gap-1.5 shadow accent-glow">
                 <i class="fas fa-heart text-amber-300"></i> Donate
             </button>
-            <div id="authStatusBadge" class="text-xs font-mono px-2.5 py-1 rounded-full bg-red-950 text-red-400 border border-red-800 flex items-center gap-1 cursor-pointer">
+            <div id="authStatusBadge" class="text-xs font-mono px-2.5 py-1 rounded-full bg-red-950 text-red-400 border border-red-800 flex items-center gap-1 cursor-pointer" onclick="window.location.href='portal.html'">
                 <span class="w-2 h-2 rounded-full bg-red-500"></span> Public
             </div>
             <button id="authBtn" onclick="window.location.href='portal.html'" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold px-4 py-2 rounded-lg transition accent-glow">
@@ -34,5 +34,4 @@
     `;
     const container = document.getElementById('headerContainer');
     if (container) container.innerHTML = headerHtml;
-    if (typeof updateAuthUI === 'function') updateAuthUI();
 }
