@@ -15,7 +15,8 @@
             <a href="index.html" class="${activePage === 'home' ? 'text-indigo-400 border-b-2 border-indigo-500' : 'text-gray-300 hover:text-white'} pb-1 transition">Home</a>
             <a href="research.html" class="${activePage === 'research' ? 'text-indigo-400 border-b-2 border-indigo-500' : 'text-gray-300 hover:text-white'} pb-1 transition">Research Repos</a>
             <a href="RAG-console.html" class="${activePage === 'rag' ? 'text-indigo-400 border-b-2 border-indigo-500' : 'text-gray-300 hover:text-white'} pb-1 transition">RAG Terminal</a>
-            <a href="pricing.html" class="${activePage === 'pricing' ? 'text-indigo-400 border-b-2 border-indigo-500' : 'text-gray-300 hover:text-white'} pb-1 transition">Membership & Donations</a>
+            <a href="blog.html" class="${activePage === 'blog' ? 'text-indigo-400 border-b-2 border-indigo-500' : 'text-gray-300 hover:text-white'} pb-1 transition">Blog & Dispatch</a>
+            <a href="pricing.html" class="${activePage === 'pricing' ? 'text-indigo-400 border-b-2 border-indigo-500' : 'text-gray-300 hover:text-white'} pb-1 transition">Membership & Tiering</a>
             <a href="portal.html" class="${activePage === 'portal' ? 'text-indigo-400 border-b-2 border-indigo-500' : 'text-gray-300 hover:text-white'} pb-1 transition">Member Portal</a>
         </nav>
         
