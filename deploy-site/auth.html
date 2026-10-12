@@ -26,8 +26,17 @@
         <!-- Auth Form -->
         <div class="space-y-4">
             <div>
+                <label class="block text-xs font-bold text-gray-400 mb-1">Select Registration Tier</label>
+                <select id="regTier" onchange="checkTierDomainRequirement()" class="w-full bg-gray-950 border border-gray-800 p-3 rounded-lg text-white text-sm focus:outline-none focus:border-blue-500">
+                    <option value="basic">Basic Member (/mo)</option>
+                    <option value="business">Business Tier (/mo)</option>
+                    <option value="academic">Academic Tier (.edu Domain Required)</option>
+                </select>
+            </div>
+            <div>
                 <label class="block text-xs font-bold text-gray-400 mb-1">Email Address</label>
-                <input type="email" id="authEmail" class="w-full bg-gray-950 border border-gray-800 p-3 rounded-lg text-white text-sm focus:outline-none focus:border-blue-500" placeholder="name@domain.com">
+                <input type="email" id="authEmail" class="w-full bg-gray-950 border border-gray-800 p-3 rounded-lg text-white text-sm focus:outline-none focus:border-blue-500" placeholder="name@university.edu">
+                <p id="domainHelp" class="text-[11px] text-amber-400 font-mono mt-1 hidden">Academic Tier requires a verified active .edu email address.</p>
             </div>
             <div>
                 <label class="block text-xs font-bold text-gray-400 mb-1">Password</label>
@@ -36,23 +45,25 @@
             <button id="authBtn" onclick="handleAuth()" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-lg text-sm transition">Sign In</button>
         </div>
 
-        <!-- 2FA / TOTP Section -->
-        <div id="mfaContainer" class="hidden pt-4 border-t border-gray-800 text-center space-y-3">
-            <h3 class="text-white text-sm font-bold">Two-Factor Authentication (2FA) Required</h3>
-            <p class="text-xs text-gray-400">Enter the 6-digit code from your authenticator app:</p>
-            <input type="text" id="mfaCode" maxlength="6" class="w-full text-center text-xl tracking-widest bg-gray-950 border border-gray-800 p-2 rounded-lg text-white focus:outline-none focus:border-blue-500" placeholder="123456">
-            <button onclick="verifyMFA()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 rounded-lg text-sm">Verify 2FA Code</button>
-        </div>
-
         <p id="authMessage" class="text-xs text-center text-gray-400"></p>
     </div>
 
     <script>
         const SUPABASE_URL = "https://wuwndfrpphyylwdvwotj.supabase.co";
-        const SUPABASE_ANON_KEY = "sb_publishable_Uwjn53ZZVbTi5rRw7XjUYg_xZfDcufn";
+        const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
         const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         let currentMode = 'login';
+
+        function checkTierDomainRequirement() {
+            const tier = document.getElementById('regTier').value;
+            const help = document.getElementById('domainHelp');
+            if (tier === 'academic') {
+                help.classList.remove('hidden');
+            } else {
+                help.classList.add('hidden');
+            }
+        }
 
         function switchTab(mode) {
             currentMode = mode;
@@ -68,20 +79,31 @@
         }
 
         async function handleAuth() {
-            const email = document.getElementById('authEmail').value.trim();
+            const email = document.getElementById('authEmail').value.trim().toLowerCase();
             const password = document.getElementById('authPassword').value;
+            const selectedTier = document.getElementById('regTier').value;
             const msg = document.getElementById('authMessage');
 
             if (!email || !password) return alert('Please enter both email and password.');
 
+            // Strict .edu Domain Validation for Academic Tier
+            if (currentMode === 'register' && selectedTier === 'academic' && !email.endsWith('.edu')) {
+                msg.innerHTML = "<span class='text-red-400 font-bold'>Error: Academic Tier registration requires an active university email ending in .edu</span>";
+                return;
+            }
+
             msg.innerText = "Processing request...";
 
             if (currentMode === 'register') {
-                const { data, error } = await supabase.auth.signUp({ email, password });
+                const { data, error } = await supabase.auth.signUp({
+                    email: email,
+                    password: password,
+                    options: { data: { tier: selectedTier } }
+                });
                 if (error) {
                     msg.innerText = "Error: " + error.message;
                 } else {
-                    msg.innerText = "Account created! Check your email to confirm registration or sign in.";
+                    msg.innerHTML = "<span class='text-emerald-400 font-bold'>Account created! Check your " + email + " inbox to confirm your active email account.</span>";
                 }
             } else {
                 const { data, error } = await supabase.auth.signInWithPassword({ email, password });
