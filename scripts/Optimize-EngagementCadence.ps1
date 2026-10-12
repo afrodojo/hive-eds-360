@@ -1,6 +1,7 @@
-param(
+﻿param(
     [string]$Platform = "All",
-    [double]$TargetPostsPerWeek = 5.0,     [switch]$AutoRespond
+    [double]$TargetPostsPerWeek = 5.0,
+    [switch]$AutoRespond
 )
 
 Write-Host "==========================================================" -ForegroundColor Cyan
@@ -8,7 +9,8 @@ Write-Host "   HIVE NETWORK DATA SCIENCE CADENCE & ENGAGEMENT ENGINE  " -Foregro
 Write-Host "==========================================================" -ForegroundColor Cyan
 
 $telemetryFile = "$env:USERPROFILE\hive-eds-360\trackers\social_engagement_log.json"
-if (-not (Test-Path $telemetryFile)) {$sampleData = @(
+if (-not (Test-Path $telemetryFile)) {
+    $sampleData = @(
         @{ id="fb_101"; platform="Facebook"; hour=14; engagement_score=0.88; query="How does air-gapped RAG handle memory constraints?" },
         @{ id="yt_202"; platform="YouTube"; hour=9; engagement_score=0.94; query="Can we integrate this with SBIR Phase I subcontracts?" },
         @{ id="li_303"; platform="LinkedIn"; hour=11; engagement_score=0.72; query="Is the local gateway compatible with Windows PowerShell 7?" }
@@ -39,7 +41,9 @@ foreach ($item in$engagementLog) {
     $isDefense = if ($item.query -match "SBIR|defense|air-gapped|zero-trust|contract") { 1.5 } else { 1.0 }
     $priorityScore = [math]::Round(($item.engagement_score * $isDefense), 3)
 
-    $suggestedResponse = if ($item.query -match "SBIR\vert{}contract") {         "Thank you for reaching out. The Hive Network supports dual-use SBIR/STTR partnerships. Please review our capability statement at https://hive.eds-360.com/research.html or contact us directly at dassenseibsu@pm.me."     } elseif ($item.query -match "air-gapped|memory") {
+$suggestedResponse = if ($item.query -match "SBIR\vert{}contract") {
+        "Thank you for reaching out. The Hive Network supports dual-use SBIR/STTR partnerships. Please review our capability statement at https://hive.eds-360.com/research.html or contact us directly at dassenseibsu@pm.me."
+    } elseif ($item.query -match "air-gapped|memory") {
         "Great question! Our local REST gateway uses quantized vector schemas running offline on port 8443. You can test a live simulation at https://hive.eds-360.com/RAG-console.html."
     } else {
         "Thanks for engaging! You can follow our CS Ph.D. dissertation logs and updates on https://hive.eds-360.com/blog.html."
