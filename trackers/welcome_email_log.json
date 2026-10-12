@@ -1,0 +1,14 @@
+﻿[
+    {
+        "email":  "user@example.com",
+        "name":  "Alex",
+        "sent_at":  "2026-10-12T00:51:17Z",
+        "status":  "SIMULATED"
+    },
+    {
+        "email":  "user@example.com",
+        "name":  "Alex",
+        "sent_at":  "2026-10-12T00:52:39Z",
+        "status":  "SIMULATED"
+    }
+]
