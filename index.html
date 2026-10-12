@@ -1,0 +1,123 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Journey as a Doctoral Student | Emerging Defense Solutions</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background-color: #0b0e14; color: #c9d1d9; font-family: sans-serif; }
+        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 50; justify-content: center; align-items: center; }
+    </style>
+</head>
+<body class="p-6">
+
+    <header class="flex items-center justify-between bg-gray-900 p-4 rounded-xl mb-6 border border-gray-800">
+        <div class="flex items-center space-x-3">
+            <div class="bg-blue-600 text-white font-bold p-2 rounded-lg">DS</div>
+            <div>
+                <h1 class="text-white font-bold">My Journey as a Doctoral Student</h1>
+                <p class="text-xs text-gray-400">hive.eds-360.com | CS Ph.D. & Emerging Defense Solutions</p>
+            </div>
+        </div>
+        <div class="flex items-center space-x-3">
+            <button onclick="openDonateModal()" class="bg-emerald-600 hover:bg-emerald-500 text-white text-sm px-4 py-2 rounded-lg font-semibold">💚 Donate / Support Research</button>
+            <select id="gateSelect" onchange="requestGateAccess()" class="bg-gray-800 text-white text-sm px-3 py-2 rounded-lg border border-gray-700">
+                <option value="public">🔒 Public Visitor Homepage</option>
+                <option value="admin">🔒 Founder & Admin (Root Password)</option>
+            </select>
+            <button onclick="openLoginModal()" class="bg-blue-600 hover:bg-blue-500 text-white text-sm px-4 py-2 rounded-lg font-semibold">Log In</button>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto space-y-8">
+        <section class="bg-gray-900 border border-gray-800 rounded-2xl p-8">
+            <span class="inline-block bg-blue-950 text-blue-400 text-xs px-3 py-1 rounded-full font-mono mb-4">CS Doctoral Student • Defense AI Innovator • Founder</span>
+            <h2 class="text-4xl font-extrabold text-white mb-4">Documenting My Computer Science Ph.D. & Sovereign Defense AI Journey</h2>
+            <p class="text-gray-400 max-w-3xl mb-6">
+                Welcome to my public digital enclave. I am a Computer Science Doctoral Candidate specializing in air-gapped local AI architectures, secure Retrieval-Augmented Generation (RAG), and tactical edge compute.
+            </p>
+            <div class="flex flex-wrap gap-3">
+                <a href="https://youtube.com" target="_blank" class="bg-red-900/40 text-red-300 border border-red-800/50 hover:bg-red-800/40 px-4 py-2 rounded-lg text-sm font-semibold">▶ YouTube Channel</a>
+                <a href="https://linkedin.com" target="_blank" class="bg-blue-900/40 text-blue-300 border border-blue-800/50 hover:bg-blue-800/40 px-4 py-2 rounded-lg text-sm font-semibold">in LinkedIn Profile</a>
+                <a href="https://instagram.com" target="_blank" class="bg-pink-900/40 text-pink-300 border border-pink-800/50 hover:bg-pink-800/40 px-4 py-2 rounded-lg text-sm font-semibold">📷 @eds_360</a>
+                <a href="https://facebook.com" target="_blank" class="bg-blue-900/40 text-blue-300 border border-blue-800/50 hover:bg-blue-800/40 px-4 py-2 rounded-lg text-sm font-semibold">f Facebook Page</a>
+            </div>
+        </section>
+
+        <section class="bg-gray-900 border border-gray-800 rounded-2xl p-6 flex justify-between items-center">
+            <div>
+                <h3 class="text-emerald-400 font-bold text-lg">💸 Support Open-Source Defense AI & Doctoral Research</h3>
+                <p class="text-sm text-gray-400">Your direct contributions fund air-gapped CUDA hardware benchmarks and research initiatives.</p>
+            </div>
+            <button onclick="openDonateModal()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-6 py-3 rounded-xl">💳 Make a Donation</button>
+        </section>
+    </main>
+
+    <div id="loginModal" class="modal-overlay">
+        <div class="bg-gray-900 border border-gray-800 p-6 rounded-2xl w-full max-w-md">
+            <h3 class="text-white text-xl font-bold mb-4">Account Login</h3>
+            <input type="email" id="loginEmail" placeholder="Enter dassenseibsu@pm.me or cyberdojosensei@gmail.com" class="w-full bg-gray-950 border border-gray-800 p-3 rounded-lg text-white mb-4">
+            <button onclick="submitLogin()" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-lg mb-2">Log In</button>
+            <button onclick="closeModals()" class="w-full bg-gray-800 text-gray-400 py-2 rounded-lg">Cancel</button>
+        </div>
+    </div>
+
+    <div id="donateModal" class="modal-overlay">
+        <div class="bg-gray-900 border border-gray-800 p-6 rounded-2xl w-full max-w-md text-center">
+            <h3 class="text-emerald-400 text-xl font-bold mb-2">Support Research</h3>
+            <p class="text-sm text-gray-400 mb-6">Select a membership/donation tier:</p>
+            <button onclick="triggerStripeCheckout('basic')" class="w-full bg-gray-800 hover:bg-gray-700 text-white font-bold py-3 rounded-lg mb-3">Student Tier (/mo)</button>
+            <button onclick="triggerStripeCheckout('consortium')" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 rounded-lg mb-3">Consortium Tier (/mo)</button>
+            <button onclick="closeModals()" class="w-full bg-gray-800 text-gray-400 py-2 rounded-lg">Close</button>
+        </div>
+    </div>
+
+    <script>
+        window.STRIPE_PAYMENT_LINKS = {
+            basic: "https://buy.stripe.com/test_basic",
+            consortium: "https://buy.stripe.com/test_consortium"
+        };
+
+        const ADMINS = ["dassenseibsu@pm.me", "cyberdojosensei@gmail.com"];
+
+        function openLoginModal() {
+            document.getElementById('loginModal').style.display = 'flex';
+        }
+
+        function openDonateModal() {
+            document.getElementById('donateModal').style.display = 'flex';
+        }
+
+        function closeModals() {
+            document.getElementById('loginModal').style.display = 'none';
+            document.getElementById('donateModal').style.display = 'none';
+        }
+
+        function requestGateAccess() {
+            const val = document.getElementById('gateSelect').value;
+            if (val === 'admin') { openLoginModal(); }
+        }
+
+        function submitLogin() {
+            const email = document.getElementById('loginEmail').value.trim().toLowerCase();
+            if (!email) return alert('Please enter an email.');
+
+            localStorage.setItem('hive_user_email', email);
+            if (ADMINS.includes(email)) {
+                localStorage.setItem('hive_user_role', 'admin');
+                window.location.href = 'admin.html';
+            } else {
+                localStorage.setItem('hive_user_role', 'member');
+                window.location.href = 'research.html';
+            }
+        }
+
+        function triggerStripeCheckout(tier) {
+            const url = window.STRIPE_PAYMENT_LINKS[tier] || window.STRIPE_PAYMENT_LINKS.basic;
+            window.open(url, '_blank');
+        }
+    </script>
+</body>
+</html>
