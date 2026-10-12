@@ -1,27 +1,25 @@
-﻿// Stripe Integration & Payment Handler
+﻿// Production Stripe Integration
 const STRIPE_LINKS = {
-    tier1: 'https://buy.stripe.com/test_tier1_individual',
-    tier2: 'https://buy.stripe.com/test_tier2_researcher',
-    tier3: 'https://buy.stripe.com/test_tier3_institution',
-    donation: 'https://donate.stripe.com/test_donation_hive'
+    tier1: 'https://buy.stripe.com/4gM28leW294M9FjbsR5os01',
+    tier2: 'https://buy.stripe.com/4gM7sF5lsa8Q04J9kJ5os02',
+    tier3: 'https://buy.stripe.com/3cIbIVbJQep6dVz7cB5os03',
+    donation: 'https://donate.stripe.com/9B6bIVaFMep68BfgNb5os04'
 };
 
 function triggerStripeCheckout(tierKey) {
-    console.log(`Initiating checkout for tier: ${tierKey}`);
+    console.log(`Initiating checkout for: ${tierKey}`);
     
-    // Check if valid URL exists
     if (STRIPE_LINKS[tierKey]) {
         window.open(STRIPE_LINKS[tierKey], '_blank');
     } else {
-        // Fallback email trigger if direct Stripe URL is pending activation
         const emailSubject = encodeURIComponent(`Membership / Donation Inquiry: ${tierKey}`);
-        const emailBody = encodeURIComponent(`Hello,\n\nI would like to initiate a subscription or donation for ${tierKey}.\n\nPrimary Contact: dassenseibsu@pm.me`);
+        const emailBody = encodeURIComponent(`Hello,\n\nI would like to subscribe or donate to ${tierKey}.\n\nPrimary Contact: dassenseibsu@pm.me`);
         window.location.href = `mailto:dassenseibsu@pm.me?subject=${emailSubject}&body=${emailBody}`;
     }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Attach click listeners to all buttons with data-stripe attribute
+    // Wire up all elements with data-stripe attributes
     const stripeBtns = document.querySelectorAll('[data-stripe]');
     stripeBtns.forEach(btn => {
         btn.addEventListener('click', (e) => {
