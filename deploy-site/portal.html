@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hive Network - Member Portal</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0d1117; color: #c9d1d9; margin: 0; padding: 40px; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .card { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 30px; width: 100%; max-width: 450px; box-shadow: 0 8px 24px rgba(0,0,0,0.5); }
+        h1 { color: #58a6ff; font-size: 24px; margin-bottom: 20px; text-align: center; }
+        label { display: block; margin-bottom: 8px; color: #8b949e; }
+        input { width: 100%; padding: 10px; margin-bottom: 20px; border-radius: 6px; border: 1px solid #30363d; background: #0d1117; color: #c9d1d9; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background: #238636; border: none; border-radius: 6px; color: white; font-weight: bold; cursor: pointer; font-size: 16px; margin-bottom: 10px; }
+        button:hover { background: #2ea043; }
+        .status { margin-top: 15px; font-size: 14px; text-align: center; font-weight: bold; min-height: 20px; }
+        .success { color: #3fb950; }
+        .error { color: #f85149; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>Hive Network Portal</h1>
+        <form id="loginForm" onsubmit="return handleLogin(event)">
+            <label for="email">Account Email</label>
+            <input type="email" id="email" placeholder="name@example.com" required autocomplete="email">
+            <button type="submit" id="loginBtn">Log In to Workspace</button>
+        </form>
+        <div id="statusMsg" class="status"></div>
+    </div>
+    <script>
+        const admins = ["dassenseibsu@pm.me", "cyberdojosensei@gmail.com"];
+
+        function handleLogin(e) {
+            if (e) e.preventDefault();
+            const emailInput = document.getElementById('email');
+            const email = emailInput ? emailInput.value.trim().toLowerCase() : '';
+            const status = document.getElementById('statusMsg');
+
+            if (!email) {
+                status.className = 'status error';
+                status.innerText = 'Please enter a valid email address.';
+                return false;
+            }
+
+            try {
+                localStorage.setItem('hive_user_email', email);
+                if (admins.includes(email)) {
+                    localStorage.setItem('hive_user_role', 'admin');
+                    status.className = 'status success';
+                    status.innerText = 'Admin Access Verified! Redirecting to Admin Console...';
+                    setTimeout(() => { window.location.href = 'admin.html'; }, 500);
+                } else {
+                    localStorage.setItem('hive_user_role', 'member');
+                    status.className = 'status success';
+                    status.innerText = 'Member Access Verified! Redirecting to Research Hub...';
+                    setTimeout(() => { window.location.href = 'research.html'; }, 500);
+                }
+            } catch (err) {
+                status.className = 'status error';
+                status.innerText = 'Storage error: ' + err.message;
+            }
+            return false;
+        }
+    </script>
+</body>
+</html>

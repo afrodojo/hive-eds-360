@@ -1,0 +1,35 @@
+﻿{
+    "local_research_logs":  {
+                                "chunks":  [
+
+                                           ],
+                                "notes_folder":  "research_notes/",
+                                "files_indexed":  0
+                            },
+    "timestamp":  "2026-10-11T22:56:30Z",
+    "metrics":  {
+                    "total_chunks_indexed":  4120,
+                    "total_comments_logged":  340,
+                    "last_ingested_source":  "Local Research Notes \u0026 YouTube Feed"
+                },
+    "primary_email":  "dassenseibsu@pm.me",
+    "profiles":  {
+                     "linkedin":  {
+                                      "url":  "https://www.linkedin.com/in/asaad-morman-4403423b",
+                                      "status":  "Connected"
+                                  },
+                     "youtube":  {
+                                     "status":  "Connected",
+                                     "channel":  "@DASSensei",
+                                     "contact":  "dassenseibsu@pm.me"
+                                 },
+                     "instagram":  {
+                                       "status":  "Connected",
+                                       "handle":  "eds_360"
+                                   },
+                     "facebook":  {
+                                      "url":  "https://www.facebook.com/share/1Be74piiEu/",
+                                      "status":  "Connected"
+                                  }
+                 }
+}

@@ -1,0 +1,20 @@
+﻿[
+    {
+        "hashtags":  "#SovereignAI #CyberSecurity #EdgeRAG #DASSensei",
+        "day":  "Monday",
+        "call_to_action":  "Test live vector console: https://hive.eds-360.com/RAG-console.html",
+        "topic":  "Sovereign Edge RAG vs Cloud Vulnerabilities"
+    },
+    {
+        "hashtags":  "#AdversarialML #DefenseTech #SBIR #PhDResearch",
+        "day":  "Wednesday",
+        "call_to_action":  "Explore SBIR capability statement: https://hive.eds-360.com/research.html",
+        "topic":  "Adversarial Prompt Injection Defenses in Local LLMs"
+    },
+    {
+        "hashtags":  "#ComputerScience #PhDLife #AIResearch #TheHiveNetwork",
+        "day":  "Friday",
+        "call_to_action":  "Watch full technical breakdown on YouTube: @DASSensei",
+        "topic":  "CS Ph.D. Dissertation Notes \u0026 Mathematical Retrieval Bounds"
+    }
+]

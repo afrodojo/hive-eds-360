@@ -1,0 +1,54 @@
+﻿[
+    {
+        "id":  "fb_msg_01",
+        "platform":  "Facebook Messenger",
+        "handle":  "@HiveNetworkMessenger",
+        "webhook":  "https://hive.eds-360.com/webhooks/messenger",
+        "seo_keywords":  [
+                             "RAG",
+                             "defense",
+                             "air-gapped"
+                         ],
+        "seo_weight":  1.5,
+        "active":  true
+    },
+    {
+        "id":  "yt_chan_01",
+        "platform":  "YouTube Comments",
+        "handle":  "@HiveNetworkLabs",
+        "webhook":  "https://hive.eds-360.com/webhooks/youtube",
+        "seo_keywords":  [
+                             "SBIR",
+                             "grant",
+                             "dissertation"
+                         ],
+        "seo_weight":  1.4,
+        "active":  true
+    },
+    {
+        "id":  "li_page_01",
+        "platform":  "LinkedIn Org Page",
+        "handle":  "Hive Network Org",
+        "webhook":  "https://hive.eds-360.com/webhooks/linkedin",
+        "seo_keywords":  [
+                             "dual-use",
+                             "partnerships",
+                             "zero-trust"
+                         ],
+        "seo_weight":  1.2,
+        "active":  true
+    },
+    {
+        "id":  "ig_msg_01",
+        "platform":  "Instagram Direct",
+        "handle":  "@HiveNetworkOfficial",
+        "webhook":  "https://hive.eds-360.com/webhooks/instagram",
+        "seo_keywords":  [
+                             "AI",
+                             "Defense",
+                             "RAG"
+                         ],
+        "seo_weight":  1.6,
+        "active":  true
+    }
+]

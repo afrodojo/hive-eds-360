@@ -8,7 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { background-color: #0b0e14; color: #c9d1d9; font-family: sans-serif; }
-        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 50; justify-content: center; align-items: center; }
+        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 50; justify-content: center; align-items: center; }
     </style>
 </head>
 <body class="p-6">
@@ -18,7 +18,7 @@
             <div class="bg-blue-600 text-white font-bold p-2 rounded-lg">DS</div>
             <div>
                 <h1 class="text-white font-bold">My Journey as a DAS Student</h1>
-                <p class="text-xs text-gray-400">hive.eds-360.com | CS Doctorate of Applied Science (DAS) Candidate & Emerging Defense Solutions</p>
+                <p class="text-xs text-gray-400">hive.eds-360.com | Doctor of Applied Science in Computer Science Student & Emerging Defense Solutions</p>
             </div>
         </div>
         <div class="flex items-center space-x-3">
@@ -33,10 +33,10 @@
 
     <main class="max-w-6xl mx-auto space-y-8">
         <section class="bg-gray-900 border border-gray-800 rounded-2xl p-8">
-            <span class="inline-block bg-blue-950 text-blue-400 text-xs px-3 py-1 rounded-full font-mono mb-4">CS Doctorate of Applied Science (DAS) Student • Defense AI Innovator • Founder</span>
-            <h2 class="text-4xl font-extrabold text-white mb-4">Documenting My Doctorate of Applied Science (DAS) in Computer Science & Sovereign Defense AI Journey</h2>
+            <span class="inline-block bg-blue-950 text-blue-400 text-xs px-3 py-1 rounded-full font-mono mb-4">Doctor of Applied Science in Computer Science Student • Defense AI Innovator • Founder</span>
+            <h2 class="text-4xl font-extrabold text-white mb-4">Documenting My Doctor of Applied Science in Computer Science & Sovereign Defense AI Journey</h2>
             <p class="text-gray-400 max-w-3xl mb-6">
-                Welcome to my public digital enclave. I am a Doctorate of Applied Science (DAS) in Computer Science Candidate specializing in air-gapped local AI architectures, secure Retrieval-Augmented Generation (RAG), and tactical edge compute. Through <strong>Emerging Defense Solutions (EDS)</strong>, I integrate doctoral research, SBIR grant acquisition, and student mentorship.
+                Welcome to my public digital enclave. I am a Doctor of Applied Science in Computer Science Student specializing in air-gapped local AI architectures, secure Retrieval-Augmented Generation (RAG), and tactical edge compute. Through <strong>Emerging Defense Solutions (EDS)</strong>, I integrate doctoral research, SBIR grant acquisition, and student mentorship.
             </p>
             
             <!-- Direct Social Media Profile Links -->
@@ -50,10 +50,10 @@
 
         <section class="bg-gray-900 border border-gray-800 rounded-2xl p-6 flex justify-between items-center">
             <div>
-                <h3 class="text-emerald-400 font-bold text-lg">💸 Support Open-Source Defense AI & DAS Doctoral Research</h3>
+                <h3 class="text-emerald-400 font-bold text-lg">💸 Support Open-Source Defense AI & DAS Research</h3>
                 <p class="text-sm text-gray-400">Your direct contributions fund air-gapped CUDA hardware benchmarks, academic open-access fees, and student mentorship initiatives.</p>
             </div>
-            <button onclick="openDonateModal()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-6 py-3 rounded-xl">💳 Make a Donation</button>
+            <button onclick="openDonateModal()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-6 py-3 rounded-xl">💳 Make a Donation / Join</button>
         </section>
     </main>
 
@@ -69,18 +69,24 @@
 
     <div id="donateModal" class="modal-overlay">
         <div class="bg-gray-900 border border-gray-800 p-6 rounded-2xl w-full max-w-md text-center">
-            <h3 class="text-emerald-400 text-xl font-bold mb-2">Support DAS Research</h3>
-            <p class="text-sm text-gray-400 mb-6">Select a membership/donation tier:</p>
-            <button onclick="triggerStripeCheckout('basic')" class="w-full bg-gray-800 hover:bg-gray-700 text-white font-bold py-3 rounded-lg mb-3">Student Tier (/mo)</button>
-            <button onclick="triggerStripeCheckout('consortium')" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 rounded-lg mb-3">Consortium Tier (/mo)</button>
-            <button onclick="closeModals()" class="w-full bg-gray-800 text-gray-400 py-2 rounded-lg">Close</button>
+            <h3 class="text-emerald-400 text-xl font-bold mb-2">Support Research & Subscriptions</h3>
+            <p class="text-sm text-gray-400 mb-6">Select a membership or donation option:</p>
+            <div class="space-y-3 mb-6">
+                <button onclick="redirectToStripe('basic')" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-lg text-sm">Basic Member Subscription</button>
+                <button onclick="redirectToStripe('business')" class="w-full bg-purple-600 hover:bg-purple-500 text-white font-bold py-3 rounded-lg text-sm">Business Subscription</button>
+                <button onclick="redirectToStripe('academic')" class="w-full bg-amber-600 hover:bg-amber-500 text-white font-bold py-3 rounded-lg text-sm">Academic Institutions</button>
+                <button onclick="redirectToStripe('donation')" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 rounded-lg text-sm">Direct Donation</button>
+            </div>
+            <button onclick="closeModals()" class="w-full bg-gray-800 text-gray-400 py-2 rounded-lg text-sm">Close</button>
         </div>
     </div>
 
     <script>
-        window.STRIPE_PAYMENT_LINKS = {
-            basic: "https://buy.stripe.com/test_basic",
-            consortium: "https://buy.stripe.com/test_consortium"
+        window.STRIPE_URLS = {
+            basic: "https://buy.stripe.com/4gM28leW294M9FjbsR5os01",
+            business: "https://buy.stripe.com/4gM7sF5lsa8Q04J9kJ5os02",
+            academic: "https://buy.stripe.com/3cIbIVbJQep6dVz7cB5os03",
+            donation: "https://donate.stripe.com/9B6bIVaFMep68BfgNb5os04"
         };
 
         const ADMINS = ["dassenseibsu@pm.me", "cyberdojosensei@gmail.com"];
@@ -105,7 +111,7 @@
 
         function submitLogin() {
             const email = document.getElementById('loginEmail').value.trim().toLowerCase();
-            if (!email) return alert('Please enter an email.');
+            if (!email) return alert('Please enter your account email.');
 
             localStorage.setItem('hive_user_email', email);
             if (ADMINS.includes(email)) {
@@ -113,13 +119,17 @@
                 window.location.href = 'admin.html';
             } else {
                 localStorage.setItem('hive_user_role', 'member');
-                window.location.href = 'research.html';
+                window.location.href = 'portal.html';
             }
         }
 
-        function triggerStripeCheckout(tier) {
-            const url = window.STRIPE_PAYMENT_LINKS[tier] || window.STRIPE_PAYMENT_LINKS.basic;
-            window.open(url, '_blank');
+        function redirectToStripe(option) {
+            const targetUrl = window.STRIPE_URLS[option];
+            if (targetUrl) {
+                window.open(targetUrl, '_blank');
+            } else {
+                alert('Invalid Stripe link selected.');
+            }
         }
     </script>
 </body>

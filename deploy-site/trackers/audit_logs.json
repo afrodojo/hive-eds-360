@@ -1,0 +1,7 @@
+﻿[
+  {
+    "event": "DISCOUNT_ENGINE_ACTIVE",
+    "supported_rules": ["EDU_EMAIL_ONLY", "REDACTED_VET_DOC", "SCHOOL_CODE", "APPROVAL_QUEUE"],
+    "timestamp": "2026-10-11T13:53:00Z"
+  }
+]
