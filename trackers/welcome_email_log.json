@@ -1,50 +1,40 @@
 ﻿[
     {
-        "email":  "user@example.com",
-        "name":  "Alex",
-        "drip_step":  1,
-        "admin_notify":  "dassenseibsu@pm.me",
-        "sent_at":  "2026-10-12T01:23:09Z",
-        "status":  "SIMULATED"
+        "value":  [
+                      {
+                          "value":  [
+                                        {
+                                            "value":  "     ",
+                                            "Count":  6
+                                        },
+                                        {
+                                            "email":  "cyberdojosensei@gmail.com",
+                                            "name":  "Sensei Admin",
+                                            "drip_step":  1,
+                                            "admin_notify":  "dassenseibsu@pm.me",
+                                            "sent_at":  "2026-10-12T12:01:49Z",
+                                            "status":  "SIMULATED"
+                                        }
+                                    ],
+                          "Count":  2
+                      },
+                      {
+                          "email":  "cyberdojosensei@gmail.com",
+                          "name":  "Sensei Admin",
+                          "drip_step":  3,
+                          "admin_notify":  "dassenseibsu@pm.me",
+                          "sent_at":  "2026-10-12T12:01:49Z",
+                          "status":  "SIMULATED"
+                      }
+                  ],
+        "Count":  2
     },
     {
-        "email":  "user@example.com",
-        "name":  "Alex",
-        "drip_step":  3,
-        "admin_notify":  "dassenseibsu@pm.me",
-        "sent_at":  "2026-10-12T01:23:09Z",
-        "status":  "SIMULATED"
-    },
-    {
-        "email":  "user@example.com",
-        "name":  "Alex",
+        "email":  "cyberdojosensei@gmail.com",
+        "name":  "Sensei Admin",
         "drip_step":  7,
         "admin_notify":  "dassenseibsu@pm.me",
-        "sent_at":  "2026-10-12T01:23:09Z",
-        "status":  "SIMULATED"
-    },
-    {
-        "email":  "testuser@eds-360.com",
-        "name":  "Test User",
-        "drip_step":  1,
-        "admin_notify":  "dassenseibsu@pm.me",
-        "sent_at":  "2026-10-12T01:23:09Z",
-        "status":  "SIMULATED"
-    },
-    {
-        "email":  "testuser@eds-360.com",
-        "name":  "Test User",
-        "drip_step":  3,
-        "admin_notify":  "dassenseibsu@pm.me",
-        "sent_at":  "2026-10-12T01:23:09Z",
-        "status":  "SIMULATED"
-    },
-    {
-        "email":  "testuser@eds-360.com",
-        "name":  "Test User",
-        "drip_step":  7,
-        "admin_notify":  "dassenseibsu@pm.me",
-        "sent_at":  "2026-10-12T01:23:09Z",
+        "sent_at":  "2026-10-12T12:01:49Z",
         "status":  "SIMULATED"
     }
 ]
