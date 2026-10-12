@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hive Network - Admin Gateway</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0d1117; color: #c9d1d9; padding: 30px; }
+        .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #30363d; padding-bottom: 15px; margin-bottom: 25px; }
+        h1 { color: #58a6ff; margin: 0; }
+        .badge { background: #238636; color: white; padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: bold; }
+        .card { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 20px; margin-bottom: 20px; }
+        h2 { color: #3fb950; margin-top: 0; }
+        a { color: #58a6ff; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Hive Network Admin Console</h1>
+        <span class="badge" id="roleBadge">ADMIN AUTHORIZED</span>
+    </div>
+    <div class="card">
+        <h2>Active Executive Accounts</h2>
+        <p><b>Primary Contact:</b> dassenseibsu@pm.me</p>
+        <p><b>Secondary Contact:</b> cyberdojosensei@gmail.com</p>
+        <p><b>Current Session:</b> <span id="currentEmail">Loading...</span></p>
+    </div>
+    <div class="card">
+        <h2>System Architecture & Navigation</h2>
+        <ul>
+            <li><a href="portal.html">Portal Login Page</a></li>
+            <li><a href="blog.html">Research & Blog Logs</a></li>
+            <li><a href="RAG-console.html">Air-Gapped RAG Console</a></li>
+            <li><a href="research.html">Consortium & Dual-Use Defense Research</a></li>
+        </ul>
+    </div>
+    <script>
+        const admins = ["dassenseibsu@pm.me", "cyberdojosensei@gmail.com"];
+        const current = localStorage.getItem('hive_user_email') || '';
+        document.getElementById('currentEmail').innerText = current || 'Not Logged In';
+        
+        if (!admins.includes(current.toLowerCase())) {
+            alert('Access Denied: Admin authorization required.');
+            window.location.href = 'portal.html';
+        }
+    </script>
+</body>
+</html>
