@@ -16,15 +16,17 @@
         h1 { font-size: 32px; color: #ffffff; margin-top: 0; line-height: 1.3; }
         p { color: #8b949e; line-height: 1.6; font-size: 16px; }
         .btn-group { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 25px; }
-        .btn { padding: 10px 18px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 14px; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; border: 1px solid transparent; }
-        .btn-primary { background: #238636; color: white; }
+        .btn { padding: 10px 18px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 14px; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; border: 1px solid transparent; background: #21262d; color: #c9d1d9; border-color: #30363d; }
+        .btn:hover { background: #30363d; }
+        .btn-primary { background: #238636; color: white; border: none; }
         .btn-primary:hover { background: #2ea043; }
-        .btn-secondary { background: #21262d; color: #c9d1d9; border-color: #30363d; }
-        .btn-secondary:hover { background: #30363d; }
-        .btn-admin { background: #1f6feb; color: white; }
+        .btn-admin { background: #1f6feb; color: white; border: none; }
         .btn-admin:hover { background: #388bfd; }
-        .status-pill { background: rgba(46, 160, 67, 0.15); color: #3fb950; padding: 6px 12px; border-radius: 12px; font-size: 13px; font-family: monospace; display: inline-flex; align-items: center; gap: 6px; margin-top: 15px; }
-        .dot { width: 8px; height: 8px; background: #3fb950; border-radius: 50%; display: inline-block; }
+        /* Modal Overlay Styling */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); justify-content: center; align-items: center; z-index: 1000; }
+        .modal-content { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 30px; width: 90%; max-width: 400px; text-align: center; }
+        .modal-content input { width: 100%; padding: 10px; margin: 15px 0; background: #0d1117; border: 1px solid #30363d; color: #c9d1d9; border-radius: 6px; box-sizing: border-box; }
+        .close-btn { background: #21262d; color: #8b949e; padding: 8px 16px; border-radius: 6px; border: 1px solid #30363d; cursor: pointer; margin-top: 10px; }
     </style>
 </head>
 <body>
@@ -43,21 +45,84 @@
         <div class="hero">
             <div class="badge">CS Doctoral Student • Defense AI Innovator • Founder</div>
             <h1>Documenting My Computer Science Ph.D. & Sovereign Defense AI Journey</h1>
-            <p>Welcome to my public digital enclave. I am a Computer Science Doctoral Candidate specializing in air-gapped local AI architectures, secure Retrieval-Augmented Generation (RAG), and tactical edge compute. Through <b>Emerging Defense Solutions (EDS)</b>, I integrate doctoral research, SBIR grant acquisition, and student mentorship.</p>
+            <p>Welcome to my public digital enclave. I am a Computer Science Doctoral Candidate specializing in air-gapped local AI architectures, secure Retrieval-Augmented Generation (RAG), and tactical edge compute.</p>
             
             <div class="btn-group">
-                <a href="portal.html" class="btn btn-primary">Member Portal Login</a>
+                <button onclick="openLoginModal()" class="btn btn-primary">Member Portal Login</button>
                 <a href="admin.html" class="btn btn-admin">Admin Console</a>
-                <a href="https://youtube.com" target="_blank" class="btn btn-secondary">YouTube Channel</a>
-                <a href="https://linkedin.com" target="_blank" class="btn btn-secondary">LinkedIn Profile</a>
-                <a href="https://instagram.com" target="_blank" class="btn btn-secondary">@eds_360</a>
-                <a href="https://facebook.com" target="_blank" class="btn btn-secondary">Facebook Page</a>
-            </div>
-
-            <div>
-                <div class="status-pill"><span class="dot"></span> Auto-Ingesting Comments & Engagement Active</div>
+                <button onclick="openDonateModal()" class="btn">Support Doctoral Research</button>
+                <a href="https://youtube.com" target="_blank" class="btn">YouTube Channel</a>
+                <a href="https://linkedin.com" target="_blank" class="btn">LinkedIn Profile</a>
+                <a href="https://instagram.com" target="_blank" class="btn">@eds_360</a>
+                <a href="https://facebook.com" target="_blank" class="btn">Facebook Page</a>
             </div>
         </div>
     </div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal-overlay">
+        <div class="modal-content">
+            <h2 style="color:#58a6ff; margin-top:0;">Member Sign In</h2>
+            <input type="email" id="loginEmail" placeholder="Enter your email...">
+            <button onclick="executeModalLogin()" class="btn btn-primary" style="width:100%;">Log In</button>
+            <button onclick="closeModal('loginModal')" class="close-btn">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Donate Modal -->
+    <div id="donateModal" class="modal-overlay">
+        <div class="modal-content">
+            <h2 style="color:#3fb950; margin-top:0;">Support Research</h2>
+            <p style="font-size:14px; color:#8b949e;">Select Tier to proceed to secure checkout:</p>
+            <button onclick="triggerStripeCheckout('basic')" class="btn" style="width:100%; margin-bottom:10px;">Basic Tier ()</button>
+            <button onclick="triggerStripeCheckout('consortium')" class="btn btn-primary" style="width:100%; margin-bottom:10px;">Consortium Tier ()</button>
+            <button onclick="closeModal('donateModal')" class="close-btn">Close</button>
+        </div>
+    </div>
+
+    <script>
+        // Single global declaration for Stripe payment links
+        const STRIPE_PAYMENT_LINKS = {
+            basic: "https://buy.stripe.com/test_basic",
+            consortium: "https://buy.stripe.com/test_consortium"
+        };
+
+        const ADMIN_EMAILS = ["dassenseibsu@pm.me", "cyberdojosensei@gmail.com"];
+
+        function openLoginModal() {
+            document.getElementById('loginModal').style.display = 'flex';
+        }
+
+        function openDonateModal() {
+            document.getElementById('donateModal').style.display = 'flex';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        function executeModalLogin() {
+            const email = document.getElementById('loginEmail').value.trim().toLowerCase();
+            if (!email) return alert('Please enter a valid email.');
+
+            localStorage.setItem('hive_user_email', email);
+            if (ADMIN_EMAILS.includes(email)) {
+                localStorage.setItem('hive_user_role', 'admin');
+                window.location.href = 'admin.html';
+            } else {
+                localStorage.setItem('hive_user_role', 'member');
+                window.location.href = 'research.html';
+            }
+        }
+
+        function triggerStripeCheckout(tier) {
+            const url = STRIPE_PAYMENT_LINKS[tier] || STRIPE_PAYMENT_LINKS.basic;
+            window.open(url, '_blank');
+        }
+
+        function requestGateAccess(event) {
+            openLoginModal();
+        }
+    </script>
 </body>
 </html>
