@@ -39,12 +39,12 @@
                 localStorage.setItem('hive_user_role', 'admin');
                 status.className = 'status success';
                 status.innerText = 'Admin Access Verified! Redirecting to Admin Console...';
-                setTimeout(() => { window.location.href = 'admin.html'; }, 1000);
+                setTimeout(() => { window.location.href = 'admin.html'; }, 800);
             } else {
                 localStorage.setItem('hive_user_role', 'member');
                 status.className = 'status success';
                 status.innerText = 'Member Access Verified! Redirecting to Research Hub...';
-                setTimeout(() => { window.location.href = 'research.html'; }, 1000);
+                setTimeout(() => { window.location.href = 'research.html'; }, 800);
             }
         });
     </script>
