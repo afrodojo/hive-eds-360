@@ -1,14 +1,40 @@
 ﻿[
     {
-        "email":  "user@example.com",
-        "name":  "Alex",
-        "sent_at":  "2026-10-12T00:51:17Z",
-        "status":  "SIMULATED"
+        "value":  [
+                      {
+                          "value":  [
+                                        {
+                                            "value":  " ",
+                                            "Count":  2
+                                        },
+                                        {
+                                            "email":  "user@example.com",
+                                            "name":  "Alex",
+                                            "drip_step":  1,
+                                            "admin_notify":  "dassenseibsu@pm.me",
+                                            "sent_at":  "2026-10-12T01:14:37Z",
+                                            "status":  "SIMULATED"
+                                        }
+                                    ],
+                          "Count":  2
+                      },
+                      {
+                          "email":  "user@example.com",
+                          "name":  "Alex",
+                          "drip_step":  3,
+                          "admin_notify":  "dassenseibsu@pm.me",
+                          "sent_at":  "2026-10-12T01:14:37Z",
+                          "status":  "SIMULATED"
+                      }
+                  ],
+        "Count":  2
     },
     {
         "email":  "user@example.com",
         "name":  "Alex",
-        "sent_at":  "2026-10-12T00:52:39Z",
+        "drip_step":  7,
+        "admin_notify":  "dassenseibsu@pm.me",
+        "sent_at":  "2026-10-12T01:14:37Z",
         "status":  "SIMULATED"
     }
 ]
