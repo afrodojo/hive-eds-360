@@ -8,33 +8,33 @@
                                             "Count":  2
                                         },
                                         {
-                                            "email":  "user@example.com",
-                                            "name":  "Alex",
+                                            "email":  "testuser@eds-360.com",
+                                            "name":  "Test User",
                                             "drip_step":  1,
                                             "admin_notify":  "dassenseibsu@pm.me",
-                                            "sent_at":  "2026-10-12T01:14:37Z",
+                                            "sent_at":  "2026-10-12T01:21:23Z",
                                             "status":  "SIMULATED"
                                         }
                                     ],
                           "Count":  2
                       },
                       {
-                          "email":  "user@example.com",
-                          "name":  "Alex",
+                          "email":  "testuser@eds-360.com",
+                          "name":  "Test User",
                           "drip_step":  3,
                           "admin_notify":  "dassenseibsu@pm.me",
-                          "sent_at":  "2026-10-12T01:14:37Z",
+                          "sent_at":  "2026-10-12T01:21:23Z",
                           "status":  "SIMULATED"
                       }
                   ],
         "Count":  2
     },
     {
-        "email":  "user@example.com",
-        "name":  "Alex",
+        "email":  "testuser@eds-360.com",
+        "name":  "Test User",
         "drip_step":  7,
         "admin_notify":  "dassenseibsu@pm.me",
-        "sent_at":  "2026-10-12T01:14:37Z",
+        "sent_at":  "2026-10-12T01:21:23Z",
         "status":  "SIMULATED"
     }
 ]
