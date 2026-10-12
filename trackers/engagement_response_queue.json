@@ -1,7 +1,7 @@
 ﻿{
     "id":  "fb_101",
     "priority_score":  1.320,
-    "suggested_response":  "Great question! Our local REST gateway uses quantized vector schemas running offline on port 8443. You can test a live simulation at https://hive.eds-360.com/RAG-console.html.",
+    "suggested_response":  "Great question! Our local REST gateway uses quantized vector schemas running offline on port 8443. You can test a live simulation at https://hive.ed³-360.com/RAG-console.html.",
     "platform":  "Facebook",
     "status":  "QUEUED_FOR_REVIEW",
     "query":  "How does air-gapped RAG handle memory constraints?"
