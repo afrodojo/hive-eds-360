@@ -1,4 +1,4 @@
-﻿param(
+param(
     [string]$Platform = "All",
     [double]$TargetPostsPerWeek = 5.0,     [switch]$AutoRespond
 )
