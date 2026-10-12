@@ -29,14 +29,16 @@
                 <label class="block text-xs font-bold text-gray-400 mb-1">Select Registration Tier</label>
                 <select id="regTier" onchange="checkTierDomainRequirement()" class="w-full bg-gray-950 border border-gray-800 p-3 rounded-lg text-white text-sm focus:outline-none focus:border-blue-500">
                     <option value="basic">Basic Member (/mo)</option>
+                    <option value="academic">Academic Student/Faculty (/mo - .edu Required)</option>
+                    <option value="proposal_partner">Grant & Proposal Partner (.00 - Grant Funded)</option>
                     <option value="business">Business Tier (/mo)</option>
-                    <option value="academic">Academic Tier (.edu Domain Required)</option>
                 </select>
             </div>
             <div>
                 <label class="block text-xs font-bold text-gray-400 mb-1">Email Address</label>
                 <input type="email" id="authEmail" class="w-full bg-gray-950 border border-gray-800 p-3 rounded-lg text-white text-sm focus:outline-none focus:border-blue-500" placeholder="name@university.edu">
                 <p id="domainHelp" class="text-[11px] text-amber-400 font-mono mt-1 hidden">Academic Tier requires a verified active .edu email address.</p>
+                <p id="partnerHelp" class="text-[11px] text-emerald-400 font-mono mt-1 hidden">Proposal Partners receive 0.00 billing under grant allocations upon verification.</p>
             </div>
             <div>
                 <label class="block text-xs font-bold text-gray-400 mb-1">Password</label>
@@ -55,13 +57,26 @@
 
         let currentMode = 'login';
 
+        // Check URL parameters if redirected from pricing page
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('tier') === 'proposal_partner') {
+            document.getElementById('regTier').value = 'proposal_partner';
+            switchTab('register');
+            checkTierDomainRequirement();
+        }
+
         function checkTierDomainRequirement() {
             const tier = document.getElementById('regTier').value;
             const help = document.getElementById('domainHelp');
+            const pHelp = document.getElementById('partnerHelp');
+            
+            help.classList.add('hidden');
+            pHelp.classList.add('hidden');
+
             if (tier === 'academic') {
                 help.classList.remove('hidden');
-            } else {
-                help.classList.add('hidden');
+            } else if (tier === 'proposal_partner') {
+                pHelp.classList.remove('hidden');
             }
         }
 

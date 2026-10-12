@@ -39,7 +39,7 @@
             <!-- Basic Member -->
             <div class="bg-gray-900 border border-gray-800 rounded-2xl p-6 flex flex-col justify-between hover:border-gray-700 transition">
                 <div class="space-y-4">
-                    <span class="text-xs font-bold text-blue-400 uppercase tracking-wider">Individual / Student</span>
+                    <span class="text-xs font-bold text-blue-400 uppercase tracking-wider">Individual Enthusiast</span>
                     <h3 class="text-2xl font-bold text-white">Basic Member</h3>
                     <p class="text-3xl font-extrabold text-white"> <span class="text-xs font-normal text-gray-400">/ month</span></p>
                     <ul class="space-y-2 text-xs text-gray-300 pt-4 border-t border-gray-800">
@@ -52,82 +52,65 @@
                 <a href="https://buy.stripe.com/4gM28leW294M9FjbsR5os01" target="_blank" class="mt-8 w-full block text-center bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl text-sm">Subscribe Basic</a>
             </div>
 
-            <!-- Business -->
-            <div class="bg-gray-900 border-2 border-purple-600 rounded-2xl p-6 flex flex-col justify-between relative shadow-lg shadow-purple-900/20">
-                <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-purple-600 text-white text-[10px] uppercase font-extrabold px-3 py-0.5 rounded-full">Most Popular</span>
+            <!-- Student / Faculty Academic Tier -->
+            <div class="bg-gray-900 border border-amber-600/50 rounded-2xl p-6 flex flex-col justify-between hover:border-amber-500 transition">
                 <div class="space-y-4">
-                    <span class="text-xs font-bold text-purple-400 uppercase tracking-wider">Industry & Defense</span>
+                    <span class="text-xs font-bold text-amber-400 uppercase tracking-wider">Students & Faculty (.edu Verified)</span>
+                    <h3 class="text-2xl font-bold text-white">Academic Member</h3>
+                    <p class="text-3xl font-extrabold text-white"> <span class="text-xs font-normal text-gray-400">/ month</span></p>
+                    <p class="text-[11px] text-amber-400/90 font-mono">Requires verified active .edu email address.</p>
+                    <ul class="space-y-2 text-xs text-gray-300 pt-4 border-t border-gray-800">
+                        <li>✔ Open-Access Doctoral Publications</li>
+                        <li>✔ RAG & Edge AI Code Repositories</li>
+                        <li>✔ Student Mentorship Portal Access</li>
+                        <li>✔ Research Dataset Downloads</li>
+                    </ul>
+                </div>
+                <a href="https://buy.stripe.com/3cIbIVbJQep6dVz7cB5os03" target="_blank" class="mt-8 w-full block text-center bg-amber-600 hover:bg-amber-500 text-white font-bold py-3 rounded-xl text-sm">Join Academic (/mo)</a>
+            </div>
+
+            <!-- Grant & Proposal Partner Tier -->
+            <div class="bg-gray-900 border-2 border-emerald-500 rounded-2xl p-6 flex flex-col justify-between relative shadow-lg shadow-emerald-900/20">
+                <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-emerald-600 text-white text-[10px] uppercase font-extrabold px-3 py-0.5 rounded-full">Sponsored Partners</span>
+                <div class="space-y-4">
+                    <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider">SBIR / STTR / Grant Collaborators</span>
+                    <h3 class="text-2xl font-bold text-white">Proposal Partner</h3>
+                    <p class="text-3xl font-extrabold text-white">.00 <span class="text-xs font-normal text-emerald-400">/ Direct Access</span></p>
+                    <p class="text-[11px] text-gray-400">Platform compute & licensing fees funded directly via joint proposal/grant budget allocations.</p>
+                    <ul class="space-y-2 text-xs text-gray-300 pt-4 border-t border-gray-800">
+                        <li>✔ Multi-Seat Co-PI & Researcher Access</li>
+                        <li>✔ Joint SBIR/STTR Proposal Drafting</li>
+                        <li>✔ Air-Gapped CUDA Hardware Allocation</li>
+                        <li>✔ Custom Defense RAG Integrations</li>
+                    </ul>
+                </div>
+                <a href="auth.html?tier=proposal_partner" class="mt-8 w-full block text-center bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 rounded-xl text-sm">Partner Registration (.00)</a>
+            </div>
+
+            <!-- Business Tier -->
+            <div class="bg-gray-900 border border-gray-800 rounded-2xl p-6 flex flex-col justify-between hover:border-gray-700 transition">
+                <div class="space-y-4">
+                    <span class="text-xs font-bold text-purple-400 uppercase tracking-wider">Industry & Defense Contractors</span>
                     <h3 class="text-2xl font-bold text-white">Business Tier</h3>
                     <p class="text-3xl font-extrabold text-white"> <span class="text-xs font-normal text-gray-400">/ month</span></p>
                     <ul class="space-y-2 text-xs text-gray-300 pt-4 border-t border-gray-800">
-                        <li>✔ All Basic Features Included</li>
                         <li>✔ Full Air-Gapped Benchmark Datasets</li>
                         <li>✔ Priority RAG API Sandbox Access</li>
-                        <li>✔ Direct SBIR/STTR Collaboration Logs</li>
+                        <li>✔ Commercial Defense Licensing</li>
+                        <li>✔ Executive Technical Consultations</li>
                     </ul>
                 </div>
                 <a href="https://buy.stripe.com/4gM7sF5lsa8Q04J9kJ5os02" target="_blank" class="mt-8 w-full block text-center bg-purple-600 hover:bg-purple-500 text-white font-bold py-3 rounded-xl text-sm">Subscribe Business</a>
             </div>
 
-            <!-- Academic Institutions (.edu Verified) -->
-            <div class="bg-gray-900 border border-gray-800 rounded-2xl p-6 flex flex-col justify-between hover:border-gray-700 transition">
-                <div class="space-y-4">
-                    <span class="text-xs font-bold text-amber-400 uppercase tracking-wider">Universities & Labs (.edu Only)</span>
-                    <h3 class="text-2xl font-bold text-white">Academic Tier</h3>
-                    <p class="text-3xl font-extrabold text-white">Institutional</p>
-                    <p class="text-[11px] text-amber-400/90 font-mono">Requires verified active .edu institutional account.</p>
-                    <ul class="space-y-2 text-xs text-gray-300 pt-4 border-t border-gray-800">
-                        <li>✔ Multi-Seat Student & Faculty Access</li>
-                        <li>✔ Open-Access Doctoral Publications</li>
-                        <li>✔ Joint Grant Collaboration Rights</li>
-                        <li>✔ Student Mentorship Portal Access</li>
-                    </ul>
-                </div>
-                <a href="https://buy.stripe.com/3cIbIVbJQep6dVz7cB5os03" target="_blank" class="mt-8 w-full block text-center bg-amber-600 hover:bg-amber-500 text-white font-bold py-3 rounded-xl text-sm">Join Academic (.edu)</a>
-            </div>
-
-            <!-- Direct Donations & Research Sponsorship -->
-            <div class="bg-gray-900 border border-gray-800 rounded-2xl p-6 flex flex-col justify-between hover:border-gray-700 transition">
-                <div class="space-y-4">
-                    <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider">Patrons & Sponsors</span>
-                    <h3 class="text-2xl font-bold text-white">Research Sponsor</h3>
-                    <p class="text-3xl font-extrabold text-white">Custom</p>
-                    <ul class="space-y-2 text-xs text-gray-300 pt-4 border-t border-gray-800">
-                        <li>✔ CUDA Hardware & GPU Benchmarks</li>
-                        <li>✔ Doctoral Open-Access Publications</li>
-                        <li>✔ Infrastructure & Domain Hosting</li>
-                        <li>✔ Open-Source Defense AI Toolkits</li>
-                    </ul>
-                </div>
-                <a href="https://donate.stripe.com/9B6bIVaFMep68BfgNb5os04" target="_blank" class="mt-8 w-full block text-center bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 rounded-xl text-sm">Make Direct Donation</a>
-            </div>
-
         </div>
 
-        <!-- Detailed Section: What Donations Fund -->
+        <!-- Detailed Funding & Grant Allocation Breakdown -->
         <section class="bg-gray-900/60 border border-gray-800 rounded-2xl p-8 space-y-4">
-            <h3 class="text-xl font-bold text-emerald-400">💡 How Donations Direct-Fund Research & Operations</h3>
+            <h3 class="text-xl font-bold text-emerald-400">💡 Grant & Proposal Sponsorship Model</h3>
             <p class="text-sm text-gray-300 leading-relaxed">
-                Your direct contributions fund the hardware, compute power, and operational foundation powering <strong>The Hive Network</strong> and <strong>Emerging Defense Solutions</strong>:
+                Partner institutions collaborating on active <strong>SBIR, STTR, or DoD research proposals</strong> pay <strong>.00 out-of-pocket</strong> for platform access. Compute usage, air-gapped CUDA hardware time, and research portal seats are allocated as direct direct-cost items within submitted grant budgets.
             </p>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-xs text-gray-400 pt-2">
-                <div class="bg-gray-950 p-4 rounded-xl border border-gray-800/80">
-                    <strong class="text-white block mb-1">🔬 Doctoral CS Research</strong>
-                    Open-access publication fees, academic conference fees, and student research assistant stipends.
-                </div>
-                <div class="bg-gray-950 p-4 rounded-xl border border-gray-800/80">
-                    <strong class="text-white block mb-1">⚡ CUDA GPU Hardware</strong>
-                    Procurement and maintenance of physical, air-gapped GPU clusters for local LLM and RAG latency benchmarks.
-                </div>
-                <div class="bg-gray-950 p-4 rounded-xl border border-gray-800/80">
-                    <strong class="text-white block mb-1">🌐 Hosting & Infrastructure</strong>
-                    Cloudflare edge worker deployments, Supabase encrypted database scaling, and high-availability domain hosting.
-                </div>
-                <div class="bg-gray-950 p-4 rounded-xl border border-gray-800/80">
-                    <strong class="text-white block mb-1">🛡️ Open-Source Defense AI</strong>
-                    Creating tactical, zero-trust AI toolkits made available to student engineers and defense innovation partners.
-                </div>
-            </div>
         </section>
     </main>
 </body>
