@@ -1,0 +1,99 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Access & Account Portal | The Hive Network</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        body { background-color: #0b0e14; color: #c9d1d9; font-family: system-ui, sans-serif; }
+    </style>
+</head>
+<body class="p-6 flex items-center justify-center min-h-screen">
+    <div class="bg-gray-900 border border-gray-800 p-8 rounded-2xl w-full max-w-md space-y-6">
+        <div class="text-center space-y-2">
+            <h1 class="text-2xl font-bold text-white">The Hive Network Portal</h1>
+            <p class="text-xs text-gray-400">Doctor of Applied Science in Computer Science Enclave</p>
+        </div>
+
+        <div class="flex border-b border-gray-800 text-sm">
+            <button id="tabLogin" onclick="switchTab('login')" class="flex-1 py-2 font-bold text-blue-400 border-b-2 border-blue-500">Sign In</button>
+            <button id="tabRegister" onclick="switchTab('register')" class="flex-1 py-2 font-bold text-gray-400">Create Account</button>
+        </div>
+
+        <!-- Auth Form -->
+        <div class="space-y-4">
+            <div>
+                <label class="block text-xs font-bold text-gray-400 mb-1">Email Address</label>
+                <input type="email" id="authEmail" class="w-full bg-gray-950 border border-gray-800 p-3 rounded-lg text-white text-sm focus:outline-none focus:border-blue-500" placeholder="name@domain.com">
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-gray-400 mb-1">Password</label>
+                <input type="password" id="authPassword" class="w-full bg-gray-950 border border-gray-800 p-3 rounded-lg text-white text-sm focus:outline-none focus:border-blue-500" placeholder="••••••••••••">
+            </div>
+            <button id="authBtn" onclick="handleAuth()" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-lg text-sm transition">Sign In</button>
+        </div>
+
+        <!-- 2FA / TOTP Section -->
+        <div id="mfaContainer" class="hidden pt-4 border-t border-gray-800 text-center space-y-3">
+            <h3 class="text-white text-sm font-bold">Two-Factor Authentication (2FA) Required</h3>
+            <p class="text-xs text-gray-400">Enter the 6-digit code from your authenticator app:</p>
+            <input type="text" id="mfaCode" maxlength="6" class="w-full text-center text-xl tracking-widest bg-gray-950 border border-gray-800 p-2 rounded-lg text-white focus:outline-none focus:border-blue-500" placeholder="123456">
+            <button onclick="verifyMFA()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 rounded-lg text-sm">Verify 2FA Code</button>
+        </div>
+
+        <p id="authMessage" class="text-xs text-center text-gray-400"></p>
+    </div>
+
+    <script>
+        const SUPABASE_URL = "https://wuwndfrpphyylwdvwotj.supabase.co";
+        const SUPABASE_ANON_KEY = "sb_publishable_Uwjn53ZZVbTi5rRw7XjUYg_xZfDcufn";
+        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        let currentMode = 'login';
+
+        function switchTab(mode) {
+            currentMode = mode;
+            if (mode === 'login') {
+                document.getElementById('tabLogin').className = "flex-1 py-2 font-bold text-blue-400 border-b-2 border-blue-500";
+                document.getElementById('tabRegister').className = "flex-1 py-2 font-bold text-gray-400";
+                document.getElementById('authBtn').innerText = "Sign In";
+            } else {
+                document.getElementById('tabRegister').className = "flex-1 py-2 font-bold text-blue-400 border-b-2 border-blue-500";
+                document.getElementById('tabLogin').className = "flex-1 py-2 font-bold text-gray-400";
+                document.getElementById('authBtn').innerText = "Create Account";
+            }
+        }
+
+        async function handleAuth() {
+            const email = document.getElementById('authEmail').value.trim();
+            const password = document.getElementById('authPassword').value;
+            const msg = document.getElementById('authMessage');
+
+            if (!email || !password) return alert('Please enter both email and password.');
+
+            msg.innerText = "Processing request...";
+
+            if (currentMode === 'register') {
+                const { data, error } = await supabase.auth.signUp({ email, password });
+                if (error) {
+                    msg.innerText = "Error: " + error.message;
+                } else {
+                    msg.innerText = "Account created! Check your email to confirm registration or sign in.";
+                }
+            } else {
+                const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+                if (error) {
+                    msg.innerText = "Error: " + error.message;
+                } else {
+                    localStorage.setItem('hive_user_email', email);
+                    msg.innerText = "Authentication successful! Redirecting to Portal...";
+                    setTimeout(() => { window.location.href = 'portal.html'; }, 1000);
+                }
+            }
+        }
+    </script>
+</body>
+</html>

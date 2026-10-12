@@ -1,0 +1,107 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Membership Tiers & Subscriptions | Emerging Defense Solutions</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background-color: #0b0e14; color: #c9d1d9; font-family: system-ui, sans-serif; }
+    </style>
+</head>
+<body class="p-6">
+    <header class="max-w-7xl mx-auto flex items-center justify-between bg-gray-900 p-4 rounded-xl mb-8 border border-gray-800">
+        <div class="flex items-center space-x-3">
+            <a href="index.html" class="bg-blue-600 text-white font-bold p-2 rounded-lg">DS</a>
+            <div>
+                <a href="index.html" class="text-white font-bold hover:underline">The Hive Network</a>
+                <p class="text-xs text-gray-400">Doctor of Applied Science in Computer Science Research</p>
+            </div>
+        </div>
+        <nav class="flex items-center space-x-4">
+            <a href="index.html" class="text-gray-300 hover:text-white text-sm">About & Bio</a>
+            <a href="pricing.html" class="text-blue-400 font-bold text-sm">Membership Tiers</a>
+            <a href="auth.html" class="bg-blue-600 hover:bg-blue-500 text-white text-sm px-4 py-2 rounded-lg font-semibold">Sign In / Register</a>
+        </nav>
+    </header>
+
+    <main class="max-w-7xl mx-auto space-y-12">
+        <section class="text-center max-w-3xl mx-auto space-y-4">
+            <span class="bg-blue-950 text-blue-400 text-xs px-3 py-1 rounded-full font-mono">Sovereign Defense AI & Academic Research Enclave</span>
+            <h1 class="text-4xl font-extrabold text-white">Select Your Membership Level</h1>
+            <p class="text-gray-400 text-sm">Support air-gapped CUDA benchmarks, secure RAG architectures, and doctoral CS research. Unlocks verified portal access based on subscription tier.</p>
+        </section>
+
+        <!-- Tier Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            
+            <!-- Basic Member -->
+            <div class="bg-gray-900 border border-gray-800 rounded-2xl p-6 flex flex-col justify-between hover:border-gray-700 transition">
+                <div class="space-y-4">
+                    <span class="text-xs font-bold text-blue-400 uppercase tracking-wider">Individual / Student</span>
+                    <h3 class="text-2xl font-bold text-white">Basic Member</h3>
+                    <p class="text-3xl font-extrabold text-white"> <span class="text-xs font-normal text-gray-400">/ month</span></p>
+                    <ul class="space-y-2 text-xs text-gray-300 pt-4 border-t border-gray-800">
+                        <li>✔ Public & Student Research Logs</li>
+                        <li>✔ Access to RAG Architecture Summaries</li>
+                        <li>✔ Community Forum & Event Invites</li>
+                        <li>✔ 2FA Authenticator Support</li>
+                    </ul>
+                </div>
+                <a href="https://buy.stripe.com/4gM28leW294M9FjbsR5os01" target="_blank" class="mt-8 w-full block text-center bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl text-sm">Subscribe Basic</a>
+            </div>
+
+            <!-- Business -->
+            <div class="bg-gray-900 border-2 border-purple-600 rounded-2xl p-6 flex flex-col justify-between relative shadow-lg shadow-purple-900/20">
+                <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-purple-600 text-white text-[10px] uppercase font-extrabold px-3 py-0.5 rounded-full">Most Popular</span>
+                <div class="space-y-4">
+                    <span class="text-xs font-bold text-purple-400 uppercase tracking-wider">Industry & Defense</span>
+                    <h3 class="text-2xl font-bold text-white">Business Tier</h3>
+                    <p class="text-3xl font-extrabold text-white"> <span class="text-xs font-normal text-gray-400">/ month</span></p>
+                    <ul class="space-y-2 text-xs text-gray-300 pt-4 border-t border-gray-800">
+                        <li>✔ All Basic Features Included</li>
+                        <li>✔ Full Air-Gapped Benchmark Datasets</li>
+                        <li>✔ Priority RAG API Sandbox Access</li>
+                        <li>✔ Direct SBIR/STTR Collaboration Logs</li>
+                    </ul>
+                </div>
+                <a href="https://buy.stripe.com/4gM7sF5lsa8Q04J9kJ5os02" target="_blank" class="mt-8 w-full block text-center bg-purple-600 hover:bg-purple-500 text-white font-bold py-3 rounded-xl text-sm">Subscribe Business</a>
+            </div>
+
+            <!-- Academic Institutions -->
+            <div class="bg-gray-900 border border-gray-800 rounded-2xl p-6 flex flex-col justify-between hover:border-gray-700 transition">
+                <div class="space-y-4">
+                    <span class="text-xs font-bold text-amber-400 uppercase tracking-wider">Universities & Labs</span>
+                    <h3 class="text-2xl font-bold text-white">Academic Tier</h3>
+                    <p class="text-3xl font-extrabold text-white">Institutional</p>
+                    <ul class="space-y-2 text-xs text-gray-300 pt-4 border-t border-gray-800">
+                        <li>✔ Multi-Seat Research Access</li>
+                        <li>✔ Open-Access Doctoral Publications</li>
+                        <li>✔ Joint Grant Collaboration Rights</li>
+                        <li>✔ Student Mentorship Portal Access</li>
+                    </ul>
+                </div>
+                <a href="https://buy.stripe.com/3cIbIVbJQep6dVz7cB5os03" target="_blank" class="mt-8 w-full block text-center bg-amber-600 hover:bg-amber-500 text-white font-bold py-3 rounded-xl text-sm">Join Academic</a>
+            </div>
+
+            <!-- Direct Donations -->
+            <div class="bg-gray-900 border border-gray-800 rounded-2xl p-6 flex flex-col justify-between hover:border-gray-700 transition">
+                <div class="space-y-4">
+                    <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider">Patrons & Sponsors</span>
+                    <h3 class="text-2xl font-bold text-white">Research Sponsor</h3>
+                    <p class="text-3xl font-extrabold text-white">Custom</p>
+                    <ul class="space-y-2 text-xs text-gray-300 pt-4 border-t border-gray-800">
+                        <li>✔ Hardware & CUDA GPU Funding</li>
+                        <li>✔ Sponsor Acknowledgment in Papers</li>
+                        <li>✔ Executive Advisory Updates</li>
+                        <li>✔ Direct Support to DAS Research</li>
+                    </ul>
+                </div>
+                <a href="https://donate.stripe.com/9B6bIVaFMep68BfgNb5os04" target="_blank" class="mt-8 w-full block text-center bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 rounded-xl text-sm">Make Donation</a>
+            </div>
+
+        </div>
+    </main>
+</body>
+</html>
