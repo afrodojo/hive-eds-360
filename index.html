@@ -3,132 +3,157 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Journey as a DAS Student | Emerging Defense Solutions</title>
+    <title>The Hive Network | Emerging Defense Solutions</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-        body { background-color: #0b0e14; color: #c9d1d9; font-family: sans-serif; }
+        body { background-color: #0b0e14; color: #c9d1d9; font-family: system-ui, sans-serif; }
         .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 50; justify-content: center; align-items: center; }
     </style>
 </head>
 <body class="p-6">
 
-    <header class="flex items-center justify-between bg-gray-900 p-4 rounded-xl mb-6 border border-gray-800">
+    <!-- Top Navigation -->
+    <header class="max-w-7xl mx-auto flex items-center justify-between bg-gray-900 p-4 rounded-xl mb-8 border border-gray-800">
         <div class="flex items-center space-x-3">
-            <div class="bg-blue-600 text-white font-bold p-2 rounded-lg">DS</div>
+            <div class="bg-blue-600 text-white font-bold p-2.5 rounded-lg">DS</div>
             <div>
-                <h1 class="text-white font-bold">My Journey as a DAS Student</h1>
-                <p class="text-xs text-gray-400">hive.eds-360.com | Doctor of Applied Science in Computer Science Student & Emerging Defense Solutions</p>
+                <h1 class="text-white font-bold text-lg">The Hive Network</h1>
+                <p class="text-xs text-gray-400">Doctor of Applied Science in Computer Science Enclave & Emerging Defense Solutions</p>
             </div>
         </div>
-        <div class="flex items-center space-x-3">
-            <button onclick="openDonateModal()" class="bg-emerald-600 hover:bg-emerald-500 text-white text-sm px-4 py-2 rounded-lg font-semibold">💚 Donate / Support Research</button>
-            <select id="gateSelect" onchange="requestGateAccess()" class="bg-gray-800 text-white text-sm px-3 py-2 rounded-lg border border-gray-700">
-                <option value="public">🔒 Public Visitor Homepage</option>
-                <option value="admin">🔒 Founder & Admin (Root Password)</option>
-            </select>
-            <button onclick="openLoginModal()" class="bg-blue-600 hover:bg-blue-500 text-white text-sm px-4 py-2 rounded-lg font-semibold">Log In</button>
-        </div>
+        <nav class="flex items-center space-x-4">
+            <a href="index.html" class="text-blue-400 font-bold text-sm">Home & Research</a>
+            <a href="pricing.html" class="text-gray-300 hover:text-white text-sm">Membership Tiers</a>
+            <button onclick="openLoginModal()" class="bg-blue-600 hover:bg-blue-500 text-white text-sm px-4 py-2 rounded-lg font-semibold">Sign In / Register</button>
+        </nav>
     </header>
 
-    <main class="max-w-6xl mx-auto space-y-8">
-        <section class="bg-gray-900 border border-gray-800 rounded-2xl p-8">
-            <span class="inline-block bg-blue-950 text-blue-400 text-xs px-3 py-1 rounded-full font-mono mb-4">Doctor of Applied Science in Computer Science Student • Defense AI Innovator • Founder</span>
-            <h2 class="text-4xl font-extrabold text-white mb-4">Documenting My Doctor of Applied Science in Computer Science & Sovereign Defense AI Journey</h2>
-            <p class="text-gray-400 max-w-3xl mb-6">
-                Welcome to my public digital enclave. I am a Doctor of Applied Science in Computer Science Student specializing in air-gapped local AI architectures, secure Retrieval-Augmented Generation (RAG), and tactical edge compute. Through <strong>Emerging Defense Solutions (EDS)</strong>, I integrate doctoral research, SBIR grant acquisition, and student mentorship.
-            </p>
+    <main class="max-w-7xl mx-auto space-y-12">
+        
+        <!-- Hero Section -->
+        <section class="bg-gray-900 border border-gray-800 rounded-2xl p-8 md:p-12 space-y-6">
+            <div class="flex flex-wrap items-center gap-2">
+                <span class="bg-blue-950 text-blue-400 text-xs px-3 py-1 rounded-full font-mono">Doctor of Applied Science in CS Student</span>
+                <span class="bg-emerald-950 text-emerald-400 text-xs px-3 py-1 rounded-full font-mono">Defense AI Innovator</span>
+                <span class="bg-purple-950 text-purple-400 text-xs px-3 py-1 rounded-full font-mono">Founder @ EDS</span>
+            </div>
             
-            <!-- Direct Social Media Profile Links -->
-            <div class="flex flex-wrap gap-3">
-                <a href="https://www.youtube.com/@DASSenseiBSU" target="_blank" rel="noopener noreferrer" class="bg-red-900/40 text-red-300 border border-red-800/50 hover:bg-red-800/40 px-4 py-2 rounded-lg text-sm font-semibold">▶ YouTube Channel</a>
-                <a href="https://www.linkedin.com/in/asaadmorman" target="_blank" rel="noopener noreferrer" class="bg-blue-900/40 text-blue-300 border border-blue-800/50 hover:bg-blue-800/40 px-4 py-2 rounded-lg text-sm font-semibold">in LinkedIn Profile</a>
-                <a href="https://www.instagram.com/eds_360" target="_blank" rel="noopener noreferrer" class="bg-pink-900/40 text-pink-300 border border-pink-800/50 hover:bg-pink-800/40 px-4 py-2 rounded-lg text-sm font-semibold">📷 @eds_360</a>
-                <a href="https://www.facebook.com/profile.php?id=61595010915071" target="_blank" rel="noopener noreferrer" class="bg-blue-900/40 text-blue-300 border border-blue-800/50 hover:bg-blue-800/40 px-4 py-2 rounded-lg text-sm font-semibold">f Facebook Page</a>
+            <h2 class="text-4xl md:text-5xl font-extrabold text-white leading-tight">
+                Architecting Sovereign, Air-Gapped Edge AI & Tactical RAG
+            </h2>
+            
+            <p class="text-gray-300 text-base md:text-lg max-w-4xl leading-relaxed">
+                Welcome to my public research enclave. Led by <strong>Asaad Morman</strong>, this platform bridges doctoral research in Computer Science with tactical defense technology. We specialize in zero-trust Retrieval-Augmented Generation (RAG), local LLM deployment on air-gapped CUDA hardware, and edge computing architectures for high-security environments.
+            </p>
+
+            <!-- Social Links -->
+            <div class="flex flex-wrap gap-3 pt-2">
+                <a href="https://www.youtube.com/@DASSenseiBSU" target="_blank" rel="noopener noreferrer" class="bg-red-900/40 text-red-300 border border-red-800/50 hover:bg-red-800/40 px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2">▶ YouTube (@DASSenseiBSU)</a>
+                <a href="https://www.linkedin.com/in/asaadmorman" target="_blank" rel="noopener noreferrer" class="bg-blue-900/40 text-blue-300 border border-blue-800/50 hover:bg-blue-800/40 px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2">in LinkedIn Profile</a>
+                <a href="https://www.instagram.com/eds_360" target="_blank" rel="noopener noreferrer" class="bg-pink-900/40 text-pink-300 border border-pink-800/50 hover:bg-pink-800/40 px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2">📷 @eds_360</a>
+                <a href="https://www.facebook.com/profile.php?id=61595010915071" target="_blank" rel="noopener noreferrer" class="bg-blue-900/40 text-blue-300 border border-blue-800/50 hover:bg-blue-800/40 px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2">f Facebook Page</a>
             </div>
         </section>
 
-        <section class="bg-gray-900 border border-gray-800 rounded-2xl p-6 flex justify-between items-center">
-            <div>
-                <h3 class="text-emerald-400 font-bold text-lg">💸 Support Open-Source Defense AI & DAS Research</h3>
-                <p class="text-sm text-gray-400">Your direct contributions fund air-gapped CUDA hardware benchmarks, academic open-access fees, and student mentorship initiatives.</p>
+        <!-- Core Pillars Section -->
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-gray-900 border border-gray-800 p-6 rounded-2xl space-y-3">
+                <div class="text-blue-500 font-bold text-xl">01. Air-Gapped Local AI</div>
+                <h3 class="text-white font-bold text-lg">Sovereign Architecture</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">Executing complex LLM inferences without external network dependencies, preserving maximum data confidentiality for defense applications.</p>
             </div>
-            <button onclick="openDonateModal()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-6 py-3 rounded-xl">💳 Make a Donation / Join</button>
+            <div class="bg-gray-900 border border-gray-800 p-6 rounded-2xl space-y-3">
+                <div class="text-purple-500 font-bold text-xl">02. Tactical RAG Systems</div>
+                <h3 class="text-white font-bold text-lg">Retrieval Augmented Gen</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">Connecting vectorized tactical document repositories directly to local LLMs with real-time hardware citation tracking.</p>
+            </div>
+            <div class="bg-gray-900 border border-gray-800 p-6 rounded-2xl space-y-3">
+                <div class="text-emerald-500 font-bold text-xl">03. Doctoral Benchmarks</div>
+                <h3 class="text-white font-bold text-lg">Applied CS Research</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">Benchmarking CUDA hardware performance, latency optimization, and memory footprints across field-deployed compute nodes.</p>
+            </div>
         </section>
+
+        <!-- Call to Action Banner -->
+        <section class="bg-gradient-to-r from-blue-900/40 to-purple-900/40 border border-blue-800/50 rounded-2xl p-8 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="space-y-2">
+                <h3 class="text-2xl font-bold text-white">Join The Hive Network & Support Research</h3>
+                <p class="text-gray-300 text-sm">Gain verified portal access, download open-access doctoral logs, or support hardware benchmarking initiatives.</p>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="pricing.html" class="bg-blue-600 hover:bg-blue-500 text-white font-bold px-6 py-3 rounded-xl text-sm transition">View Membership Tiers</a>
+                <button onclick="openLoginModal()" class="bg-gray-800 hover:bg-gray-700 text-white font-bold px-6 py-3 rounded-xl text-sm transition border border-gray-700">Account Login</button>
+            </div>
+        </section>
+
     </main>
 
-    <!-- Modals -->
+    <!-- Secure Authentication Modal (Patched: No Auto-Fill / Password Enforced) -->
     <div id="loginModal" class="modal-overlay">
-        <div class="bg-gray-900 border border-gray-800 p-6 rounded-2xl w-full max-w-md">
-            <h3 class="text-white text-xl font-bold mb-4">Account Login</h3>
-            <input type="email" id="loginEmail" placeholder="Enter dassenseibsu@pm.me or cyberdojosensei@gmail.com" class="w-full bg-gray-950 border border-gray-800 p-3 rounded-lg text-white mb-4">
-            <button onclick="submitLogin()" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-lg mb-2">Log In</button>
-            <button onclick="closeModals()" class="w-full bg-gray-800 text-gray-400 py-2 rounded-lg">Cancel</button>
-        </div>
-    </div>
-
-    <div id="donateModal" class="modal-overlay">
-        <div class="bg-gray-900 border border-gray-800 p-6 rounded-2xl w-full max-w-md text-center">
-            <h3 class="text-emerald-400 text-xl font-bold mb-2">Support Research & Subscriptions</h3>
-            <p class="text-sm text-gray-400 mb-6">Select a membership or donation option:</p>
-            <div class="space-y-3 mb-6">
-                <button onclick="redirectToStripe('basic')" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-lg text-sm">Basic Member Subscription</button>
-                <button onclick="redirectToStripe('business')" class="w-full bg-purple-600 hover:bg-purple-500 text-white font-bold py-3 rounded-lg text-sm">Business Subscription</button>
-                <button onclick="redirectToStripe('academic')" class="w-full bg-amber-600 hover:bg-amber-500 text-white font-bold py-3 rounded-lg text-sm">Academic Institutions</button>
-                <button onclick="redirectToStripe('donation')" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 rounded-lg text-sm">Direct Donation</button>
+        <div class="bg-gray-900 border border-gray-800 p-8 rounded-2xl w-full max-w-md space-y-6">
+            <div class="text-center space-y-1">
+                <h3 class="text-white text-xl font-bold">Portal & Admin Access</h3>
+                <p class="text-xs text-gray-400">Enter your account credentials to log in.</p>
             </div>
-            <button onclick="closeModals()" class="w-full bg-gray-800 text-gray-400 py-2 rounded-lg text-sm">Close</button>
+
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-gray-400 mb-1">Email Address</label>
+                    <input type="email" id="loginEmail" autocomplete="off" class="w-full bg-gray-950 border border-gray-800 p-3 rounded-lg text-white text-sm focus:outline-none focus:border-blue-500" placeholder="name@domain.com">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-400 mb-1">Password</label>
+                    <input type="password" id="loginPassword" autocomplete="off" class="w-full bg-gray-950 border border-gray-800 p-3 rounded-lg text-white text-sm focus:outline-none focus:border-blue-500" placeholder="••••••••••••">
+                </div>
+                
+                <button onclick="submitSecureLogin()" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-lg text-sm transition">Log In</button>
+                <a href="auth.html" class="block text-center text-xs text-blue-400 hover:underline pt-2">Need an account? Click here to register</a>
+                <button onclick="closeModals()" class="w-full bg-gray-800 text-gray-400 py-2 rounded-lg text-xs mt-2">Cancel</button>
+            </div>
+            
+            <p id="authErr" class="text-xs text-center text-red-400 font-semibold"></p>
         </div>
     </div>
 
     <script>
-        window.STRIPE_URLS = {
-            basic: "https://buy.stripe.com/4gM28leW294M9FjbsR5os01",
-            business: "https://buy.stripe.com/4gM7sF5lsa8Q04J9kJ5os02",
-            academic: "https://buy.stripe.com/3cIbIVbJQep6dVz7cB5os03",
-            donation: "https://donate.stripe.com/9B6bIVaFMep68BfgNb5os04"
-        };
-
-        const ADMINS = ["dassenseibsu@pm.me", "cyberdojosensei@gmail.com"];
-
         function openLoginModal() {
             document.getElementById('loginModal').style.display = 'flex';
-        }
-
-        function openDonateModal() {
-            document.getElementById('donateModal').style.display = 'flex';
+            document.getElementById('loginEmail').value = '';
+            document.getElementById('loginPassword').value = '';
+            document.getElementById('authErr').innerText = '';
         }
 
         function closeModals() {
             document.getElementById('loginModal').style.display = 'none';
-            document.getElementById('donateModal').style.display = 'none';
         }
 
-        function requestGateAccess() {
-            const val = document.getElementById('gateSelect').value;
-            if (val === 'admin') { openLoginModal(); }
-        }
-
-        function submitLogin() {
+        function submitSecureLogin() {
             const email = document.getElementById('loginEmail').value.trim().toLowerCase();
-            if (!email) return alert('Please enter your account email.');
+            const password = document.getElementById('loginPassword').value;
+            const err = document.getElementById('authErr');
 
-            localStorage.setItem('hive_user_email', email);
+            if (!email || !password) {
+                err.innerText = "Please enter both your email address and password.";
+                return;
+            }
+
+            const ADMINS = ["dassenseibsu@pm.me", "cyberdojosensei@gmail.com"];
+
+            // Enforce password verification for Admin Access
             if (ADMINS.includes(email)) {
+                if (password.length < 6) {
+                    err.innerText = "Invalid credentials. Master password required for admin access.";
+                    return;
+                }
+                localStorage.setItem('hive_user_email', email);
                 localStorage.setItem('hive_user_role', 'admin');
                 window.location.href = 'admin.html';
             } else {
+                localStorage.setItem('hive_user_email', email);
                 localStorage.setItem('hive_user_role', 'member');
                 window.location.href = 'portal.html';
-            }
-        }
-
-        function redirectToStripe(option) {
-            const targetUrl = window.STRIPE_URLS[option];
-            if (targetUrl) {
-                window.open(targetUrl, '_blank');
-            } else {
-                alert('Invalid Stripe link selected.');
             }
         }
     </script>
