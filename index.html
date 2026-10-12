@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hive Network - Sovereign Defense AI & Ph.D. Enclave</title>
+    <!-- Cache Bust: 20261012123158 -->
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0b0e14; color: #c9d1d9; margin: 0; padding: 0; }
         nav { background: #161b22; border-bottom: 1px solid #30363d; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; }
@@ -22,8 +23,7 @@
         .btn-primary:hover { background: #2ea043; }
         .btn-admin { background: #1f6feb; color: white; border: none; }
         .btn-admin:hover { background: #388bfd; }
-        /* Modal Overlay Styling */
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); justify-content: center; align-items: center; z-index: 1000; }
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); justify-content: center; align-items: center; z-index: 1000; }
         .modal-content { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 30px; width: 90%; max-width: 400px; text-align: center; }
         .modal-content input { width: 100%; padding: 10px; margin: 15px 0; background: #0d1117; border: 1px solid #30363d; color: #c9d1d9; border-radius: 6px; box-sizing: border-box; }
         .close-btn { background: #21262d; color: #8b949e; padding: 8px 16px; border-radius: 6px; border: 1px solid #30363d; cursor: pointer; margin-top: 10px; }
@@ -48,9 +48,9 @@
             <p>Welcome to my public digital enclave. I am a Computer Science Doctoral Candidate specializing in air-gapped local AI architectures, secure Retrieval-Augmented Generation (RAG), and tactical edge compute.</p>
             
             <div class="btn-group">
-                <button onclick="openLoginModal()" class="btn btn-primary">Member Portal Login</button>
+                <a href="portal.html" class="btn btn-primary">Member Portal Login</a>
                 <a href="admin.html" class="btn btn-admin">Admin Console</a>
-                <button onclick="openDonateModal()" class="btn">Support Doctoral Research</button>
+                <button id="donateBtn" class="btn">Support Doctoral Research</button>
                 <a href="https://youtube.com" target="_blank" class="btn">YouTube Channel</a>
                 <a href="https://linkedin.com" target="_blank" class="btn">LinkedIn Profile</a>
                 <a href="https://instagram.com" target="_blank" class="btn">@eds_360</a>
@@ -59,70 +59,47 @@
         </div>
     </div>
 
-    <!-- Login Modal -->
-    <div id="loginModal" class="modal-overlay">
-        <div class="modal-content">
-            <h2 style="color:#58a6ff; margin-top:0;">Member Sign In</h2>
-            <input type="email" id="loginEmail" placeholder="Enter your email...">
-            <button onclick="executeModalLogin()" class="btn btn-primary" style="width:100%;">Log In</button>
-            <button onclick="closeModal('loginModal')" class="close-btn">Cancel</button>
-        </div>
-    </div>
-
     <!-- Donate Modal -->
     <div id="donateModal" class="modal-overlay">
         <div class="modal-content">
-            <h2 style="color:#3fb950; margin-top:0;">Support Research</h2>
-            <p style="font-size:14px; color:#8b949e;">Select Tier to proceed to secure checkout:</p>
-            <button onclick="triggerStripeCheckout('basic')" class="btn" style="width:100%; margin-bottom:10px;">Basic Tier ()</button>
-            <button onclick="triggerStripeCheckout('consortium')" class="btn btn-primary" style="width:100%; margin-bottom:10px;">Consortium Tier ()</button>
-            <button onclick="closeModal('donateModal')" class="close-btn">Close</button>
+            <h2 style="color:#3fb950; margin-top:0;">Support Doctoral Research</h2>
+            <p style="font-size:14px; color:#8b949e;">Select a tier to proceed to secure checkout:</p>
+            <button id="basicTierBtn" class="btn" style="width:100%; margin-bottom:10px;">Basic Tier ()</button>
+            <button id="consortiumTierBtn" class="btn btn-primary" style="width:100%; margin-bottom:10px;">Consortium Tier ()</button>
+            <button id="closeDonateBtn" class="close-btn">Close</button>
         </div>
     </div>
 
     <script>
-        // Single global declaration for Stripe payment links
-        const STRIPE_PAYMENT_LINKS = {
-            basic: "https://buy.stripe.com/test_basic",
-            consortium: "https://buy.stripe.com/test_consortium"
-        };
+        (function() {
+            const STRIPE_LINKS = {
+                basic: "https://buy.stripe.com/test_basic",
+                consortium: "https://buy.stripe.com/test_consortium"
+            };
 
-        const ADMIN_EMAILS = ["dassenseibsu@pm.me", "cyberdojosensei@gmail.com"];
+            const donateModal = document.getElementById('donateModal');
+            
+            document.getElementById('donateBtn').addEventListener('click', function() {
+                donateModal.style.display = 'flex';
+            });
 
-        function openLoginModal() {
-            document.getElementById('loginModal').style.display = 'flex';
-        }
+            document.getElementById('closeDonateBtn').addEventListener('click', function() {
+                donateModal.style.display = 'none';
+            });
 
-        function openDonateModal() {
-            document.getElementById('donateModal').style.display = 'flex';
-        }
+            document.getElementById('basicTierBtn').addEventListener('click', function() {
+                window.open(STRIPE_LINKS.basic, '_blank');
+            });
 
-        function closeModal(modalId) {
-            document.getElementById(modalId).style.display = 'none';
-        }
+            document.getElementById('consortiumTierBtn').addEventListener('click', function() {
+                window.open(STRIPE_LINKS.consortium, '_blank');
+            });
 
-        function executeModalLogin() {
-            const email = document.getElementById('loginEmail').value.trim().toLowerCase();
-            if (!email) return alert('Please enter a valid email.');
-
-            localStorage.setItem('hive_user_email', email);
-            if (ADMIN_EMAILS.includes(email)) {
-                localStorage.setItem('hive_user_role', 'admin');
-                window.location.href = 'admin.html';
-            } else {
-                localStorage.setItem('hive_user_role', 'member');
-                window.location.href = 'research.html';
-            }
-        }
-
-        function triggerStripeCheckout(tier) {
-            const url = STRIPE_PAYMENT_LINKS[tier] || STRIPE_PAYMENT_LINKS.basic;
-            window.open(url, '_blank');
-        }
-
-        function requestGateAccess(event) {
-            openLoginModal();
-        }
+            window.openDonateModal = function() { donateModal.style.display = 'flex'; };
+            window.openLoginModal = function() { window.location.href = 'portal.html'; };
+            window.requestGateAccess = function() { window.location.href = 'portal.html'; };
+            window.triggerStripeCheckout = function(tier) { window.open(STRIPE_LINKS[tier] || STRIPE_LINKS.basic, '_blank'); };
+        })();
     </script>
 </body>
 </html>
