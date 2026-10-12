@@ -3,143 +3,128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hive Network - Sovereign Defense AI & Ph.D. Enclave</title>
+    <title>My Journey as a Doctoral Student | Emerging Defense Solutions</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-    <meta http-equiv="Pragma" content="no-cache" />
-    <meta http-equiv="Expires" content="0" />
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0b0e14; color: #c9d1d9; margin: 0; padding: 0; }
-        nav { background: #161b22; border-bottom: 1px solid #30363d; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 20px; font-weight: bold; color: #58a6ff; text-decoration: none; }
-        .nav-links a { color: #8b949e; text-decoration: none; margin-left: 20px; font-weight: 500; }
-        .nav-links a:hover, .nav-links a.active { color: #58a6ff; }
-        .container { max-width: 1100px; margin: 40px auto; padding: 0 20px; }
-        .hero { background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 40px; margin-bottom: 30px; }
-        .badge { background: rgba(88, 166, 255, 0.1); color: #58a6ff; padding: 6px 12px; border-radius: 16px; font-size: 13px; font-family: monospace; display: inline-block; margin-bottom: 20px; }
-        h1 { font-size: 32px; color: #ffffff; margin-top: 0; line-height: 1.3; }
-        p { color: #8b949e; line-height: 1.6; font-size: 16px; }
-        .btn-group { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 25px; }
-        .btn { padding: 10px 18px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 14px; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; border: 1px solid transparent; background: #21262d; color: #c9d1d9; border-color: #30363d; }
-        .btn:hover { background: #30363d; }
-        .btn-primary { background: #238636; color: white; border: none; }
-        .btn-primary:hover { background: #2ea043; }
-        .btn-admin { background: #1f6feb; color: white; border: none; }
-        .btn-admin:hover { background: #388bfd; }
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); justify-content: center; align-items: center; z-index: 1000; }
-        .modal-content { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 30px; width: 90%; max-width: 400px; text-align: center; }
-        .close-btn { background: #21262d; color: #8b949e; padding: 8px 16px; border-radius: 6px; border: 1px solid #30363d; cursor: pointer; margin-top: 10px; }
+        body { background-color: #0b0e14; color: #c9d1d9; font-family: sans-serif; }
+        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 50; justify-content: center; align-items: center; }
     </style>
 </head>
-<body>
-    <nav>
-        <a href="index.html" class="logo">Hive Network</a>
-        <div class="nav-links">
-            <a href="index.html" class="active">Home</a>
-            <a href="portal.html">Member Portal</a>
-            <a href="admin.html">Admin Console</a>
-            <a href="blog.html">Research Logs</a>
-            <a href="RAG-console.html">RAG Console</a>
-            <a href="research.html">Defense SBIR</a>
-        </div>
-    </nav>
-    <div class="container">
-        <div class="hero">
-            <div class="badge">CS Doctoral Student • Defense AI Innovator • Founder</div>
-            <h1>Documenting My Computer Science Ph.D. & Sovereign Defense AI Journey</h1>
-            <p>Welcome to my public digital enclave. I am a Computer Science Doctoral Candidate specializing in air-gapped local AI architectures, secure Retrieval-Augmented Generation (RAG), and tactical edge compute.</p>
-            
-            <div class="btn-group">
-                <a href="portal.html" class="btn btn-primary">Member Portal Login</a>
-                <a href="admin.html" class="btn btn-admin">Admin Console</a>
-                <button id="donateBtn" class="btn">Support Doctoral Research</button>
-                <a href="https://youtube.com" target="_blank" class="btn">YouTube Channel</a>
-                <a href="https://linkedin.com" target="_blank" class="btn">LinkedIn Profile</a>
-                <a href="https://instagram.com" target="_blank" class="btn">@eds_360</a>
-                <a href="https://facebook.com" target="_blank" class="btn">Facebook Page</a>
+<body class="p-6">
+
+    <!-- Top Navigation Bar -->
+    <header class="flex items-center justify-between bg-gray-900 p-4 rounded-xl mb-6 border border-gray-800">
+        <div class="flex items-center space-x-3">
+            <div class="bg-blue-600 text-white font-bold p-2 rounded-lg">DS</div>
+            <div>
+                <h1 class="text-white font-bold">My Journey as a Doctoral Student</h1>
+                <p class="text-xs text-gray-400">hive.eds-360.com | CS Ph.D. & Emerging Defense Solutions</p>
             </div>
-            <!-- Deployment Marker: 20261012123553 -->
+        </div>
+        <div class="flex items-center space-x-3">
+            <button onclick="openDonateModal()" class="bg-emerald-600 hover:bg-emerald-500 text-white text-sm px-4 py-2 rounded-lg font-semibold">💚 Donate / Support Research</button>
+            <select id="gateSelect" onchange="requestGateAccess()" class="bg-gray-800 text-white text-sm px-3 py-2 rounded-lg border border-gray-700">
+                <option value="public">🔒 Public Visitor Homepage</option>
+                <option value="admin">🔒 Founder & Admin (Root Password)</option>
+            </select>
+            <button onclick="openLoginModal()" class="bg-blue-600 hover:bg-blue-500 text-white text-sm px-4 py-2 rounded-lg font-semibold">Log In</button>
+        </div>
+    </header>
+
+    <!-- Main Hero -->
+    <main class="max-w-6xl mx-auto space-y-8">
+        <section class="bg-gray-900 border border-gray-800 rounded-2xl p-8">
+            <span class="inline-block bg-blue-950 text-blue-400 text-xs px-3 py-1 rounded-full font-mono mb-4">CS Doctoral Student • Defense AI Innovator • Founder</span>
+            <h2 class="text-4xl font-extrabold text-white mb-4">Documenting My Computer Science Ph.D. & Sovereign Defense AI Journey</h2>
+            <p class="text-gray-400 max-w-3xl mb-6">
+                Welcome to my public digital enclave. I am a Computer Science Doctoral Candidate specializing in air-gapped local AI architectures, secure Retrieval-Augmented Generation (RAG), and tactical edge compute. Through <strong>Emerging Defense Solutions (EDS)</strong>, I integrate doctoral research, SBIR grant acquisition, and student mentorship.
+            </p>
+            <div class="flex flex-wrap gap-3">
+                <a href="https://youtube.com" target="_blank" class="bg-red-900/40 text-red-300 border border-red-800/50 hover:bg-red-800/40 px-4 py-2 rounded-lg text-sm font-semibold">▶ YouTube Channel</a>
+                <a href="https://linkedin.com" target="_blank" class="bg-blue-900/40 text-blue-300 border border-blue-800/50 hover:bg-blue-800/40 px-4 py-2 rounded-lg text-sm font-semibold">in LinkedIn Profile</a>
+                <a href="https://instagram.com" target="_blank" class="bg-pink-900/40 text-pink-300 border border-pink-800/50 hover:bg-pink-800/40 px-4 py-2 rounded-lg text-sm font-semibold">📷 @eds_360</a>
+                <a href="https://facebook.com" target="_blank" class="bg-blue-900/40 text-blue-300 border border-blue-800/50 hover:bg-blue-800/40 px-4 py-2 rounded-lg text-sm font-semibold">f Facebook Page</a>
+            </div>
+        </section>
+
+        <!-- Donation Tier Section -->
+        <section class="bg-gray-900 border border-gray-800 rounded-2xl p-6 flex justify-between items-center">
+            <div>
+                <h3 class="text-emerald-400 font-bold text-lg">💸 Support Open-Source Defense AI & Doctoral Research</h3>
+                <p class="text-sm text-gray-400">Your direct contributions fund air-gapped CUDA hardware benchmarks, academic open-access fees, and student mentorship initiatives.</p>
+            </div>
+            <button onclick="openDonateModal()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-6 py-3 rounded-xl">💳 Make a Donation</button>
+        </section>
+    </main>
+
+    <!-- Modals -->
+    <div id="loginModal" class="modal-overlay">
+        <div class="bg-gray-900 border border-gray-800 p-6 rounded-2xl w-full max-w-md">
+            <h3 class="text-white text-xl font-bold mb-4">Account Login</h3>
+            <input type="email" id="loginEmail" placeholder="Enter dassenseibsu@pm.me or cyberdojosensei@gmail.com" class="w-full bg-gray-950 border border-gray-800 p-3 rounded-lg text-white mb-4">
+            <button onclick="submitLogin()" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-lg mb-2">Log In</button>
+            <button onclick="closeModals()" class="w-full bg-gray-800 text-gray-400 py-2 rounded-lg">Cancel</button>
         </div>
     </div>
 
-    <!-- Support Modal -->
     <div id="donateModal" class="modal-overlay">
-        <div class="modal-content">
-            <h2 style="color:#3fb950; margin-top:0;">Support Doctoral Research</h2>
-            <p style="font-size:14px; color:#8b949e;">Select a tier to proceed to secure checkout:</p>
-            <button id="basicTierBtn" class="btn" style="width:100%; margin-bottom:10px;">Basic Tier ()</button>
-            <button id="consortiumTierBtn" class="btn btn-primary" style="width:100%; margin-bottom:10px;">Consortium Tier ()</button>
-            <button id="closeDonateBtn" class="close-btn">Close</button>
+        <div class="bg-gray-900 border border-gray-800 p-6 rounded-2xl w-full max-w-md text-center">
+            <h3 class="text-emerald-400 text-xl font-bold mb-2">Support Research</h3>
+            <p class="text-sm text-gray-400 mb-6">Select a membership/donation tier:</p>
+            <button onclick="triggerStripeCheckout('basic')" class="w-full bg-gray-800 hover:bg-gray-700 text-white font-bold py-3 rounded-lg mb-3">Student Tier (/mo)</button>
+            <button onclick="triggerStripeCheckout('consortium')" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 rounded-lg mb-3">Consortium Tier (/mo)</button>
+            <button onclick="closeModals()" class="w-full bg-gray-800 text-gray-400 py-2 rounded-lg">Close</button>
         </div>
     </div>
 
     <script>
-        (function() {
-            const STRIPE_LINKS = {
-                basic: "https://buy.stripe.com/test_basic",
-                consortium: "https://buy.stripe.com/test_consortium"
-            };
+        // Single Global Scope - No Duplicate Variable Declarations
+        window.STRIPE_PAYMENT_LINKS = {
+            basic: "https://buy.stripe.com/test_basic",
+            consortium: "https://buy.stripe.com/test_consortium"
+        };
 
-            const donateModal = document.getElementById('donateModal');
-            
-            if (document.getElementById('donateBtn')) {
-                document.getElementById('donateBtn').addEventListener('click', function() {
-                    donateModal.style.display = 'flex';
-                });
+        const ADMINS = ["dassenseibsu@pm.me", "cyberdojosensei@gmail.com"];
+
+        function openLoginModal() {
+            document.getElementById('loginModal').style.display = 'flex';
+        }
+
+        function openDonateModal() {
+            document.getElementById('donateModal').style.display = 'flex';
+        }
+
+        function closeModals() {
+            document.getElementById('loginModal').style.display = 'none';
+            document.getElementById('donateModal').style.display = 'none';
+        }
+
+        function requestGateAccess() {
+            const val = document.getElementById('gateSelect').value;
+            if (val === 'admin') {
+                openLoginModal();
             }
+        }
 
-            if (document.getElementById('closeDonateBtn')) {
-                document.getElementById('closeDonateBtn').addEventListener('click', function() {
-                    donateModal.style.display = 'none';
-                });
+        function submitLogin() {
+            const email = document.getElementById('loginEmail').value.trim().toLowerCase();
+            if (!email) return alert('Please enter an email.');
+
+            localStorage.setItem('hive_user_email', email);
+            if (ADMINS.includes(email)) {
+                localStorage.setItem('hive_user_role', 'admin');
+                window.location.href = 'admin.html';
+            } else {
+                localStorage.setItem('hive_user_role', 'member');
+                window.location.href = 'research.html';
             }
+        }
 
-            if (document.getElementById('basicTierBtn')) {
-                document.getElementById('basicTierBtn').addEventListener('click', function() {
-                    window.open(STRIPE_LINKS.basic, '_blank');
-                });
-            }
-
-            if (document.getElementById('consortiumTierBtn')) {
-                document.getElementById('consortiumTierBtn').addEventListener('click', function() {
-                    window.open(STRIPE_LINKS.consortium, '_blank');
-                });
-            }
-
-            // Expose required legacy callers safely without throwing duplicates
-            window.openDonateModal = function() { if (donateModal) donateModal.style.display = 'flex'; };
-            window.openLoginModal = function() { window.location.href = 'portal.html'; };
-            window.requestGateAccess = function() { window.location.href = 'portal.html'; };
-            window.triggerStripeCheckout = function(tier) { window.open(STRIPE_LINKS[tier] || STRIPE_LINKS.basic, '_blank'); };
-        })();
+        function triggerStripeCheckout(tier) {
+            const url = window.STRIPE_PAYMENT_LINKS[tier] || window.STRIPE_PAYMENT_LINKS.basic;
+            window.open(url, '_blank');
+        }
     </script>
-<script>
-    // Failsafe Global Definitions to prevent ReferenceError on inline handlers
-    window.STRIPE_PAYMENT_LINKS = window.STRIPE_PAYMENT_LINKS || {
-        basic: "https://buy.stripe.com/test_basic",
-        consortium: "https://buy.stripe.com/test_consortium"
-    };
-
-    window.openLoginModal = window.openLoginModal || function() {
-        var modal = document.getElementById('loginModal');
-        if (modal) { modal.style.display = 'flex'; } else { window.location.href = 'portal.html'; }
-    };
-
-    window.openDonateModal = window.openDonateModal || function() {
-        var modal = document.getElementById('donateModal');
-        if (modal) { modal.style.display = 'flex'; } else { alert('Donation modal loading...'); }
-    };
-
-    window.triggerStripeCheckout = window.triggerStripeCheckout || function(tier) {
-        var url = window.STRIPE_PAYMENT_LINKS[tier] || window.STRIPE_PAYMENT_LINKS.basic;
-        window.open(url, '_blank');
-    };
-
-    window.requestGateAccess = window.requestGateAccess || function() {
-        window.openLoginModal();
-    };
-
-    console.log('[HIVE UI FIX] Global click handlers and Stripe links initialized successfully.');
-</script>
 </body>
 </html>
