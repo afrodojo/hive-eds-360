@@ -1,0 +1,30 @@
+﻿{
+    "timestamp":  "2026-10-11T21:46:10Z",
+    "metrics":  {
+                    "youtube_subscribers":  0,
+                    "last_ingested_content":  "Air-Gapped RAG Architectures for Sovereign Defense AI",
+                    "total_likes_recorded":  1040,
+                    "total_comments_indexed":  185
+                },
+    "primary_email":  "dassenseibsu@pm.me",
+    "profiles":  {
+                     "linkedin":  {
+                                      "url":  "https://www.linkedin.com/in/asaad-morman-4403423b",
+                                      "status":  "Connected"
+                                  },
+                     "youtube":  {
+                                     "channel_name":  "DAS Sensei - Sovereign Defense AI \u0026 Ph.D.",
+                                     "status":  "Connected",
+                                     "contact_email":  "dassenseibsu@pm.me"
+                                 },
+                     "instagram":  {
+                                       "url":  "https://www.instagram.com/eds_360",
+                                       "status":  "Connected",
+                                       "handle":  "eds_360"
+                                   },
+                     "facebook":  {
+                                      "url":  "https://www.facebook.com/share/1Be74piiEu/",
+                                      "status":  "Connected"
+                                  }
+                 }
+}
