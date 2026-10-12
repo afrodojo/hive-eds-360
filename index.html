@@ -688,7 +688,83 @@
             </div>
         </div>
     </div>
+    <!-- MODAL 3: FIRST-TIME ONBOARDING WORKFLOW -->
+    <div id="onboardingModal" class="modal fixed inset-0 bg-black/85 backdrop-blur-md z-50 items-center justify-center p-4">
+        <div class="glass max-w-lg w-full p-6 rounded-2xl border border-indigo-500/50 space-y-4">
+            <div class="border-b border-gray-800 pb-3">
+                <span class="px-2.5 py-0.5 rounded bg-indigo-950 text-indigo-300 border border-indigo-800 text-[10px] font-mono font-bold">WELCOME TO THE HIVE</span>
+                <h3 class="text-lg font-bold text-white mt-1">Complete Your Research Profile</h3>
+                <p class="text-xs text-gray-300">Set up your member profile for <span id="onboardEmailDisplay" class="text-indigo-400 font-mono"></span>.</p>
+            </div>
+
+            <div class="space-y-3 text-xs">
+                <div>
+                    <label class="text-gray-400 text-[10px] font-mono">FULL NAME / CALLSIGN *</label>
+                    <input type="text" id="onboardName" placeholder="Dr. Jane Doe / Alex Smith" class="w-full bg-gray-950 border border-gray-800 rounded p-2 text-gray-200 focus:outline-none focus:border-indigo-500" />
+                </div>
+                <div>
+                    <label class="text-gray-400 text-[10px] font-mono">ORGANIZATION / UNIVERSITY / DEFENSE NODE</label>
+                    <input type="text" id="onboardOrg" placeholder="Emerging Defense Solutions / MIT / US DoD" class="w-full bg-gray-950 border border-gray-800 rounded p-2 text-gray-200 focus:outline-none focus:border-indigo-500" />
+                </div>
+                <div>
+                    <label class="text-gray-400 text-[10px] font-mono">RESEARCH FOCUS & BIO</label>
+                    <textarea id="onboardBio" rows="2" placeholder="CS Ph.D. candidate focusing on local air-gapped RAG, tactical edge compute..." class="w-full bg-gray-950 border border-gray-800 rounded p-2 text-gray-200 focus:outline-none focus:border-indigo-500"></textarea>
+                </div>
+            </div>
+
+            <button onclick="saveOnboardingProfile()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs py-2.5 rounded-lg transition shadow-lg">
+                Complete Onboarding & Enter Platform
+            </button>
+        </div>
+    </div>
+
+    <!-- MODAL 4: PROFILE MANAGEMENT & ACCOUNT ERASURE (GDPR) -->
+    <div id="profileModal" class="modal fixed inset-0 bg-black/85 backdrop-blur-md z-50 items-center justify-center p-4">
+        <div class="glass max-w-lg w-full p-6 rounded-2xl border border-indigo-500/50 space-y-4 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center border-b border-gray-800 pb-2">
+                <h3 class="text-md font-bold text-white"><i class="fas fa-id-card text-indigo-400"></i> Account Settings & Profile</h3>
+                <button onclick="closeModals()" class="text-gray-400 hover:text-white"><i class="fas fa-times"></i></button>
+            </div>
+
+            <div class="space-y-3 text-xs">
+                <div>
+                    <label class="text-gray-400 text-[10px] font-mono">FULL NAME</label>
+                    <input type="text" id="editFullName" class="w-full bg-gray-950 border border-gray-800 rounded p-2 text-gray-200 focus:outline-none focus:border-indigo-500" />
+                </div>
+                <div>
+                    <label class="text-gray-400 text-[10px] font-mono">EMAIL ADDRESS (CHANGING REQUIRES RE-VERIFICATION)</label>
+                    <input type="email" id="editEmail" class="w-full bg-gray-950 border border-gray-800 rounded p-2 text-gray-200 focus:outline-none focus:border-indigo-500" />
+                </div>
+                <div>
+                    <label class="text-gray-400 text-[10px] font-mono">ORGANIZATION / INSTITUTION</label>
+                    <input type="text" id="editOrg" class="w-full bg-gray-950 border border-gray-800 rounded p-2 text-gray-200 focus:outline-none focus:border-indigo-500" />
+                </div>
+                <div>
+                    <label class="text-gray-400 text-[10px] font-mono">BIO / RESEARCH FOCUS</label>
+                    <textarea id="editBio" rows="2" class="w-full bg-gray-950 border border-gray-800 rounded p-2 text-gray-200 focus:outline-none focus:border-indigo-500"></textarea>
+                </div>
+
+                <button onclick="updateProfileSettings()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs py-2 rounded transition">
+                    Save Profile Changes
+                </button>
+            </div>
+
+            <!-- GDPR Data Erasure Box -->
+            <div class="pt-4 border-t border-gray-800 space-y-2">
+                <div class="font-bold text-red-400 text-xs flex items-center gap-1.5">
+                    <i class="fas fa-exclamation-triangle"></i> Account Erasure & Data Deletion
+                </div>
+                <p class="text-[11px] text-gray-400 leading-relaxed">
+                    Under our privacy policy, clicking below permanently deletes your profile, purges local vector search indexes, cancels active Stripe subscriptions, and unlinks your email from newsletters.
+                </p>
+                <button onclick="confirmAccountDeletion()" class="w-full bg-red-950/80 hover:bg-red-900 text-red-300 border border-red-800 font-bold text-xs py-2 rounded transition">
+                    Permanently Delete Account & Purge My Data
+                </button>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
+
 
 
