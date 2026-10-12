@@ -3,63 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hive Network - Member Portal</title>
+    <title>Member Enclave & Research Portal | The Hive Network</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0d1117; color: #c9d1d9; margin: 0; padding: 40px; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
-        .card { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 30px; width: 100%; max-width: 450px; box-shadow: 0 8px 24px rgba(0,0,0,0.5); }
-        h1 { color: #58a6ff; font-size: 24px; margin-bottom: 20px; text-align: center; }
-        label { display: block; margin-bottom: 8px; color: #8b949e; }
-        input { width: 100%; padding: 10px; margin-bottom: 20px; border-radius: 6px; border: 1px solid #30363d; background: #0d1117; color: #c9d1d9; box-sizing: border-box; }
-        button { width: 100%; padding: 12px; background: #238636; border: none; border-radius: 6px; color: white; font-weight: bold; cursor: pointer; font-size: 16px; margin-bottom: 10px; }
-        button:hover { background: #2ea043; }
-        .status { margin-top: 15px; font-size: 14px; text-align: center; font-weight: bold; min-height: 20px; }
-        .success { color: #3fb950; }
-        .error { color: #f85149; }
+        body { background-color: #0b0e14; color: #c9d1d9; font-family: system-ui, sans-serif; }
     </style>
 </head>
-<body>
-    <div class="card">
-        <h1>Hive Network Portal</h1>
-        <form id="loginForm" onsubmit="return handleLogin(event)">
-            <label for="email">Account Email</label>
-            <input type="email" id="email" placeholder="name@example.com" required autocomplete="email">
-            <button type="submit" id="loginBtn">Log In to Workspace</button>
-        </form>
-        <div id="statusMsg" class="status"></div>
-    </div>
+<body class="p-6">
+
+    <header class="max-w-7xl mx-auto flex items-center justify-between bg-gray-900 p-4 rounded-xl mb-8 border border-gray-800">
+        <div class="flex items-center space-x-3">
+            <div class="bg-blue-600 text-white font-bold p-2.5 rounded-lg">DS</div>
+            <div>
+                <h1 class="text-white font-bold text-lg">Member Enclave</h1>
+                <p class="text-xs text-gray-400">The Hive Network | Active Membership Dashboard</p>
+            </div>
+        </div>
+        <div class="flex items-center space-x-4">
+            <span id="tierBadge" class="bg-gray-800 text-gray-300 text-xs px-3 py-1 rounded-full font-mono font-bold">Checking Membership...</span>
+            <button onclick="logout()" class="bg-red-900/40 text-red-300 border border-red-800/50 text-xs px-3 py-2 rounded-lg font-semibold hover:bg-red-800/40">Log Out</button>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto space-y-8">
+        
+        <!-- Welcome Banner -->
+        <section class="bg-gray-900 border border-gray-800 rounded-2xl p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div>
+                <h2 class="text-2xl font-bold text-white">Welcome back to the Enclave</h2>
+                <p class="text-sm text-gray-400" id="userEmailDisplay">Logged in user</p>
+            </div>
+            <a href="RAG-console.html" class="bg-blue-600 hover:bg-blue-500 text-white text-sm px-5 py-2.5 rounded-xl font-bold">Launch RAG Console</a>
+        </section>
+
+        <!-- Dynamic Tier Features Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            
+            <!-- Basic Member Feature Card -->
+            <div id="cardBasic" class="bg-gray-900 border border-gray-800 p-6 rounded-2xl space-y-3">
+                <span class="bg-blue-950 text-blue-400 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase">Basic Tier</span>
+                <h3 class="text-white font-bold text-lg">Doctoral Research Logs</h3>
+                <p class="text-gray-400 text-xs">Access public paper summaries, air-gapped system design notes, and open community discussions.</p>
+                <a href="research.html" class="block text-center bg-gray-800 hover:bg-gray-700 text-white text-xs py-2 rounded-lg font-semibold mt-4">View Research Logs</a>
+            </div>
+
+            <!-- Business Tier Feature Card -->
+            <div id="cardBusiness" class="bg-gray-900 border border-gray-800 p-6 rounded-2xl space-y-3 opacity-50 relative">
+                <span class="bg-purple-950 text-purple-400 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase">Business Tier</span>
+                <h3 class="text-white font-bold text-lg">CUDA Benchmarks & Datasets</h3>
+                <p class="text-gray-400 text-xs">Raw latency metrics, VRAM consumption profiles, and edge compute optimization data.</p>
+                <button id="btnBusiness" disabled class="w-full bg-gray-800 text-gray-500 text-xs py-2 rounded-lg font-semibold mt-4 cursor-not-allowed">Locked (Requires Business Tier)</button>
+            </div>
+
+            <!-- Academic Tier Feature Card -->
+            <div id="cardAcademic" class="bg-gray-900 border border-gray-800 p-6 rounded-2xl space-y-3 opacity-50 relative">
+                <span class="bg-amber-950 text-amber-400 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase">Academic Tier</span>
+                <h3 class="text-white font-bold text-lg">Multi-Seat & SBIR Collaboration</h3>
+                <p class="text-gray-400 text-xs">Grant research proposals, joint institutional publication drafts, and student mentorship access.</p>
+                <button id="btnAcademic" disabled class="w-full bg-gray-800 text-gray-500 text-xs py-2 rounded-lg font-semibold mt-4 cursor-not-allowed">Locked (Requires Academic Tier)</button>
+            </div>
+
+        </div>
+
+    </main>
+
     <script>
-        const admins = ["dassenseibsu@pm.me", "cyberdojosensei@gmail.com"];
+        // Parse URL parameters for Stripe payment return redirects
+        const urlParams = new URLSearchParams(window.location.search);
+        const stripeTier = urlParams.get('tier');
+        const stripeStatus = urlParams.get('status');
 
-        function handleLogin(e) {
-            if (e) e.preventDefault();
-            const emailInput = document.getElementById('email');
-            const email = emailInput ? emailInput.value.trim().toLowerCase() : '';
-            const status = document.getElementById('statusMsg');
+        if (stripeStatus === 'success' && stripeTier) {
+            localStorage.setItem('hive_user_tier', stripeTier);
+            // Clean URL parameters
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }
 
-            if (!email) {
-                status.className = 'status error';
-                status.innerText = 'Please enter a valid email address.';
-                return false;
-            }
+        const userEmail = localStorage.getItem('hive_user_email') || 'Member';
+        let currentTier = localStorage.getItem('hive_user_tier') || 'basic';
 
-            try {
-                localStorage.setItem('hive_user_email', email);
-                if (admins.includes(email)) {
-                    localStorage.setItem('hive_user_role', 'admin');
-                    status.className = 'status success';
-                    status.innerText = 'Admin Access Verified! Redirecting to Admin Console...';
-                    setTimeout(() => { window.location.href = 'admin.html'; }, 500);
-                } else {
-                    localStorage.setItem('hive_user_role', 'member');
-                    status.className = 'status success';
-                    status.innerText = 'Member Access Verified! Redirecting to Research Hub...';
-                    setTimeout(() => { window.location.href = 'research.html'; }, 500);
-                }
-            } catch (err) {
-                status.className = 'status error';
-                status.innerText = 'Storage error: ' + err.message;
-            }
-            return false;
+        // Display user status
+        document.getElementById('userEmailDisplay').innerText = Account: \ | Active Level: \;
+        const badge = document.getElementById('tierBadge');
+
+        // Dynamic Access Control Routing based on user tier
+        if (currentTier === 'business' || currentTier === 'admin') {
+            badge.innerText = 'Business Member';
+            badge.className = 'bg-purple-950 text-purple-300 border border-purple-800/50 text-xs px-3 py-1 rounded-full font-mono font-bold';
+            
+            // Unlock Business Features
+            const cardBiz = document.getElementById('cardBusiness');
+            cardBiz.classList.remove('opacity-50');
+            const btnBiz = document.getElementById('btnBusiness');
+            btnBiz.disabled = false;
+            btnBiz.innerText = "Access CUDA Benchmarks";
+            btnBiz.className = "w-full bg-purple-600 hover:bg-purple-500 text-white text-xs py-2 rounded-lg font-semibold mt-4 cursor-pointer";
+            btnBiz.onclick = () => window.location.href = 'RAG-console.html';
+        } 
+        
+        if (currentTier === 'academic' || currentTier === 'admin') {
+            badge.innerText = 'Academic Member';
+            badge.className = 'bg-amber-950 text-amber-300 border border-amber-800/50 text-xs px-3 py-1 rounded-full font-mono font-bold';
+            
+            // Unlock Academic Features
+            const cardAcad = document.getElementById('cardAcademic');
+            cardAcad.classList.remove('opacity-50');
+            const btnAcad = document.getElementById('btnAcademic');
+            btnAcad.disabled = false;
+            btnAcad.innerText = "Access Collaboration Hub";
+            btnAcad.className = "w-full bg-amber-600 hover:bg-amber-500 text-white text-xs py-2 rounded-lg font-semibold mt-4 cursor-pointer";
+            btnAcad.onclick = () => window.location.href = 'research.html';
+        }
+
+        if (currentTier === 'basic') {
+            badge.innerText = 'Basic Member';
+            badge.className = 'bg-blue-950 text-blue-300 border border-blue-800/50 text-xs px-3 py-1 rounded-full font-mono font-bold';
+        }
+
+        function logout() {
+            localStorage.clear();
+            window.location.href = 'index.html';
         }
     </script>
 </body>
