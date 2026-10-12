@@ -113,5 +113,33 @@
             window.triggerStripeCheckout = function(tier) { window.open(STRIPE_LINKS[tier] || STRIPE_LINKS.basic, '_blank'); };
         })();
     </script>
+<script>
+    // Failsafe Global Definitions to prevent ReferenceError on inline handlers
+    window.STRIPE_PAYMENT_LINKS = window.STRIPE_PAYMENT_LINKS || {
+        basic: "https://buy.stripe.com/test_basic",
+        consortium: "https://buy.stripe.com/test_consortium"
+    };
+
+    window.openLoginModal = window.openLoginModal || function() {
+        var modal = document.getElementById('loginModal');
+        if (modal) { modal.style.display = 'flex'; } else { window.location.href = 'portal.html'; }
+    };
+
+    window.openDonateModal = window.openDonateModal || function() {
+        var modal = document.getElementById('donateModal');
+        if (modal) { modal.style.display = 'flex'; } else { alert('Donation modal loading...'); }
+    };
+
+    window.triggerStripeCheckout = window.triggerStripeCheckout || function(tier) {
+        var url = window.STRIPE_PAYMENT_LINKS[tier] || window.STRIPE_PAYMENT_LINKS.basic;
+        window.open(url, '_blank');
+    };
+
+    window.requestGateAccess = window.requestGateAccess || function() {
+        window.openLoginModal();
+    };
+
+    console.log('[HIVE UI FIX] Global click handlers and Stripe links initialized successfully.');
+</script>
 </body>
 </html>
