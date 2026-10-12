@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Membership & Donations | The Hive Network</title>
+    <title>Membership, Defense & Academic Tiering | The Hive Network</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body { background-color: #030712; color: #f3f4f6; font-family: ui-sans-serif, system-ui, sans-serif; }
         .glass { background: rgba(17, 24, 39, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
-        .accent-glow { box-shadow: 0 0 20px rgba(99, 102, 241, 0.25); }
+        .accent-glow { box-shadow: 0 0 25px rgba(99, 102, 241, 0.25); }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -18,68 +18,142 @@
 
     <main class="flex-grow max-w-7xl w-full mx-auto p-6 space-y-10">
         
-        <section class="text-center space-y-3 pt-6">
-            <h2 class="text-3xl font-extrabold text-white sm:text-4xl">Membership & Doctoral Research Support</h2>
-            <p class="text-sm text-gray-400 max-w-2xl mx-auto">Support air-gapped sovereign AI research, zero-trust vector architectures, and open-source defense tools.</p>
+        <!-- HEADER SECTION -->
+        <section class="text-center space-y-3 pt-6 max-w-3xl mx-auto">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-950/80 border border-indigo-800 text-indigo-400 text-xs font-mono">
+                <span class="w-2 h-2 rounded-full bg-indigo-400 animate-pulse"></span>
+                Sovereign AI Access & Partnership Model
+            </div>
+            <h2 class="text-3xl font-extrabold text-white sm:text-4xl">Membership, Defense & Academic Tiering</h2>
+            <p class="text-sm text-gray-400">Structured tiering designed to support air-gapped RAG research, zero-trust edge deployments, academic collaboration, and direct doctoral research funding.</p>
         </section>
 
         <!-- PRICING CARDS GRID -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             
-            <!-- BASIC MEMBER -->
+            <!-- TIER 1: BASIC MEMBER -->
             <div class="glass p-6 rounded-2xl border border-gray-800 flex flex-col justify-between space-y-6 hover:border-indigo-500/50 transition">
                 <div class="space-y-4">
                     <span class="text-xs font-mono text-indigo-400 uppercase font-bold tracking-wider">Tier 1</span>
                     <h3 class="text-xl font-bold text-white">Basic Member</h3>
-                    <p class="text-xs text-gray-400">Access public research notes, community logs, and entry-level vector search terminal.</p>
-                    <div class="text-2xl font-bold text-white font-mono">$10 <span class="text-xs text-gray-500 font-normal">/ mo</span></div>
+                    <div class="text-3xl font-bold text-white font-mono">$10 <span class="text-xs text-gray-500 font-normal">/ mo</span></div>
+                    
+                    <div class="pt-2 border-t border-gray-800/80 space-y-2">
+                        <span class="text-[11px] font-mono text-indigo-300 font-bold uppercase tracking-wide block">Who This Is For</span>
+                        <p class="text-xs text-gray-300 leading-relaxed">Individual developers, CS students, AI enthusiasts, and independent security researchers looking to track air-gapped RAG advancements.</p>
+                    </div>
+
+                    <div class="space-y-2">
+                        <span class="text-[11px] font-mono text-gray-400 font-bold uppercase tracking-wide block">Included Deliverables</span>
+                        <ul class="text-xs text-gray-400 space-y-2">
+                            <li class="flex items-start gap-2"><i class="fas fa-check text-indigo-400 mt-0.5"></i> <span>Access to public Ph.D. research logs & vlogs</span></li>
+                            <li class="flex items-start gap-2"><i class="fas fa-check text-indigo-400 mt-0.5"></i> <span>Interactive Web RAG Console query access</span></li>
+                            <li class="flex items-start gap-2"><i class="fas fa-check text-indigo-400 mt-0.5"></i> <span>Community updates & repository releases</span></li>
+                        </ul>
+                    </div>
                 </div>
                 <a href="https://buy.stripe.com/4gM28leW294M9FjbsR5os01" target="_blank" class="w-full text-center bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs py-3 rounded-xl transition accent-glow block">
-                    Subscribe Basic
+                    Subscribe Basic ($10/mo)
                 </a>
             </div>
 
-            <!-- BUSINESS / DEFENSE -->
+            <!-- TIER 2: BUSINESS / DEFENSE -->
             <div class="glass p-6 rounded-2xl border border-indigo-500/50 flex flex-col justify-between space-y-6 relative accent-glow">
                 <span class="absolute -top-3 right-4 bg-indigo-600 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">Popular</span>
                 <div class="space-y-4">
                     <span class="text-xs font-mono text-indigo-400 uppercase font-bold tracking-wider">Tier 2</span>
                     <h3 class="text-xl font-bold text-white">Business / Defense</h3>
-                    <p class="text-xs text-gray-400">Full SBIR capability integration, priority REST gateway support, and advisory logs.</p>
-                    <div class="text-2xl font-bold text-white font-mono">$250 <span class="text-xs text-gray-500 font-normal">/ mo</span></div>
+                    <div class="text-3xl font-bold text-white font-mono">$250 <span class="text-xs text-gray-500 font-normal">/ mo</span></div>
+                    
+                    <div class="pt-2 border-t border-gray-800/80 space-y-2">
+                        <span class="text-[11px] font-mono text-indigo-300 font-bold uppercase tracking-wide block">Who This Is For</span>
+                        <p class="text-xs text-gray-300 leading-relaxed">Defense contractors, SBIR/STTR prime partners, enterprise security teams, and government agency program managers.</p>
+                    </div>
+
+                    <div class="space-y-2">
+                        <span class="text-[11px] font-mono text-gray-400 font-bold uppercase tracking-wide block">Included Deliverables</span>
+                        <ul class="text-xs text-gray-400 space-y-2">
+                            <li class="flex items-start gap-2"><i class="fas fa-check text-indigo-400 mt-0.5"></i> <span>DoD Capability Statement & SBIR integration</span></li>
+                            <li class="flex items-start gap-2"><i class="fas fa-check text-indigo-400 mt-0.5"></i> <span>Air-gapped REST Gateway setup documentation</span></li>
+                            <li class="flex items-start gap-2"><i class="fas fa-check text-indigo-400 mt-0.5"></i> <span>Adversarial ML & prompt defense audit logs</span></li>
+                            <li class="flex items-start gap-2"><i class="fas fa-check text-indigo-400 mt-0.5"></i> <span>Direct technical advisory via <code class="text-indigo-300">dassenseibsu@pm.me</code></span></li>
+                        </ul>
+                    </div>
                 </div>
                 <a href="https://buy.stripe.com/4gM7sF5lsa8Q04J9kJ5os02" target="_blank" class="w-full text-center bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs py-3 rounded-xl transition accent-glow block">
-                    Subscribe Business
+                    Subscribe Business ($250/mo)
                 </a>
             </div>
 
-            <!-- ACADEMIC INSTITUTIONS -->
-            <div class="glass p-6 rounded-2xl border border-gray-800 flex flex-col justify-between space-y-6 hover:border-indigo-500/50 transition">
+            <!-- TIER 3: ACADEMIC INSTITUTIONS -->
+            <div class="glass p-6 rounded-2xl border border-gray-800 flex flex-col justify-between space-y-6 hover:border-emerald-500/50 transition">
                 <div class="space-y-4">
                     <span class="text-xs font-mono text-emerald-400 uppercase font-bold tracking-wider">Tier 3</span>
                     <h3 class="text-xl font-bold text-white">Academic Institutions</h3>
-                    <p class="text-xs text-gray-400">Full research dataset access, formal method citation logs, and university STTR partnerships.</p>
-                    <div class="text-2xl font-bold text-white font-mono">$500 <span class="text-xs text-gray-500 font-normal">/ mo</span></div>
+                    <div class="text-3xl font-bold text-white font-mono">$500 <span class="text-xs text-gray-500 font-normal">/ mo</span></div>
+                    
+                    <div class="pt-2 border-t border-gray-800/80 space-y-2">
+                        <span class="text-[11px] font-mono text-emerald-300 font-bold uppercase tracking-wide block">Who This Is For</span>
+                        <p class="text-xs text-gray-300 leading-relaxed">Universities, computer science research labs, doctoral advisors, and institutional academic departments.</p>
+                    </div>
+
+                    <div class="space-y-2">
+                        <span class="text-[11px] font-mono text-gray-400 font-bold uppercase tracking-wide block">Included Deliverables</span>
+                        <ul class="text-xs text-gray-400 space-y-2">
+                            <li class="flex items-start gap-2"><i class="fas fa-check text-emerald-400 mt-0.5"></i> <span>Full access to formal math dissertation logs</span></li>
+                            <li class="flex items-start gap-2"><i class="fas fa-check text-emerald-400 mt-0.5"></i> <span>Raw vector store benchmark datasets</span></li>
+                            <li class="flex items-start gap-2"><i class="fas fa-check text-emerald-400 mt-0.5"></i> <span>Joint academic publishing & STTR grant co-bidding</span></li>
+                            <li class="flex items-start gap-2"><i class="fas fa-check text-emerald-400 mt-0.5"></i> <span>Multi-user campus research license</span></li>
+                        </ul>
+                    </div>
                 </div>
                 <a href="https://buy.stripe.com/3cIbIVbJQep6dVz7cB5os03" target="_blank" class="w-full text-center bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs py-3 rounded-xl transition shadow block">
-                    Join Academic
+                    Join Academic ($500/mo)
                 </a>
             </div>
 
-            <!-- RESEARCH DONATIONS -->
+            <!-- TIER 4: RESEARCH DONATIONS -->
             <div class="glass p-6 rounded-2xl border border-amber-500/30 flex flex-col justify-between space-y-6 hover:border-amber-500 transition">
                 <div class="space-y-4">
                     <span class="text-xs font-mono text-amber-400 uppercase font-bold tracking-wider">Support</span>
                     <h3 class="text-xl font-bold text-white">Research Donation</h3>
-                    <p class="text-xs text-gray-400">Directly fund doctoral computer science research, hardware labs, and open defense software.</p>
-                    <div class="text-2xl font-bold text-white font-mono">Custom <span class="text-xs text-gray-500 font-normal">Amount</span></div>
+                    <div class="text-3xl font-bold text-white font-mono">Custom <span class="text-xs text-gray-500 font-normal">Contribution</span></div>
+                    
+                    <div class="pt-2 border-t border-gray-800/80 space-y-2">
+                        <span class="text-[11px] font-mono text-amber-300 font-bold uppercase tracking-wide block">Who This Is For</span>
+                        <p class="text-xs text-gray-300 leading-relaxed">Sponsors, alumni, and tech visionaries wanting to fund open-source sovereign AI hardware, labs, and doctoral CS research.</p>
+                    </div>
+
+                    <div class="space-y-2">
+                        <span class="text-[11px] font-mono text-gray-400 font-bold uppercase tracking-wide block">Impact & Recognition</span>
+                        <ul class="text-xs text-gray-400 space-y-2">
+                            <li class="flex items-start gap-2"><i class="fas fa-heart text-amber-400 mt-0.5"></i> <span>Direct hardware & compute lab funding</span></li>
+                            <li class="flex items-start gap-2"><i class="fas fa-heart text-amber-400 mt-0.5"></i> <span>Sponsor acknowledgment in open whitepapers</span></li>
+                            <li class="flex items-start gap-2"><i class="fas fa-heart text-amber-400 mt-0.5"></i> <span>Supports independent Ph.D. research freedom</span></li>
+                        </ul>
+                    </div>
                 </div>
                 <a href="https://donate.stripe.com/9B6bIVaFMep68BfgNb5os04" target="_blank" class="w-full text-center bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs py-3 rounded-xl transition shadow block">
-                    <i class="fas fa-heart mr-1.5"></i> Make a Donation
+                    <i class="fas fa-heart mr-1.5"></i> Donate to Research
                 </a>
             </div>
 
         </div>
+
+        <!-- FAQ SECTION FOR CLARITY -->
+        <section class="glass p-8 rounded-2xl border border-gray-800 space-y-6 max-w-4xl mx-auto">
+            <h3 class="text-lg font-bold text-white font-mono border-b border-gray-800 pb-3">Frequently Asked Questions</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs">
+                <div class="space-y-1">
+                    <h4 class="font-bold text-indigo-300">How do I access the air-gapped terminal after subscribing?</h4>
+                    <p class="text-gray-400 leading-relaxed">Your subscription unlocks credentials usable in our <a href="portal.html" class="text-indigo-400 underline">Member Portal</a> and grants direct access to run vector queries locally or remotely.</p>
+                </div>
+                <div class="space-y-1">
+                    <h4 class="font-bold text-indigo-300">Are donations tax-deductible?</h4>
+                    <p class="text-gray-400 leading-relaxed">Donations directly fund hardware, edge compute rigs, and open research publications at Emerging Defense Solutions.</p>
+                </div>
+            </div>
+        </section>
 
     </main>
 
