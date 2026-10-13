@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Executive Enclave & Enterprise Telemetry | EDS-360</title>
+    <title>Executive Enclave & CUI Data Vault | EDS-360</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -19,14 +19,14 @@
         <div class="flex items-center space-x-3">
             <div class="bg-purple-600 text-white font-bold p-2.5 rounded-lg">EDS</div>
             <div>
-                <h1 class="text-white font-bold text-lg">Emerging Defense Solutions (EDS-360) Enclave</h1>
-                <p class="text-xs text-gray-400">Proposals, Funding, Calendar Ingestion & Partner Operations</p>
+                <h1 class="text-white font-bold text-lg">Emerging Defense Solutions Command Enclave</h1>
+                <p class="text-xs text-gray-400">Research Showcase & Domain-Gated CUI Data Vaults</p>
             </div>
         </div>
         
         <div class="flex items-center space-x-3">
-            <span id="userAccessBadge" class="bg-emerald-950 text-emerald-400 border border-emerald-800/50 text-xs px-3 py-1.5 rounded-full font-mono font-bold">
-                Domain Auth: @eds-360.com / Super-Admin
+            <span id="domainBadge" class="bg-blue-950 text-blue-400 border border-blue-800/50 text-xs px-3 py-1.5 rounded-full font-mono font-bold">
+                Session Active: Research Admin Mode
             </span>
             <button onclick="logout()" class="bg-gray-800 hover:bg-gray-700 text-white text-xs px-3 py-2 rounded-lg font-semibold">Exit Enclave</button>
         </div>
@@ -34,191 +34,114 @@
 
     <main class="max-w-7xl mx-auto space-y-8">
 
-        <!-- Navigation Tabs -->
-        <div class="flex border-b border-gray-800 space-x-2 text-xs font-mono font-bold">
-            <button onclick="switchTab('overview')" id="tab-overview" class="px-4 py-2 text-purple-400 border-b-2 border-purple-500 font-bold">Telemetry Overview</button>
-            <button onclick="switchTab('proposals')" id="tab-proposals" class="px-4 py-2 text-gray-400 hover:text-white">Proposals & Contracts</button>
-            <button onclick="switchTab('ingestion')" id="tab-ingestion" class="px-4 py-2 text-gray-400 hover:text-white">Email & Calendar Sync</button>
-            <button onclick="switchTab('partnerships')" id="tab-partnerships" class="px-4 py-2 text-gray-400 hover:text-white">Research Partnerships</button>
-            <button onclick="switchTab('proprietary')" id="tab-proprietary" class="px-4 py-2 text-gray-400 hover:text-white">EDS Proprietary IP</button>
-        </div>
-
-        <!-- TAB 1: Telemetry Overview -->
-        <div id="view-overview" class="space-y-8">
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="bg-gray-900 border border-gray-800 p-5 rounded-2xl space-y-2">
-                    <span class="text-gray-400 text-xs font-semibold uppercase">Active Proposals & Grants</span>
-                    <h3 class="text-3xl font-extrabold text-emerald-400">$1.25M</h3>
-                    <p class="text-[11px] text-gray-500">AFWERX, DARPA, & NSF Submissions</p>
-                </div>
-                <div class="bg-gray-900 border border-gray-800 p-5 rounded-2xl space-y-2">
-                    <span class="text-gray-400 text-xs font-semibold uppercase">Consultation Requests</span>
-                    <h3 class="text-3xl font-extrabold text-purple-400">8 Active</h3>
-                    <p class="text-[11px] text-gray-500">Defense Contractors & Academic Co-PIs</p>
-                </div>
-                <div class="bg-gray-900 border border-gray-800 p-5 rounded-2xl space-y-2">
-                    <span class="text-gray-400 text-xs font-semibold uppercase">Verified EDS Personnel</span>
-                    <h3 class="text-3xl font-extrabold text-white">12 Seats</h3>
-                    <p class="text-[11px] text-gray-500">Authorized @eds-360.com Accounts</p>
-                </div>
-                <div class="bg-gray-900 border border-gray-800 p-5 rounded-2xl space-y-2">
-                    <span class="text-gray-400 text-xs font-semibold uppercase">Synced Calendar Items</span>
-                    <h3 class="text-3xl font-extrabold text-blue-400">14 Events</h3>
-                    <p class="text-[11px] text-gray-500">Academic & Commercial Schedule</p>
-                </div>
+        <!-- System Health Telemetry -->
+        <section class="bg-gray-900 border border-gray-800 rounded-2xl p-6 space-y-4">
+            <div class="flex justify-between items-center border-b border-gray-800 pb-3">
+                <h3 class="text-white font-bold text-base flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                    Subnet System Health Telemetry (10.0.20.0/24)
+                </h3>
+                <span class="text-xs font-mono text-gray-400">Node 1 Ingress: Verified Operational</span>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div class="bg-gray-900 border border-gray-800 p-6 rounded-2xl space-y-4">
-                    <h3 class="text-white font-bold text-base">Funding & Subscription Velocity</h3>
-                    <div class="h-64"><canvas id="revenueChart"></canvas></div>
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-4 text-xs font-mono">
+                <div class="bg-gray-950 border border-gray-800 p-3 rounded-xl space-y-1">
+                    <span class="text-gray-500 block">Node 0 (Control Plane)</span>
+                    <strong class="text-white">10.0.20.100</strong>
+                    <div class="text-[10px] text-emerald-400">Vaultwarden: Active</div>
                 </div>
-                <div class="bg-gray-900 border border-gray-800 p-6 rounded-2xl space-y-4">
-                    <h3 class="text-white font-bold text-base">RAG Query Load & Benchmark API Hits</h3>
-                    <div class="h-64"><canvas id="interactionChart"></canvas></div>
+                <div class="bg-gray-950 border border-gray-800 p-3 rounded-xl space-y-1">
+                    <span class="text-gray-500 block">Node 1 (Ingress Gate)</span>
+                    <strong class="text-white">10.0.20.101</strong>
+                    <div class="text-[10px] text-emerald-400">WireGuard: Connected</div>
                 </div>
-            </div>
-        </div>
-
-        <!-- TAB 2: Proposals, Funding & Defense Contracts -->
-        <div id="view-proposals" class="hidden space-y-6">
-            <div class="bg-gray-900 border border-gray-800 rounded-2xl p-6 space-y-4">
-                <div class="flex justify-between items-center">
-                    <div>
-                        <h3 class="text-white font-bold text-lg">Emerging Defense Solutions - Proposals & Grants</h3>
-                        <p class="text-xs text-gray-400">Manage SBIR/STTR applications, DoD research budgets, and defense consultation requests.</p>
-                    </div>
-                    <button class="bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs px-4 py-2 rounded-lg">+ Add Proposal / Request</button>
+                <div class="bg-gray-950 border border-gray-800 p-3 rounded-xl space-y-1">
+                    <span class="text-gray-500 block">Node 2 (vLLM Engine)</span>
+                    <strong class="text-white">10.0.20.102</strong>
+                    <div class="text-[10px] text-purple-400">CUDA: 114 Tok/s</div>
                 </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="bg-gray-950 border border-gray-800 p-4 rounded-xl space-y-2">
-                        <div class="flex justify-between items-center">
-                            <strong class="text-white text-xs">AFWERX Phase I - Tactical Edge RAG</strong>
-                            <span class="bg-amber-950 text-amber-400 text-[10px] font-mono px-2 py-0.5 rounded">In Review ($150,000)</span>
-                        </div>
-                        <p class="text-gray-400 text-[11px]">Co-PI Partner: Bowie State University Lab</p>
-                    </div>
-                    <div class="bg-gray-950 border border-gray-800 p-4 rounded-xl space-y-2">
-                        <div class="flex justify-between items-center">
-                            <strong class="text-white text-xs">DARPA Sub-10ms CUDA Benchmark Award</strong>
-                            <span class="bg-emerald-950 text-emerald-400 text-[10px] font-mono px-2 py-0.5 rounded">Awarded ($750,000)</span>
-                        </div>
-                        <p class="text-gray-400 text-[11px]">Direct Compute Allocation & Hardware Sponsorship</p>
-                    </div>
+                <div class="bg-gray-950 border border-gray-800 p-3 rounded-xl space-y-1">
+                    <span class="text-gray-500 block">Node 3 (LUKS2 Vault)</span>
+                    <strong class="text-white">10.0.20.103</strong>
+                    <div class="text-[10px] text-blue-400">AES-256 Encrypted</div>
+                </div>
+                <div class="bg-gray-950 border border-gray-800 p-3 rounded-xl space-y-1">
+                    <span class="text-gray-500 block">Node 4 (FreeIPA / GRC)</span>
+                    <strong class="text-white">10.0.20.104</strong>
+                    <div class="text-[10px] text-amber-400">DISA STIG High</div>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- TAB 3: Email & Calendar Ingestion Hub -->
-        <div id="view-ingestion" class="hidden space-y-6">
-            <div class="bg-gray-900 border border-gray-800 rounded-2xl p-6 space-y-6">
-                <h3 class="text-white font-bold text-lg">Email Ingestion & Academic Calendar Sync</h3>
+        <!-- Isolated CUI Enclave Vault -->
+        <section class="bg-gray-900 border-2 border-red-950 rounded-2xl p-6 space-y-4 relative overflow-hidden">
+            <div class="flex justify-between items-center">
+                <div>
+                    <span class="bg-red-950 text-red-400 border border-red-800/50 text-[10px] font-mono px-2.5 py-0.5 rounded uppercase font-bold">CUI Domain Clearance Restricted</span>
+                    <h3 class="text-lg font-bold text-white mt-1">Controlled Unclassified Information (CUI) & Contract Vault</h3>
+                </div>
+                <button onclick="lockCUIVault()" class="bg-gray-800 hover:bg-gray-700 text-xs text-gray-300 px-3 py-1.5 rounded-lg border border-gray-700">Re-Lock Vault</button>
+            </div>
+
+            <!-- GATE LOCKED STATE -->
+            <div id="cuiLockedState" class="p-8 bg-gray-950 border border-red-900/30 rounded-xl text-center space-y-4">
+                <div class="text-3xl">🛡️</div>
+                <h4 class="text-white font-bold text-sm">CUI Logic Gate Lockout Active</h4>
+                <p class="text-xs text-gray-400 max-w-md mx-auto">Access restricted exclusively to verified <strong class="text-white">@eds-360.com</strong> and <strong class="text-white">@emergingdefensesolutions.com</strong> domain accounts.</p>
                 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="space-y-3">
-                        <h4 class="text-xs font-mono text-purple-400 font-bold uppercase">Schedule Meeting / Invite EDS Personnel</h4>
-                        <input type="text" id="eventTitle" placeholder="Meeting Title (e.g., Joint SBIR Strategy Session)..." class="w-full bg-gray-950 border border-gray-800 text-xs text-white p-3 rounded-xl focus:outline-none focus:border-purple-500">
-                        <input type="text" id="inviteeEmail" placeholder="Invitee Email (@eds-360.com or Partner)..." class="w-full bg-gray-950 border border-gray-800 text-xs text-white p-3 rounded-xl focus:outline-none focus:border-purple-500">
-                        <input type="datetime-local" id="eventTime" class="w-full bg-gray-950 border border-gray-800 text-xs text-gray-300 p-3 rounded-xl focus:outline-none focus:border-purple-500">
-                        <button onclick="scheduleEvent()" class="w-full bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs py-3 rounded-xl">Send Enclave Invitation</button>
-                    </div>
+                <div class="flex justify-center items-center space-x-2 max-w-sm mx-auto">
+                    <input type="password" id="cuiKeyInput" placeholder="Session Clearance Passphrase..." class="bg-gray-900 border border-gray-800 text-xs text-white p-2.5 rounded-lg focus:outline-none focus:border-red-500 font-mono flex-1">
+                    <button onclick="unlockCUIVault()" class="bg-red-900 hover:bg-red-800 text-white text-xs font-bold px-4 py-2.5 rounded-lg border border-red-700">Unlock CUI Vault</button>
+                </div>
+                <span id="cuiGateError" class="text-[11px] text-red-400 hidden block font-mono"></span>
+            </div>
 
-                    <div class="space-y-3">
-                        <h4 class="text-xs font-mono text-blue-400 font-bold uppercase">Ingested Calendar Feed & Consultations</h4>
-                        <ul class="space-y-2 text-xs text-gray-300">
-                            <li class="p-3 bg-gray-950 border border-gray-800 rounded-xl flex justify-between">
-                                <span>📅 Doctoral Dissertation Defense Planning</span>
-                                <span class="text-gray-500 font-mono">Tomorrow 14:00 EST</span>
-                            </li>
-                            <li class="p-3 bg-gray-950 border border-gray-800 rounded-xl flex justify-between">
-                                <span>📅 Defense Consultation - Zero-Trust RAG Sandbox</span>
-                                <span class="text-gray-500 font-mono">Oct 15, 2026</span>
-                            </li>
-                        </ul>
+            <!-- GATE UNLOCKED STATE -->
+            <div id="cuiUnlockedState" class="hidden space-y-4">
+                <div class="p-4 bg-emerald-950/40 border border-emerald-800/50 rounded-xl text-xs text-emerald-300 font-mono">
+                    ✓ Domain clearance (@eds-360.com / @emergingdefensesolutions.com) verified. CUI payload decrypted.
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                    <div class="p-4 bg-gray-950 border border-gray-800 rounded-xl space-y-2">
+                        <strong class="text-white block font-mono">📄 CMMC L2 System Security Plan (NIST SP 800-171)</strong>
+                        <p class="text-gray-400">Formal hardware implementation audit for 10.0.20.0/24 physical subnet.</p>
+                    </div>
+                    <div class="p-4 bg-gray-950 border border-gray-800 rounded-xl space-y-2">
+                        <strong class="text-white block font-mono">📄 AFWERX & DARPA Contract Allocations</strong>
+                        <p class="text-gray-400">Emerging Defense Solutions proposal budgets and joint partner agreements.</p>
                     </div>
                 </div>
             </div>
-        </div>
-
-        <!-- TAB 4: Research Partnerships -->
-        <div id="view-partnerships" class="hidden space-y-6">
-            <div class="bg-gray-900 border border-gray-800 rounded-2xl p-6 space-y-4">
-                <h3 class="text-white font-bold text-lg">Academic & Industry Partnership Portal</h3>
-                <p class="text-xs text-gray-400">Dedicated enclave for universities, DoD labs, and contractors seeking to partner with your research.</p>
-                <div class="p-4 bg-gray-950 border border-gray-800 rounded-xl text-xs space-y-2">
-                    <p class="text-emerald-400 font-mono font-bold">✓ Active Institutional Co-PI Portal Enabled</p>
-                    <p class="text-gray-300">Partner organizations can register at <code class="text-purple-400">pricing.html</code> under the $0.00 Proposal Partner Tier to receive direct access to grant drafting workspaces.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- TAB 5: EDS Proprietary IP -->
-        <div id="view-proprietary" class="hidden space-y-6">
-            <div class="bg-gray-900 border border-red-900/50 rounded-2xl p-6 space-y-4">
-                <div class="flex items-center space-x-2">
-                    <span class="bg-red-950 text-red-400 border border-red-800/50 text-[10px] font-mono font-bold px-2.5 py-1 rounded-full uppercase">Restricted IP Enclave</span>
-                    <h3 class="text-white font-bold text-lg">EDS Proprietary Specifications & Air-Gapped CUDA Repos</h3>
-                </div>
-                <p class="text-xs text-gray-400">Restricted to verified <strong class="text-white">@eds-360.com</strong> staff and <strong class="text-white">dassensebsu@pm.me</strong>.</p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="p-4 bg-gray-950 border border-gray-800 rounded-xl text-xs space-y-1">
-                        <strong class="text-white">🔒 Air-Gapped CUDA Sub-10ms Architecture PDF</strong>
-                        <p class="text-gray-500">Internal hardware specification & zero-trust vector embeddings schema.</p>
-                    </div>
-                    <div class="p-4 bg-gray-950 border border-gray-800 rounded-xl text-xs space-y-1">
-                        <strong class="text-white">🔒 Tactical Edge RAG Model Weights (Quantized)</strong>
-                        <p class="text-gray-500">Download link for internal defense deployment testing.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+        </section>
 
     </main>
 
     <script>
-        function switchTab(tabId) {
-            ['overview', 'proposals', 'ingestion', 'partnerships', 'proprietary'].forEach(t => {
-                document.getElementById('view-' + t).classList.add('hidden');
-                document.getElementById('tab-' + t).classList.remove('text-purple-400', 'border-b-2', 'border-purple-500', 'font-bold');
-                document.getElementById('tab-' + t).classList.add('text-gray-400');
-            });
-            document.getElementById('view-' + tabId).classList.remove('hidden');
-            document.getElementById('tab-' + tabId).classList.add('text-purple-400', 'border-b-2', 'border-purple-500', 'font-bold');
-            document.getElementById('tab-' + tabId).classList.remove('text-gray-400');
-        }
-
-        function scheduleEvent() {
-            const title = document.getElementById("eventTitle").value;
-            const invitee = document.getElementById("inviteeEmail").value;
-            if (title && invitee) {
-                alert(`Invitation sent to ${invitee} for "${title}". Event added to calendar ingestion queue.`);
-                document.getElementById("eventTitle").value = "";
-                document.getElementById("inviteeEmail").value = "";
+        function unlockCUIVault() {
+            const key = document.getElementById("cuiKeyInput").value;
+            const err = document.getElementById("cuiGateError");
+            
+            const result = validateCUIGate(key);
+            if (result.allowed) {
+                document.getElementById("cuiLockedState").classList.add("hidden");
+                document.getElementById("cuiUnlockedState").classList.remove("hidden");
+                err.classList.add("hidden");
+            } else {
+                err.innerText = result.reason;
+                err.classList.remove("hidden");
             }
         }
 
-        window.onload = function() {
-            const ctxRev = document.getElementById('revenueChart').getContext('2d');
-            new Chart(ctxRev, {
-                type: 'line',
-                data: {
-                    labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
-                    datasets: [{ label: 'Funding ($)', data: [2800, 3400, 4100, 4850], borderColor: '#10b981', fill: true, backgroundColor: 'rgba(16,185,129,0.1)' }]
-                },
-                options: { responsive: true, maintainAspectRatio: false }
-            });
+        function lockCUIVault() {
+            document.getElementById("cuiLockedState").classList.remove("hidden");
+            document.getElementById("cuiUnlockedState").classList.add("hidden");
+            document.getElementById("cuiKeyInput").value = "";
+        }
 
-            const ctxInt = document.getElementById('interactionChart').getContext('2d');
-            new Chart(ctxInt, {
-                type: 'bar',
-                data: {
-                    labels: ['Basic', 'Academic', 'Proposal Partners', 'Business'],
-                    datasets: [{ label: 'RAG Queries', data: [4200, 6800, 3100, 9400], backgroundColor: '#3b82f6' }]
-                },
-                options: { responsive: true, maintainAspectRatio: false }
-            });
-        };
+        function logout() {
+            localStorage.clear();
+            window.location.href = 'index.html';
+        }
     </script>
 </body>
 </html>
