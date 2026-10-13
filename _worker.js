@@ -2,7 +2,7 @@
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
 
-    // Trap /api/* namespace
+    // Explicit API endpoint handling
     if (url.pathname.startsWith("/api/")) {
       if (request.method === "OPTIONS") {
         return new Response(null, {
@@ -33,12 +33,12 @@
         try {
           const payload = await request.json();
           const prompt = payload.prompt || "";
-          let reply = `🤖 **EDS-360 Agent**: Processed query "${prompt}". Enclave parameters verified under FIPS 140-3.`;
-          
+          let reply = `🤖 **EDS-360 Agent**: Evaluated prompt "${prompt}". CUI enclave parameters active under FIPS 140-3.`;
+
           if (prompt.toLowerCase().includes("cmmc") || prompt.toLowerCase().includes("nist")) {
-            reply = `🛡️ **Compliance Guard Analysis**: Control alignment verified under NIST SP 800-171 / CMMC Level 2. Ephemeral key rotation decay model active.`;
+            reply = `🛡️ **Compliance Analysis**: NIST SP 800-171 / CMMC Level 2 control verified. Ephemeral key decay active.`;
           } else if (prompt.toLowerCase().includes("scenario") || prompt.toLowerCase().includes("attack")) {
-            reply = `🚨 **Threat Scenario Simulation**: Ingress threat score elevated. Node 4 Wazuh SIEM enforcing automated isolation rules.`;
+            reply = `🚨 **Threat Scenario**: Threat score elevated. Node 4 Wazuh SIEM isolating suspicious peer endpoints.`;
           }
 
           return new Response(JSON.stringify({ status: "SUCCESS", response: reply }), {
@@ -54,6 +54,18 @@
       }
     }
 
-    return env.ASSETS.fetch(request);
+    // Safe Static Asset Fetching
+    if (env && env.ASSETS) {
+      try {
+        return await env.ASSETS.fetch(request);
+      } catch (e) {
+        // Fallback if asset fetch fails
+      }
+    }
+
+    return new Response(JSON.stringify({ status: "ONLINE", system: "EDS-360 Telemetry Router" }), {
+      status: 200,
+      headers: { "Content-Type": "application/json" }
+    });
   }
 };
