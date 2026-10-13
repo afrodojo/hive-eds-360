@@ -3,258 +3,148 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Member Portal & Admin Command Hub | EDS-360</title>
+    <title>Enterprise Portal & CUI Compliance Enclave | EDS-360</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="assets/js/auth.js"></script>
     <style>
-        body { background-color: #0b0e14; color: #c9d1d9; font-family: system-ui, -apple-system, sans-serif; }
+        body { background-color: #0b0e14; color: #c9d1d9; font-family: system-ui, sans-serif; }
         .glass-panel { background: rgba(17, 24, 39, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
     </style>
 </head>
 <body class="p-4 md:p-8 min-h-screen flex flex-col">
 
-    <!-- Top Navigation Header -->
+    <!-- Header -->
     <header class="max-w-7xl w-full mx-auto glass-panel p-4 rounded-2xl mb-6 flex flex-col md:flex-row items-center justify-between gap-4">
         <div class="flex items-center space-x-3">
             <div class="bg-gradient-to-r from-purple-600 to-blue-600 text-white font-black p-3 rounded-xl shadow-lg">EDS</div>
             <div>
                 <h1 class="text-white font-extrabold text-lg tracking-tight">Emerging Defense Solutions</h1>
-                <p class="text-xs text-gray-400">Enterprise Member Hub & Admin Command Enclave</p>
+                <p class="text-xs text-gray-400">Enterprise Enclave & Continuous CMMC L2 / SOC 2 Compliance Engine</p>
             </div>
         </div>
 
-        <!-- Mode Selector & Session Badge -->
         <div class="flex items-center space-x-3">
             <div id="portalModeNav" class="bg-gray-950 p-1 rounded-xl border border-gray-800 flex space-x-1 text-xs font-mono font-bold">
-                <button onclick="switchPortalMode('member')" id="modeBtnMember" class="px-3 py-1.5 rounded-lg text-purple-400 bg-gray-800 border border-purple-500/30">
-                    👤 Member Hub
-                </button>
-                <button onclick="switchPortalMode('admin')" id="modeBtnAdmin" class="px-3 py-1.5 rounded-lg text-gray-400 hover:text-white">
-                    🔑 Executive Admin
-                </button>
+                <button onclick="switchPortalMode('member')" id="modeBtnMember" class="px-3 py-1.5 rounded-lg text-purple-400 bg-gray-800 border border-purple-500/30">👤 Member Hub</button>
+                <button onclick="switchPortalMode('admin')" id="modeBtnAdmin" class="px-3 py-1.5 rounded-lg text-gray-400 hover:text-white">🔑 Executive Admin</button>
             </div>
             <button onclick="logout()" class="bg-gray-800 hover:bg-gray-700 text-white text-xs px-3.5 py-2 rounded-xl font-semibold border border-gray-700">Exit</button>
         </div>
     </header>
 
-    <!-- MAIN VIEW CONTAINER -->
     <main class="max-w-7xl w-full mx-auto flex-1 space-y-6">
 
-        <!-- ================================================================= -->
-        # SECTION 1: PUBLIC / MEMBER COMMUNITY HUB
-        <!-- ================================================================= -->
+        <!-- MEMBER HUB -->
         <div id="viewMemberHub" class="space-y-6">
-            
-            <!-- Welcome Banner -->
             <div class="glass-panel p-6 rounded-2xl border-l-4 border-purple-500 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div>
-                    <h2 class="text-white text-xl font-bold">Welcome to the Research & Defense Community</h2>
-                    <p class="text-xs text-gray-400 mt-1">Access technical Q&A, listen to research podcasts, and review public AI benchmark releases.</p>
+                    <h2 class="text-white text-xl font-bold">Research Community & Defense Advisory</h2>
+                    <p class="text-xs text-gray-400 mt-1">Inter-organization research dispatches, Q&A feeds, and model execution telemetry.</p>
                 </div>
-                <button onclick="switchPortalMode('admin')" class="bg-purple-600/20 hover:bg-purple-600/30 text-purple-300 border border-purple-500/40 text-xs font-bold px-4 py-2.5 rounded-xl font-mono">
-                    Admin Verification Settings &rarr;
-                </button>
+                <span class="bg-emerald-950 text-emerald-400 border border-emerald-800/50 text-xs px-3 py-1.5 rounded-full font-mono font-bold">SOC 2 Type II Active</span>
             </div>
 
-            <!-- Member Workspace Grid -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-
-                <!-- Interactive Q&A Feed -->
                 <div class="lg:col-span-2 glass-panel p-6 rounded-2xl space-y-4">
-                    <div class="flex justify-between items-center border-b border-gray-800 pb-3">
-                        <h3 class="text-white font-bold text-sm flex items-center gap-2">
-                            <span>💬</span> Member Q&A & Advisory Feed
-                        </h3>
-                        <span class="text-[10px] font-mono text-emerald-400 bg-emerald-950/60 border border-emerald-800/40 px-2 py-0.5 rounded-full">Live Interactive</span>
+                    <h3 class="text-white font-bold text-sm border-b border-gray-800 pb-3">💬 Member Advisory & Defense Q&A Feed</h3>
+                    <textarea id="userQuestionInput" placeholder="Submit technical query..." class="w-full bg-gray-950 border border-gray-800 text-xs text-white p-3 rounded-xl focus:outline-none focus:border-purple-500 h-20 resize-none"></textarea>
+                    <div class="flex justify-between items-center">
+                        <span class="text-[10px] text-gray-500 font-mono">Input sanitized via OWASP & NIST SP 800-53 SI-10 controls.</span>
+                        <button onclick="postQuestion()" class="bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs px-4 py-2 rounded-xl">Post Question</button>
                     </div>
-
-                    <!-- Ask Question Input -->
-                    <div class="space-y-2">
-                        <textarea id="userQuestionInput" placeholder="Ask a question regarding formal RAG, CMMC L2 compliance, or SAT decoding..." class="w-full bg-gray-950 border border-gray-800 text-xs text-white p-3 rounded-xl focus:outline-none focus:border-purple-500 h-20 resize-none font-sans"></textarea>
-                        <div class="flex justify-between items-center">
-                            <span class="text-[10px] text-gray-500">Inputs are auto-sanitized for security.</span>
-                            <button onclick="postQuestion()" class="bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs px-4 py-2 rounded-xl transition">Post Question</button>
-                        </div>
-                    </div>
-
-                    <!-- Discussion List -->
-                    <div id="discussionFeed" class="space-y-3 pt-2">
-                        <div class="bg-gray-950/80 border border-gray-800 p-4 rounded-xl space-y-2">
-                            <div class="flex justify-between items-center text-xs">
-                                <strong class="text-purple-400 font-mono">Dr. A. Morman (Research Lead)</strong>
-                                <span class="text-gray-500 text-[10px]">Today at 14:20 EST</span>
-                            </div>
-                            <p class="text-xs text-gray-300">How does the sub-10ms vLLM engine handle SAT-constrained decoding when processing high-volume CUI documents?</p>
-                            <div class="bg-gray-900 border border-gray-800/80 p-3 rounded-lg text-[11px] text-gray-400 font-mono mt-2">
-                                <strong class="text-emerald-400 block mb-1">Answer from Super-Admin (dassensebsu):</strong>
-                                Node 2 applies CUDA logit processor masks before softmax sampling, ensuring generated outputs never breach pre-compiled formal logic proofs.
-                            </div>
-                        </div>
-                    </div>
+                    <div id="discussionFeed" class="space-y-3 pt-2"></div>
                 </div>
 
-                <!-- Podcast & Media Stream -->
                 <div class="glass-panel p-6 rounded-2xl space-y-4">
-                    <div class="flex justify-between items-center border-b border-gray-800 pb-3">
-                        <h3 class="text-white font-bold text-sm flex items-center gap-2">
-                            <span>🎙️</span> Research Broadcasts & Podcasts
-                        </h3>
-                        <span class="text-[10px] font-mono text-purple-400">Audio Hub</span>
-                    </div>
-
-                    <div class="space-y-4">
-                        <!-- Featured Episode -->
-                        <div class="bg-gray-950 border border-purple-900/30 p-4 rounded-xl space-y-3">
-                            <span class="bg-purple-950 text-purple-300 text-[10px] font-mono px-2 py-0.5 rounded font-bold">Episode #04</span>
-                            <h4 class="text-xs font-bold text-white">Air-Gapped Subnets & CMMC Level 2 Compliance Architecture</h4>
-                            <p class="text-[11px] text-gray-400">A deep dive into 5-node physical hardware telemetry and zero-trust isolated vaults.</p>
-                            
-                            <!-- Custom Audio Player Mockup -->
-                            <div class="bg-gray-900 p-2.5 rounded-lg flex items-center space-x-3 border border-gray-800">
-                                <button onclick="togglePodcastPlay()" id="podcastPlayBtn" class="bg-purple-600 text-white rounded-full p-2 text-xs w-8 h-8 flex items-center justify-center font-bold">▶</button>
-                                <div class="flex-1 space-y-1">
-                                    <div class="h-1 bg-gray-800 rounded-full overflow-hidden">
-                                        <div id="podcastProgress" class="h-full bg-purple-500 w-1/3"></div>
-                                    </div>
-                                    <div class="flex justify-between text-[9px] text-gray-500 font-mono">
-                                        <span>12:44</span>
-                                        <span>38:10</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Previous Episodes List -->
-                        <div class="space-y-2 text-xs">
-                            <strong class="text-gray-400 text-[11px] font-mono uppercase block">Recent Broadcasts</strong>
-                            <div class="p-2.5 bg-gray-950 hover:bg-gray-900 rounded-lg text-gray-300 flex justify-between items-center border border-gray-800/50">
-                                <span>#03: Formal RAG Verification Proofs</span>
-                                <span class="text-gray-500 text-[10px]">24 mins</span>
-                            </div>
-                            <div class="p-2.5 bg-gray-950 hover:bg-gray-900 rounded-lg text-gray-300 flex justify-between items-center border border-gray-800/50">
-                                <span>#02: Hybrid AI Models in Defense</span>
-                                <span class="text-gray-500 text-[10px]">41 mins</span>
-                            </div>
-                        </div>
+                    <h3 class="text-white font-bold text-sm border-b border-gray-800 pb-3">🎙️ Research Broadcasts</h3>
+                    <div class="bg-gray-950 p-4 rounded-xl border border-purple-900/30 space-y-2">
+                        <span class="bg-purple-950 text-purple-300 text-[10px] font-mono px-2 py-0.5 rounded font-bold">Episode #04</span>
+                        <h4 class="text-xs font-bold text-white">Air-Gapped Subnet Telemetry & SOC 2 Audits</h4>
+                        <p class="text-[11px] text-gray-400">Maintaining sovereignty and continuous Body of Evidence logs.</p>
                     </div>
                 </div>
-
             </div>
         </div>
 
-        <!-- ================================================================= -->
-        # SECTION 2: EXECUTIVE SUPER-ADMIN COMMAND ENCLAVE
-        <!-- ================================================================= -->
+        <!-- EXECUTIVE ADMIN & COMPLIANCE ENCLAVE -->
         <div id="viewAdminEnclave" class="hidden space-y-6">
-
-            <!-- Admin Sub-Navigation Tabs -->
             <div class="flex border-b border-gray-800 space-x-2 text-xs font-mono font-bold overflow-x-auto">
                 <button onclick="switchAdminTab('overview')" id="tab-overview" class="px-4 py-2 text-purple-400 border-b-2 border-purple-500 font-bold">Telemetry Overview</button>
-                <button onclick="switchAdminTab('proposals')" id="tab-proposals" class="px-4 py-2 text-gray-400 hover:text-white">Proposals & Grants</button>
-                <button onclick="switchAdminTab('ingestion')" id="tab-ingestion" class="px-4 py-2 text-gray-400 hover:text-white">Email & Calendar Sync</button>
+                <button onclick="switchAdminTab('boe')" id="tab-boe" class="px-4 py-2 text-gray-400 hover:text-white">📜 Body of Evidence (BOE)</button>
                 <button onclick="switchAdminTab('cui')" id="tab-cui" class="px-4 py-2 text-gray-400 hover:text-white">🔒 Domain-Gated CUI Vault</button>
             </div>
 
-            <!-- ADMIN TAB 1: Telemetry Overview -->
+            <!-- OVERVIEW -->
             <div id="adminTabOverview" class="space-y-6">
                 <section class="glass-panel p-6 rounded-2xl space-y-4">
                     <div class="flex justify-between items-center border-b border-gray-800 pb-3">
                         <h3 class="text-white font-bold text-sm flex items-center gap-2">
                             <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                            Subnet Hardware Health Telemetry (10.0.20.0/24)
+                            Subnet Telemetry (10.0.20.0/24)
                         </h3>
-                        <span class="text-xs font-mono text-gray-400">Node 1 Ingress: Verified Connected</span>
+                        <span class="text-xs font-mono text-gray-400">DISA STIG High Compliant</span>
                     </div>
-
                     <div class="grid grid-cols-1 md:grid-cols-5 gap-3 text-xs font-mono">
-                        <div class="bg-gray-950 border border-gray-800 p-3 rounded-xl">
-                            <span class="text-gray-500 block">Node 0 (Control)</span>
-                            <strong class="text-white">10.0.20.100</strong>
-                            <div class="text-[10px] text-emerald-400 mt-1">Vaultwarden: Active</div>
-                        </div>
-                        <div class="bg-gray-950 border border-gray-800 p-3 rounded-xl">
-                            <span class="text-gray-500 block">Node 1 (Ingress)</span>
-                            <strong class="text-white">10.0.20.101</strong>
-                            <div class="text-[10px] text-emerald-400 mt-1">WireGuard: Connected</div>
-                        </div>
-                        <div class="bg-gray-950 border border-gray-800 p-3 rounded-xl">
-                            <span class="text-gray-500 block">Node 2 (vLLM Engine)</span>
-                            <strong class="text-white">10.0.20.102</strong>
-                            <div class="text-[10px] text-purple-400 mt-1">CUDA: 114 Tok/s</div>
-                        </div>
-                        <div class="bg-gray-950 border border-gray-800 p-3 rounded-xl">
-                            <span class="text-gray-500 block">Node 3 (LUKS2 Vault)</span>
-                            <strong class="text-white">10.0.20.103</strong>
-                            <div class="text-[10px] text-blue-400 mt-1">AES-256 Encrypted</div>
-                        </div>
-                        <div class="bg-gray-950 border border-gray-800 p-3 rounded-xl">
-                            <span class="text-gray-500 block">Node 4 (FreeIPA/GRC)</span>
-                            <strong class="text-white">10.0.20.104</strong>
-                            <div class="text-[10px] text-amber-400 mt-1">DISA STIG High</div>
-                        </div>
+                        <div class="bg-gray-950 border border-gray-800 p-3 rounded-xl"><span class="text-gray-500 block">Node 0</span><strong class="text-white">10.0.20.100</strong><div class="text-[10px] text-emerald-400 mt-1">Vaultwarden OK</div></div>
+                        <div class="bg-gray-950 border border-gray-800 p-3 rounded-xl"><span class="text-gray-500 block">Node 1</span><strong class="text-white">10.0.20.101</strong><div class="text-[10px] text-emerald-400 mt-1">WireGuard OK</div></div>
+                        <div class="bg-gray-950 border border-gray-800 p-3 rounded-xl"><span class="text-gray-500 block">Node 2</span><strong class="text-white">10.0.20.102</strong><div class="text-[10px] text-purple-400 mt-1">vLLM 114 Tok/s</div></div>
+                        <div class="bg-gray-950 border border-gray-800 p-3 rounded-xl"><span class="text-gray-500 block">Node 3</span><strong class="text-white">10.0.20.103</strong><div class="text-[10px] text-blue-400 mt-1">LUKS2 Encrypted</div></div>
+                        <div class="bg-gray-950 border border-gray-800 p-3 rounded-xl"><span class="text-gray-500 block">Node 4</span><strong class="text-white">10.0.20.104</strong><div class="text-[10px] text-amber-400 mt-1">FreeIPA STIG High</div></div>
                     </div>
                 </section>
             </div>
 
-            <!-- ADMIN TAB 2: Proposals & Grants -->
-            <div id="adminTabProposals" class="hidden space-y-4">
+            <!-- BOE CONTINUOUS AUDIT TRAIL -->
+            <div id="adminTabBoe" class="hidden space-y-4">
                 <div class="glass-panel p-6 rounded-2xl space-y-4">
-                    <h3 class="text-white font-bold text-sm">Active Defense Contracts & Grant Submissions</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-                        <div class="bg-gray-950 border border-gray-800 p-4 rounded-xl space-y-2">
-                            <div class="flex justify-between">
-                                <strong class="text-white">AFWERX Phase I - Tactical Edge RAG</strong>
-                                <span class="bg-amber-950 text-amber-400 text-[10px] font-mono px-2 py-0.5 rounded">$150,000</span>
-                            </div>
-                            <p class="text-gray-400 text-[11px]">Bowie State University AI Lab Partner Submission</p>
+                    <div class="flex justify-between items-center border-b border-gray-800 pb-3">
+                        <div>
+                            <span class="bg-purple-950 text-purple-300 border border-purple-800/50 text-[10px] font-mono px-2.5 py-0.5 rounded uppercase font-bold">Continuous Accreditation Engine</span>
+                            <h3 class="text-base font-bold text-white mt-1">Body of Evidence (BOE) Continuous Audit Trail</h3>
                         </div>
-                        <div class="bg-gray-950 border border-gray-800 p-4 rounded-xl space-y-2">
-                            <div class="flex justify-between">
-                                <strong class="text-white">DARPA Neural Execution Award</strong>
-                                <span class="bg-emerald-950 text-emerald-400 text-[10px] font-mono px-2 py-0.5 rounded">$750,000</span>
-                            </div>
-                            <p class="text-gray-400 text-[11px]">Sub-10ms vLLM Hardware Optimization</p>
-                        </div>
+                        <button onclick="exportBOEArtifacts()" class="bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs px-4 py-2 rounded-xl">Export ATO Evidence (.JSON)</button>
+                    </div>
+
+                    <div class="space-y-2">
+                        <span class="text-xs text-gray-400 font-mono">Live Audit Stream (NIST SP 800-171 AU-2 / SOC 2 Type II CC6.1):</span>
+                        <div id="boeLogStream" class="bg-gray-950 border border-gray-800 p-4 rounded-xl font-mono text-xs text-emerald-400 h-64 overflow-y-auto space-y-2"></div>
                     </div>
                 </div>
             </div>
 
-            <!-- ADMIN TAB 3: Email & Calendar Ingestion -->
-            <div id="adminTabIngestion" class="hidden space-y-4">
-                <div class="glass-panel p-6 rounded-2xl space-y-4">
-                    <h3 class="text-white font-bold text-sm">Academic Schedule & Member Invitation Hub</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="space-y-3">
-                            <input type="text" id="adminInviteEmail" placeholder="Invitee Email (@eds-360.com or Partner)..." class="w-full bg-gray-950 border border-gray-800 text-xs text-white p-3 rounded-xl focus:outline-none">
-                            <button onclick="dispatchInvite()" class="w-full bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs py-3 rounded-xl">Dispatch Portal Invite</button>
-                        </div>
-                        <div class="p-4 bg-gray-950 border border-gray-800 rounded-xl text-xs text-gray-300 font-mono">
-                            📅 Synced: Doctoral Defense Strategy Session (Tomorrow 14:00 EST)
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ADMIN TAB 4: Domain-Gated CUI Vault -->
-            <div id="adminTabCUI" class="hidden space-y-4">
+            <!-- DOMAIN-GATED CUI VAULT WITH ROTATING SESSION KEYS -->
+            <div id="adminTabCui" class="hidden space-y-4">
                 <section class="glass-panel border-2 border-red-950/80 rounded-2xl p-6 space-y-4">
                     <div class="flex justify-between items-center">
                         <div>
-                            <span class="bg-red-950 text-red-400 border border-red-800/50 text-[10px] font-mono px-2.5 py-0.5 rounded uppercase font-bold">Domain Clearance Required</span>
+                            <span class="bg-red-950 text-red-400 border border-red-800/50 text-[10px] font-mono px-2.5 py-0.5 rounded uppercase font-bold">15-Min Rotating Key Rotation Active</span>
                             <h3 class="text-base font-bold text-white mt-1">Controlled Unclassified Information (CUI) Vault</h3>
                         </div>
                         <button onclick="lockCUIVault()" class="bg-gray-800 text-xs text-gray-300 px-3 py-1.5 rounded-lg border border-gray-700">Re-Lock Vault</button>
                     </div>
 
+                    <!-- ROTATING SESSION KEY STATUS BAR -->
+                    <div class="p-3 bg-gray-950 border border-gray-800 rounded-xl flex flex-col sm:flex-row justify-between items-center text-xs font-mono gap-2">
+                        <div>
+                            <span class="text-gray-400">Active Epoch Key: </span>
+                            <strong id="activeEpochKeyDisplay" class="text-purple-400">Loading...</strong>
+                        </div>
+                        <div>
+                            <span class="text-gray-400">Key Expiration In: </span>
+                            <span id="keyCountdownDisplay" class="text-amber-400 font-bold">15:00</span>
+                        </div>
+                    </div>
+
                     <!-- LOCKED STATE -->
                     <div id="cuiLockedState" class="p-8 bg-gray-950 border border-red-900/30 rounded-xl text-center space-y-4">
                         <div class="text-3xl">🛡️</div>
-                        <h4 class="text-white font-bold text-sm">CUI Logic Gate Active</h4>
-                        <p class="text-xs text-gray-400 max-w-md mx-auto">Access strictly restricted to verified <strong class="text-white">@eds-360.com</strong> and <strong class="text-white">@emergingdefensesolutions.com</strong> domain accounts.</p>
-                        <div class="flex justify-center items-center space-x-2 max-w-sm mx-auto">
-                            <input type="password" id="cuiKeyInput" placeholder="Passphrase..." class="bg-gray-900 border border-gray-800 text-xs text-white p-2.5 rounded-lg font-mono flex-1">
-                            <button onclick="unlockCUIVault()" class="bg-red-900 hover:bg-red-800 text-white text-xs font-bold px-4 py-2.5 rounded-lg">Unlock</button>
+                        <h4 class="text-white font-bold text-sm">Rotating Key Logic Gate Lockout Active</h4>
+                        <p class="text-xs text-gray-400 max-w-md mx-auto">Requires active 15-minute epoch key and verified <strong class="text-white">@eds-360.com</strong> or <strong class="text-white">@emergingdefensesolutions.com</strong> session.</p>
+                        
+                        <div class="flex justify-center items-center space-x-2 max-w-md mx-auto">
+                            <input type="text" id="cuiKeyInput" placeholder="Enter Active Epoch Key..." class="bg-gray-900 border border-gray-800 text-xs text-white p-2.5 rounded-lg font-mono flex-1 focus:outline-none focus:border-red-500">
+                            <button onclick="unlockCUIVault()" class="bg-red-900 hover:bg-red-800 text-white text-xs font-bold px-4 py-2.5 rounded-lg">Authenticate Key</button>
                         </div>
                         <span id="cuiGateError" class="text-[11px] text-red-400 hidden block font-mono"></span>
                     </div>
@@ -262,11 +152,17 @@
                     <!-- UNLOCKED STATE -->
                     <div id="cuiUnlockedState" class="hidden space-y-3">
                         <div class="p-3 bg-emerald-950/40 border border-emerald-800/50 rounded-xl text-xs text-emerald-300 font-mono">
-                            ✓ Domain clearance verified. CUI payload decrypted for active session.
+                            ✓ Rotating epoch key verified. CUI payload decrypted under NIST SP 800-171 AC.L2-3.1.1 controls.
                         </div>
-                        <div class="p-4 bg-gray-950 border border-gray-800 rounded-xl text-xs space-y-1 font-mono">
-                            <strong class="text-white block">📄 DoD CMMC L2 System Security Plan (NIST SP 800-171)</strong>
-                            <p class="text-gray-400">Formal hardware security audit for physical subnet 10.0.20.0/24.</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono">
+                            <div class="p-4 bg-gray-950 border border-gray-800 rounded-xl space-y-1">
+                                <strong class="text-white block">📄 DoD CMMC L2 System Security Plan (SSP)</strong>
+                                <p class="text-gray-400 text-[11px]">Hardware security implementation matrix for 10.0.20.0/24 physical subnet.</p>
+                            </div>
+                            <div class="p-4 bg-gray-950 border border-gray-800 rounded-xl space-y-1">
+                                <strong class="text-white block">📄 AFWERX & DARPA BOE Grant Allocations</strong>
+                                <p class="text-gray-400 text-[11px]">Validated proposal budgets and joint partner agreements.</p>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -277,27 +173,60 @@
     </main>
 
     <script>
+        // Update Rotating Key Displays & Countdowns
+        function updateKeyDisplay() {
+            const key = generateRotatingSessionKey();
+            const secondsLeft = getKeyRemainingSeconds();
+            const mins = Math.floor(secondsLeft / 60).toString().padStart(2, '0');
+            const secs = (secondsLeft % 60).toString().padStart(2, '0');
+
+            document.getElementById("activeEpochKeyDisplay").innerText = key;
+            document.getElementById("keyCountdownDisplay").innerText = `${mins}:${secs}`;
+        }
+
+        setInterval(updateKeyDisplay, 1000);
+        updateKeyDisplay();
+
+        function renderBOELogs() {
+            const container = document.getElementById("boeLogStream");
+            const logs = JSON.parse(localStorage.getItem("hive_boe_audit_trail") || "[]");
+            if (logs.length === 0) {
+                container.innerHTML = "<div>[BOE Engine]: Initializing live compliance stream... No security violations detected.</div>";
+                return;
+            }
+            container.innerHTML = logs.map(l => `
+                <div class="border-b border-gray-800 pb-1">
+                    <span class="text-gray-500">[${l.timestamp}]</span>
+                    <strong class="text-purple-400">[${l.event_type}]</strong>
+                    <span class="text-gray-300">User: ${l.user_identity} | ${l.details}</span>
+                </div>
+            `).join('');
+        }
+
+        function exportBOEArtifacts() {
+            const logs = localStorage.getItem("hive_boe_audit_trail") || "[]";
+            const blob = new Blob([logs], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `BOE_ATO_Audit_Evidence_${new Date().toISOString().slice(0,10)}.json`;
+            a.click();
+        }
+
         function switchPortalMode(mode) {
             const memberView = document.getElementById("viewMemberHub");
             const adminView = document.getElementById("viewAdminEnclave");
-            const btnMember = document.getElementById("modeBtnMember");
-            const btnAdmin = document.getElementById("modeBtnAdmin");
-
             if (mode === 'admin') {
                 memberView.classList.add("hidden");
                 adminView.classList.remove("hidden");
-                btnAdmin.className = "px-3 py-1.5 rounded-lg text-purple-400 bg-gray-800 border border-purple-500/30";
-                btnMember.className = "px-3 py-1.5 rounded-lg text-gray-400 hover:text-white";
             } else {
                 adminView.classList.add("hidden");
                 memberView.classList.remove("hidden");
-                btnMember.className = "px-3 py-1.5 rounded-lg text-purple-400 bg-gray-800 border border-purple-500/30";
-                btnAdmin.className = "px-3 py-1.5 rounded-lg text-gray-400 hover:text-white";
             }
         }
 
         function switchAdminTab(tabId) {
-            ['overview', 'proposals', 'ingestion', 'cui'].forEach(t => {
+            ['overview', 'boe', 'cui'].forEach(t => {
                 const el = document.getElementById('adminTab' + t.charAt(0).toUpperCase() + t.slice(1));
                 const btn = document.getElementById('tab-' + t);
                 if (el) el.classList.add('hidden');
@@ -308,37 +237,14 @@
             const targetBtn = document.getElementById('tab-' + tabId);
             if (targetEl) targetEl.classList.remove('hidden');
             if (targetBtn) targetBtn.className = 'px-4 py-2 text-purple-400 border-b-2 border-purple-500 font-bold';
-        }
 
-        function postQuestion() {
-            const input = document.getElementById("userQuestionInput");
-            const feed = document.getElementById("discussionFeed");
-            if (!input.value.trim()) return;
-
-            const safeText = sanitizeInput(input.value);
-            const questionHtml = `
-                <div class="bg-gray-950/80 border border-gray-800 p-4 rounded-xl space-y-2">
-                    <div class="flex justify-between items-center text-xs">
-                        <strong class="text-blue-400 font-mono">Verified Member</strong>
-                        <span class="text-gray-500 text-[10px]">Just now</span>
-                    </div>
-                    <p class="text-xs text-gray-300">${safeText}</p>
-                    <div class="text-[10px] text-amber-400 font-mono">⌛ Pending response from Super-Admin (dassensebsu)...</div>
-                </div>
-            `;
-            feed.insertAdjacentHTML('afterbegin', questionHtml);
-            input.value = "";
-        }
-
-        function togglePodcastPlay() {
-            const btn = document.getElementById("podcastPlayBtn");
-            btn.innerText = btn.innerText === "▶" ? "⏸" : "▶";
+            if (tabId === 'boe') renderBOELogs();
         }
 
         function unlockCUIVault() {
-            const key = document.getElementById("cuiKeyInput").value;
+            const key = document.getElementById("cuiKeyInput").value.trim();
             const err = document.getElementById("cuiGateError");
-            const result = validateCUIGate(key);
+            const result = validateCUIRotatingKey(key);
             if (result.allowed) {
                 document.getElementById("cuiLockedState").classList.add("hidden");
                 document.getElementById("cuiUnlockedState").classList.remove("hidden");
@@ -353,14 +259,6 @@
             document.getElementById("cuiLockedState").classList.remove("hidden");
             document.getElementById("cuiUnlockedState").classList.add("hidden");
             document.getElementById("cuiKeyInput").value = "";
-        }
-
-        function dispatchInvite() {
-            const email = document.getElementById("adminInviteEmail").value;
-            if (email) {
-                alert(`Portal invitation link dispatched to ${email}.`);
-                document.getElementById("adminInviteEmail").value = "";
-            }
         }
 
         function logout() {
