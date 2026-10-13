@@ -2,9 +2,8 @@
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
 
-    // Route matching for /api/ webhook and agent handlers
+    // Trap only /api/* endpoints
     if (url.pathname.startsWith("/api/")) {
-      // Return 200 OK for OPTIONS preflight and GET/POST
       if (request.method === "OPTIONS") {
         return new Response(null, {
           status: 200,
@@ -34,7 +33,7 @@
         try {
           const payload = await request.json();
           const prompt = payload.prompt || "";
-          let reply = `🤖 **EDS-360 Defense Agent**: Analyzed prompt "${prompt}". CUI enclave parameters verified under FIPS 140-3.`;
+          let reply = `🤖 **EDS-360 Agent**: Evaluated prompt "${prompt}". Enclave parameters active under FIPS 140-3.`;
           
           if (prompt.toLowerCase().includes("cmmc") || prompt.toLowerCase().includes("nist")) {
             reply = `🛡️ **Compliance Guard Analysis**: Control verified under NIST SP 800-171 / CMMC Level 2. Ephemeral key decay model active.`;
@@ -55,6 +54,7 @@
       }
     }
 
+    // Pass through all HTML / JS / static asset requests to Pages static asset storage
     return env.ASSETS.fetch(request);
   }
 };
