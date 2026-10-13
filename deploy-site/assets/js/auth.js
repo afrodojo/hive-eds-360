@@ -71,3 +71,48 @@ function switchPortalMode(mode) {
         btnAdmin.className = "px-3 py-1.5 rounded-lg text-gray-400 hover:text-white";
     }
 }
+
+// GitHub REST API Integration Engine
+async function fetchGitHubRepoTelemetry(repoOwner = "afrodojo", repoName = "hive-eds-360") {
+    try {
+        const response = await fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/commits?per_page=5`);
+        if (!response.ok) throw new Error("GitHub API rate limit or invalid endpoint");
+        const commits = await response.json();
+        
+        const gitHubEvents = commits.map(c => ({
+            id: c.sha.substring(0, 7),
+            author: c.commit.author.name,
+            message: c.commit.message,
+            date: c.commit.author.date,
+            url: c.html_url
+        }));
+
+        localStorage.setItem("hive_github_live_commits", JSON.stringify(gitHubEvents));
+        logBOEEvent("GITHUB_SYNC_SUCCESS", `Synced ${gitHubEvents.length} live commits from ${repoOwner}/${repoName}`);
+        return gitHubEvents;
+    } catch (err) {
+        console.warn("GitHub API Fetch Warning:", err.message);
+        return JSON.parse(localStorage.getItem("hive_github_live_commits") || "[]");
+    }
+}
+
+function renderGitHubCommitsOnDashboard() {
+    const commits = JSON.parse(localStorage.getItem("hive_github_live_commits") || "[]");
+    const container = document.getElementById("repoRegistryList");
+    if (!container) return;
+
+    if (commits.length === 0) {
+        container.innerHTML = "<p class='text-gray-500 font-mono text-xs p-2'>Click 'Sync GitHub API' to fetch live repository commit activity.</p>";
+        return;
+    }
+
+    container.innerHTML = commits.map(c => `
+        <div class="p-2.5 bg-gray-950 border border-amber-900/40 rounded-xl font-mono text-xs flex justify-between items-center">
+            <div class="truncate max-w-md">
+                <strong class="text-amber-300 block truncate">📌 Commit [${c.id}]: ${c.message}</strong>
+                <span class="text-[10px] text-gray-400">By ${c.author} • ${new Date(c.date).toLocaleTimeString()}</span>
+            </div>
+            <a href="${c.url}" target="_blank" class="text-[10px] bg-amber-950 text-amber-300 border border-amber-800 px-2 py-1 rounded font-bold hover:bg-amber-900">View on GitHub ↗</a>
+        </div>
+    `).join('');
+}

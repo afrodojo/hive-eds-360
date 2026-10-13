@@ -1,47 +1,45 @@
-export default {
-  async fetch(request, env, ctx) {
-    const url = new URL(request.url);
+﻿export async function onRequestPost(context) {
+    try {
+        const payload = await context.request.json();
+        const eventType = context.request.headers.get("X-GitHub-Event") || "push";
 
-    // Endpoint route: /api/webhook
-    if (url.pathname === "/api/webhook" && request.method === "POST") {
-      try {
-        const payload = await request.json();
-
-        // Extract commit details from GitHub Push payload
         const commitData = {
-          sha: payload.after ? payload.after.substring(0, 7) : "0000000",
-          author: payload.pusher ? payload.pusher.name : "DevSecOps CI/CD",
-          message: payload.head_commit ? payload.head_commit.message : "System Update",
-          timestamp: new Date().toISOString(),
-          repo: payload.repository ? payload.repository.full_name : "afrodojo/hive-eds-360"
+            event: eventType,
+            sha: payload.after ? payload.after.substring(0, 7) : (payload.head_commit ? payload.head_commit.id.substring(0, 7) : "0000000"),
+            author: payload.pusher ? payload.pusher.name : (payload.sender ? payload.sender.login : "DevSecOps CI/CD"),
+            message: payload.head_commit ? payload.head_commit.message : `GitHub Event: ${eventType}`,
+            timestamp: new Date().toISOString(),
+            repo: payload.repository ? payload.repository.full_name : "afrodojo/hive-eds-360"
         };
 
-        // Option A: Store in Cloudflare KV / D1 / Cache for portal fetching
-        if (env.HIVE_KV) {
-          await env.HIVE_KV.put("latest_git_telemetry", JSON.stringify(commitData));
-        }
-
-        return new Response(JSON.stringify({ 
-          status: "SUCCESS", 
-          message: "Telemetry ingested into EDS-360 Enclave",
-          commit: commitData.sha 
+        return new Response(JSON.stringify({
+            status: "SUCCESS",
+            message: "Telemetry ingested into EDS-360 Enclave",
+            data: commitData
         }), {
-          status: 200,
-          headers: { 
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*"
-          }
+            status: 200,
+            headers: {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "POST, OPTIONS",
+                "Access-Control-Allow-Headers": "Content-Type, X-GitHub-Event"
+            }
         });
-
-      } catch (err) {
-        return new Response(JSON.stringify({ error: "Invalid JSON Payload", details: err.message }), { 
-          status: 400,
-          headers: { "Content-Type": "application/json" }
+    } catch (err) {
+        return new Response(JSON.stringify({ status: "ACK", message: "Webhook ping or payload received", error: err.message }), {
+            status: 200,
+            headers: { "Content-Type": "application/json" }
         });
-      }
     }
+}
 
-    // Default static assets pass-through for Pages
-    return env.ASSETS.fetch(request);
-  }
-};
+export async function onRequestOptions() {
+    return new Response(null, {
+        status: 204,
+        headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "POST, OPTIONS",
+            "Access-Control-Allow-Headers": "Content-Type, X-GitHub-Event"
+        }
+    });
+}
