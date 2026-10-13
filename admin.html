@@ -3,47 +3,327 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hive Network - Admin Gateway</title>
+    <title>Executive Telemetry & Admin Command Enclave | The Hive Network</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0d1117; color: #c9d1d9; padding: 30px; }
-        .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #30363d; padding-bottom: 15px; margin-bottom: 25px; }
-        h1 { color: #58a6ff; margin: 0; }
-        .badge { background: #238636; color: white; padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: bold; }
-        .card { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 20px; margin-bottom: 20px; }
-        h2 { color: #3fb950; margin-top: 0; }
-        a { color: #58a6ff; text-decoration: none; }
-        a:hover { text-decoration: underline; }
+        body { background-color: #0b0e14; color: #c9d1d9; font-family: system-ui, sans-serif; }
     </style>
 </head>
-<body>
-    <div class="header">
-        <h1>Hive Network Admin Console</h1>
-        <span class="badge" id="roleBadge">ADMIN AUTHORIZED</span>
-    </div>
-    <div class="card">
-        <h2>Active Executive Accounts</h2>
-        <p><b>Primary Admin:</b> dassenseibsu@pm.me</p>
-        <p><b>Secondary Admin:</b> cyberdojosensei@gmail.com</p>
-        <p><b>Current Session:</b> <span id="currentEmail">Loading...</span></p>
-    </div>
-    <div class="card">
-        <h2>System Architecture & Navigation</h2>
-        <ul>
-            <li><a href="portal.html">Portal Login Page</a></li>
-            <li><a href="blog.html">Research & Blog Logs</a></li>
-            <li><a href="RAG-console.html">Air-Gapped RAG Console</a></li>
-            <li><a href="research.html">Consortium & Dual-Use Defense Research</a></li>
-        </ul>
-    </div>
-    <script>
-        const admins = ["dassenseibsu@pm.me", "cyberdojosensei@gmail.com"];
-        const current = localStorage.getItem('hive_user_email') || '';
-        document.getElementById('currentEmail').innerText = current || 'Not Logged In';
+<body class="p-6">
+
+    <header class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between bg-gray-900 p-4 rounded-xl mb-8 border border-gray-800 gap-4">
+        <div class="flex items-center space-x-3">
+            <div class="bg-purple-600 text-white font-bold p-2.5 rounded-lg">ADM</div>
+            <div>
+                <h1 class="text-white font-bold text-lg">Executive Command & Telemetry</h1>
+                <p class="text-xs text-gray-400">The Hive Network | Sovereign Defense AI & Member Operations</p>
+            </div>
+        </div>
         
-        if (!admins.includes(current.toLowerCase())) {
-            alert('Access Denied: Admin authorization required.');
-            window.location.href = 'portal.html';
+        <div class="flex items-center space-x-3">
+            <select id="timeRange" onchange="updateDashboardMetrics()" class="bg-gray-950 border border-gray-800 text-xs text-gray-300 rounded-lg p-2 font-mono focus:outline-none focus:border-purple-500">
+                <option value="7d">Last 7 Days</option>
+                <option value="30d" selected>Last 30 Days</option>
+                <option value="90d">Last 90 Days</option>
+            </select>
+
+            <span class="bg-red-950 text-red-400 border border-red-800/50 text-xs px-3 py-1.5 rounded-full font-mono font-bold">TS/SCI Master Enclave</span>
+            <button onclick="logout()" class="bg-gray-800 hover:bg-gray-700 text-white text-xs px-3 py-2 rounded-lg font-semibold">Exit Enclave</button>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto space-y-8">
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="bg-gray-900 border border-gray-800 p-5 rounded-2xl space-y-2">
+                <span class="text-gray-400 text-xs font-semibold uppercase">Total Monthly Revenue (MRR)</span>
+                <div class="flex justify-between items-baseline">
+                    <h3 id="statMRR" class="text-3xl font-extrabold text-emerald-400">$4,850</h3>
+                    <span id="statMRRChange" class="text-xs font-mono text-emerald-400">+18.4%</span>
+                </div>
+                <p class="text-[11px] text-gray-500">Includes $150/mo Business & $15/mo Academic</p>
+            </div>
+
+            <div class="bg-gray-900 border border-gray-800 p-5 rounded-2xl space-y-2">
+                <span class="text-gray-400 text-xs font-semibold uppercase">Active Enclave Members</span>
+                <div class="flex justify-between items-baseline">
+                    <h3 id="statMembers" class="text-3xl font-extrabold text-white">142</h3>
+                    <span id="statMembersChange" class="text-xs font-mono text-blue-400">+12 this week</span>
+                </div>
+                <p class="text-[11px] text-gray-500">32 .edu Verified | 8 Proposal Partners</p>
+            </div>
+
+            <div class="bg-gray-900 border border-gray-800 p-5 rounded-2xl space-y-2">
+                <span class="text-gray-400 text-xs font-semibold uppercase">RAG & Benchmark API Hits</span>
+                <div class="flex justify-between items-baseline">
+                    <h3 id="statHits" class="text-3xl font-extrabold text-purple-400">18,940</h3>
+                    <span id="statHitsChange" class="text-xs font-mono text-purple-400">+24.1%</span>
+                </div>
+                <p class="text-[11px] text-gray-500">Air-Gapped CUDA Telemetry Logs</p>
+            </div>
+
+            <div class="bg-gray-900 border border-gray-800 p-5 rounded-2xl space-y-2">
+                <span class="text-gray-400 text-xs font-semibold uppercase">Pending Moderation</span>
+                <div class="flex justify-between items-baseline">
+                    <h3 id="statPendingComments" class="text-3xl font-extrabold text-amber-400">4</h3>
+                    <span class="text-xs font-mono text-amber-400">Requires Review</span>
+                </div>
+                <p class="text-[11px] text-gray-500">Comments & Member Inquiry Queue</p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="bg-gray-900 border border-gray-800 p-6 rounded-2xl space-y-4">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h3 class="text-white font-bold text-base">Membership & Revenue Trajectory</h3>
+                        <p class="text-xs text-gray-400">Monthly recurring subscription velocity ($)</p>
+                    </div>
+                    <span class="bg-emerald-950 text-emerald-400 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase">Stripe Sync Active</span>
+                </div>
+                <div class="h-64">
+                    <canvas id="revenueChart"></canvas>
+                </div>
+            </div>
+
+            <div class="bg-gray-900 border border-gray-800 p-6 rounded-2xl space-y-4">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h3 class="text-white font-bold text-base">System Interactions & Compute Load</h3>
+                        <p class="text-xs text-gray-400">CUDA benchmark dataset downloads vs RAG queries</p>
+                    </div>
+                    <span class="bg-blue-950 text-blue-400 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase">Realtime Logs</span>
+                </div>
+                <div class="h-64">
+                    <canvas id="interactionChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <section class="bg-gray-900 border border-gray-800 rounded-2xl p-6 space-y-4">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h3 class="text-white font-bold text-lg">Member Interactions & Discussion Moderation</h3>
+                    <p class="text-xs text-gray-400">Review research log comments, mentorship requests, and institutional outreach.</p>
+                </div>
+                <button onclick="clearApprovedComments()" class="bg-gray-800 hover:bg-gray-700 text-xs text-gray-300 font-semibold px-3 py-1.5 rounded-lg border border-gray-700">Purge Approved</button>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs text-gray-300">
+                    <thead class="bg-gray-950 text-gray-400 uppercase font-mono border-b border-gray-800">
+                        <tr>
+                            <th class="p-3">User / Institution</th>
+                            <th class="p-3">Tier</th>
+                            <th class="p-3">Topic / Target Log</th>
+                            <th class="p-3">Comment / Message</th>
+                            <th class="p-3">Status</th>
+                            <th class="p-3 text-right">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="commentTableBody" class="divide-y divide-gray-800">
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="bg-gray-900 border border-gray-800 rounded-2xl p-6 space-y-4">
+            <h3 class="text-white font-bold text-lg">Joint SBIR/STTR Proposal & Grant Allocations</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-gray-950 border border-gray-800 p-4 rounded-xl space-y-2">
+                    <div class="flex justify-between items-center">
+                        <strong class="text-white text-xs">AFWERX Phase I RAG Proposal</strong>
+                        <span class="bg-amber-950 text-amber-400 text-[10px] font-mono px-2 py-0.5 rounded">In Review</span>
+                    </div>
+                    <p class="text-gray-400 text-[11px]">Partner: Bowie State University Lab</p>
+                    <div class="w-full bg-gray-800 h-2 rounded-full overflow-hidden">
+                        <div class="bg-amber-500 h-full w-3/4"></div>
+                    </div>
+                </div>
+
+                <div class="bg-gray-950 border border-gray-800 p-4 rounded-xl space-y-2">
+                    <div class="flex justify-between items-center">
+                        <strong class="text-white text-xs">DARPA Edge AI Hardware Grant</strong>
+                        <span class="bg-emerald-950 text-emerald-400 text-[10px] font-mono px-2 py-0.5 rounded">Awarded</span>
+                    </div>
+                    <p class="text-gray-400 text-[11px]">Direct Compute Allocation: $0.00 Partner Tier</p>
+                    <div class="w-full bg-gray-800 h-2 rounded-full overflow-hidden">
+                        <div class="bg-emerald-500 h-full w-full"></div>
+                    </div>
+                </div>
+
+                <div class="bg-gray-950 border border-gray-800 p-4 rounded-xl space-y-2">
+                    <div class="flex justify-between items-center">
+                        <strong class="text-white text-xs">NSF Cyberinfrastructure Draft</strong>
+                        <span class="bg-blue-950 text-blue-400 text-[10px] font-mono px-2 py-0.5 rounded">Drafting</span>
+                    </div>
+                    <p class="text-gray-400 text-[11px]">Joint Multi-Seat Research Enclave</p>
+                    <div class="w-full bg-gray-800 h-2 rounded-full overflow-hidden">
+                        <div class="bg-blue-500 h-full w-1/3"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        let commentsData = [
+            { id: 1, user: "m.johnson@bsu.edu", tier: "academic", target: "CUDA Benchmarks", text: "Verified local inference times on RTX 4090. Impressive low latency.", status: "Approved" },
+            { id: 2, user: "a.davis@defensepartner.com", tier: "business", target: "RAG Sandbox", text: "Requesting technical consultation regarding air-gapped zero-trust deployment.", status: "Pending" },
+            { id: 3, user: "student_researcher@mit.edu", tier: "academic", target: "Doctoral Logs", text: "Is the vector embeddings dataset available for student mentorship projects?", status: "Pending" },
+            { id: 4, user: "c.miller@techcorp.io", tier: "business", target: "Business Licensing", text: "Upgraded to $150/mo Business tier. Accessing full benchmarking APIs.", status: "Approved" },
+            { id: 5, user: "r.patel@stanford.edu", tier: "proposal_partner", target: "SBIR Collaboration", text: "Uploaded preliminary grant proposal draft to joint workspace.", status: "Pending" }
+        ];
+
+        let revChart, intChart;
+
+        function initCharts() {
+            const ctxRev = document.getElementById('revenueChart').getContext('2d');
+            revChart = new Chart(ctxRev, {
+                type: 'line',
+                data: {
+                    labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+                    datasets: [{
+                        label: 'MRR ($)',
+                        data: [2800, 3400, 4100, 4850],
+                        borderColor: '#10b981',
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        fill: true,
+                        tension: 0.3
+                    }, {
+                        label: 'Business Tier ($150)',
+                        data: [1500, 1950, 2400, 2850],
+                        borderColor: '#a855f7',
+                        borderDash: [5, 5],
+                        fill: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { labels: { color: '#9ca3af', font: { size: 11 } } } },
+                    scales: {
+                        x: { ticks: { color: '#6b7280' }, grid: { color: '#1f2937' } },
+                        y: { ticks: { color: '#6b7280' }, grid: { color: '#1f2937' } }
+                    }
+                }
+            });
+
+            const ctxInt = document.getElementById('interactionChart').getContext('2d');
+            intChart = new Chart(ctxInt, {
+                type: 'bar',
+                data: {
+                    labels: ['Basic', 'Academic (.edu)', 'Proposal Partners', 'Business'],
+                    datasets: [{
+                        label: 'RAG Queries',
+                        data: [4200, 6800, 3100, 9400],
+                        backgroundColor: '#3b82f6'
+                    }, {
+                        label: 'Dataset Downloads',
+                        data: [1100, 3400, 1900, 5200],
+                        backgroundColor: '#8b5cf6'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { labels: { color: '#9ca3af', font: { size: 11 } } } },
+                    scales: {
+                        x: { ticks: { color: '#6b7280' }, grid: { color: '#1f2937' } },
+                        y: { ticks: { color: '#6b7280' }, grid: { color: '#1f2937' } }
+                    }
+                }
+            });
         }
+
+        function renderComments() {
+            const tbody = document.getElementById('commentTableBody');
+            tbody.innerHTML = '';
+            let pendingCount = 0;
+
+            commentsData.forEach(item => {
+                if (item.status === 'Pending') pendingCount++;
+
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-gray-950/50 transition";
+
+                let tierBadge = `<span class="bg-blue-950 text-blue-400 text-[10px] px-2 py-0.5 rounded font-mono uppercase">${item.tier}</span>`;
+                if (item.tier === 'business') tierBadge = `<span class="bg-purple-950 text-purple-300 text-[10px] px-2 py-0.5 rounded font-mono uppercase">Business ($150)</span>`;
+                if (item.tier === 'academic') tierBadge = `<span class="bg-amber-950 text-amber-300 text-[10px] px-2 py-0.5 rounded font-mono uppercase">Academic (.edu)</span>`;
+                if (item.tier === 'proposal_partner') tierBadge = `<span class="bg-emerald-950 text-emerald-300 text-[10px] px-2 py-0.5 rounded font-mono uppercase">Grant Partner</span>`;
+
+                let statusBadge = item.status === 'Approved' 
+                    ? `<span class="text-emerald-400 font-bold font-mono">✓ Approved</span>` 
+                    : `<span class="text-amber-400 font-bold font-mono">⏳ Pending</span>`;
+
+                tr.innerHTML = `
+                    <td class="p-3 font-semibold text-white">${item.user}</td>
+                    <td class="p-3">${tierBadge}</td>
+                    <td class="p-3 text-gray-400">${item.target}</td>
+                    <td class="p-3 text-gray-300 max-w-xs truncate">${item.text}</td>
+                    <td class="p-3">${statusBadge}</td>
+                    <td class="p-3 text-right space-x-2">
+                        ${item.status === 'Pending' ? `<button onclick="approveComment(${item.id})" class="bg-emerald-600 hover:bg-emerald-500 text-white px-2.5 py-1 rounded text-[10px] font-bold">Approve</button>` : ''}
+                        <button onclick="deleteComment(${item.id})" class="bg-red-900/40 text-red-300 border border-red-800/50 hover:bg-red-800/40 px-2.5 py-1 rounded text-[10px]">Delete</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            document.getElementById('statPendingComments').innerText = pendingCount;
+        }
+
+        function approveComment(id) {
+            const item = commentsData.find(c => c.id === id);
+            if (item) {
+                item.status = 'Approved';
+                renderComments();
+            }
+        }
+
+        function deleteComment(id) {
+            commentsData = commentsData.filter(c => c.id !== id);
+            renderComments();
+        }
+
+        function clearApprovedComments() {
+            commentsData = commentsData.filter(c => c.status === 'Pending');
+            renderComments();
+        }
+
+        function updateDashboardMetrics() {
+            const range = document.getElementById('timeRange').value;
+            if (range === '7d') {
+                document.getElementById('statMRR').innerText = "$1,420";
+                document.getElementById('statMembers').innerText = "118";
+                document.getElementById('statHits').innerText = "4,920";
+                revChart.data.datasets[0].data = [800, 1050, 1200, 1420];
+            } else if (range === '30d') {
+                document.getElementById('statMRR').innerText = "$4,850";
+                document.getElementById('statMembers').innerText = "142";
+                document.getElementById('statHits').innerText = "18,940";
+                revChart.data.datasets[0].data = [2800, 3400, 4100, 4850];
+            } else {
+                document.getElementById('statMRR').innerText = "$12,600";
+                document.getElementById('statMembers').innerText = "289";
+                document.getElementById('statHits').innerText = "52,100";
+                revChart.data.datasets[0].data = [6200, 8100, 10400, 12600];
+            }
+            revChart.update();
+        }
+
+        function logout() {
+            localStorage.clear();
+            window.location.href = 'index.html';
+        }
+
+        window.onload = function() {
+            initCharts();
+            renderComments();
+        };
     </script>
 </body>
 </html>
