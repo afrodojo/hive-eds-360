@@ -3,65 +3,246 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Member Enclave & Research Portal | The Hive Network</title>
+    <title>Enterprise Hub & God's Eye Telemetry Map | EDS-360</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="assets/js/auth.js"></script>
     <style>
         body { background-color: #0b0e14; color: #c9d1d9; font-family: system-ui, sans-serif; }
+        .glass-panel { background: rgba(17, 24, 39, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .node-pulse { animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
     </style>
 </head>
-<body class="p-6">
+<body class="p-4 md:p-8 min-h-screen flex flex-col">
 
-    <header class="max-w-7xl mx-auto flex items-center justify-between bg-gray-900 p-4 rounded-xl mb-8 border border-gray-800">
+    <!-- Header -->
+    <header class="max-w-7xl w-full mx-auto glass-panel p-4 rounded-2xl mb-6 flex flex-col md:flex-row items-center justify-between gap-4">
         <div class="flex items-center space-x-3">
-            <div class="bg-blue-600 text-white font-bold p-2.5 rounded-lg">DS</div>
+            <div class="bg-gradient-to-r from-purple-600 to-blue-600 text-white font-black p-3 rounded-xl shadow-lg">EDS</div>
             <div>
-                <h1 class="text-white font-bold text-lg">Member Enclave</h1>
-                <p class="text-xs text-gray-400">The Hive Network | Active Membership Dashboard</p>
+                <h1 class="text-white font-extrabold text-lg tracking-tight">Emerging Defense Solutions</h1>
+                <p class="text-xs text-gray-400">Enterprise Portal, Wazuh SIEM & God's Eye View Data Mapping</p>
             </div>
         </div>
-        <div class="flex items-center space-x-4">
-            <span id="tierBadge" class="bg-gray-800 text-gray-300 text-xs px-3 py-1 rounded-full font-mono font-bold">Checking Membership...</span>
-            <button onclick="logout()" class="bg-red-900/40 text-red-300 border border-red-800/50 text-xs px-3 py-2 rounded-lg font-semibold hover:bg-red-800/40">Log Out</button>
+
+        <div class="flex items-center space-x-3">
+            <div id="portalModeNav" class="bg-gray-950 p-1 rounded-xl border border-gray-800 flex space-x-1 text-xs font-mono font-bold">
+                <button onclick="switchPortalMode('member')" id="modeBtnMember" class="px-3 py-1.5 rounded-lg text-purple-400 bg-gray-800 border border-purple-500/30">👤 Member Hub</button>
+                <button onclick="switchPortalMode('admin')" id="modeBtnAdmin" class="px-3 py-1.5 rounded-lg text-gray-400 hover:text-white">🔑 Executive Admin</button>
+            </div>
+            <button onclick="logout()" class="bg-gray-800 hover:bg-gray-700 text-white text-xs px-3.5 py-2 rounded-xl font-semibold border border-gray-700">Exit</button>
         </div>
     </header>
 
-    <main class="max-w-7xl mx-auto space-y-8">
-        
-        <!-- Welcome Banner -->
-        <section class="bg-gray-900 border border-gray-800 rounded-2xl p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-            <div>
-                <h2 class="text-2xl font-bold text-white">Welcome back to the Enclave</h2>
-                <p class="text-sm text-gray-400" id="userEmailDisplay">Logged in user</p>
-            </div>
-            <a href="RAG-console.html" class="bg-blue-600 hover:bg-blue-500 text-white text-sm px-5 py-2.5 rounded-xl font-bold">Launch RAG Console</a>
-        </section>
+    <main class="max-w-7xl w-full mx-auto flex-1 space-y-6">
 
-        <!-- Dynamic Tier Features Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            
-            <!-- Basic Member Feature Card -->
-            <div id="cardBasic" class="bg-gray-900 border border-gray-800 p-6 rounded-2xl space-y-3">
-                <span class="bg-blue-950 text-blue-400 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase">Basic Tier</span>
-                <h3 class="text-white font-bold text-lg">Doctoral Research Logs</h3>
-                <p class="text-gray-400 text-xs">Access public paper summaries, air-gapped system design notes, and open community discussions.</p>
-                <a href="research.html" class="block text-center bg-gray-800 hover:bg-gray-700 text-white text-xs py-2 rounded-lg font-semibold mt-4">View Research Logs</a>
+        <!-- MEMBER HUB -->
+        <div id="viewMemberHub" class="space-y-6">
+            <div class="glass-panel p-6 rounded-2xl border-l-4 border-purple-500 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <h2 class="text-white text-xl font-bold">Defense Community & Research Advisory</h2>
+                    <p class="text-xs text-gray-400 mt-1">Real-time collaboration, Q&A feeds, and model execution benchmarks.</p>
+                </div>
+                <span class="bg-emerald-950 text-emerald-400 border border-emerald-800/50 text-xs px-3 py-1.5 rounded-full font-mono font-bold">Cross-Domain Guard Active</span>
             </div>
 
-            <!-- Business Tier Feature Card -->
-            <div id="cardBusiness" class="bg-gray-900 border border-gray-800 p-6 rounded-2xl space-y-3 opacity-50 relative">
-                <span class="bg-purple-950 text-purple-400 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase">Business Tier</span>
-                <h3 class="text-white font-bold text-lg">CUDA Benchmarks & Datasets</h3>
-                <p class="text-gray-400 text-xs">Raw latency metrics, VRAM consumption profiles, and edge compute optimization data.</p>
-                <button id="btnBusiness" disabled class="w-full bg-gray-800 text-gray-500 text-xs py-2 rounded-lg font-semibold mt-4 cursor-not-allowed">Locked (Requires Business Tier)</button>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="lg:col-span-2 glass-panel p-6 rounded-2xl space-y-4">
+                    <h3 class="text-white font-bold text-sm border-b border-gray-800 pb-3">💬 Member Advisory & Defense Q&A Feed</h3>
+                    <textarea id="userQuestionInput" placeholder="Submit technical query..." class="w-full bg-gray-950 border border-gray-800 text-xs text-white p-3 rounded-xl focus:outline-none focus:border-purple-500 h-20 resize-none"></textarea>
+                    <div class="flex justify-between items-center">
+                        <span class="text-[10px] text-gray-500 font-mono">Sanitized via OWASP & NIST SP 800-53 SI-10.</span>
+                        <button onclick="postQuestion()" class="bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs px-4 py-2 rounded-xl">Post Question</button>
+                    </div>
+                    <div id="discussionFeed" class="space-y-3 pt-2"></div>
+                </div>
+
+                <div class="glass-panel p-6 rounded-2xl space-y-4">
+                    <h3 class="text-white font-bold text-sm border-b border-gray-800 pb-3">🎙️ Research Broadcasts</h3>
+                    <div class="bg-gray-950 p-4 rounded-xl border border-purple-900/30 space-y-2">
+                        <span class="bg-purple-950 text-purple-300 text-[10px] font-mono px-2 py-0.5 rounded font-bold">Episode #04</span>
+                        <h4 class="text-xs font-bold text-white">Spatial Telemetry & God's Eye Data Mapping</h4>
+                        <p class="text-[11px] text-gray-400">Visualizing CUI data flows across air-gapped subnet nodes.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- EXECUTIVE ADMIN, SIEM & GOD'S EYE ENCLAVE -->
+        <div id="viewAdminEnclave" class="hidden space-y-6">
+            <div class="flex border-b border-gray-800 space-x-2 text-xs font-mono font-bold overflow-x-auto">
+                <button onclick="switchAdminTab('overview')" id="tab-overview" class="px-4 py-2 text-purple-400 border-b-2 border-purple-500 font-bold">Telemetry Overview</button>
+                <button onclick="switchAdminTab('godseye')" id="tab-godseye" class="px-4 py-2 text-gray-400 hover:text-white">👁️ God's Eye View Map</button>
+                <button onclick="switchAdminTab('wazuh')" id="tab-wazuh" class="px-4 py-2 text-gray-400 hover:text-white">🛡️ Wazuh SIEM & UBA Radar</button>
+                <button onclick="switchAdminTab('boe')" id="tab-boe" class="px-4 py-2 text-gray-400 hover:text-white">📜 Body of Evidence (BOE)</button>
+                <button onclick="switchAdminTab('cui')" id="tab-cui" class="px-4 py-2 text-gray-400 hover:text-white">🔒 Domain-Gated CUI Vault</button>
             </div>
 
-            <!-- Academic Tier Feature Card -->
-            <div id="cardAcademic" class="bg-gray-900 border border-gray-800 p-6 rounded-2xl space-y-3 opacity-50 relative">
-                <span class="bg-amber-950 text-amber-400 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase">Academic Tier</span>
-                <h3 class="text-white font-bold text-lg">Multi-Seat & SBIR Collaboration</h3>
-                <p class="text-gray-400 text-xs">Grant research proposals, joint institutional publication drafts, and student mentorship access.</p>
-                <button id="btnAcademic" disabled class="w-full bg-gray-800 text-gray-500 text-xs py-2 rounded-lg font-semibold mt-4 cursor-not-allowed">Locked (Requires Academic Tier)</button>
+            <!-- OVERVIEW -->
+            <div id="adminTabOverview" class="space-y-6">
+                <section class="glass-panel p-6 rounded-2xl space-y-4">
+                    <div class="flex justify-between items-center border-b border-gray-800 pb-3">
+                        <h3 class="text-white font-bold text-sm flex items-center gap-2">
+                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                            Subnet Telemetry (10.0.20.0/24)
+                        </h3>
+                        <span class="text-xs font-mono text-gray-400">DISA STIG High Compliant</span>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-5 gap-3 text-xs font-mono">
+                        <div class="bg-gray-950 border border-gray-800 p-3 rounded-xl"><span class="text-gray-500 block">Node 0</span><strong class="text-white">10.0.20.100</strong><div class="text-[10px] text-emerald-400 mt-1">Vaultwarden OK</div></div>
+                        <div class="bg-gray-950 border border-gray-800 p-3 rounded-xl"><span class="text-gray-500 block">Node 1</span><strong class="text-white">10.0.20.101</strong><div class="text-[10px] text-emerald-400 mt-1">WireGuard OK</div></div>
+                        <div class="bg-gray-950 border border-gray-800 p-3 rounded-xl"><span class="text-gray-500 block">Node 2</span><strong class="text-white">10.0.20.102</strong><div class="text-[10px] text-purple-400 mt-1">vLLM 114 Tok/s</div></div>
+                        <div class="bg-gray-950 border border-gray-800 p-3 rounded-xl"><span class="text-gray-500 block">Node 3</span><strong class="text-white">10.0.20.103</strong><div class="text-[10px] text-blue-400 mt-1">LUKS2 Encrypted</div></div>
+                        <div class="bg-gray-950 border border-gray-800 p-3 rounded-xl"><span class="text-gray-500 block">Node 4</span><strong class="text-white">10.0.20.104</strong><div class="text-[10px] text-amber-400 mt-1">FreeIPA / Wazuh OK</div></div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- GOD'S EYE VIEW TELEMETRY & DATA FLOW MAP -->
+            <div id="adminTabGodseye" class="hidden space-y-6">
+                <div class="glass-panel p-6 rounded-2xl space-y-4">
+                    <div class="flex justify-between items-center border-b border-gray-800 pb-3">
+                        <div>
+                            <span class="bg-cyan-950 text-cyan-300 border border-cyan-800/50 text-[10px] font-mono px-2.5 py-0.5 rounded uppercase font-bold">God's Eye View Spatial Radar</span>
+                            <h3 class="text-base font-bold text-white mt-1">Subnet Data Flow Mapping & Overlay Telemetry</h3>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span class="bg-emerald-950 text-emerald-400 border border-emerald-800/50 text-[11px] font-mono px-2.5 py-1 rounded">Live Packet Stream</span>
+                            <a href="https://github.com/bilawalsidhu/gods-eye-view" target="_blank" class="bg-gray-800 hover:bg-gray-700 text-white text-xs px-3 py-1 rounded-lg border border-gray-700">Repo: gods-eye-view</a>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Canvas Diagram -->
+                    <div class="relative bg-gray-950 border border-gray-800 rounded-xl p-6 h-96 flex flex-col justify-between overflow-hidden">
+                        
+                        <!-- Canvas Header Info -->
+                        <div class="flex justify-between text-xs font-mono z-10">
+                            <span class="text-cyan-400 font-bold">🌐 Subnet Ingress Gate: 10.0.20.101</span>
+                            <span id="dataFlowRate" class="text-emerald-400">Data Throughput: 42.8 MB/s (TLS 1.3 / AES-256)</span>
+                        </div>
+
+                        <!-- Graphical Subnet Nodes Overlay -->
+                        <div class="grid grid-cols-5 gap-4 my-auto relative z-10 text-center font-mono">
+                            <!-- Node 0 -->
+                            <div class="p-3 bg-gray-900 border border-gray-800 rounded-xl space-y-1">
+                                <span class="w-2 h-2 rounded-full bg-emerald-500 inline-block node-pulse"></span>
+                                <strong class="text-xs text-white block">Node 0</strong>
+                                <span class="text-[10px] text-gray-400 block">Control Plane</span>
+                                <span class="text-[9px] text-purple-400">Vaultwarden</span>
+                            </div>
+
+                            <!-- Node 1 -->
+                            <div class="p-3 bg-gray-900 border border-cyan-500/50 rounded-xl space-y-1 shadow-lg shadow-cyan-950/50">
+                                <span class="w-2 h-2 rounded-full bg-cyan-400 inline-block node-pulse"></span>
+                                <strong class="text-xs text-white block">Node 1</strong>
+                                <span class="text-[10px] text-gray-400 block">Ingress Router</span>
+                                <span class="text-[9px] text-cyan-300">WireGuard GW</span>
+                            </div>
+
+                            <!-- Node 2 -->
+                            <div class="p-3 bg-gray-900 border border-purple-500/50 rounded-xl space-y-1 shadow-lg shadow-purple-950/50">
+                                <span class="w-2 h-2 rounded-full bg-purple-400 inline-block node-pulse"></span>
+                                <strong class="text-xs text-white block">Node 2</strong>
+                                <span class="text-[10px] text-gray-400 block">vLLM Inference</span>
+                                <span class="text-[9px] text-purple-300">CUDA GPU</span>
+                            </div>
+
+                            <!-- Node 3 -->
+                            <div class="p-3 bg-gray-900 border border-blue-500/50 rounded-xl space-y-1 shadow-lg shadow-blue-950/50">
+                                <span class="w-2 h-2 rounded-full bg-blue-400 inline-block node-pulse"></span>
+                                <strong class="text-xs text-white block">Node 3</strong>
+                                <span class="text-[10px] text-gray-400 block">LUKS2 Storage</span>
+                                <span class="text-[9px] text-blue-300">CUI Encrypted</span>
+                            </div>
+
+                            <!-- Node 4 -->
+                            <div class="p-3 bg-gray-900 border border-amber-500/50 rounded-xl space-y-1 shadow-lg shadow-amber-950/50">
+                                <span class="w-2 h-2 rounded-full bg-amber-400 inline-block node-pulse"></span>
+                                <strong class="text-xs text-white block">Node 4</strong>
+                                <span class="text-[10px] text-gray-400 block">FreeIPA / SIEM</span>
+                                <span class="text-[9px] text-amber-300">Wazuh Manager</span>
+                            </div>
+                        </div>
+
+                        <!-- Data Flow Live Log -->
+                        <div class="bg-gray-900/90 border border-gray-800 p-3 rounded-lg font-mono text-[11px] text-gray-300 flex justify-between items-center z-10">
+                            <div><span class="text-purple-400 font-bold">[ACTIVE FLOW]:</span> <span id="currentDataFlowPath">Node 1 (Ingress) ➔ Node 2 (vLLM Engine) ➔ Node 3 (LUKS2 Storage)</span></div>
+                            <span class="text-emerald-400 text-[10px]">✓ Zero-Trust WireGuard Tunnel Verified</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- WAZUH SIEM & UBA DASHBOARD -->
+            <div id="adminTabWazuh" class="hidden space-y-6">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="glass-panel p-6 rounded-2xl space-y-4">
+                        <span class="bg-purple-950 text-purple-300 border border-purple-800/50 text-[10px] font-mono px-2.5 py-0.5 rounded uppercase font-bold">User Behavior Analytics</span>
+                        <h3 class="text-base font-bold text-white">Network UBA Threat Score</h3>
+                        <div class="text-center py-6">
+                            <div id="ubaScoreGauge" class="text-5xl font-extrabold text-emerald-400 font-mono">12 / 100</div>
+                            <span class="text-xs text-gray-400 block mt-2">Threat Status: Low Risk (Nominal)</span>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-2 glass-panel p-6 rounded-2xl space-y-4">
+                        <div class="flex justify-between items-center border-b border-gray-800 pb-3">
+                            <h3 class="text-white font-bold text-sm">🛡️ Wazuh SIEM Agent Live Event Stream</h3>
+                            <span class="text-xs text-emerald-400 font-mono">Node 4 Manager: 10.0.20.104</span>
+                        </div>
+                        <div id="wazuhLogStream" class="bg-gray-950 border border-gray-800 p-4 rounded-xl font-mono text-xs text-gray-300 h-64 overflow-y-auto space-y-2"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BOE CONTINUOUS AUDIT TRAIL -->
+            <div id="adminTabBoe" class="hidden space-y-4">
+                <div class="glass-panel p-6 rounded-2xl space-y-4">
+                    <div class="flex justify-between items-center border-b border-gray-800 pb-3">
+                        <div>
+                            <span class="bg-purple-950 text-purple-300 border border-purple-800/50 text-[10px] font-mono px-2.5 py-0.5 rounded uppercase font-bold">Continuous Accreditation Engine</span>
+                            <h3 class="text-base font-bold text-white mt-1">Body of Evidence (BOE) Continuous Audit Trail</h3>
+                        </div>
+                        <button onclick="exportBOEArtifacts()" class="bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs px-4 py-2 rounded-xl">Export ATO Evidence (.JSON)</button>
+                    </div>
+                    <div id="boeLogStream" class="bg-gray-950 border border-gray-800 p-4 rounded-xl font-mono text-xs text-emerald-400 h-64 overflow-y-auto space-y-2"></div>
+                </div>
+            </div>
+
+            <!-- DOMAIN-GATED CUI VAULT -->
+            <div id="adminTabCui" class="hidden space-y-4">
+                <section class="glass-panel border-2 border-red-950/80 rounded-2xl p-6 space-y-4">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <span class="bg-red-950 text-red-400 border border-red-800/50 text-[10px] font-mono px-2.5 py-0.5 rounded uppercase font-bold">15-Min Rotating Key Active</span>
+                            <h3 class="text-base font-bold text-white mt-1">Controlled Unclassified Information (CUI) Vault</h3>
+                        </div>
+                        <button onclick="lockCUIVault()" class="bg-gray-800 text-xs text-gray-300 px-3 py-1.5 rounded-lg border border-gray-700">Re-Lock Vault</button>
+                    </div>
+
+                    <div class="p-3 bg-gray-950 border border-gray-800 rounded-xl flex flex-col sm:flex-row justify-between items-center text-xs font-mono gap-2">
+                        <div><span class="text-gray-400">Active Epoch Key: </span><strong id="activeEpochKeyDisplay" class="text-purple-400">Loading...</strong></div>
+                        <div><span class="text-gray-400">Key Expiration In: </span><span id="keyCountdownDisplay" class="text-amber-400 font-bold">15:00</span></div>
+                    </div>
+
+                    <div id="cuiLockedState" class="p-8 bg-gray-950 border border-red-900/30 rounded-xl text-center space-y-4">
+                        <div class="text-3xl">🛡️</div>
+                        <h4 class="text-white font-bold text-sm">Rotating Key Logic Gate Lockout Active</h4>
+                        <p class="text-xs text-gray-400 max-w-md mx-auto">Requires active 15-minute epoch key and verified <strong class="text-white">@eds-360.com</strong> or <strong class="text-white">@emergingdefensesolutions.com</strong> session.</p>
+                        <div class="flex justify-center items-center space-x-2 max-w-md mx-auto">
+                            <input type="text" id="cuiKeyInput" placeholder="Enter Active Epoch Key..." class="bg-gray-900 border border-gray-800 text-xs text-white p-2.5 rounded-lg font-mono flex-1 focus:outline-none focus:border-red-500">
+                            <button onclick="unlockCUIVault()" class="bg-red-900 hover:bg-red-800 text-white text-xs font-bold px-4 py-2.5 rounded-lg">Authenticate Key</button>
+                        </div>
+                        <span id="cuiGateError" class="text-[11px] text-red-400 hidden block font-mono"></span>
+                    </div>
+
+                    <div id="cuiUnlockedState" class="hidden space-y-3">
+                        <div class="p-3 bg-emerald-950/40 border border-emerald-800/50 rounded-xl text-xs text-emerald-300 font-mono">
+                            ✓ Rotating epoch key verified. CUI payload decrypted under NIST SP 800-171 AC.L2-3.1.1 controls.
+                        </div>
+                    </div>
+                </section>
             </div>
 
         </div>
@@ -69,56 +250,66 @@
     </main>
 
     <script>
-        // Parse URL parameters for Stripe payment return redirects
-        const urlParams = new URLSearchParams(window.location.search);
-        const stripeTier = urlParams.get('tier');
-        const stripeStatus = urlParams.get('status');
+        function updateKeyDisplay() {
+            const key = generateRotatingSessionKey();
+            const secondsLeft = getKeyRemainingSeconds();
+            const mins = Math.floor(secondsLeft / 60).toString().padStart(2, '0');
+            const secs = (secondsLeft % 60).toString().padStart(2, '0');
 
-        if (stripeStatus === 'success' && stripeTier) {
-            localStorage.setItem('hive_user_tier', stripeTier);
-            // Clean URL parameters
-            window.history.replaceState({}, document.title, window.location.pathname);
+            document.getElementById("activeEpochKeyDisplay").innerText = key;
+            document.getElementById("keyCountdownDisplay").innerText = `${mins}:${secs}`;
         }
 
-        const userEmail = localStorage.getItem('hive_user_email') || 'Member';
-        let currentTier = localStorage.getItem('hive_user_tier') || 'basic';
+        setInterval(updateKeyDisplay, 1000);
+        updateKeyDisplay();
 
-        // Display user status
-        document.getElementById('userEmailDisplay').innerText = Account: \ | Active Level: \;
-        const badge = document.getElementById('tierBadge');
-
-        // Dynamic Access Control Routing based on user tier
-        if (currentTier === 'business' || currentTier === 'admin') {
-            badge.innerText = 'Business Member';
-            badge.className = 'bg-purple-950 text-purple-300 border border-purple-800/50 text-xs px-3 py-1 rounded-full font-mono font-bold';
-            
-            // Unlock Business Features
-            const cardBiz = document.getElementById('cardBusiness');
-            cardBiz.classList.remove('opacity-50');
-            const btnBiz = document.getElementById('btnBusiness');
-            btnBiz.disabled = false;
-            btnBiz.innerText = "Access CUDA Benchmarks";
-            btnBiz.className = "w-full bg-purple-600 hover:bg-purple-500 text-white text-xs py-2 rounded-lg font-semibold mt-4 cursor-pointer";
-            btnBiz.onclick = () => window.location.href = 'RAG-console.html';
-        } 
-        
-        if (currentTier === 'academic' || currentTier === 'admin') {
-            badge.innerText = 'Academic Member';
-            badge.className = 'bg-amber-950 text-amber-300 border border-amber-800/50 text-xs px-3 py-1 rounded-full font-mono font-bold';
-            
-            // Unlock Academic Features
-            const cardAcad = document.getElementById('cardAcademic');
-            cardAcad.classList.remove('opacity-50');
-            const btnAcad = document.getElementById('btnAcademic');
-            btnAcad.disabled = false;
-            btnAcad.innerText = "Access Collaboration Hub";
-            btnAcad.className = "w-full bg-amber-600 hover:bg-amber-500 text-white text-xs py-2 rounded-lg font-semibold mt-4 cursor-pointer";
-            btnAcad.onclick = () => window.location.href = 'research.html';
+        function switchPortalMode(mode) {
+            const memberView = document.getElementById("viewMemberHub");
+            const adminView = document.getElementById("viewAdminEnclave");
+            if (mode === 'admin') {
+                memberView.classList.add("hidden");
+                adminView.classList.remove("hidden");
+            } else {
+                adminView.classList.add("hidden");
+                memberView.classList.remove("hidden");
+            }
         }
 
-        if (currentTier === 'basic') {
-            badge.innerText = 'Basic Member';
-            badge.className = 'bg-blue-950 text-blue-300 border border-blue-800/50 text-xs px-3 py-1 rounded-full font-mono font-bold';
+        function switchAdminTab(tabId) {
+            ['overview', 'godseye', 'wazuh', 'boe', 'cui'].forEach(t => {
+                const el = document.getElementById('adminTab' + t.charAt(0).toUpperCase() + t.slice(1));
+                const btn = document.getElementById('tab-' + t);
+                if (el) el.classList.add('hidden');
+                if (btn) btn.className = 'px-4 py-2 text-gray-400 hover:text-white';
+            });
+            
+            const targetEl = document.getElementById('adminTab' + tabId.charAt(0).toUpperCase() + tabId.slice(1));
+            const targetBtn = document.getElementById('tab-' + tabId);
+            if (targetEl) targetEl.classList.remove('hidden');
+            if (targetBtn) targetBtn.className = 'px-4 py-2 text-purple-400 border-b-2 border-purple-500 font-bold';
+
+            if (tabId === 'wazuh') renderWazuhStream();
+            if (tabId === 'boe') renderBOELogs();
+        }
+
+        function unlockCUIVault() {
+            const key = document.getElementById("cuiKeyInput").value.trim();
+            const err = document.getElementById("cuiGateError");
+            const result = validateCUIRotatingKey(key);
+            if (result.allowed) {
+                document.getElementById("cuiLockedState").classList.add("hidden");
+                document.getElementById("cuiUnlockedState").classList.remove("hidden");
+                err.classList.add("hidden");
+            } else {
+                err.innerText = result.reason;
+                err.classList.remove("hidden");
+            }
+        }
+
+        function lockCUIVault() {
+            document.getElementById("cuiLockedState").classList.remove("hidden");
+            document.getElementById("cuiUnlockedState").classList.add("hidden");
+            document.getElementById("cuiKeyInput").value = "";
         }
 
         function logout() {

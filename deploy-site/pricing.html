@@ -3,120 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Membership Tiers & Subscriptions | Emerging Defense Solutions</title>
+    <title>Membership Tiers | The Hive Network</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body { background-color: #0b0e14; color: #c9d1d9; font-family: system-ui, sans-serif; }
-    </style>
 </head>
-<body class="p-6">
-    <header class="max-w-7xl mx-auto flex items-center justify-between bg-gray-900 p-4 rounded-xl mb-8 border border-gray-800">
+<body class="bg-[#0b0e14] text-gray-200 font-sans p-6">
+
+    <header class="max-w-7xl mx-auto flex items-center justify-between bg-gray-900 p-4 rounded-xl mb-12 border border-gray-800">
         <div class="flex items-center space-x-3">
-            <a href="index.html" class="bg-blue-600 text-white font-bold p-2 rounded-lg">DS</a>
+            <div class="bg-blue-600 text-white font-bold p-2.5 rounded-lg">DS</div>
             <div>
-                <a href="index.html" class="text-white font-bold hover:underline">The Hive Network</a>
+                <h1 class="text-white font-bold text-lg">The Hive Network</h1>
                 <p class="text-xs text-gray-400">Doctor of Applied Science in Computer Science Research</p>
             </div>
         </div>
-        <nav class="flex items-center space-x-4">
-            <a href="index.html" class="text-gray-300 hover:text-white text-sm">About & Bio</a>
-            <a href="pricing.html" class="text-blue-400 font-bold text-sm">Membership Tiers</a>
-            <a href="auth.html" class="bg-blue-600 hover:bg-blue-500 text-white text-sm px-4 py-2 rounded-lg font-semibold">Sign In / Register</a>
+        <nav class="flex items-center space-x-6 text-sm">
+            <a href="index.html" class="text-gray-400 hover:text-white">About & Bio</a>
+            <a href="pricing.html" class="text-blue-400 font-semibold border-b-2 border-blue-500 pb-1">Membership Tiers</a>
+            <a href="auth.html" class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg font-semibold">Sign In / Register</a>
         </nav>
     </header>
 
     <main class="max-w-7xl mx-auto space-y-12">
-        <section class="text-center max-w-3xl mx-auto space-y-4">
-            <span class="bg-blue-950 text-blue-400 text-xs px-3 py-1 rounded-full font-mono">Sovereign Defense AI & Academic Research Enclave</span>
-            <h1 class="text-4xl font-extrabold text-white">Select Your Membership Level</h1>
-            <p class="text-gray-400 text-sm">Support air-gapped CUDA benchmarks, secure RAG architectures, and doctoral CS research. Unlocks verified portal access based on subscription tier.</p>
-        </section>
+        <div class="text-center space-y-3">
+            <span class="bg-blue-950/80 text-blue-400 border border-blue-800/50 text-xs px-3 py-1 rounded-full font-mono uppercase">Sovereign Defense AI & Academic Research Enclave</span>
+            <h2 class="text-4xl font-black text-white">Select Your Membership Level</h2>
+            <p class="text-gray-400 text-sm max-w-2xl mx-auto">Support air-gapped CUDA benchmarks, secure RAG architectures, and doctoral CS research. Unlocks verified portal access based on subscription tier.</p>
+        </div>
 
-        <!-- Tier Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            
             <!-- Basic Member -->
-            <div class="bg-gray-900 border border-gray-800 rounded-2xl p-6 flex flex-col justify-between hover:border-gray-700 transition">
-                <div class="space-y-4">
-                    <span class="text-xs font-bold text-blue-400 uppercase tracking-wider">Individual Enthusiast</span>
-                    <h3 class="text-2xl font-bold text-white">Basic Member</h3>
-                    <p class="text-3xl font-extrabold text-white"> <span class="text-xs font-normal text-gray-400">/ month</span></p>
-                    <ul class="space-y-2 text-xs text-gray-300 pt-4 border-t border-gray-800">
-                        <li>✔ Public & Student Research Logs</li>
-                        <li>✔ Access to RAG Architecture Summaries</li>
-                        <li>✔ Community Forum & Event Invites</li>
-                        <li>✔ 2FA Authenticator Support</li>
+            <div class="bg-gray-900/90 border border-gray-800 rounded-2xl p-6 flex flex-col justify-between hover:border-blue-500/50 transition">
+                <div>
+                    <span class="text-[10px] font-mono font-bold text-blue-400 uppercase tracking-wider">Individual Enthusiast</span>
+                    <h3 class="text-2xl font-bold text-white mt-1 mb-2">Basic Member</h3>
+                    <div class="text-4xl font-extrabold text-white mb-4">$10 <span class="text-xs font-normal text-gray-400">/ month</span></div>
+                    <ul class="text-xs text-gray-300 space-y-2 mb-6">
+                        <li>✓ Public & Student Research Logs</li>
+                        <li>✓ Access to RAG Architecture Summaries</li>
+                        <li>✓ Community Forum & Event Invites</li>
+                        <li>✓ 2FA Authenticator Support</li>
                     </ul>
                 </div>
-                <a href="https://buy.stripe.com/9B6aERdRY0ygdVz40p5os05" target="_blank" class="mt-8 w-full block text-center bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl text-sm">Subscribe Basic (/mo)</a>
+                <a href="auth.html?tier=basic" class="block text-center bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold py-3 rounded-xl transition">Subscribe Basic ($10/mo)</a>
             </div>
 
-            <!-- Student / Faculty Academic Tier -->
-            <div class="bg-gray-900 border border-amber-600/50 rounded-2xl p-6 flex flex-col justify-between hover:border-amber-500 transition">
-                <div class="space-y-4">
-                    <span class="text-xs font-bold text-amber-400 uppercase tracking-wider">Students & Faculty (.edu Verified)</span>
-                    <h3 class="text-2xl font-bold text-white">Academic Member</h3>
-                    <p class="text-3xl font-extrabold text-white"> <span class="text-xs font-normal text-gray-400">/ month</span></p>
-                    <p class="text-[11px] text-amber-400/90 font-mono">Requires verified active .edu email address.</p>
-                    <ul class="space-y-2 text-xs text-gray-300 pt-4 border-t border-gray-800">
-                        <li>✔ Open-Access Doctoral Publications</li>
-                        <li>✔ RAG & Edge AI Code Repositories</li>
-                        <li>✔ Student Mentorship Portal Access</li>
-                        <li>✔ Research Dataset Downloads</li>
+            <!-- Academic Member -->
+            <div class="bg-gray-900/90 border border-amber-500/30 rounded-2xl p-6 flex flex-col justify-between hover:border-amber-500/60 transition">
+                <div>
+                    <span class="text-[10px] font-mono font-bold text-amber-400 uppercase tracking-wider">Students & Faculty (.EDU Verified)</span>
+                    <h3 class="text-2xl font-bold text-white mt-1 mb-2">Academic Member</h3>
+                    <div class="text-4xl font-extrabold text-white mb-2">$15 <span class="text-xs font-normal text-gray-400">/ month</span></div>
+                    <p class="text-[11px] text-amber-400/90 font-mono mb-4">Requires verified active .edu email address.</p>
+                    <ul class="text-xs text-gray-300 space-y-2 mb-6">
+                        <li>✓ Open-Access Doctoral Publications</li>
+                        <li>✓ RAG & Edge AI Code Repositories</li>
+                        <li>✓ Student Mentorship Portal Access</li>
+                        <li>✓ Research Dataset Downloads</li>
                     </ul>
                 </div>
-                <a href="https://buy.stripe.com/3cI6oB7tA94M3gV68x5os06" target="_blank" class="mt-8 w-full block text-center bg-amber-600 hover:bg-amber-500 text-white font-bold py-3 rounded-xl text-sm">Join Academic (/mo)</a>
+                <a href="auth.html?tier=academic" class="block text-center bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold py-3 rounded-xl transition">Join Academic ($15/mo)</a>
             </div>
 
             <!-- Business Tier -->
-            <div class="bg-gray-900 border-2 border-purple-600 rounded-2xl p-6 flex flex-col justify-between relative shadow-lg shadow-purple-900/20">
-                <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-purple-600 text-white text-[10px] uppercase font-extrabold px-3 py-0.5 rounded-full">Industry & Defense</span>
-                <div class="space-y-4">
-                    <span class="text-xs font-bold text-purple-400 uppercase tracking-wider">Contractors & Enterprise</span>
-                    <h3 class="text-2xl font-bold text-white">Business Tier</h3>
-                    <p class="text-3xl font-extrabold text-white"> <span class="text-xs font-normal text-gray-400">/ month</span></p>
-                    <ul class="space-y-2 text-xs text-gray-300 pt-4 border-t border-gray-800">
-                        <li>✔ Full Air-Gapped Benchmark Datasets</li>
-                        <li>✔ Priority RAG API Sandbox Access</li>
-                        <li>✔ Commercial Defense Licensing</li>
-                        <li>✔ Executive Technical Consultations</li>
-                    </ul>
-                </div>
-                <a href="https://buy.stripe.com/4gM8wJ5ls5SA4kZfJ75os07" target="_blank" class="mt-8 w-full block text-center bg-purple-600 hover:bg-purple-500 text-white font-bold py-3 rounded-xl text-sm">Subscribe Business (/mo)</a>
-            </div>
-
-            <!-- Grant & Proposal Partner Tier -->
-            <div class="bg-gray-900 border border-emerald-500 rounded-2xl p-6 flex flex-col justify-between hover:border-emerald-400 transition">
-                <div class="space-y-4">
-                    <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider">SBIR / STTR / Grant Collaborators</span>
-                    <h3 class="text-2xl font-bold text-white">Proposal Partner</h3>
-                    <p class="text-3xl font-extrabold text-white">.00 <span class="text-xs font-normal text-emerald-400">/ Direct Access</span></p>
-                    <p class="text-[11px] text-gray-400">Compute & licensing fees funded directly via joint proposal/grant budget allocations.</p>
-                    <ul class="space-y-2 text-xs text-gray-300 pt-4 border-t border-gray-800">
-                        <li>✔ Multi-Seat Co-PI & Researcher Access</li>
-                        <li>✔ Joint SBIR/STTR Proposal Drafting</li>
-                        <li>✔ Air-Gapped CUDA Hardware Allocation</li>
-                        <li>✔ Custom Defense RAG Integrations</li>
-                    </ul>
-                </div>
-                <a href="auth.html?tier=proposal_partner" class="mt-8 w-full block text-center bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 rounded-xl text-sm">Partner Registration (.00)</a>
-            </div>
-
-        </div>
-
-        <!-- Detailed Funding & Grant Allocation Breakdown -->
-        <section class="bg-gray-900/60 border border-gray-800 rounded-2xl p-8 space-y-4">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div class="bg-gray-900/90 border-2 border-purple-500 rounded-2xl p-6 flex flex-col justify-between shadow-xl shadow-purple-950/30 relative">
+                <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-purple-600 text-white text-[9px] font-bold px-3 py-0.5 rounded-full uppercase tracking-wider">Industry & Defense</span>
                 <div>
-                    <h3 class="text-xl font-bold text-emerald-400">💡 Direct Research Sponsorship & Donations</h3>
-                    <p class="text-sm text-gray-300 leading-relaxed max-w-3xl">
-                        Your direct contributions support air-gapped GPU hardware procurement, academic publication fees, and student mentorship programs.
-                    </p>
+                    <span class="text-[10px] font-mono font-bold text-purple-400 uppercase tracking-wider">Contractors & Enterprise</span>
+                    <h3 class="text-2xl font-bold text-white mt-1 mb-2">Business Tier</h3>
+                    <div class="text-4xl font-extrabold text-white mb-4">$150 <span class="text-xs font-normal text-gray-400">/ month</span></div>
+                    <ul class="text-xs text-gray-300 space-y-2 mb-6">
+                        <li>✓ Full Air-Gapped Benchmark Datasets</li>
+                        <li>✓ Priority RAG API Sandbox Access</li>
+                        <li>✓ Commercial Defense Licensing</li>
+                        <li>✓ Executive Technical Consultations</li>
+                    </ul>
                 </div>
-                <a href="https://donate.stripe.com/9B6bIVaFMep68BfgNb5os04" target="_blank" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-6 py-3 rounded-xl text-sm whitespace-nowrap">Make Direct Donation</a>
+                <a href="auth.html?tier=business" class="block text-center bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold py-3 rounded-xl transition">Subscribe Business ($150/mo)</a>
             </div>
-        </section>
+
+            <!-- Proposal Partner -->
+            <div class="bg-gray-900/90 border border-emerald-500/30 rounded-2xl p-6 flex flex-col justify-between hover:border-emerald-500/60 transition">
+                <div>
+                    <span class="text-[10px] font-mono font-bold text-emerald-400 uppercase tracking-wider">SBIR / STTR / Grant Collaborators</span>
+                    <h3 class="text-2xl font-bold text-white mt-1 mb-2">Proposal Partner</h3>
+                    <div class="text-4xl font-extrabold text-emerald-400 mb-2">$0.00 <span class="text-xs font-normal text-emerald-300">/ Direct Access</span></div>
+                    <p class="text-[11px] text-gray-400 mb-4">Compute & licensing fees funded directly via joint proposal/grant budget allocations.</p>
+                    <ul class="text-xs text-gray-300 space-y-2 mb-6">
+                        <li>✓ Multi-Seat Co-PI & Researcher Access</li>
+                        <li>✓ Joint SBIR/STTR Proposal Drafting</li>
+                        <li>✓ Air-Gapped CUDA Hardware Allocation</li>
+                        <li>✓ Custom Defense RAG Integrations</li>
+                    </ul>
+                </div>
+                <a href="auth.html?tier=partner" class="block text-center bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold py-3 rounded-xl transition">Partner Registration ($0.00)</a>
+            </div>
+        </div>
     </main>
 </body>
 </html>
