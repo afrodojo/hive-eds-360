@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enterprise Hub & God's Eye Telemetry Map | EDS-360</title>
+    <title>Enterprise Hub & Command Enclave | EDS-360</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="assets/js/auth.js"></script>
@@ -22,7 +22,7 @@
             <div class="bg-gradient-to-r from-purple-600 to-blue-600 text-white font-black p-3 rounded-xl shadow-lg">EDS</div>
             <div>
                 <h1 class="text-white font-extrabold text-lg tracking-tight">Emerging Defense Solutions</h1>
-                <p class="text-xs text-gray-400">Enterprise Portal, Wazuh SIEM & God's Eye View Data Mapping</p>
+                <p class="text-xs text-gray-400">Enterprise Portal, Agentic Marketing & CUI Enclave Command Hub</p>
             </div>
         </div>
 
@@ -37,11 +37,11 @@
 
     <main class="max-w-7xl w-full mx-auto flex-1 space-y-6">
 
-        <!-- MEMBER HUB -->
+        <!-- MEMBER COMMUNITY HUB -->
         <div id="viewMemberHub" class="space-y-6">
             <div class="glass-panel p-6 rounded-2xl border-l-4 border-purple-500 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div>
-                    <h2 class="text-white text-xl font-bold">Defense Community & Research Advisory</h2>
+                    <h2 class="text-white text-xl font-bold">Research Community & Defense Advisory</h2>
                     <p class="text-xs text-gray-400 mt-1">Real-time collaboration, Q&A feeds, and model execution benchmarks.</p>
                 </div>
                 <span class="bg-emerald-950 text-emerald-400 border border-emerald-800/50 text-xs px-3 py-1.5 rounded-full font-mono font-bold">Cross-Domain Guard Active</span>
@@ -62,24 +62,25 @@
                     <h3 class="text-white font-bold text-sm border-b border-gray-800 pb-3">🎙️ Research Broadcasts</h3>
                     <div class="bg-gray-950 p-4 rounded-xl border border-purple-900/30 space-y-2">
                         <span class="bg-purple-950 text-purple-300 text-[10px] font-mono px-2 py-0.5 rounded font-bold">Episode #04</span>
-                        <h4 class="text-xs font-bold text-white">Spatial Telemetry & God's Eye Data Mapping</h4>
-                        <p class="text-[11px] text-gray-400">Visualizing CUI data flows across air-gapped subnet nodes.</p>
+                        <h4 class="text-xs font-bold text-white">Math-Backed Marketing & Agentic Synthesizers</h4>
+                        <p class="text-[11px] text-gray-400">Communicating zero-trust AI architecture to broad audiences.</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- EXECUTIVE ADMIN, SIEM & GOD'S EYE ENCLAVE -->
+        <!-- EXECUTIVE ADMIN COMMAND ENCLAVE -->
         <div id="viewAdminEnclave" class="hidden space-y-6">
             <div class="flex border-b border-gray-800 space-x-2 text-xs font-mono font-bold overflow-x-auto">
                 <button onclick="switchAdminTab('overview')" id="tab-overview" class="px-4 py-2 text-purple-400 border-b-2 border-purple-500 font-bold">Telemetry Overview</button>
+                <button onclick="switchAdminTab('social')" id="tab-social" class="px-4 py-2 text-gray-400 hover:text-white">📡 Agentic Social & Marketing</button>
                 <button onclick="switchAdminTab('godseye')" id="tab-godseye" class="px-4 py-2 text-gray-400 hover:text-white">👁️ God's Eye View Map</button>
                 <button onclick="switchAdminTab('wazuh')" id="tab-wazuh" class="px-4 py-2 text-gray-400 hover:text-white">🛡️ Wazuh SIEM & UBA Radar</button>
                 <button onclick="switchAdminTab('boe')" id="tab-boe" class="px-4 py-2 text-gray-400 hover:text-white">📜 Body of Evidence (BOE)</button>
                 <button onclick="switchAdminTab('cui')" id="tab-cui" class="px-4 py-2 text-gray-400 hover:text-white">🔒 Domain-Gated CUI Vault</button>
             </div>
 
-            <!-- OVERVIEW -->
+            <!-- OVERVIEW TAB -->
             <div id="adminTabOverview" class="space-y-6">
                 <section class="glass-panel p-6 rounded-2xl space-y-4">
                     <div class="flex justify-between items-center border-b border-gray-800 pb-3">
@@ -99,7 +100,56 @@
                 </section>
             </div>
 
-            <!-- GOD'S EYE VIEW TELEMETRY & DATA FLOW MAP -->
+            <!-- AGENTIC SOCIAL & SCIENCE MARKETING TAB -->
+            <div id="adminTabSocial" class="hidden space-y-6">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="glass-panel p-6 rounded-2xl space-y-4 bg-gray-900/80 border border-gray-800">
+                        <div class="flex justify-between items-center border-b border-gray-800 pb-3">
+                            <span class="bg-purple-950 text-purple-300 border border-purple-800/50 text-[10px] font-mono px-2.5 py-0.5 rounded uppercase font-bold">Autonomous Agent</span>
+                            <h3 class="text-sm font-bold text-white">Math & Science Post Synthesizer</h3>
+                        </div>
+                        <p class="text-xs text-gray-400">Develops educational posts using mathematical proofs, entropy models, and scientific concepts.</p>
+                        <button onclick="triggerAgenticPostGen()" class="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white font-bold text-xs py-3 rounded-xl transition shadow-lg font-mono">
+                            ⚡ Synthesize Science Post
+                        </button>
+                        <div id="latestAgenticDraft" class="hidden bg-gray-950 p-4 rounded-xl border border-purple-900/40 text-xs font-mono space-y-2">
+                            <div class="flex justify-between text-purple-400 text-[10px]">
+                                <span id="agenticDraftTopic">Topic</span>
+                                <span id="agenticDraftReach">Projected Reach</span>
+                            </div>
+                            <p id="agenticDraftBody" class="text-gray-300 whitespace-pre-line text-[11px]"></p>
+                            <button onclick="alert('Post scheduled across LinkedIn, X, Facebook & Instagram for next slot (8 AM / 12 PM / 5 PM)!')" class="w-full bg-emerald-950 hover:bg-emerald-900 text-emerald-300 border border-emerald-800/50 font-bold text-[11px] py-1.5 rounded-lg mt-2">
+                                ✓ Schedule Dispatch
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-2 glass-panel p-6 rounded-2xl space-y-4 bg-gray-900/80 border border-gray-800">
+                        <div class="flex justify-between items-center border-b border-gray-800 pb-3">
+                            <h3 class="text-sm font-bold text-white">📡 Live Cross-Platform Ingestion Feed</h3>
+                            <span class="text-xs text-emerald-400 font-mono">Reach: 18.4K Impressions (CTR 4.2%)</span>
+                        </div>
+                        <div id="socialEngagementStream" class="space-y-3">
+                            <div class="p-3 bg-gray-950 border border-gray-800 rounded-xl space-y-1 text-xs">
+                                <div class="flex justify-between text-[10px] font-mono">
+                                    <strong class="text-blue-400">LinkedIn • Dr. K. Vance (DoD Contractor)</strong>
+                                    <span class="text-gray-500">10 mins ago</span>
+                                </div>
+                                <p class="text-gray-300">"Fascinating application of Shannon Entropy in zero-trust RAG networks."</p>
+                            </div>
+                            <div class="p-3 bg-gray-950 border border-gray-800 rounded-xl space-y-1 text-xs">
+                                <div class="flex justify-between text-[10px] font-mono">
+                                    <strong class="text-cyan-400">X / Twitter • @CyberDefenseTech</strong>
+                                    <span class="text-gray-500">35 mins ago</span>
+                                </div>
+                                <p class="text-gray-300">"The 15-minute key rotation math looks rock solid for CMMC L2."</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GOD'S EYE VIEW TELEMETRY & DATA FLOW TAB -->
             <div id="adminTabGodseye" class="hidden space-y-6">
                 <div class="glass-panel p-6 rounded-2xl space-y-4">
                     <div class="flex justify-between items-center border-b border-gray-800 pb-3">
@@ -107,74 +157,29 @@
                             <span class="bg-cyan-950 text-cyan-300 border border-cyan-800/50 text-[10px] font-mono px-2.5 py-0.5 rounded uppercase font-bold">God's Eye View Spatial Radar</span>
                             <h3 class="text-base font-bold text-white mt-1">Subnet Data Flow Mapping & Overlay Telemetry</h3>
                         </div>
-                        <div class="flex items-center space-x-2">
-                            <span class="bg-emerald-950 text-emerald-400 border border-emerald-800/50 text-[11px] font-mono px-2.5 py-1 rounded">Live Packet Stream</span>
-                            <a href="https://github.com/bilawalsidhu/gods-eye-view" target="_blank" class="bg-gray-800 hover:bg-gray-700 text-white text-xs px-3 py-1 rounded-lg border border-gray-700">Repo: gods-eye-view</a>
-                        </div>
+                        <a href="https://github.com/bilawalsidhu/gods-eye-view" target="_blank" class="bg-gray-800 hover:bg-gray-700 text-white text-xs px-3 py-1 rounded-lg border border-gray-700 font-mono">Repo: gods-eye-view</a>
                     </div>
-
-                    <!-- Interactive Canvas Diagram -->
-                    <div class="relative bg-gray-950 border border-gray-800 rounded-xl p-6 h-96 flex flex-col justify-between overflow-hidden">
-                        
-                        <!-- Canvas Header Info -->
+                    <div class="relative bg-gray-950 border border-gray-800 rounded-xl p-6 h-80 flex flex-col justify-between overflow-hidden">
                         <div class="flex justify-between text-xs font-mono z-10">
                             <span class="text-cyan-400 font-bold">🌐 Subnet Ingress Gate: 10.0.20.101</span>
-                            <span id="dataFlowRate" class="text-emerald-400">Data Throughput: 42.8 MB/s (TLS 1.3 / AES-256)</span>
+                            <span class="text-emerald-400">Data Throughput: 42.8 MB/s (TLS 1.3 / AES-256)</span>
                         </div>
-
-                        <!-- Graphical Subnet Nodes Overlay -->
-                        <div class="grid grid-cols-5 gap-4 my-auto relative z-10 text-center font-mono">
-                            <!-- Node 0 -->
-                            <div class="p-3 bg-gray-900 border border-gray-800 rounded-xl space-y-1">
-                                <span class="w-2 h-2 rounded-full bg-emerald-500 inline-block node-pulse"></span>
-                                <strong class="text-xs text-white block">Node 0</strong>
-                                <span class="text-[10px] text-gray-400 block">Control Plane</span>
-                                <span class="text-[9px] text-purple-400">Vaultwarden</span>
-                            </div>
-
-                            <!-- Node 1 -->
-                            <div class="p-3 bg-gray-900 border border-cyan-500/50 rounded-xl space-y-1 shadow-lg shadow-cyan-950/50">
-                                <span class="w-2 h-2 rounded-full bg-cyan-400 inline-block node-pulse"></span>
-                                <strong class="text-xs text-white block">Node 1</strong>
-                                <span class="text-[10px] text-gray-400 block">Ingress Router</span>
-                                <span class="text-[9px] text-cyan-300">WireGuard GW</span>
-                            </div>
-
-                            <!-- Node 2 -->
-                            <div class="p-3 bg-gray-900 border border-purple-500/50 rounded-xl space-y-1 shadow-lg shadow-purple-950/50">
-                                <span class="w-2 h-2 rounded-full bg-purple-400 inline-block node-pulse"></span>
-                                <strong class="text-xs text-white block">Node 2</strong>
-                                <span class="text-[10px] text-gray-400 block">vLLM Inference</span>
-                                <span class="text-[9px] text-purple-300">CUDA GPU</span>
-                            </div>
-
-                            <!-- Node 3 -->
-                            <div class="p-3 bg-gray-900 border border-blue-500/50 rounded-xl space-y-1 shadow-lg shadow-blue-950/50">
-                                <span class="w-2 h-2 rounded-full bg-blue-400 inline-block node-pulse"></span>
-                                <strong class="text-xs text-white block">Node 3</strong>
-                                <span class="text-[10px] text-gray-400 block">LUKS2 Storage</span>
-                                <span class="text-[9px] text-blue-300">CUI Encrypted</span>
-                            </div>
-
-                            <!-- Node 4 -->
-                            <div class="p-3 bg-gray-900 border border-amber-500/50 rounded-xl space-y-1 shadow-lg shadow-amber-950/50">
-                                <span class="w-2 h-2 rounded-full bg-amber-400 inline-block node-pulse"></span>
-                                <strong class="text-xs text-white block">Node 4</strong>
-                                <span class="text-[10px] text-gray-400 block">FreeIPA / SIEM</span>
-                                <span class="text-[9px] text-amber-300">Wazuh Manager</span>
-                            </div>
+                        <div class="grid grid-cols-5 gap-3 my-auto text-center font-mono text-xs">
+                            <div class="p-3 bg-gray-900 border border-gray-800 rounded-xl"><strong class="text-white block">Node 0</strong><span class="text-[10px] text-gray-400">Control</span></div>
+                            <div class="p-3 bg-gray-900 border border-cyan-500/50 rounded-xl"><strong class="text-white block">Node 1</strong><span class="text-[10px] text-cyan-300">Ingress</span></div>
+                            <div class="p-3 bg-gray-900 border border-purple-500/50 rounded-xl"><strong class="text-white block">Node 2</strong><span class="text-[10px] text-purple-300">vLLM</span></div>
+                            <div class="p-3 bg-gray-900 border border-blue-500/50 rounded-xl"><strong class="text-white block">Node 3</strong><span class="text-[10px] text-blue-300">Vault</span></div>
+                            <div class="p-3 bg-gray-900 border border-amber-500/50 rounded-xl"><strong class="text-white block">Node 4</strong><span class="text-[10px] text-amber-300">SIEM</span></div>
                         </div>
-
-                        <!-- Data Flow Live Log -->
-                        <div class="bg-gray-900/90 border border-gray-800 p-3 rounded-lg font-mono text-[11px] text-gray-300 flex justify-between items-center z-10">
-                            <div><span class="text-purple-400 font-bold">[ACTIVE FLOW]:</span> <span id="currentDataFlowPath">Node 1 (Ingress) ➔ Node 2 (vLLM Engine) ➔ Node 3 (LUKS2 Storage)</span></div>
-                            <span class="text-emerald-400 text-[10px]">✓ Zero-Trust WireGuard Tunnel Verified</span>
+                        <div class="bg-gray-900/90 border border-gray-800 p-2.5 rounded-lg font-mono text-[11px] text-gray-300 flex justify-between items-center">
+                            <span><strong class="text-purple-400">[FLOW]:</strong> Node 1 (Ingress) ➔ Node 2 (vLLM Engine) ➔ Node 3 (LUKS2 Vault)</span>
+                            <span class="text-emerald-400 text-[10px]">✓ WireGuard Tunnel Verified</span>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- WAZUH SIEM & UBA DASHBOARD -->
+            <!-- WAZUH SIEM DASHBOARD TAB -->
             <div id="adminTabWazuh" class="hidden space-y-6">
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     <div class="glass-panel p-6 rounded-2xl space-y-4">
@@ -185,7 +190,6 @@
                             <span class="text-xs text-gray-400 block mt-2">Threat Status: Low Risk (Nominal)</span>
                         </div>
                     </div>
-
                     <div class="lg:col-span-2 glass-panel p-6 rounded-2xl space-y-4">
                         <div class="flex justify-between items-center border-b border-gray-800 pb-3">
                             <h3 class="text-white font-bold text-sm">🛡️ Wazuh SIEM Agent Live Event Stream</h3>
@@ -196,7 +200,7 @@
                 </div>
             </div>
 
-            <!-- BOE CONTINUOUS AUDIT TRAIL -->
+            <!-- BOE CONTINUOUS AUDIT TRAIL TAB -->
             <div id="adminTabBoe" class="hidden space-y-4">
                 <div class="glass-panel p-6 rounded-2xl space-y-4">
                     <div class="flex justify-between items-center border-b border-gray-800 pb-3">
@@ -210,7 +214,7 @@
                 </div>
             </div>
 
-            <!-- DOMAIN-GATED CUI VAULT -->
+            <!-- DOMAIN-GATED CUI VAULT TAB -->
             <div id="adminTabCui" class="hidden space-y-4">
                 <section class="glass-panel border-2 border-red-950/80 rounded-2xl p-6 space-y-4">
                     <div class="flex justify-between items-center">
@@ -220,12 +224,10 @@
                         </div>
                         <button onclick="lockCUIVault()" class="bg-gray-800 text-xs text-gray-300 px-3 py-1.5 rounded-lg border border-gray-700">Re-Lock Vault</button>
                     </div>
-
                     <div class="p-3 bg-gray-950 border border-gray-800 rounded-xl flex flex-col sm:flex-row justify-between items-center text-xs font-mono gap-2">
                         <div><span class="text-gray-400">Active Epoch Key: </span><strong id="activeEpochKeyDisplay" class="text-purple-400">Loading...</strong></div>
                         <div><span class="text-gray-400">Key Expiration In: </span><span id="keyCountdownDisplay" class="text-amber-400 font-bold">15:00</span></div>
                     </div>
-
                     <div id="cuiLockedState" class="p-8 bg-gray-950 border border-red-900/30 rounded-xl text-center space-y-4">
                         <div class="text-3xl">🛡️</div>
                         <h4 class="text-white font-bold text-sm">Rotating Key Logic Gate Lockout Active</h4>
@@ -236,7 +238,6 @@
                         </div>
                         <span id="cuiGateError" class="text-[11px] text-red-400 hidden block font-mono"></span>
                     </div>
-
                     <div id="cuiUnlockedState" class="hidden space-y-3">
                         <div class="p-3 bg-emerald-950/40 border border-emerald-800/50 rounded-xl text-xs text-emerald-300 font-mono">
                             ✓ Rotating epoch key verified. CUI payload decrypted under NIST SP 800-171 AC.L2-3.1.1 controls.
@@ -263,6 +264,14 @@
         setInterval(updateKeyDisplay, 1000);
         updateKeyDisplay();
 
+        function triggerAgenticPostGen() {
+            const draft = generateAgenticSciencePost();
+            document.getElementById("agenticDraftTopic").innerText = draft.topic;
+            document.getElementById("agenticDraftReach").innerText = "Est. Reach: " + draft.projected_reach;
+            document.getElementById("agenticDraftBody").innerText = draft.content;
+            document.getElementById("latestAgenticDraft").classList.remove("hidden");
+        }
+
         function switchPortalMode(mode) {
             const memberView = document.getElementById("viewMemberHub");
             const adminView = document.getElementById("viewAdminEnclave");
@@ -276,7 +285,7 @@
         }
 
         function switchAdminTab(tabId) {
-            ['overview', 'godseye', 'wazuh', 'boe', 'cui'].forEach(t => {
+            ['overview', 'social', 'godseye', 'wazuh', 'boe', 'cui'].forEach(t => {
                 const el = document.getElementById('adminTab' + t.charAt(0).toUpperCase() + t.slice(1));
                 const btn = document.getElementById('tab-' + t);
                 if (el) el.classList.add('hidden');
