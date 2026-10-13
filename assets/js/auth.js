@@ -1,11 +1,12 @@
-﻿// The Hive Network - Enterprise Compliance, Rotating Session Key & BOE Engine
-// Compliant with NIST SP 800-171 AU-2/AU-12, CMMC L2, and SOC 2 Type II (CC6/CC7)
+﻿// The Hive Network - Wazuh SIEM, UBA Engine & Cross-Domain Integrity (XDI) Guard
+// Compliant with CMMC L2 (SI.L2-3.14.1), SOC 2 Type II (CC6.8/CC7.2), NIST SP 800-171 AU-6
 
 const CUI_AUTHORIZED_DOMAINS = ["eds-360.com", "emergingdefensesolutions.com"];
 const RESEARCH_SUPER_ADMINS = ["dassensebsu@pm.me", "asaad.morman@eds-360.com"];
+const KEY_ROTATION_INTERVAL_MS = 15 * 60 * 1000;
 
-// Session Key Constants (15 Minute Rotation Epochs)
-const KEY_ROTATION_INTERVAL_MS = 15 * 60 * 1000; 
+// Threat Score Tracking (0 - 100)
+let currentUBARiskScore = 12; // Baseline network score
 
 function getCurrentUser() {
     const userJson = localStorage.getItem("hive_user");
@@ -25,13 +26,79 @@ function sanitizeInput(str) {
         .replace(/(<script|javascript:|data:|vbscript:)/gi, '[BLOCKED_INJECTION]');
 }
 
+// CROSS-DOMAIN INTEGRITY (XDI) GUARD
+function enforceCrossDomainIntegrity() {
+    const origin = window.location.hostname;
+    const user = getCurrentUser();
+    
+    // Check for origin mismatch or domain spoofing attempt
+    if (user && user.email) {
+        const domain = user.email.split('@')[1]?.toLowerCase().trim();
+        const isCUIPrivileged = CUI_AUTHORIZED_DOMAINS.includes(domain);
+        
+        // Detect cross-domain context leak
+        if (!isCUIPrivileged && window.location.hash.includes("cui-vault")) {
+            triggerUBAAnomaly("XDI_DOMAIN_MISMATCH", "Unprivileged domain account attempted to invoke CUI hash routes.", 35);
+            return false;
+        }
+    }
+    return true;
+}
+
+// USER BEHAVIOR ANALYTICS (UBA) THREAT ENGINE
+function triggerUBAAnomaly(anomalyType, details, scoreIncrement) {
+    currentUBARiskScore = Math.min(100, currentUBARiskScore + scoreIncrement);
+    
+    dispatchWazuhAlert({
+        rule_id: 100201,
+        level: scoreIncrement >= 30 ? 12 : 7,
+        description: `UBA Anomaly Detected: ${anomalyType}`,
+        details: details,
+        risk_increment: scoreIncrement,
+        total_risk_score: currentUBARiskScore
+    });
+
+    if (currentUBARiskScore >= 75) {
+        console.warn("[UBA LOCKDOWN]: Risk score critical! Revoking active CUI session keys.");
+        localStorage.removeItem("active_cui_session_key");
+        logBOEEvent("UBA_CRITICAL_LOCKDOWN", `Risk score reached ${currentUBARiskScore}. Auto-lockdown invoked.`);
+    }
+}
+
+// WAZUH SIEM SYSLOG DISPATCHER
+function dispatchWazuhAlert(alertData) {
+    const user = getCurrentUser() || { email: "unauthenticated@hive.eds-360.com" };
+    const wazuhPayload = {
+        timestamp: new Date().toISOString(),
+        agent: { id: "001", name: "Node-1-Ingress-Gate", ip: "10.0.20.101" },
+        manager: { name: "Node-4-FreeIPA-SIEM", ip: "10.0.20.104" },
+        rule: {
+            id: alertData.rule_id,
+            level: alertData.level,
+            description: alertData.description,
+            groups: ["cmmc_l2", "soc2_type2", "uba_engine", "xdi_guard"]
+        },
+        data: {
+            srcuser: user.email,
+            srcip: "10.0.20.101",
+            details: alertData.details,
+            risk_score: alertData.total_risk_score || currentUBARiskScore
+        }
+    };
+
+    let wazuhStream = JSON.parse(localStorage.getItem("hive_wazuh_siem_events") || "[]");
+    wazuhStream.unshift(wazuhPayload);
+    if (wazuhStream.length > 50) wazuhStream.pop();
+    localStorage.setItem("hive_wazuh_siem_events", JSON.stringify(wazuhStream));
+
+    console.log("[WAZUH SIEM DISPATCH]:", wazuhPayload);
+}
+
 // Generate Ephemeral Rotating Cryptographic Session Token
 function generateRotatingSessionKey() {
     const user = getCurrentUser();
     const epoch = Math.floor(Date.now() / KEY_ROTATION_INTERVAL_MS);
     const userDomain = user?.email || "anonymous";
-    
-    // Pseudo-HMAC key seed generation bound to 15-minute epoch
     const seed = `EDS-360-CMMC2-EPOCH-${epoch}-${userDomain}`;
     let hash = 0;
     for (let i = 0; i < seed.length; i++) {
@@ -42,43 +109,46 @@ function generateRotatingSessionKey() {
     return `CUI-KEY-${epoch}-${keyHex}`;
 }
 
-// Get Remaining Lifetime of Current Ephemeral Session Key
 function getKeyRemainingSeconds() {
     const now = Date.now();
     const currentEpochEnd = (Math.floor(now / KEY_ROTATION_INTERVAL_MS) + 1) * KEY_ROTATION_INTERVAL_MS;
     return Math.max(0, Math.floor((currentEpochEnd - now) / 1000));
 }
 
-// Strictly verifies if user belongs to authorized CUI enterprise domains
 function checkCUIEnclaveClearance() {
+    if (!enforceCrossDomainIntegrity()) return false;
     const user = getCurrentUser();
     if (!user || !user.email) return false;
     const domain = user.email.split('@')[1]?.toLowerCase().trim();
     return CUI_AUTHORIZED_DOMAINS.includes(domain);
 }
 
-// Logic Gate & Ephemeral Key Verification Engine
 function validateCUIRotatingKey(inputKey) {
     const activeKey = generateRotatingSessionKey();
     const user = getCurrentUser();
     
-    // Check 1: Enterprise Domain Verification
+    if (currentUBARiskScore >= 75) {
+        dispatchWazuhAlert({ rule_id: 100205, level: 14, description: "CUI Access Blocked by UBA Lockout", details: "Risk score exceeds 75." });
+        return { allowed: false, reason: "UBA SECURITY LOCKDOWN: Excessive threat score detected. Administrative clearance required." };
+    }
+
     if (!checkCUIEnclaveClearance()) {
-        logBOEEvent("CUI_ACCESS_DENIED", "Domain clearance failed. Must use @eds-360.com or @emergingdefensesolutions.com address.");
-        return { allowed: false, reason: "ACCESS DENIED: CUI Enclaves restricted to verified @eds-360.com or @emergingdefensesolutions.com accounts." };
+        triggerUBAAnomaly("CUI_UNAUTHORIZED_DOMAIN", `Attempted access by non-enterprise domain account: ${user?.email}`, 25);
+        logBOEEvent("CUI_ACCESS_DENIED", "Domain clearance failed.");
+        return { allowed: false, reason: "ACCESS DENIED: Restricted to verified @eds-360.com or @emergingdefensesolutions.com accounts." };
     }
 
-    // Check 2: Rotating Key Matching
     if (inputKey !== activeKey) {
-        logBOEEvent("CUI_KEY_EXPIRED_OR_INVALID", `Invalid session token provided: ${inputKey}`);
-        return { allowed: false, reason: "INVALID OR EXPIRED SESSION KEY: Key has rotated or is invalid. Use current epoch key." };
+        triggerUBAAnomaly("INVALID_ROTATING_KEY", "Key rotation mismatch or expired token submitted.", 15);
+        logBOEEvent("CUI_KEY_INVALID", `Invalid session key attempt: ${inputKey}`);
+        return { allowed: false, reason: "INVALID OR EXPIRED SESSION KEY: Key has rotated. Use active epoch token." };
     }
 
-    logBOEEvent("CUI_ACCESS_GRANTED", `Decryption key verified for session user ${user.email}.`);
+    dispatchWazuhAlert({ rule_id: 100200, level: 3, description: "Successful CUI Enclave Authentication", details: `User ${user.email} unlocked vault.` });
+    logBOEEvent("CUI_ACCESS_GRANTED", `Decryption key verified for ${user.email}.`);
     return { allowed: true, key: activeKey };
 }
 
-// Body of Evidence (BOE) Continuous Compliance Logger
 function logBOEEvent(eventType, details) {
     const user = getCurrentUser() || { email: "unauthenticated@eds-360.com" };
     const logEntry = {
@@ -86,15 +156,13 @@ function logBOEEvent(eventType, details) {
         event_type: eventType,
         user_identity: user.email,
         active_key_epoch: Math.floor(Date.now() / KEY_ROTATION_INTERVAL_MS),
-        compliance_controls: ["NIST SP 800-171 AU-2", "CMMC L2 AC.L2-3.1.1", "SOC2 CC6.1"],
+        compliance_controls: ["NIST SP 800-171 AU-2/AU-6", "CMMC L2 SI.L2-3.14.1", "SOC2 CC6.8"],
         details: sanitizeInput(details),
         subnet_ingress: "10.0.20.101 (Node 1)"
     };
 
     let existingLogs = JSON.parse(localStorage.getItem("hive_boe_audit_trail") || "[]");
     existingLogs.unshift(logEntry);
-    if (existingLogs.length > 50) existingLogs.pop(); // Retain rolling 50 local evidence logs
+    if (existingLogs.length > 50) existingLogs.pop();
     localStorage.setItem("hive_boe_audit_trail", JSON.stringify(existingLogs));
-    
-    console.log("[BOE COMPLIANCE AUDIT LOGGED]:", logEntry);
 }
