@@ -9,7 +9,7 @@ let currentUBARiskScore = 12; // Baseline network threat score
 
 function getCurrentUser() {
     const userJson = localStorage.getItem("hive_user");
-    if (!userJson) return { email: "asaad.morman@eds-360.com", role: "DAS Candidate" };
+    if (!userJson) return { email: "asaad.morman@eds-360.com", role: "DAS Student" };
     return JSON.parse(userJson);
 }
 
