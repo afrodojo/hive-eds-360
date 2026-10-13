@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enterprise Hub & Wazuh SIEM Operations | EDS-360</title>
+    <title>Enterprise Hub & God's Eye Telemetry Map | EDS-360</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="assets/js/auth.js"></script>
     <style>
         body { background-color: #0b0e14; color: #c9d1d9; font-family: system-ui, sans-serif; }
         .glass-panel { background: rgba(17, 24, 39, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .node-pulse { animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
     </style>
 </head>
 <body class="p-4 md:p-8 min-h-screen flex flex-col">
@@ -20,7 +22,7 @@
             <div class="bg-gradient-to-r from-purple-600 to-blue-600 text-white font-black p-3 rounded-xl shadow-lg">EDS</div>
             <div>
                 <h1 class="text-white font-extrabold text-lg tracking-tight">Emerging Defense Solutions</h1>
-                <p class="text-xs text-gray-400">Enterprise Portal, Wazuh SIEM Telemetry & UBA Risk Radar</p>
+                <p class="text-xs text-gray-400">Enterprise Portal, Wazuh SIEM & God's Eye View Data Mapping</p>
             </div>
         </div>
 
@@ -60,17 +62,18 @@
                     <h3 class="text-white font-bold text-sm border-b border-gray-800 pb-3">🎙️ Research Broadcasts</h3>
                     <div class="bg-gray-950 p-4 rounded-xl border border-purple-900/30 space-y-2">
                         <span class="bg-purple-950 text-purple-300 text-[10px] font-mono px-2 py-0.5 rounded font-bold">Episode #04</span>
-                        <h4 class="text-xs font-bold text-white">Wazuh SIEM Ingestion & UBA Threat Radar</h4>
-                        <p class="text-[11px] text-gray-400">Automated audit trails for NIST SP 800-171 & SOC 2 Type II accreditation.</p>
+                        <h4 class="text-xs font-bold text-white">Spatial Telemetry & God's Eye Data Mapping</h4>
+                        <p class="text-[11px] text-gray-400">Visualizing CUI data flows across air-gapped subnet nodes.</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- EXECUTIVE ADMIN & SIEM ENCLAVE -->
+        <!-- EXECUTIVE ADMIN, SIEM & GOD'S EYE ENCLAVE -->
         <div id="viewAdminEnclave" class="hidden space-y-6">
             <div class="flex border-b border-gray-800 space-x-2 text-xs font-mono font-bold overflow-x-auto">
                 <button onclick="switchAdminTab('overview')" id="tab-overview" class="px-4 py-2 text-purple-400 border-b-2 border-purple-500 font-bold">Telemetry Overview</button>
+                <button onclick="switchAdminTab('godseye')" id="tab-godseye" class="px-4 py-2 text-gray-400 hover:text-white">👁️ God's Eye View Map</button>
                 <button onclick="switchAdminTab('wazuh')" id="tab-wazuh" class="px-4 py-2 text-gray-400 hover:text-white">🛡️ Wazuh SIEM & UBA Radar</button>
                 <button onclick="switchAdminTab('boe')" id="tab-boe" class="px-4 py-2 text-gray-400 hover:text-white">📜 Body of Evidence (BOE)</button>
                 <button onclick="switchAdminTab('cui')" id="tab-cui" class="px-4 py-2 text-gray-400 hover:text-white">🔒 Domain-Gated CUI Vault</button>
@@ -96,10 +99,84 @@
                 </section>
             </div>
 
+            <!-- GOD'S EYE VIEW TELEMETRY & DATA FLOW MAP -->
+            <div id="adminTabGodseye" class="hidden space-y-6">
+                <div class="glass-panel p-6 rounded-2xl space-y-4">
+                    <div class="flex justify-between items-center border-b border-gray-800 pb-3">
+                        <div>
+                            <span class="bg-cyan-950 text-cyan-300 border border-cyan-800/50 text-[10px] font-mono px-2.5 py-0.5 rounded uppercase font-bold">God's Eye View Spatial Radar</span>
+                            <h3 class="text-base font-bold text-white mt-1">Subnet Data Flow Mapping & Overlay Telemetry</h3>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span class="bg-emerald-950 text-emerald-400 border border-emerald-800/50 text-[11px] font-mono px-2.5 py-1 rounded">Live Packet Stream</span>
+                            <a href="https://github.com/bilawalsidhu/gods-eye-view" target="_blank" class="bg-gray-800 hover:bg-gray-700 text-white text-xs px-3 py-1 rounded-lg border border-gray-700">Repo: gods-eye-view</a>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Canvas Diagram -->
+                    <div class="relative bg-gray-950 border border-gray-800 rounded-xl p-6 h-96 flex flex-col justify-between overflow-hidden">
+                        
+                        <!-- Canvas Header Info -->
+                        <div class="flex justify-between text-xs font-mono z-10">
+                            <span class="text-cyan-400 font-bold">🌐 Subnet Ingress Gate: 10.0.20.101</span>
+                            <span id="dataFlowRate" class="text-emerald-400">Data Throughput: 42.8 MB/s (TLS 1.3 / AES-256)</span>
+                        </div>
+
+                        <!-- Graphical Subnet Nodes Overlay -->
+                        <div class="grid grid-cols-5 gap-4 my-auto relative z-10 text-center font-mono">
+                            <!-- Node 0 -->
+                            <div class="p-3 bg-gray-900 border border-gray-800 rounded-xl space-y-1">
+                                <span class="w-2 h-2 rounded-full bg-emerald-500 inline-block node-pulse"></span>
+                                <strong class="text-xs text-white block">Node 0</strong>
+                                <span class="text-[10px] text-gray-400 block">Control Plane</span>
+                                <span class="text-[9px] text-purple-400">Vaultwarden</span>
+                            </div>
+
+                            <!-- Node 1 -->
+                            <div class="p-3 bg-gray-900 border border-cyan-500/50 rounded-xl space-y-1 shadow-lg shadow-cyan-950/50">
+                                <span class="w-2 h-2 rounded-full bg-cyan-400 inline-block node-pulse"></span>
+                                <strong class="text-xs text-white block">Node 1</strong>
+                                <span class="text-[10px] text-gray-400 block">Ingress Router</span>
+                                <span class="text-[9px] text-cyan-300">WireGuard GW</span>
+                            </div>
+
+                            <!-- Node 2 -->
+                            <div class="p-3 bg-gray-900 border border-purple-500/50 rounded-xl space-y-1 shadow-lg shadow-purple-950/50">
+                                <span class="w-2 h-2 rounded-full bg-purple-400 inline-block node-pulse"></span>
+                                <strong class="text-xs text-white block">Node 2</strong>
+                                <span class="text-[10px] text-gray-400 block">vLLM Inference</span>
+                                <span class="text-[9px] text-purple-300">CUDA GPU</span>
+                            </div>
+
+                            <!-- Node 3 -->
+                            <div class="p-3 bg-gray-900 border border-blue-500/50 rounded-xl space-y-1 shadow-lg shadow-blue-950/50">
+                                <span class="w-2 h-2 rounded-full bg-blue-400 inline-block node-pulse"></span>
+                                <strong class="text-xs text-white block">Node 3</strong>
+                                <span class="text-[10px] text-gray-400 block">LUKS2 Storage</span>
+                                <span class="text-[9px] text-blue-300">CUI Encrypted</span>
+                            </div>
+
+                            <!-- Node 4 -->
+                            <div class="p-3 bg-gray-900 border border-amber-500/50 rounded-xl space-y-1 shadow-lg shadow-amber-950/50">
+                                <span class="w-2 h-2 rounded-full bg-amber-400 inline-block node-pulse"></span>
+                                <strong class="text-xs text-white block">Node 4</strong>
+                                <span class="text-[10px] text-gray-400 block">FreeIPA / SIEM</span>
+                                <span class="text-[9px] text-amber-300">Wazuh Manager</span>
+                            </div>
+                        </div>
+
+                        <!-- Data Flow Live Log -->
+                        <div class="bg-gray-900/90 border border-gray-800 p-3 rounded-lg font-mono text-[11px] text-gray-300 flex justify-between items-center z-10">
+                            <div><span class="text-purple-400 font-bold">[ACTIVE FLOW]:</span> <span id="currentDataFlowPath">Node 1 (Ingress) ➔ Node 2 (vLLM Engine) ➔ Node 3 (LUKS2 Storage)</span></div>
+                            <span class="text-emerald-400 text-[10px]">✓ Zero-Trust WireGuard Tunnel Verified</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- WAZUH SIEM & UBA DASHBOARD -->
             <div id="adminTabWazuh" class="hidden space-y-6">
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <!-- UBA Threat Radar -->
                     <div class="glass-panel p-6 rounded-2xl space-y-4">
                         <span class="bg-purple-950 text-purple-300 border border-purple-800/50 text-[10px] font-mono px-2.5 py-0.5 rounded uppercase font-bold">User Behavior Analytics</span>
                         <h3 class="text-base font-bold text-white">Network UBA Threat Score</h3>
@@ -107,14 +184,8 @@
                             <div id="ubaScoreGauge" class="text-5xl font-extrabold text-emerald-400 font-mono">12 / 100</div>
                             <span class="text-xs text-gray-400 block mt-2">Threat Status: Low Risk (Nominal)</span>
                         </div>
-                        <div class="p-3 bg-gray-950 border border-gray-800 rounded-xl text-[11px] text-gray-400 font-mono space-y-1">
-                            <div>• Cross-Domain Violations: <strong class="text-emerald-400">0 Detected</strong></div>
-                            <div>• Replay / Injection Attempts: <strong class="text-emerald-400">0 Blocked</strong></div>
-                            <div>• Threshold Action: <strong class="text-purple-400">Auto-Lockdown at Score >= 75</strong></div>
-                        </div>
                     </div>
 
-                    <!-- Wazuh SIEM Live Alert Stream -->
                     <div class="lg:col-span-2 glass-panel p-6 rounded-2xl space-y-4">
                         <div class="flex justify-between items-center border-b border-gray-800 pb-3">
                             <h3 class="text-white font-bold text-sm">🛡️ Wazuh SIEM Agent Live Event Stream</h3>
@@ -170,16 +241,6 @@
                         <div class="p-3 bg-emerald-950/40 border border-emerald-800/50 rounded-xl text-xs text-emerald-300 font-mono">
                             ✓ Rotating epoch key verified. CUI payload decrypted under NIST SP 800-171 AC.L2-3.1.1 controls.
                         </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono">
-                            <div class="p-4 bg-gray-950 border border-gray-800 rounded-xl space-y-1">
-                                <strong class="text-white block">📄 DoD CMMC L2 System Security Plan (SSP)</strong>
-                                <p class="text-gray-400 text-[11px]">Hardware security matrix for 10.0.20.0/24 physical subnet.</p>
-                            </div>
-                            <div class="p-4 bg-gray-950 border border-gray-800 rounded-xl space-y-1">
-                                <strong class="text-white block">📄 AFWERX & DARPA BOE Grant Allocations</strong>
-                                <p class="text-gray-400 text-[11px]">Validated proposal budgets and joint partner agreements.</p>
-                            </div>
-                        </div>
                     </div>
                 </section>
             </div>
@@ -202,51 +263,6 @@
         setInterval(updateKeyDisplay, 1000);
         updateKeyDisplay();
 
-        function renderWazuhStream() {
-            const container = document.getElementById("wazuhLogStream");
-            const gauge = document.getElementById("ubaScoreGauge");
-            if (gauge) gauge.innerText = `${currentUBARiskScore} / 100`;
-
-            const events = JSON.parse(localStorage.getItem("hive_wazuh_siem_events") || "[]");
-            if (events.length === 0) {
-                container.innerHTML = "<div>[Wazuh SIEM Agent]: Listening on 10.0.20.104... No security anomalies.</div>";
-                return;
-            }
-            container.innerHTML = events.map(e => `
-                <div class="border-b border-gray-800 pb-1 text-[11px]">
-                    <span class="text-gray-500">[${e.timestamp}]</span>
-                    <strong class="${e.rule.level >= 10 ? 'text-red-400' : 'text-purple-400'}">[Rule ${e.rule.id} | Lvl ${e.rule.level}]</strong>
-                    <span class="text-gray-300">${e.rule.description} - User: ${e.data.srcuser}</span>
-                </div>
-            `).join('');
-        }
-
-        function renderBOELogs() {
-            const container = document.getElementById("boeLogStream");
-            const logs = JSON.parse(localStorage.getItem("hive_boe_audit_trail") || "[]");
-            if (logs.length === 0) {
-                container.innerHTML = "<div>[BOE Engine]: Initializing live compliance stream... No security violations.</div>";
-                return;
-            }
-            container.innerHTML = logs.map(l => `
-                <div class="border-b border-gray-800 pb-1">
-                    <span class="text-gray-500">[${l.timestamp}]</span>
-                    <strong class="text-purple-400">[${l.event_type}]</strong>
-                    <span class="text-gray-300">User: ${l.user_identity} | ${l.details}</span>
-                </div>
-            `).join('');
-        }
-
-        function exportBOEArtifacts() {
-            const logs = localStorage.getItem("hive_boe_audit_trail") || "[]";
-            const blob = new Blob([logs], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `BOE_ATO_Audit_Evidence_${new Date().toISOString().slice(0,10)}.json`;
-            a.click();
-        }
-
         function switchPortalMode(mode) {
             const memberView = document.getElementById("viewMemberHub");
             const adminView = document.getElementById("viewAdminEnclave");
@@ -260,7 +276,7 @@
         }
 
         function switchAdminTab(tabId) {
-            ['overview', 'wazuh', 'boe', 'cui'].forEach(t => {
+            ['overview', 'godseye', 'wazuh', 'boe', 'cui'].forEach(t => {
                 const el = document.getElementById('adminTab' + t.charAt(0).toUpperCase() + t.slice(1));
                 const btn = document.getElementById('tab-' + t);
                 if (el) el.classList.add('hidden');
