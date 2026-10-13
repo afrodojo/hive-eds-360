@@ -1,7 +1,11 @@
-﻿[
-  {
-    "event": "DISCOUNT_ENGINE_ACTIVE",
-    "supported_rules": ["EDU_EMAIL_ONLY", "REDACTED_VET_DOC", "SCHOOL_CODE", "APPROVAL_QUEUE"],
-    "timestamp": "2026-10-11T13:53:00Z"
-  }
-]
+﻿{
+    "devsecops_policy":  "STRICT_FIPS_140_3",
+    "incident_response":  {
+                              "evidence_preservation_target":  "10.0.20.103:/mnt/cui_vault/forensics",
+                              "wazuh_siem_node":  "10.0.20.104",
+                              "auto_quarantine_uba_threshold":  75
+                          },
+    "sbom_scanning":  true,
+    "dual_signoff_required":  true,
+    "gpg_enforcement":  true
+}
