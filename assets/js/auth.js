@@ -244,3 +244,91 @@ function clearPartnerSimulations() {
     currentUBARiskScore = 12; // Reset to baseline
     logBOEEvent("PARTNER_SIMULATION_RESET", "Reset all logical partner topology simulations.");
 }
+
+// Open Collaborative Research, Custom Machines, Model Hub & Script Engine
+let registeredModels = JSON.parse(localStorage.getItem("hive_collaborative_models") || "[]");
+let registeredCustomMachines = JSON.parse(localStorage.getItem("hive_custom_machines") || "[]");
+let registeredScripts = JSON.parse(localStorage.getItem("hive_uploaded_scripts") || "[]");
+let registeredExternalRepos = JSON.parse(localStorage.getItem("hive_external_repos") || "[]");
+
+// Baseline Active Models
+if (registeredModels.length === 0) {
+    registeredModels = [
+        { id: "MOD-001", name: "Qwen2.5-Coder-7B-Instruct", framework: "vLLM", quantization: "AWQ INT4", vram_gb: 5.8, status: "Active Primary" },
+        { id: "MOD-002", name: "DeepSeek-R1-Distill-Qwen-14B", framework: "vLLM", quantization: "FP8", vram_gb: 14.2, status: "Standby" },
+        { id: "MOD-003", name: "Llama-3.1-70B-Instruct", framework: "vLLM Engine (Node 2 Cluster)", quantization: "GGUF Q4_K_M", vram_gb: 42.0, status: "Standby" }
+    ];
+    localStorage.setItem("hive_collaborative_models", JSON.stringify(registeredModels));
+}
+
+function getRegisteredModels() { return registeredModels; }
+function getCustomMachines() { return registeredCustomMachines; }
+function getRegisteredScripts() { return registeredScripts; }
+function getExternalRepos() { return registeredExternalRepos; }
+
+function registerCustomModel(modelData) {
+    const user = getCurrentUser();
+    const entry = {
+        id: "MOD-" + Date.now().toString().slice(-4),
+        name: sanitizeInput(modelData.name),
+        framework: sanitizeInput(modelData.framework || "vLLM / Ollama"),
+        quantization: sanitizeInput(modelData.quantization || "FP16"),
+        vram_gb: parseFloat(modelData.vram_gb) || 8.0,
+        added_by: user.email,
+        status: "Registered / Standby"
+    };
+    registeredModels.unshift(entry);
+    localStorage.setItem("hive_collaborative_models", JSON.stringify(registeredModels));
+    logBOEEvent("MODEL_REGISTRATION", `Registered model ${entry.name} (${entry.quantization}) by ${user.email}.`);
+    return entry;
+}
+
+function registerCustomMachine(machineData) {
+    const user = getCurrentUser();
+    const entry = {
+        id: "MACH-" + Date.now().toString().slice(-4),
+        name: sanitizeInput(machineData.name),
+        arch: sanitizeInput(machineData.arch || "x86_64 / ARM64"),
+        ip_address: sanitizeInput(machineData.ip_address),
+        gpu_spec: sanitizeInput(machineData.gpu_spec || "NVIDIA RTX 4090 / Apple M3 Max"),
+        added_by: user.email,
+        timestamp: new Date().toISOString()
+    };
+    registeredCustomMachines.unshift(entry);
+    localStorage.setItem("hive_custom_machines", JSON.stringify(registeredCustomMachines));
+    logBOEEvent("CUSTOM_MACHINE_ADDED", `Registered hardware node ${entry.name} (${entry.ip_address}) by ${user.email}.`);
+    return entry;
+}
+
+function registerCodeScript(scriptData) {
+    const user = getCurrentUser();
+    const entry = {
+        id: "SCR-" + Date.now().toString().slice(-4),
+        filename: sanitizeInput(scriptData.filename),
+        language: sanitizeInput(scriptData.language),
+        purpose: sanitizeInput(scriptData.purpose),
+        code_body: sanitizeInput(scriptData.code_body),
+        uploaded_by: user.email,
+        timestamp: new Date().toISOString()
+    };
+    registeredScripts.unshift(entry);
+    localStorage.setItem("hive_uploaded_scripts", JSON.stringify(registeredScripts));
+    logBOEEvent("SCRIPT_UPLOAD", `Uploaded ${entry.language} script '${entry.filename}' by ${user.email}.`);
+    return entry;
+}
+
+function registerExternalRepo(repoData) {
+    const user = getCurrentUser();
+    const entry = {
+        id: "LINK-" + Date.now().toString().slice(-4),
+        title: sanitizeInput(repoData.title),
+        type: sanitizeInput(repoData.type), // GitHub, Gemini Notebook, HuggingFace, arXiv
+        url: sanitizeInput(repoData.url),
+        added_by: user.email,
+        timestamp: new Date().toISOString()
+    };
+    registeredExternalRepos.unshift(entry);
+    localStorage.setItem("hive_external_repos", JSON.stringify(registeredExternalRepos));
+    logBOEEvent("EXTERNAL_REPO_LINKED", `Linked ${entry.type} resource '${entry.title}' by ${user.email}.`);
+    return entry;
+}
