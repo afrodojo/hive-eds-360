@@ -183,3 +183,64 @@ function interceptRoute(routeId) {
     logBOEEvent("GEOPOLITICAL_ROUTE_INTERCEPT", `Quarantined ingress route ${route.id} from ${route.origin} (${route.ip}).`);
     return { success: true, message: `Route ${route.id} (${route.origin}) quarantined. SIEM alert logged.` };
 }
+
+// Academic & Research Partner System Topology Simulation Engine
+let partnerSimulatedSystems = JSON.parse(localStorage.getItem("hive_partner_systems") || "[]");
+
+function getPartnerSimulatedSystems() {
+    return partnerSimulatedSystems;
+}
+
+function registerPartnerSystem(systemData) {
+    const user = getCurrentUser();
+    
+    // Calculate telemetry & load impacts
+    const loadGflops = parseFloat(systemData.load_gflops) || 10;
+    const dataClass = systemData.classification || "CUI";
+    
+    const latencyImpactMs = Math.round(loadGflops * 1.4);
+    const ioImpactIops = Math.round(loadGflops * 45);
+    const siemEpsIncrease = Math.round(loadGflops * 8.2);
+    const riskDelta = dataClass === "CUI" ? 12 : (dataClass === "Secret / Highly Sensitive" ? 28 : 2);
+
+    const systemEntry = {
+        id: "PARTNER-SYS-" + Date.now().toString().slice(-4),
+        timestamp: new Date().toISOString(),
+        institution: sanitizeInput(systemData.institution || "Partner Institution"),
+        submitter: user.email,
+        name: sanitizeInput(systemData.name),
+        ip_range: sanitizeInput(systemData.ip_range),
+        protocol: sanitizeInput(systemData.protocol),
+        classification: dataClass,
+        metrics: {
+            load_gflops: loadGflops,
+            latency_impact_ms: latencyImpactMs,
+            io_impact_iops: ioImpactIops,
+            siem_eps_surge: siemEpsIncrease,
+            risk_score_delta: riskDelta
+        }
+    };
+
+    partnerSimulatedSystems.unshift(systemEntry);
+    localStorage.setItem("hive_partner_systems", JSON.stringify(partnerSimulatedSystems));
+
+    // Update global risk score & dispatch Wazuh alert
+    currentUBARiskScore = Math.min(100, currentUBARiskScore + riskDelta);
+    dispatchWazuhAlert({
+        rule_id: 100400,
+        level: 5,
+        description: `TOPOLOGY SIMULATION: Partner system registered by ${systemEntry.institution}`,
+        details: `System ${systemEntry.name} (${systemEntry.ip_range}). Projected latency impact: +${latencyImpactMs}ms. Risk delta: +${riskDelta}.`
+    });
+
+    logBOEEvent("PARTNER_TOPOLOGY_SIMULATION", `Added logical system ${systemEntry.name} (${systemEntry.ip_range}) from ${systemEntry.institution}.`);
+    
+    return { success: true, entry: systemEntry };
+}
+
+function clearPartnerSimulations() {
+    partnerSimulatedSystems = [];
+    localStorage.removeItem("hive_partner_systems");
+    currentUBARiskScore = 12; // Reset to baseline
+    logBOEEvent("PARTNER_SIMULATION_RESET", "Reset all logical partner topology simulations.");
+}
