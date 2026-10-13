@@ -52,48 +52,375 @@
                 <button onclick="switchAdminTab('collab')" id="tab-collab" class="px-4 py-2 text-purple-400 border-b-2 border-purple-500 font-bold">🧪 Open Research Lab & Models</button>
                 <button onclick="switchAdminTab('partner')" id="tab-partner" class="px-4 py-2 text-gray-400 hover:text-white">🏛️ Academic System Simulator</button>
                 <button onclick="switchAdminTab('godseye')" id="tab-godseye" class="px-4 py-2 text-gray-400 hover:text-white">👁️ God's Eye View Spatial Radar</button>
-                <button onclick="switchAdminTab('social')" id="tab-social" class="px-4 py-2 text-gray-400 hover:text-white">📡 Agentic Social & Marketing</button>
                 <button onclick="switchAdminTab('wazuh')" id="tab-wazuh" class="px-4 py-2 text-gray-400 hover:text-white">🛡️ Wazuh SIEM & UBA Radar</button>
                 <button onclick="switchAdminTab('boe')" id="tab-boe" class="px-4 py-2 text-gray-400 hover:text-white">📜 Body of Evidence (BOE)</button>
             </div>
 
-            <!-- Tab Panels -->
-            <div id="adminTabCollab" class="space-y-4 glass-panel p-6 rounded-2xl">
-                <h3 class="text-base font-bold text-white">🧪 Open Research Lab & Model Hot-Swapping</h3>
-                <p class="text-xs text-gray-400">Manage vLLM models (Qwen2.5-Coder, DeepSeek-R1), attached edge hardware nodes, and multi-language scripts.</p>
+            <!-- TAB 1: COLLABORATIVE RESEARCH LAB & MODELS -->
+            <div id="adminTabCollab" class="space-y-6">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- AI Models Registry -->
+                    <div class="glass-panel p-6 rounded-2xl space-y-4 bg-gray-900/80 border border-gray-800">
+                        <div class="flex justify-between items-center border-b border-gray-800 pb-3">
+                            <div>
+                                <span class="bg-purple-950 text-purple-300 border border-purple-800/50 text-[10px] font-mono px-2.5 py-0.5 rounded uppercase font-bold">Model Registry</span>
+                                <h3 class="text-sm font-bold text-white mt-1">vLLM Inference Models & Hot-Swapping</h3>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2 text-xs font-mono">
+                            <input type="text" id="modName" placeholder="Model (e.g. DeepSeek-R1)" class="bg-gray-950 border border-gray-800 text-white p-2 rounded-lg col-span-2">
+                            <input type="text" id="modFramework" placeholder="Framework (vLLM / Ollama)" class="bg-gray-950 border border-gray-800 text-white p-2 rounded-lg">
+                            <input type="text" id="modQuant" placeholder="Quant (AWQ / FP8 / GGUF)" class="bg-gray-950 border border-gray-800 text-white p-2 rounded-lg">
+                            <input type="number" id="modVram" placeholder="VRAM (GB)" class="bg-gray-950 border border-gray-800 text-white p-2 rounded-lg col-span-2">
+                            <button onclick="handleAddModel()" class="bg-purple-600 hover:bg-purple-500 text-white font-bold py-2 rounded-lg col-span-2">
+                                + Register Neural Model
+                            </button>
+                        </div>
+                        <div id="modelRegistryList" class="space-y-2 h-44 overflow-y-auto pt-2"></div>
+                    </div>
+
+                    <!-- Custom Machines & Hardware Nodes -->
+                    <div class="glass-panel p-6 rounded-2xl space-y-4 bg-gray-900/80 border border-gray-800">
+                        <div class="flex justify-between items-center border-b border-gray-800 pb-3">
+                            <div>
+                                <span class="bg-blue-950 text-blue-300 border border-blue-800/50 text-[10px] font-mono px-2.5 py-0.5 rounded uppercase font-bold">Hardware Nodes</span>
+                                <h3 class="text-sm font-bold text-white mt-1">Custom Machines & Edge Compute</h3>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2 text-xs font-mono">
+                            <input type="text" id="machName" placeholder="Machine Name (e.g. Workstation 02)" class="bg-gray-950 border border-gray-800 text-white p-2 rounded-lg">
+                            <input type="text" id="machIp" placeholder="Subnet IP (e.g. 10.0.20.120)" class="bg-gray-950 border border-gray-800 text-white p-2 rounded-lg">
+                            <input type="text" id="machGpu" placeholder="GPU Spec (e.g. 2x RTX 4090)" class="bg-gray-950 border border-gray-800 text-white p-2 rounded-lg col-span-2">
+                            <button onclick="handleAddMachine()" class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 rounded-lg col-span-2">
+                                + Register Hardware Node
+                            </button>
+                        </div>
+                        <div id="customMachineList" class="space-y-2 h-44 overflow-y-auto pt-2"></div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Script Code Workbench -->
+                    <div class="glass-panel p-6 rounded-2xl space-y-4 bg-gray-900/80 border border-gray-800">
+                        <div class="border-b border-gray-800 pb-3">
+                            <span class="bg-emerald-950 text-emerald-300 border border-emerald-800/50 text-[10px] font-mono px-2.5 py-0.5 rounded uppercase font-bold">Multi-Language Code Workbench</span>
+                            <h3 class="text-sm font-bold text-white mt-1">Upload & Execute Custom Scripts</h3>
+                        </div>
+                        <div class="space-y-2 text-xs font-mono">
+                            <div class="grid grid-cols-2 gap-2">
+                                <input type="text" id="scriptFilename" placeholder="Script Name (e.g. rag_eval.py)" class="bg-gray-950 border border-gray-800 text-white p-2 rounded-lg">
+                                <select id="scriptLang" class="bg-gray-950 border border-gray-800 text-white p-2 rounded-lg">
+                                    <option value="Python">Python (.py)</option>
+                                    <option value="Bash">Bash (.sh)</option>
+                                    <option value="Rust">Rust (.rs)</option>
+                                    <option value="C++">C++ (.cpp)</option>
+                                    <option value="PowerShell">PowerShell (.ps1)</option>
+                                </select>
+                            </div>
+                            <input type="text" id="scriptPurpose" placeholder="Purpose (e.g. NIST SP 800-171 AU-6 audit parse)" class="w-full bg-gray-950 border border-gray-800 text-white p-2 rounded-lg">
+                            <textarea id="scriptBody" placeholder="# Paste code snippet here..." class="w-full bg-gray-950 border border-gray-800 text-xs text-white p-3 rounded-xl focus:outline-none h-28 font-mono resize-none"></textarea>
+                            <button onclick="handleScriptUpload()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 rounded-xl">
+                                📤 Upload Script to Enclave Vault
+                            </button>
+                        </div>
+                        <div id="scriptRegistryList" class="space-y-2 h-36 overflow-y-auto pt-2"></div>
+                    </div>
+
+                    <!-- Gemini Notebook & Knowledge Hub -->
+                    <div class="glass-panel p-6 rounded-2xl space-y-4 bg-gray-900/80 border border-gray-800">
+                        <div class="border-b border-gray-800 pb-3">
+                            <span class="bg-amber-950 text-amber-300 border border-amber-800/50 text-[10px] font-mono px-2.5 py-0.5 rounded uppercase font-bold">Research Knowledge Hub</span>
+                            <h3 class="text-sm font-bold text-white mt-1">Link GitHub Repos & Gemini Notebooks</h3>
+                        </div>
+                        <div class="space-y-2 text-xs font-mono">
+                            <div class="grid grid-cols-2 gap-2">
+                                <input type="text" id="repoTitle" placeholder="Title (e.g. EDS Master Research)" class="bg-gray-950 border border-gray-800 text-white p-2 rounded-lg">
+                                <select id="repoType" class="bg-gray-950 border border-gray-800 text-white p-2 rounded-lg">
+                                    <option value="Gemini Notebook">Gemini Notebook</option>
+                                    <option value="GitHub Repository">GitHub Repository</option>
+                                    <option value="HuggingFace Hub">HuggingFace Hub</option>
+                                </select>
+                            </div>
+                            <input type="text" id="repoUrl" placeholder="URL (e.g. https://github.com/afrodojo/hive-eds-360)" class="w-full bg-gray-950 border border-gray-800 text-white p-2 rounded-lg">
+                            <button onclick="handleRepoLink()" class="w-full bg-amber-600 hover:bg-amber-500 text-white font-bold py-2 rounded-xl">
+                                🔗 Attach Knowledge Resource
+                            </button>
+                        </div>
+                        <div id="repoRegistryList" class="space-y-2 h-44 overflow-y-auto pt-2"></div>
+                    </div>
+                </div>
             </div>
 
-            <div id="adminTabPartner" class="hidden space-y-4 glass-panel p-6 rounded-2xl">
-                <h3 class="text-base font-bold text-white">🏛️ Academic Partner System Simulator</h3>
-                <p class="text-xs text-gray-400">Simulate custom logical subnets, latency impacts, and vault IOPS.</p>
+            <!-- TAB 2: ACADEMIC SYSTEM SIMULATOR -->
+            <div id="adminTabPartner" class="hidden space-y-6">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="glass-panel p-6 rounded-2xl space-y-4 bg-gray-900/80 border border-gray-800">
+                        <div class="border-b border-gray-800 pb-3">
+                            <span class="bg-purple-950 text-purple-300 border border-purple-800/50 text-[10px] font-mono px-2.5 py-0.5 rounded uppercase font-bold">Research Co-PI Console</span>
+                            <h3 class="text-sm font-bold text-white mt-1">Inject Logical System or Route</h3>
+                        </div>
+                        <div class="space-y-3 text-xs font-mono">
+                            <div>
+                                <label class="text-gray-400 block mb-1">Institution / Agency</label>
+                                <input type="text" id="simInstitution" placeholder="e.g., Johns Hopkins APL" class="w-full bg-gray-950 border border-gray-800 text-white p-2.5 rounded-xl">
+                            </div>
+                            <div>
+                                <label class="text-gray-400 block mb-1">System / Node Name</label>
+                                <input type="text" id="simSysName" placeholder="e.g., Edge GPU Cluster Alpha" class="w-full bg-gray-950 border border-gray-800 text-white p-2.5 rounded-xl">
+                            </div>
+                            <div>
+                                <label class="text-gray-400 block mb-1">Target Logical IP Subnet</label>
+                                <input type="text" id="simIpRange" placeholder="e.g., 10.0.20.150/28" class="w-full bg-gray-950 border border-gray-800 text-white p-2.5 rounded-xl">
+                            </div>
+                            <div>
+                                <label class="text-gray-400 block mb-1">Compute Load (GFLOPs)</label>
+                                <input type="number" id="simLoadGflops" value="25" class="w-full bg-gray-950 border border-gray-800 text-white p-2.5 rounded-xl">
+                            </div>
+                            <button onclick="handlePartnerSystemSubmit()" class="w-full bg-purple-600 hover:bg-purple-500 text-white font-bold py-3 rounded-xl transition shadow-lg mt-2">
+                                ⚡ Simulate Topology Insertion
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-2 glass-panel p-6 rounded-2xl space-y-4 bg-gray-900/80 border border-gray-800">
+                        <div class="flex justify-between items-center border-b border-gray-800 pb-3">
+                            <div>
+                                <h3 class="text-sm font-bold text-white">📡 Simulated Network Capacity & Impact Matrix</h3>
+                                <p class="text-xs text-gray-400">Calculates vLLM queue latency, LUKS2 vault IOPS, and SIEM event density.</p>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 font-mono text-xs">
+                            <div class="p-3 bg-gray-950 border border-gray-800 rounded-xl space-y-1">
+                                <span class="text-gray-500 block">vLLM Engine Latency</span>
+                                <strong id="metricLatency" class="text-purple-400 text-lg">114 ms</strong>
+                            </div>
+                            <div class="p-3 bg-gray-950 border border-gray-800 rounded-xl space-y-1">
+                                <span class="text-gray-500 block">LUKS2 Vault I/O</span>
+                                <strong id="metricIops" class="text-blue-400 text-lg">1,125 IOPS</strong>
+                            </div>
+                            <div class="p-3 bg-gray-950 border border-gray-800 rounded-xl space-y-1">
+                                <span class="text-gray-500 block">SIEM Ingestion Density</span>
+                                <strong id="metricSiemEps" class="text-amber-400 text-lg">205 EPS</strong>
+                            </div>
+                        </div>
+                        <div id="partnerSystemsList" class="space-y-2 h-64 overflow-y-auto pt-2"></div>
+                    </div>
+                </div>
             </div>
 
-            <div id="adminTabGodseye" class="hidden space-y-4 glass-panel p-6 rounded-2xl">
-                <h3 class="text-base font-bold text-white">👁️ God's Eye Spatial Radar</h3>
-                <p class="text-xs text-gray-400">Live geopolitical network route tracking and intercept controls.</p>
+            <!-- TAB 3: GOD'S EYE VIEW GEOPOLITICAL SPATIAL RADAR -->
+            <div id="adminTabGodseye" class="hidden space-y-6">
+                <div class="glass-panel p-6 rounded-2xl space-y-4">
+                    <div class="flex justify-between items-center border-b border-gray-800 pb-3">
+                        <div>
+                            <span class="bg-cyan-950 text-cyan-300 border border-cyan-800/50 text-[10px] font-mono px-2.5 py-0.5 rounded uppercase font-bold">God's Eye View Spatial Radar</span>
+                            <h3 class="text-base font-bold text-white mt-1">Global Network Network Egress & Country Egress Telemetry</h3>
+                        </div>
+                        <span class="text-xs text-emerald-400 font-mono">Live Ingress Monitoring Active</span>
+                    </div>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4" id="geopoliticalRouteStream"></div>
+                </div>
             </div>
 
-            <div id="adminTabSocial" class="hidden space-y-4 glass-panel p-6 rounded-2xl">
-                <h3 class="text-base font-bold text-white">📡 Agentic Social & Marketing Engine</h3>
-                <p class="text-xs text-gray-400">Information theory-driven campaign synthesizer.</p>
+            <!-- TAB 4: WAZUH SIEM & UBA RADAR -->
+            <div id="adminTabWazuh" class="hidden space-y-6">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="glass-panel p-6 rounded-2xl space-y-4">
+                        <span class="bg-purple-950 text-purple-300 border border-purple-800/50 text-[10px] font-mono px-2.5 py-0.5 rounded uppercase font-bold">User Behavior Analytics</span>
+                        <h3 class="text-base font-bold text-white">Network UBA Threat Score</h3>
+                        <div class="text-center py-6">
+                            <div id="ubaScoreGauge" class="text-5xl font-extrabold text-amber-400 font-mono">38 / 100</div>
+                            <span class="text-xs text-gray-400 block mt-2">Threat Status: Elevated Ingress Activity</span>
+                        </div>
+                    </div>
+                    <div class="lg:col-span-2 glass-panel p-6 rounded-2xl space-y-4">
+                        <div class="flex justify-between items-center border-b border-gray-800 pb-3">
+                            <h3 class="text-white font-bold text-sm">🛡️ Wazuh SIEM Agent Live Event Stream</h3>
+                            <span class="text-xs text-emerald-400 font-mono">Node 4 Manager: 10.0.20.104</span>
+                        </div>
+                        <div id="wazuhLogStream" class="bg-gray-950 border border-gray-800 p-4 rounded-xl font-mono text-xs text-gray-300 h-64 overflow-y-auto space-y-2"></div>
+                    </div>
+                </div>
             </div>
 
-            <div id="adminTabWazuh" class="hidden space-y-4 glass-panel p-6 rounded-2xl">
-                <h3 class="text-base font-bold text-white">🛡️ Wazuh SIEM & UBA Radar</h3>
-                <p class="text-xs text-gray-400">Real-time log ingestion stream and UBA risk scores.</p>
+            <!-- TAB 5: BODY OF EVIDENCE (BOE) CONTINUOUS AUDIT TRAIL -->
+            <div id="adminTabBoe" class="hidden space-y-4">
+                <div class="glass-panel p-6 rounded-2xl space-y-4">
+                    <div class="flex justify-between items-center border-b border-gray-800 pb-3">
+                        <h3 class="text-base font-bold text-white">Body of Evidence (BOE) Continuous Audit Trail</h3>
+                    </div>
+                    <div id="boeLogStream" class="bg-gray-950 border border-gray-800 p-4 rounded-xl font-mono text-xs text-emerald-400 h-64 overflow-y-auto space-y-2"></div>
+                </div>
             </div>
 
-            <div id="adminTabBoe" class="hidden space-y-4 glass-panel p-6 rounded-2xl">
-                <h3 class="text-base font-bold text-white">📜 Body of Evidence Audit Trail</h3>
-                <p class="text-xs text-gray-400">NIST SP 800-171 & CMMC Level 2 compliant event trail.</p>
-            </div>
         </div>
 
     </main>
 
     <script>
+        function handleAddModel() {
+            const name = document.getElementById("modName").value.trim();
+            const framework = document.getElementById("modFramework").value.trim();
+            const quantization = document.getElementById("modQuant").value.trim();
+            const vram_gb = document.getElementById("modVram").value;
+            if (!name) return;
+            registerCustomModel({ name, framework, quantization, vram_gb });
+            renderCollaborativeLab();
+            document.getElementById("modName").value = "";
+        }
+
+        function handleAddMachine() {
+            const name = document.getElementById("machName").value.trim();
+            const ip_address = document.getElementById("machIp").value.trim();
+            const gpu_spec = document.getElementById("machGpu").value.trim();
+            if (!name || !ip_address) return;
+            registerCustomMachine({ name, ip_address, gpu_spec });
+            renderCollaborativeLab();
+            document.getElementById("machName").value = "";
+            document.getElementById("machIp").value = "";
+        }
+
+        function handleScriptUpload() {
+            const filename = document.getElementById("scriptFilename").value.trim();
+            const language = document.getElementById("scriptLang").value;
+            const purpose = document.getElementById("scriptPurpose").value.trim();
+            const code_body = document.getElementById("scriptBody").value.trim();
+            if (!filename || !code_body) return;
+            registerCodeScript({ filename, language, purpose, code_body });
+            renderCollaborativeLab();
+            document.getElementById("scriptFilename").value = "";
+            document.getElementById("scriptBody").value = "";
+        }
+
+        function handleRepoLink() {
+            const title = document.getElementById("repoTitle").value.trim();
+            const type = document.getElementById("repoType").value;
+            const url = document.getElementById("repoUrl").value.trim();
+            if (!title || !url) return;
+            registerExternalRepo({ title, type, url });
+            renderCollaborativeLab();
+            document.getElementById("repoTitle").value = "";
+            document.getElementById("repoUrl").value = "";
+        }
+
+        function renderCollaborativeLab() {
+            const models = getRegisteredModels();
+            const modContainer = document.getElementById("modelRegistryList");
+            if (modContainer) {
+                modContainer.innerHTML = models.map(m => `
+                    <div class="p-2.5 bg-gray-950 border border-purple-900/40 rounded-xl font-mono text-xs flex justify-between items-center">
+                        <div>
+                            <strong class="text-white block">${m.name}</strong>
+                            <span class="text-[10px] text-gray-400">${m.framework} • ${m.quantization} (${m.vram_gb} GB VRAM)</span>
+                        </div>
+                        <span class="text-[10px] bg-purple-950 text-purple-300 border border-purple-800 px-2 py-0.5 rounded font-bold">${m.status}</span>
+                    </div>
+                `).join('');
+            }
+
+            const machines = getCustomMachines();
+            const machContainer = document.getElementById("customMachineList");
+            if (machContainer) {
+                machContainer.innerHTML = machines.length === 0 ? "<p class='text-gray-500 font-mono text-xs p-2'>No custom hardware nodes attached.</p>" : machines.map(mc => `
+                    <div class="p-2.5 bg-gray-950 border border-blue-900/40 rounded-xl font-mono text-xs flex justify-between items-center">
+                        <div>
+                            <strong class="text-white block">${mc.name} (${mc.ip_address})</strong>
+                            <span class="text-[10px] text-gray-400">${mc.gpu_spec}</span>
+                        </div>
+                        <span class="text-[10px] bg-blue-950 text-blue-300 border border-blue-800 px-2 py-0.5 rounded font-bold">Online</span>
+                    </div>
+                `).join('');
+            }
+
+            const scripts = getRegisteredScripts();
+            const scriptContainer = document.getElementById("scriptRegistryList");
+            if (scriptContainer) {
+                scriptContainer.innerHTML = scripts.length === 0 ? "<p class='text-gray-500 font-mono text-xs p-2'>No scripts uploaded.</p>" : scripts.map(sc => `
+                    <div class="p-2.5 bg-gray-950 border border-emerald-900/40 rounded-xl font-mono text-xs space-y-1">
+                        <div class="flex justify-between text-emerald-300">
+                            <strong>📄 ${sc.filename} (${sc.language})</strong>
+                            <span class="text-[10px] text-gray-500">${sc.uploaded_by}</span>
+                        </div>
+                        <p class="text-[10px] text-gray-400">${sc.purpose}</p>
+                    </div>
+                `).join('');
+            }
+
+            const repos = getExternalRepos();
+            const repoContainer = document.getElementById("repoRegistryList");
+            if (repoContainer) {
+                repoContainer.innerHTML = repos.length === 0 ? "<p class='text-gray-500 font-mono text-xs p-2'>No external knowledge sources attached.</p>" : repos.map(r => `
+                    <div class="p-2.5 bg-gray-950 border border-amber-900/40 rounded-xl font-mono text-xs flex justify-between items-center">
+                        <div>
+                            <strong class="text-amber-300 block">📌 ${r.title}</strong>
+                            <a href="${r.url}" target="_blank" class="text-[10px] text-cyan-400 underline truncate block max-w-xs">${r.url}</a>
+                        </div>
+                        <span class="text-[10px] bg-amber-950 text-amber-300 border border-amber-800 px-2 py-0.5 rounded font-bold">${r.type}</span>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function renderGeopoliticalRoutes() {
+            if (typeof getGlobalRoutes !== 'function') return;
+            const routes = getGlobalRoutes();
+            const container = document.getElementById("geopoliticalRouteStream");
+            if (!container) return;
+            container.innerHTML = "";
+
+            routes.forEach(r => {
+                const threatBg = r.threat === "High Risk" ? "border-red-900/60 bg-red-950/20" : (r.threat === "Suspicious" ? "border-amber-900/60 bg-amber-950/20" : "border-gray-800 bg-gray-950");
+                const badgeBg = r.threat === "High Risk" ? "bg-red-950 text-red-400 border-red-800" : (r.threat === "Suspicious" ? "bg-amber-950 text-amber-400 border-amber-800" : "bg-emerald-950 text-emerald-400 border-emerald-800");
+
+                container.innerHTML += `
+                    <div class="p-4 border ${threatBg} rounded-xl space-y-3 font-mono text-xs">
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm font-bold text-white">${r.flag}${r.origin}</span>
+                            <span class="px-2 py-0.5 rounded border text-[10px] font-bold ${badgeBg}">${r.threat}</span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2 text-[11px] text-gray-400">
+                            <div><span class="text-gray-500 block">Source IP</span><strong class="text-gray-200">${r.ip}</strong></div>
+                            <div><span class="text-gray-500 block">Target Subnet</span><strong class="text-gray-200">${r.target}</strong></div>
+                            <div><span class="text-gray-500 block">Coordinates</span><span class="text-cyan-400">${r.geo}</span></div>
+                            <div><span class="text-gray-500 block">Protocol</span><span class="text-purple-400">${r.protocol}</span></div>
+                        </div>
+                        <div class="pt-2 flex justify-between items-center border-t border-gray-800/80">
+                            <span class="text-[10px] text-gray-500">Route ID: ${r.id}</span>
+                            <button onclick="handleRouteIntercept('${r.id}')" class="bg-red-950 hover:bg-red-900 text-red-300 border border-red-800 px-3 py-1 rounded-lg text-[10px] font-bold">
+                                🚨 Intercept & Quarantine
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function handleRouteIntercept(routeId) {
+            if (typeof interceptRoute === 'function') {
+                const res = interceptRoute(routeId);
+                alert(res.message);
+                renderWazuhStream();
+            }
+        }
+
+        function renderWazuhStream() {
+            const logs = JSON.parse(localStorage.getItem("hive_wazuh_siem_events") || "[]");
+            const container = document.getElementById("wazuhLogStream");
+            if (!container) return;
+            container.innerHTML = logs.length === 0 ? "<p class='text-gray-500'>No SIEM alerts recorded.</p>" : "";
+            logs.forEach(l => {
+                container.innerHTML += `
+                    <div class="border-b border-gray-900 pb-1.5">
+                        <span class="text-purple-400">[${l.timestamp.slice(11, 19)}]</span>
+                        <strong class="text-red-400">RULE ${l.rule.id} (Level${l.rule.level}):</strong>
+                        <span class="text-gray-300">${l.rule.description}</span>
+                    </div>
+                `;
+            });
+        }
+
         function switchAdminTab(tabId) {
-            ['collab', 'partner', 'godseye', 'social', 'wazuh', 'boe'].forEach(t => {
+            ['collab', 'partner', 'godseye', 'wazuh', 'boe'].forEach(t => {
                 const el = document.getElementById('adminTab' + t.charAt(0).toUpperCase() + t.slice(1));
                 const btn = document.getElementById('tab-' + t);
                 if (el) el.classList.add('hidden');
@@ -103,10 +430,15 @@
             const targetBtn = document.getElementById('tab-' + tabId);
             if (targetEl) targetEl.classList.remove('hidden');
             if (targetBtn) targetBtn.className = 'px-4 py-2 text-purple-400 border-b-2 border-purple-500 font-bold';
+
+            if (tabId === 'collab') renderCollaborativeLab();
+            if (tabId === 'godseye') renderGeopoliticalRoutes();
+            if (tabId === 'wazuh') renderWazuhStream();
         }
 
-        // Initialize Admin view
+        // Initialize view
         switchPortalMode('admin');
+        switchAdminTab('collab');
     </script>
 </body>
 </html>
