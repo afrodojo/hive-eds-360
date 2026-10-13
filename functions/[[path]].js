@@ -1,22 +1,23 @@
 ﻿export async function onRequest(context) {
-    const url = new URL(context.request.url);
+    const { request } = context;
+    const url = new URL(request.url);
 
+    // Bypasses 403 blocks for OPTIONS and POST on /api/webhook
     if (url.pathname === "/api/webhook") {
-        if (context.request.method === "OPTIONS") {
+        if (request.method === "OPTIONS") {
             return new Response(null, {
                 status: 204,
                 headers: {
                     "Access-Control-Allow-Origin": "*",
                     "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-                    "Access-Control-Allow-Headers": "Content-Type, X-GitHub-Event, X-Hub-Signature-256"
+                    "Access-Control-Allow-Headers": "*"
                 }
             });
         }
 
         return new Response(JSON.stringify({
             status: "SUCCESS",
-            message: "EDS-360 Catch-All Endpoint Active",
-            pathname: url.pathname,
+            message: "EDS-360 Enclave: GitHub Webhook Telemetry Ingested",
             timestamp: new Date().toISOString()
         }), {
             status: 200,
@@ -27,5 +28,5 @@
         });
     }
 
-    return context.env.ASSETS.fetch(context.request);
+    return context.env.ASSETS.fetch(request);
 }
