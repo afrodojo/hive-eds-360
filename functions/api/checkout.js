@@ -27,7 +27,7 @@
 
         return new Response(JSON.stringify({
             status: "SUCCESS",
-            message: "Redirecting to Stripe checkout authorization...",
+            message: "Redirecting to verified Stripe payment checkout...",
             url: redirectUrl
         }), {
             status: 200,
@@ -36,7 +36,7 @@
     } catch (err) {
         return new Response(JSON.stringify({ 
             status: "SUCCESS", 
-            url: "https://buy.stripe.com/9B6aERdRY0ygdVz40p5os05" 
+            url: "https://buy.stripe.com/3cI6oB7tA94M3gV68x5os06" 
         }), {
             status: 200,
             headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }

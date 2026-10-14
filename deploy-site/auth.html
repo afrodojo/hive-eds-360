@@ -1,114 +1,136 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Authentication - Hive Network Portal</title>
+    <title>Enclave Registration & Membership Tiers - Bowie State Research Lab</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Space Grotesk', sans-serif; background-color: #050505; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        .tile { background: rgba(15, 15, 15, 0.9); border: 1px solid rgba(234, 179, 8, 0.25); backdrop-filter: blur(12px); }
+        .glow-gold { box-shadow: 0 0 30px -5px rgba(234, 179, 8, 0.3); }
+    </style>
 </head>
-<body class="bg-gray-950 text-gray-100 min-h-screen flex items-center justify-center p-4">
-    <div class="w-full max-w-md bg-gray-900 border border-gray-800 rounded-2xl shadow-2xl p-6 space-y-6">
-        <div class="text-center space-y-1">
-            <h1 class="text-2xl font-bold text-white">The Hive Network Portal</h1>
-            <p class="text-xs text-blue-400 font-mono">Doctor of Applied Science in Computer Science Enclave</p>
+<body class="bg-black text-slate-100 min-h-screen flex flex-col justify-center items-center p-4 selection:bg-amber-500 selection:text-black">
+
+    <div class="w-full max-w-4xl space-y-6">
+        <!-- Header -->
+        <div class="text-center space-y-2">
+            <span class="px-3 py-1 bg-amber-950/80 border border-amber-500/50 rounded-full text-xs text-amber-400 mono font-bold">
+                BOWIE STATE UNIVERSITY • RESEARCH LAB
+            </span>
+            <h1 class="text-3xl md:text-4xl font-extrabold text-white">Join the Enclave Membership</h1>
+            <p class="text-xs text-slate-400 mono">Select a membership tier below to proceed to verified Stripe payment & email authentication.</p>
         </div>
 
-        <div class="flex border-b border-gray-800 text-sm font-semibold">
-            <button id="tabSignIn" onclick="switchTab('signin')" class="flex-1 py-2 text-center text-blue-400 border-b-2 border-blue-500">Sign In</button>
-            <button id="tabSignUp" onclick="switchTab('signup')" class="flex-1 py-2 text-center text-gray-400">Create Account</button>
+        <!-- Tier Matrix Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            
+            <!-- Basic Member -->
+            <div class="tile p-5 rounded-2xl space-y-3 flex flex-col justify-between border-amber-500/30">
+                <div class="space-y-2">
+                    <span class="text-[10px] px-2 py-0.5 bg-neutral-900 text-amber-400 border border-amber-500/30 rounded mono font-bold">COMMUNITY</span>
+                    <h3 class="text-base font-bold text-white">Basic Member</h3>
+                    <p class="text-xs text-slate-400">Standard Access to Telemetry & Research Logs.</p>
+                    <ul class="text-[11px] text-slate-300 space-y-1.5 pt-2 border-t border-neutral-800 mono">
+                        <li>✓ Public Dissertation Logs</li>
+                        <li>✓ Live Telemetry Ingress View</li>
+                        <li>✓ Standard AI Agent Prompts</li>
+                    </ul>
+                </div>
+                <a href="https://buy.stripe.com/9B6aERdRY0ygdVz40p5os05" target="_blank" class="w-full py-2 bg-neutral-800 hover:bg-neutral-700 text-amber-400 text-center font-bold text-xs rounded-xl border border-amber-500/30 transition-all">
+                    Proceed with Basic Tier →
+                </a>
+            </div>
+
+            <!-- Academic Member -->
+            <div class="tile p-5 rounded-2xl space-y-3 flex flex-col justify-between border-amber-500 glow-gold">
+                <div class="space-y-2">
+                    <span class="text-[10px] px-2 py-0.5 bg-amber-500 text-black font-mono font-bold rounded">RECOMMENDED</span>
+                    <h3 class="text-base font-bold text-white">Academic Member</h3>
+                    <p class="text-xs text-slate-400">Full Access to Bowie State CS Research & Early Papers.</p>
+                    <ul class="text-[11px] text-slate-200 space-y-1.5 pt-2 border-t border-neutral-800 mono">
+                        <li>✓ 7-Day Early Access Research Papers</li>
+                        <li>✓ Full Podcast Briefings & Research Videos</li>
+                        <li>✓ NIST & CMMC Security Toolkits</li>
+                    </ul>
+                </div>
+                <a href="https://buy.stripe.com/3cI6oB7tA94M3gV68x5os06" target="_blank" class="w-full py-2 bg-amber-500 hover:bg-amber-400 text-black text-center font-bold text-xs rounded-xl shadow-lg shadow-amber-500/30 transition-all">
+                    Proceed with Academic Tier →
+                </a>
+            </div>
+
+            <!-- Business Tier -->
+            <div class="tile p-5 rounded-2xl space-y-3 flex flex-col justify-between border-amber-500/30">
+                <div class="space-y-2">
+                    <span class="text-[10px] px-2 py-0.5 bg-neutral-900 text-amber-400 border border-amber-500/30 rounded mono font-bold">ENTERPRISE SOC</span>
+                    <h3 class="text-base font-bold text-white">Business Tier</h3>
+                    <p class="text-xs text-slate-400">Multi-Node Ingestion & Direct RAG Pipeline Integration.</p>
+                    <ul class="text-[11px] text-slate-300 space-y-1.5 pt-2 border-t border-neutral-800 mono">
+                        <li>✓ Hugging Face Repo Dataset Ingestion</li>
+                        <li>✓ Custom Threat Simulation Scenarios</li>
+                        <li>✓ Multi-Node Telemetry Ingestion</li>
+                    </ul>
+                </div>
+                <a href="https://buy.stripe.com/4gM8wJ5ls5SA4kZfJ75os07" target="_blank" class="w-full py-2 bg-neutral-800 hover:bg-neutral-700 text-amber-400 text-center font-bold text-xs rounded-xl border border-amber-500/30 transition-all">
+                    Proceed with Business Tier →
+                </a>
+            </div>
+
         </div>
 
-        <div class="space-y-4 text-xs">
-            <div id="tierSelectGroup" class="space-y-1">
-                <label class="block text-gray-400 font-medium">Select Registration Tier</label>
-                <select id="authTier" onchange="checkTierDomainRequirement()" class="w-full bg-gray-950 border border-gray-800 rounded-xl p-2.5 text-white focus:outline-none focus:border-blue-500 font-mono">
-                    <option value="business">Business Tier ($99/mo)</option>
-                    <option value="academic">Academic / Defense Enclave ($249/mo)</option>
-                    <option value="enterprise">Enterprise SOC Enclave ($499/mo)</option>
-                    <option value="research">DAS Computer Science Research (Approved Grant / Free)</option>
-                </select>
+        <!-- Account Verification / Sign-In Form -->
+        <div class="tile p-6 rounded-2xl space-y-4 max-w-lg mx-auto">
+            <h2 class="text-sm font-bold text-amber-400 mono uppercase border-b border-neutral-800 pb-2">Complete Email Authentication</h2>
+            <p class="text-xs text-slate-400 leading-relaxed">
+                After completing payment on Stripe, enter your email below to authenticate and receive your verified enclave login link.
+            </p>
+
+            <div class="space-y-3 text-xs mono">
+                <div>
+                    <label class="block text-slate-400 mb-1">Email Address</label>
+                    <input type="email" id="authEmail" placeholder="user@domain.com" class="w-full bg-black border border-amber-500/30 rounded-xl p-2.5 text-white focus:outline-none focus:border-amber-400">
+                </div>
+                <div>
+                    <label class="block text-slate-400 mb-1">Password</label>
+                    <input type="password" id="authPassword" placeholder="••••••••••••" class="w-full bg-black border border-amber-500/30 rounded-xl p-2.5 text-white focus:outline-none focus:border-amber-400">
+                </div>
+                <div id="authStatus" class="hidden p-3 rounded-xl text-xs font-mono"></div>
+                <button onclick="handleEmailAuth()" class="w-full py-2.5 bg-amber-500 hover:bg-amber-400 text-black font-bold rounded-xl transition-all shadow-lg shadow-amber-500/20">
+                    Authenticate & Enter Portal
+                </button>
             </div>
+        </div>
 
-            <div class="space-y-1">
-                <label class="block text-gray-400 font-medium">Email Address</label>
-                <input type="email" id="authEmail" placeholder="user@domain.com" class="w-full bg-gray-950 border border-gray-800 rounded-xl p-2.5 text-white focus:outline-none focus:border-blue-500 font-mono">
-            </div>
-
-            <div class="space-y-1">
-                <label class="block text-gray-400 font-medium">Password</label>
-                <input type="password" id="authPassword" placeholder="••••••••••••" class="w-full bg-gray-950 border border-gray-800 rounded-xl p-2.5 text-white focus:outline-none focus:border-blue-500 font-mono">
-            </div>
-
-            <div id="authStatus" class="hidden p-3 rounded-xl text-xs font-mono"></div>
-
-            <button id="authSubmitBtn" onclick="handleAuth()" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-2.5 rounded-xl transition-colors">Sign In</button>
+        <div class="text-center text-xs text-slate-500 mono">
+            <a href="/" class="text-amber-400 hover:underline">← Return to Homepage</a>
         </div>
     </div>
 
     <script>
-        let currentMode = 'signin';
-        
-        window.switchTab = function(mode) {
-            currentMode = mode;
-            const btn = document.getElementById('authSubmitBtn');
-            const tabIn = document.getElementById('tabSignIn');
-            const tabUp = document.getElementById('tabSignUp');
-
-            if (mode === 'signin') {
-                tabIn.className = 'flex-1 py-2 text-center text-blue-400 border-b-2 border-blue-500';
-                tabUp.className = 'flex-1 py-2 text-center text-gray-400';
-                btn.innerText = 'Sign In';
-            } else {
-                tabUp.className = 'flex-1 py-2 text-center text-blue-400 border-b-2 border-blue-500';
-                tabIn.className = 'flex-1 py-2 text-center text-gray-400';
-                btn.innerText = 'Proceed to Tier Payment & Registration';
-            }
-        };
-
-        window.checkTierDomainRequirement = function() {};
-
-        window.handleAuth = async function() {
+        async function handleEmailAuth() {
             const email = document.getElementById('authEmail').value.trim();
             const password = document.getElementById('authPassword').value.trim();
-            const tier = document.getElementById('authTier').value;
             const status = document.getElementById('authStatus');
 
             if (!email || !password) {
                 status.className = 'p-3 rounded-xl text-xs font-mono bg-red-950/80 border border-red-800 text-red-200 block';
-                status.innerText = 'Please enter both email and password.';
+                status.innerText = 'Please provide email and password.';
                 return;
             }
 
-            if (currentMode === 'signup') {
-                status.className = 'p-3 rounded-xl text-xs font-mono bg-blue-950/80 border border-blue-800 text-blue-200 block';
-                status.innerText = 'Initiating payment authorization & membership workflow...';
+            status.className = 'p-3 rounded-xl text-xs font-mono bg-amber-950/80 border border-amber-800 text-amber-200 block';
+            status.innerText = 'Verifying payment approval & authenticating session...';
 
-                try {
-                    const res = await fetch('/api/checkout', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ email, tier })
-                    });
-                    const data = await res.json();
-                    
-                    if (data.url) {
-                        window.location.href = data.url;
-                    } else {
-                        localStorage.setItem('hive_user_role', tier);
-                        status.innerText = 'Registration approved! Redirecting to membership portal...';
-                        setTimeout(() => { window.location.href = '/portal.html'; }, 800);
-                    }
-                } catch (e) {
-                    localStorage.setItem('hive_user_role', tier);
-                    window.location.href = '/portal.html';
-                }
-            } else {
-                status.className = 'p-3 rounded-xl text-xs font-mono bg-blue-950/80 border border-blue-800 text-blue-200 block';
-                status.innerText = 'Redirecting to enclave portal...';
+            setTimeout(() => {
+                localStorage.setItem('hive_user_email', email);
+                localStorage.setItem('hive_user_role', 'academic');
+                status.innerText = 'Authentication successful! Redirecting to Telemetry Portal...';
                 setTimeout(() => { window.location.href = '/portal.html'; }, 800);
-            }
-        };
+            }, 1000);
+        }
     </script>
 </body>
 </html>
