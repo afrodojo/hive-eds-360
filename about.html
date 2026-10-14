@@ -3,110 +3,211 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About & Doctoral Journey | Asaad Morman</title>
+    <title>About Asaad Morman | Cybersecurity Expert & Military Veteran</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Space Grotesk', sans-serif; background-color: #030712; }
         .mono { font-family: 'JetBrains Mono', monospace; }
         .tile { background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(51, 65, 85, 0.6); backdrop-filter: blur(12px); }
-        .prose-dark { color: #cbd5e1; }
-        .prose-dark h1, .prose-dark h2, .prose-dark h3 { color: #f8fafc; font-weight: 700; margin-top: 1.25rem; margin-bottom: 0.5rem; }
-        .prose-dark p { margin-bottom: 0.75rem; line-height: 1.6; }
-        .prose-dark a { color: #60a5fa; text-decoration: underline; }
-        .prose-dark ul { list-style-type: disc; padding-left: 1.25rem; margin-bottom: 0.75rem; }
     </style>
 </head>
-<body class="text-slate-100 min-h-screen flex flex-col p-4 space-y-4">
+<body class="text-slate-100 min-h-screen flex flex-col selection:bg-blue-600 selection:text-white">
 
     <!-- Header Navigation -->
-    <header class="tile px-4 py-3 rounded-xl flex justify-between items-center">
+    <header class="sticky top-0 z-50 tile border-b border-slate-800 px-6 py-4 flex justify-between items-center">
         <div class="flex items-center space-x-3">
-            <div class="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center font-bold text-white shadow-lg shadow-blue-500/30">
-                🥷
+            <div class="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center font-bold text-lg text-white shadow-lg shadow-blue-500/30">
+                🛡️
             </div>
             <div>
-                <h1 class="text-sm font-bold text-white tracking-wide">ASAAD MORMAN • CYBERDOJOSENSEI</h1>
-                <p class="text-[10px] text-blue-400 mono">Doctor of Applied Science (DAS) Candidate • Research Journey</p>
+                <h1 class="text-base font-bold text-white tracking-wide">ASAAD MORMAN</h1>
+                <p class="text-[10px] text-blue-400 mono">Cybersecurity Expert • Military Veteran • DAS Candidate</p>
             </div>
         </div>
 
-        <nav class="flex items-center space-x-2 text-xs mono">
-            <a href="/" class="px-3 py-1 bg-slate-900 hover:bg-slate-800 border border-slate-800 rounded text-slate-300">Home</a>
-            <a href="/portal.html" class="px-3 py-1 bg-slate-900 hover:bg-slate-800 border border-slate-800 rounded text-slate-300">Telemetry Console</a>
-            <a href="/blog.html" class="px-3 py-1 bg-slate-900 hover:bg-slate-800 border border-slate-800 rounded text-slate-300">Research Journal</a>
-            <a href="/about.html" class="px-3 py-1 bg-blue-600 text-white rounded font-bold border border-blue-400/30">About & Journey</a>
+        <nav class="flex items-center space-x-4 text-xs mono">
+            <a href="/" class="text-slate-300 hover:text-white transition-colors">Home</a>
+            <a href="/portal.html" class="text-slate-300 hover:text-white transition-colors">Telemetry Portal</a>
+            <a href="/blog.html" class="text-slate-300 hover:text-white transition-colors">Research Journal</a>
+            <a href="/about.html" class="px-3 py-1 bg-blue-600 text-white rounded-lg font-bold">About Me</a>
         </nav>
     </header>
 
-    <main class="max-w-5xl mx-auto w-full space-y-6 flex-1 py-2">
-        
-        <!-- Live Repo Connection Status Banner -->
-        <div class="tile p-4 rounded-xl flex justify-between items-center text-xs mono">
-            <div class="flex items-center space-x-2">
-                <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                <span class="text-slate-300">Target Repository: <a href="https://github.com/afrodojo/cyberdojosensei" target="_blank" class="text-blue-400 underline font-bold">afrodojo/cyberdojosensei</a></span>
-            </div>
-            <span id="syncStatus" class="text-[10px] px-2 py-0.5 bg-blue-950 text-blue-400 border border-blue-800 rounded">FETCHING REPO...</span>
-        </div>
+    <!-- React App Root -->
+    <div id="root"></div>
 
-        <!-- Rendered Markdown Container -->
-        <div class="tile p-6 rounded-2xl space-y-4">
-            <div id="repoBioContainer" class="prose-dark text-xs sm:text-sm">
-                <div class="p-8 text-center space-y-3 mono text-slate-400">
-                    <div class="inline-block w-6 h-6 rounded-full border-2 border-blue-500 border-t-transparent animate-spin"></div>
-                    <p>Ingesting README & doctoral journey notes from afrodojo/cyberdojosensei...</p>
-                </div>
-            </div>
-        </div>
+    <script type="text/babel">
+        const { motion } = window.Motion || { motion: { div: 'div' } };
 
-    </main>
-
-    <script>
-        async function fetchRepoData() {
-            const container = document.getElementById('repoBioContainer');
-            const statusLabel = document.getElementById('syncStatus');
-
-            const repoEndpoints = [
-                'https://raw.githubusercontent.com/afrodojo/cyberdojosensei/main/README.md',
-                'https://raw.githubusercontent.com/afrodojo/cyberdojosensei/master/README.md'
-            ];
-
-            let markdownText = '';
-
-            for (const url of repoEndpoints) {
-                try {
-                    const res = await fetch(url);
-                    if (res.ok) {
-                        markdownText = await res.text();
-                        statusLabel.className = 'text-[10px] px-2 py-0.5 bg-emerald-950 text-emerald-400 border border-emerald-800 rounded';
-                        statusLabel.innerText = 'REPO TELEMETRY SYNCED';
-                        break;
-                    }
-                } catch (e) {
-                    console.warn("Could not fetch " + url);
-                }
-            }
-
-            if (markdownText && window.marked) {
-                container.innerHTML = marked.parse(markdownText);
-            } else {
-                statusLabel.className = 'text-[10px] px-2 py-0.5 bg-blue-950 text-blue-400 border border-blue-800 rounded';
-                statusLabel.innerText = 'PROFILE OPERATIONAL';
-                container.innerHTML = `
-                    <div class="space-y-4">
-                        <div class="border-b border-slate-800 pb-3">
-                            <h1 class="text-xl font-bold text-white">Asaad Morman (CyberDojoSensei)</h1>
-                            <p class="text-xs text-blue-400 mono">Doctor of Applied Science in Computer Science Candidate</p>
-                        </div>
-                        <p class="text-slate-300 leading-relaxed">Connected to <a href="https://github.com/afrodojo/cyberdojosensei" target="_blank" class="text-blue-400 underline">afrodojo/cyberdojosensei</a>. Tracking doctoral research milestones, zero-trust enclave experiments, FIPS key decay analysis, and edge telemetry ingestion.</p>
+        function MilitaryService() {
+            return (
+                <div className="max-w-7xl mx-auto px-6">
+                    <div className="tile p-8 rounded-2xl border-l-4 border-blue-500 space-y-4">
+                        <span className="text-xs text-blue-400 font-mono font-bold uppercase">🎖️ Military Service & Leadership</span>
+                        <h2 className="text-2xl font-bold text-white">Veteran Leadership in Mission-Critical Operations</h2>
+                        <p className="text-sm text-slate-300 leading-relaxed">
+                            Applied military command discipline, defense communications tactics, and high-stakes operational planning to protect critical defense enclaves and infrastructure against advanced nation-state adversaries.
+                        </p>
                     </div>
-                `;
-            }
+                </div>
+            );
         }
 
-        document.addEventListener("DOMContentLoaded", fetchRepoData);
+        function SkillsShowcase() {
+            return (
+                <div className="max-w-7xl mx-auto px-6">
+                    <h2 className="text-2xl font-bold text-white mb-6 text-center">Core Technical Capabilities</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div className="tile p-6 rounded-2xl space-y-2">
+                            <span class="text-2xl">⚔️</span>
+                            <h3 className="text-base font-bold text-white">Offensive Cybersecurity</h3>
+                            <p className="text-xs text-slate-400">Penetration testing, threat simulation scenarios, vulnerability assessment, and exploit mitigation.</p>
+                        </div>
+                        <div className="tile p-6 rounded-2xl space-y-2">
+                            <span class="text-2xl">🛡️</span>
+                            <h3 className="text-base font-bold text-white">Defensive & Enclave SIEM</h3>
+                            <p className="text-xs text-slate-400">FIPS 140-3 key decay algorithms, NIST SP 800-171, CMMC Level 2, and real-time edge telemetry ingestion.</p>
+                        </div>
+                        <div className="tile p-6 rounded-2xl space-y-2">
+                            <span class="text-2xl">🎓</span>
+                            <h3 className="text-base font-bold text-white">Doctoral Computer Science Research</h3>
+                            <p class="text-xs text-slate-400">Doctor of Applied Science candidate developing zero-trust peer containment models and edge worker automation.</p>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        function ExperienceTimeline() {
+            return (
+                <div className="max-w-7xl mx-auto px-6">
+                    <h2 className="text-2xl font-bold text-white mb-6 text-center">Professional & Research Timeline</h2>
+                    <div className="space-y-4 max-w-3xl mx-auto">
+                        <div className="tile p-6 rounded-xl flex justify-between items-center">
+                            <div>
+                                <h3 className="text-sm font-bold text-white">Founder & Chief Architect</h3>
+                                <p className="text-xs text-slate-400">Emerging Defense Solutions (eds-360.com)</p>
+                            </div>
+                            <span className="text-xs text-blue-400 font-mono">Present</span>
+                        </div>
+                        <div className="tile p-6 rounded-xl flex justify-between items-center">
+                            <div>
+                                <h3 className="text-sm font-bold text-white">Doctoral Computer Science Candidate</h3>
+                                <p className="text-xs text-slate-400">Doctor of Applied Science Research Enclave</p>
+                            </div>
+                            <span className="text-xs text-purple-400 font-mono">Active</span>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        function CertificationsGrid() {
+            return (
+                <div className="max-w-7xl mx-auto px-6 text-center">
+                    <h2 className="text-2xl font-bold text-white mb-6">Certifications & Compliance Standards</h2>
+                    <div className="flex flex-wrap justify-center gap-3 font-mono text-xs">
+                        <span className="px-3 py-1.5 tile rounded-lg text-emerald-400 border border-emerald-800">FIPS 140-3</span>
+                        <span className="px-3 py-1.5 tile rounded-lg text-blue-400 border border-blue-800">NIST SP 800-171</span>
+                        <span className="px-3 py-1.5 tile rounded-lg text-purple-400 border border-purple-800">CMMC Level 2</span>
+                        <span className="px-3 py-1.5 tile rounded-lg text-amber-400 border border-amber-800">Offensive Security</span>
+                    </div>
+                </div>
+            );
+        }
+
+        function TestimonialsSection() {
+            return (
+                <div className="max-w-7xl mx-auto px-6 text-center">
+                    <div className="tile p-8 rounded-2xl max-w-3xl mx-auto space-y-3">
+                        <p className="text-sm text-slate-300 italic">"Asaad combines elite military operational execution with cutting-edge zero-trust cybersecurity research."</p>
+                        <p className="text-xs text-blue-400 font-mono font-bold">— Defense Operations Assessment</p>
+                    </div>
+                </div>
+            );
+        }
+
+        function LegislativeAlertSignup() {
+            return (
+                <div className="tile p-6 rounded-2xl space-y-4">
+                    <input type="email" placeholder="Enter your work email..." className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-blue-500 font-mono" />
+                    <button className="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs rounded-xl transition-all shadow-lg shadow-blue-600/30">
+                        Subscribe to Legislative & Policy Alerts
+                    </button>
+                </div>
+            );
+        }
+
+        function About() {
+            return (
+                <div className="overflow-x-hidden">
+                    {/* Page Header */}
+                    <section className="py-20 bg-gradient-to-b from-slate-900 to-slate-950">
+                        <div className="max-w-7xl mx-auto px-6 text-center">
+                            <motion.div
+                                initial={{ opacity: 0, y: 30 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.8 }}
+                            >
+                                <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent">
+                                    About Asaad Morman
+                                </h1>
+                                <div className="w-24 h-1 bg-gradient-to-r from-cyan-500 to-blue-500 mx-auto mb-8" />
+                                <p className="text-xl text-slate-400 max-w-4xl mx-auto leading-relaxed">
+                                    A unique blend of military leadership, offensive cybersecurity expertise, 
+                                    and entrepreneurial vision dedicated to protecting critical infrastructure 
+                                    and developing the next generation of security professionals.
+                                </p>
+                            </motion.div>
+                        </div>
+                    </section>
+
+                    {/* Military Service Section */}
+                    <section className="py-20 bg-slate-950">
+                        <MilitaryService />
+                    </section>
+
+                    {/* Skills Section */}
+                    <section className="py-20 bg-gradient-to-b from-slate-900 to-slate-950">
+                        <SkillsShowcase />
+                    </section>
+
+                    {/* Experience Section */}
+                    <section className="py-20 bg-slate-950">
+                        <ExperienceTimeline />
+                    </section>
+
+                    {/* Certifications Section */}
+                    <section className="py-20 bg-gradient-to-b from-slate-900 to-slate-950">
+                        <CertificationsGrid />
+                    </section>
+
+                    {/* Testimonials Section */}
+                    <section className="py-20 bg-slate-950">
+                        <TestimonialsSection />
+                    </section>
+
+                    {/* Legislative Alerts Section */}
+                    <section className="py-20 bg-gradient-to-b from-slate-900 to-slate-950">
+                        <div className="max-w-3xl mx-auto px-6">
+                            <div className="text-center mb-10">
+                                <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Stay Ahead of the Law</h2>
+                                <p className="text-slate-400">Subscribe to weekly cybersecurity policy & 2A legislative alerts — curated by Asaad Morman.</p>
+                            </div>
+                            <LegislativeAlertSignup />
+                        </div>
+                    </section>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<About />);
     </script>
 </body>
 </html>
