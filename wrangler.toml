@@ -1,3 +1,0 @@
-﻿name = "eds360-telemetry-router"
-main = "standalone-worker/index.js"
-compatibility_date = "2026-10-01"
