@@ -14,7 +14,7 @@
 
     return new Response(JSON.stringify({
         status: "SUCCESS",
-        message: "EDS-360 Telemetry Node Active",
+        message: "EDS-360 Telemetry Ingested",
         timestamp: new Date().toISOString()
     }), {
         status: 200,
