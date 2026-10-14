@@ -1,1 +1,90 @@
-﻿
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentication - Hive Network Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body class="bg-gray-950 text-gray-100 min-h-screen flex items-center justify-center p-4">
+    <div class="w-full max-w-md bg-gray-900 border border-gray-800 rounded-2xl shadow-2xl p-6 space-y-6">
+        <div class="text-center space-y-1">
+            <h1 class="text-2xl font-bold text-white">The Hive Network Portal</h1>
+            <p class="text-xs text-blue-400 font-mono">Doctor of Applied Science in Computer Science Enclave</p>
+        </div>
+
+        <div class="flex border-b border-gray-800 text-sm font-semibold">
+            <button id="tabSignIn" onclick="switchTab('signin')" class="flex-1 py-2 text-center text-blue-400 border-b-2 border-blue-500">Sign In</button>
+            <button id="tabSignUp" onclick="switchTab('signup')" class="flex-1 py-2 text-center text-gray-400">Create Account</button>
+        </div>
+
+        <div class="space-y-4 text-xs">
+            <div id="tierSelectGroup" class="space-y-1">
+                <label class="block text-gray-400 font-medium">Select Registration Tier</label>
+                <select id="authTier" onchange="checkTierDomainRequirement()" class="w-full bg-gray-950 border border-gray-800 rounded-xl p-2.5 text-white focus:outline-none focus:border-blue-500">
+                    <option value="business">Business Tier (/mo)</option>
+                    <option value="academic">Academic / Defense Enclave</option>
+                </select>
+            </div>
+
+            <div class="space-y-1">
+                <label class="block text-gray-400 font-medium">Email Address</label>
+                <input type="email" id="authEmail" placeholder="user@domain.com" class="w-full bg-gray-950 border border-gray-800 rounded-xl p-2.5 text-white focus:outline-none focus:border-blue-500 font-mono">
+            </div>
+
+            <div class="space-y-1">
+                <label class="block text-gray-400 font-medium">Password</label>
+                <input type="password" id="authPassword" placeholder="••••••••••••" class="w-full bg-gray-950 border border-gray-800 rounded-xl p-2.5 text-white focus:outline-none focus:border-blue-500 font-mono">
+            </div>
+
+            <div id="authStatus" class="hidden p-3 rounded-xl text-xs font-mono"></div>
+
+            <button id="authSubmitBtn" onclick="handleAuth()" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-2.5 rounded-xl transition-colors">Sign In</button>
+        </div>
+    </div>
+
+    <script>
+        let currentMode = 'signin';
+        
+        // Window level scope for onclick handlers
+        window.switchTab = function(mode) {
+            currentMode = mode;
+            const btn = document.getElementById('authSubmitBtn');
+            const tabIn = document.getElementById('tabSignIn');
+            const tabUp = document.getElementById('tabSignUp');
+
+            if (mode === 'signin') {
+                tabIn.className = 'flex-1 py-2 text-center text-blue-400 border-b-2 border-blue-500';
+                tabUp.className = 'flex-1 py-2 text-center text-gray-400';
+                btn.innerText = 'Sign In';
+            } else {
+                tabUp.className = 'flex-1 py-2 text-center text-blue-400 border-b-2 border-blue-500';
+                tabIn.className = 'flex-1 py-2 text-center text-gray-400';
+                btn.innerText = 'Create Account';
+            }
+        };
+
+        window.checkTierDomainRequirement = function() {};
+
+        window.handleAuth = function() {
+            const email = document.getElementById('authEmail').value.trim();
+            const password = document.getElementById('authPassword').value.trim();
+            const status = document.getElementById('authStatus');
+
+            if (!email || !password) {
+                status.className = 'p-3 rounded-xl text-xs font-mono bg-red-950/80 border border-red-800 text-red-200 block';
+                status.innerText = 'Please enter both email and password.';
+                return;
+            }
+
+            status.className = 'p-3 rounded-xl text-xs font-mono bg-blue-950/80 border border-blue-800 text-blue-200 block';
+            status.innerText = 'Redirecting to enclave portal...';
+            
+            setTimeout(() => {
+                window.location.href = '/portal.html';
+            }, 800);
+        };
+    </script>
+</body>
+</html>
