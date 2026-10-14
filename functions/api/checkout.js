@@ -14,21 +14,30 @@
 
     try {
         const body = await request.json().catch(() => ({}));
-        const email = body.email || "user@domain.com";
-        const tier = body.tier || "business";
+        const tier = (body.tier || "basic").toLowerCase();
 
-        // Approves access and returns membership confirmation payload
+        const stripeLinks = {
+            basic: "https://buy.stripe.com/9B6aERdRY0ygdVz40p5os05",
+            academic: "https://buy.stripe.com/3cI6oB7tA94M3gV68x5os06",
+            business: "https://buy.stripe.com/4gM8wJ5ls5SA4kZfJ75os07",
+            donation: "https://donate.stripe.com/9B6bIVaFMep68BfgNb5os04"
+        };
+
+        const redirectUrl = stripeLinks[tier] || stripeLinks.basic;
+
         return new Response(JSON.stringify({
             status: "SUCCESS",
-            message: "Payment authorized. Membership activated.",
-            user: { email, tier, membershipActive: true },
-            redirectUrl: "https://hive.eds-360.com/portal.html"
+            message: "Redirecting to Stripe checkout authorization...",
+            url: redirectUrl
         }), {
             status: 200,
             headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
         });
     } catch (err) {
-        return new Response(JSON.stringify({ status: "SUCCESS", redirectUrl: "https://hive.eds-360.com/portal.html" }), {
+        return new Response(JSON.stringify({ 
+            status: "SUCCESS", 
+            url: "https://buy.stripe.com/9B6aERdRY0ygdVz40p5os05" 
+        }), {
             status: 200,
             headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
         });
