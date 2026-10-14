@@ -1,0 +1,129 @@
+﻿<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | Asaad Morman - CyberDojoSensei</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Space Grotesk', sans-serif; background-color: #030712; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        .tile { background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(51, 65, 85, 0.6); backdrop-filter: blur(12px); }
+        .prose-dark { color: #cbd5e1; }
+        .prose-dark h1, .prose-dark h2, .prose-dark h3 { color: #f8fafc; font-weight: 700; margin-top: 1rem; margin-bottom: 0.5rem; }
+        .prose-dark p { margin-bottom: 0.75rem; line-height: 1.625; }
+        .prose-dark a { color: #60a5fa; text-decoration: underline; }
+        .prose-dark ul { list-style-type: disc; padding-left: 1.25rem; margin-bottom: 0.75rem; }
+    </style>
+</head>
+<body class="text-slate-100 min-h-screen flex flex-col p-4 space-y-4">
+
+    <!-- Header Navigation -->
+    <header class="tile px-4 py-3 rounded-xl flex justify-between items-center">
+        <div class="flex items-center space-x-3">
+            <div class="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center font-bold text-white shadow-lg shadow-blue-500/30">
+                🥷
+            </div>
+            <div>
+                <h1 class="text-sm font-bold text-white tracking-wide">ASAAD MORMAN • CYBERDOJOSENSEI</h1>
+                <p class="text-[10px] text-blue-400 mono">Doctor of Applied Science in Computer Science Candidate</p>
+            </div>
+        </div>
+
+        <nav class="flex items-center space-x-2 text-xs mono">
+            <a href="/" class="px-3 py-1 bg-slate-900 hover:bg-slate-800 border border-slate-800 rounded text-slate-300">Home</a>
+            <a href="/portal.html" class="px-3 py-1 bg-slate-900 hover:bg-slate-800 border border-slate-800 rounded text-slate-300">Telemetry Console</a>
+            <a href="/blog.html" class="px-3 py-1 bg-slate-900 hover:bg-slate-800 border border-slate-800 rounded text-slate-300">Research Journal</a>
+            <a href="/about.html" class="px-3 py-1 bg-blue-600 text-white rounded font-bold border border-blue-400/30">About Me</a>
+        </nav>
+    </header>
+
+    <main class="max-w-5xl mx-auto w-full space-y-6 flex-1 py-4">
+        
+        <!-- Bio Card -->
+        <div class="tile p-6 rounded-2xl space-y-4">
+            <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                <div class="flex items-center space-x-3">
+                    <span class="text-2xl">🥋</span>
+                    <div>
+                        <h2 class="text-base font-bold text-white mono">Biography & Research Profile</h2>
+                        <p class="text-[10px] text-slate-400 mono">Synced Endpoint: <span id="sourceUrl" class="text-blue-400">https://cyberdojosensei.eds-360.com</span></p>
+                    </div>
+                </div>
+                <span id="fetchStatus" class="text-[10px] px-2 py-0.5 bg-blue-950 text-blue-400 border border-blue-800 rounded mono">Ingesting...</span>
+            </div>
+
+            <!-- Dynamic Markdown Bio Container -->
+            <div id="bioContent" class="prose-dark text-xs sm:text-sm">
+                <div class="p-6 text-center space-y-2 mono text-slate-400">
+                    <span class="inline-block w-4 h-4 rounded-full border-2 border-blue-500 border-t-transparent animate-spin"></span>
+                    <p>Fetching profile telemetry from cyberdojosensei.eds-360.com...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Research Lab Link Footer -->
+        <div class="tile p-4 rounded-xl flex justify-between items-center text-xs mono">
+            <span class="text-slate-400">Emerging Defense Solutions Enclave • DAS CS Testbed</span>
+            <a href="https://donate.stripe.com/9B6bIVaFMep68BfgNb5os04" target="_blank" class="text-emerald-400 hover:underline">♥ Support Research</a>
+        </div>
+
+    </main>
+
+    <script>
+        async function loadBio() {
+            const contentDiv = document.getElementById('bioContent');
+            const statusSpan = document.getElementById('fetchStatus');
+
+            // Primary repo endpoint + fallback RAW Markdown mirrors
+            const endpoints = [
+                'https://cyberdojosensei.eds-360.com/README.md',
+                'https://cyberdojosensei.eds-360.com',
+                'https://raw.githubusercontent.com/afrodojo/afrodojo/main/README.md'
+            ];
+
+            let bioMarkdown = '';
+
+            for (const url of endpoints) {
+                try {
+                    const res = await fetch(url, { method: 'GET', mode: 'cors' });
+                    if (res.ok) {
+                        bioMarkdown = await res.text();
+                        document.getElementById('sourceUrl').innerText = url;
+                        statusSpan.className = "text-[10px] px-2 py-0.5 bg-emerald-950 text-emerald-400 border border-emerald-800 rounded mono";
+                        statusSpan.innerText = "LIVE TELEMETRY SYNCED";
+                        break;
+                    }
+                } catch (e) {
+                    console.warn("Could not fetch from " + url, e);
+                }
+            }
+
+            if (bioMarkdown && window.marked) {
+                contentDiv.innerHTML = marked.parse(bioMarkdown);
+            } else {
+                statusSpan.className = "text-[10px] px-2 py-0.5 bg-blue-950 text-blue-400 border border-blue-800 rounded mono";
+                statusSpan.innerText = "ENCLAVE PROFILE ACTIVE";
+                contentDiv.innerHTML = `
+                    <div class="space-y-4">
+                        <h2 class="text-lg font-bold text-white">Asaad Morman (CyberDojoSensei)</h2>
+                        <p class="text-slate-300">Doctor of Applied Science in Computer Science Candidate specializing in Zero-Trust Enclave Architectures, FIPS 140-3 Cryptographic Key Decay, and Real-Time Autonomous SIEM Telemetry Ingestion.</p>
+                        <div class="p-4 bg-slate-950 border border-slate-800 rounded-xl space-y-2 font-mono text-xs">
+                            <p class="text-blue-400 font-bold">🎓 Academic Focus & Dissertation Field Testbed:</p>
+                            <ul class="list-disc list-inside text-slate-400 space-y-1">
+                                <li>NIST SP 800-171 & CMMC Level 2 Edge Boundary Controls</li>
+                                <li>Edge Worker Ingestion Latency Optimization (Cloudflare Pages Workers)</li>
+                                <li>Autonomous Threat Scenario Simulation & WireGuard Peer Isolation</li>
+                            </ul>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", loadBio);
+    </script>
+</body>
+</html>
