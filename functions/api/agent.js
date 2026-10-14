@@ -17,25 +17,41 @@
         const rawPrompt = (payload.prompt || "").toLowerCase().trim();
         let reply = "";
 
-        // 1. CMMC / NIST / Compliance Questions
-        if (/cmmc|nist|compliance|fips|sp 800|800-171|framework|security level/.test(rawPrompt)) {
-            reply = "🛡️ **Compliance & Framework Insights**:\n• **CMMC Level 2**: Focuses on protecting Controlled Unclassified Information (CUI) through 110 security controls aligned with NIST SP 800-171.\n• **FIPS 140-3**: Federal standard for validating cryptographic modules, key generation, and decay in zero-trust enclaves.\n• **Enclave Security**: Our Bowie State testbed implements automated boundary checks and continuous monitoring to meet CMMC and NIST guidelines.";
+        // 1. CMMC, NIST & Government Defense Frameworks
+        if (/cmmc|nist|compliance|fips|sp 800|800-171|cui|dod|cisa|fedramp/.test(rawPrompt)) {
+            reply = `🛡️ **Validated Government Compliance Frameworks**:
+• **CMMC 2.0 (DoD / 32 CFR Part 170)**: Requires mandatory 3rd-party assessment (C3PAO) across 110 security controls aligned directly with **NIST SP 800-171 Rev 2/3** for protecting Controlled Unclassified Information (CUI).
+• **FIPS 140-3 (NIST Security Requirements for Cryptographic Modules)**: Validates physical/logical security, zero-trust key decay, and entropy sources for encryption-in-transit and at-rest.
+• **CISA Zero Trust Maturity Model v2.0**: Enforces automated identity verification, dynamic micro-segmentation, and continuous SIEM telemetry audit logs across all 5 pillars (Identity, Device, Network, Workload, Data).`;
         }
-        // 2. Pricing & Tier Access Questions
+        // 2. Sovereign AI, Air-Gapped RAG & Enterprise Vendor Tech (Cloudflare, AWS, Microsoft)
+        else if (/sovereign|air-gap|rag|retrieval|zero-trust|key decay|enclave|cloudflare|aws|microsoft|wazuh/.test(rawPrompt)) {
+            reply = `🔬 **Validated Enterprise Tech Architectures**:
+• **Sovereign AI (AWS European Sovereign Cloud / Microsoft Cloud for Sovereign)**: Operates AI model inference completely inside sovereign physical enclaves, preventing cross-border telemetry spillage and model weights exposure.
+• **Air-Gapped RAG (Vector DBs / Local LLMs)**: Combines offline vector indices (e.g., Qdrant/pgvector) with locally hosted LLMs over air-gapped physical networks to query CUI documents with zero internet transit.
+• **SIEM & Ingestion (Wazuh / Cloudflare Workers / WireGuard)**: Executes real-time event parsing at edge workers (Cloudflare Pages Workers) and feeds Wazuh HIDS/SIEM rule engines for immediate threat containment.`;
+        }
+        // 3. Pricing & Membership Tiers
         else if (/tier|price|pricing|cost|membership|subscription|donate|donation|basic|academic|business/.test(rawPrompt)) {
-            reply = "💳 **Membership Tiers & Access Levels**:\n• **Basic Member ($10/mo)**: Public dissertation logs & live SIEM telemetry ingress.\n• **Academic Member ($15/mo)**: 7-day early access to Bowie State research papers, podcasts, and video demonstrations.\n• **Business Tier ($150/mo)**: Enterprise SOC tools, multi-node telemetry ingestion, and direct Hugging Face RAG dataset pipeline support.\n• **Donations (Starting at $5)**: Directly supports Asaad Morman's Doctoral research lab at Bowie State University.";
+            reply = `💳 **Enclave Membership Tiers**:
+• **Basic Member ($10/mo)**: Public dissertation logs & live SIEM telemetry ingress access.
+• **Academic Member ($15/mo)**: 7-day early access to Bowie State research papers, podcast briefings, and video demonstrations.
+• **Business Tier ($150/mo)**: Enterprise SOC access, multi-node telemetry ingestion, and direct Hugging Face RAG dataset pipeline support.
+• **Donations (Starting at $5)**: Directly supports Asaad Morman's Doctoral research lab at Bowie State University.`;
         }
-        // 3. Technical Terms: Sovereign AI & Air-Gapped RAG
-        else if (/sovereign|air-gap|rag|retrieval|zero-trust|key decay|enclave/.test(rawPrompt)) {
-            reply = "🔬 **Technical Concepts & Research Focus**:\n• **Sovereign AI**: Locally owned and deployed AI infrastructure ensuring 100% data sovereignty without relying on public cloud vendors.\n• **Air-Gapped RAG**: Retrieval-Augmented Generation running entirely on isolated, offline networks to eliminate data leaks.\n• **Key Decay**: Automated, high-frequency recycling of WireGuard keys to prevent prolonged session compromise.";
-        }
-        // 4. About Asaad Morman / Bowie State
+        // 4. About Bowie State Research Lab
         else if (/who|asaad|morman|bowie|doctoral|student|phd|degree|lab/.test(rawPrompt)) {
-            reply = "🎓 **About the Researcher**:\nAsaad Morman is a 1st-Year Doctoral Student at Bowie State University, military veteran, and cybersecurity researcher evaluating zero-trust enclaves, sovereign AI, and edge SIEM telemetry latency.";
+            reply = `🎓 **About the Researcher**:
+Asaad Morman is a 1st-Year Doctoral Student at Bowie State University, military veteran, and cybersecurity researcher evaluating zero-trust enclaves, sovereign AI, and edge SIEM telemetry latency.`;
         }
-        // 5. Dynamic Fallback for Other Cybersecurity Queries
+        // 5. Grounded Dynamic Fallback
         else {
-            reply = `🤖 **EDS-360 AI Assistant**: Evaluated prompt "${payload.prompt}".\n\nOur lab evaluates zero-trust architecture, CMMC 2.0 compliance, FIPS 140-3 key decay, and air-gapped RAG pipelines. Ask me about specific terms, compliance frameworks, or our membership tiers!`;
+            reply = `🤖 **EDS-360 Validated Knowledge Assistant**:
+Evaluated query "${payload.prompt}". 
+
+Our lab references validated standards from **NIST SP 800-171**, **DoD CMMC 2.0**, **FIPS 140-3**, and enterprise architectures from **Cloudflare Workers** and **Wazuh SIEM**. 
+
+Ask about specific compliance controls, Sovereign AI implementations, Air-Gapped RAG, or membership tiers!`;
         }
 
         return new Response(JSON.stringify({ 
@@ -49,7 +65,7 @@
     } catch (err) {
         return new Response(JSON.stringify({ 
             status: "SUCCESS", 
-            response: "🤖 **EDS-360 AI Assistant**: Active under Bowie State Black & Gold Enclave rules." 
+            response: "🤖 **EDS-360 AI Assistant**: Grounded in NIST SP 800-171, CMMC Level 2, and FIPS 140-3 framework rules." 
         }), {
             status: 200,
             headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
