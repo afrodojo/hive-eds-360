@@ -1,159 +1,172 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Doctoral Research Logs & Media Dispatch | The Hive Network</title>
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <title>EDS-360 Research & Intelligence Publications</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="assets/js/auth.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Space Grotesk', sans-serif; background-color: #030712; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        .tile { background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(51, 65, 85, 0.6); backdrop-filter: blur(8px); }
+    </style>
 </head>
-<body class="bg-[#0b0e14] text-gray-200 font-sans p-6">
+<body class="text-slate-100 min-h-screen flex flex-col p-4 space-y-4">
 
-    <header class="max-w-7xl mx-auto flex items-center justify-between bg-gray-900 p-4 rounded-xl mb-8 border border-gray-800">
+    <!-- Top Navigation Header -->
+    <header class="tile px-4 py-3 rounded-xl flex justify-between items-center">
         <div class="flex items-center space-x-3">
-            <div class="bg-blue-600 text-white font-bold p-2.5 rounded-lg">DS</div>
+            <div class="w-8 h-8 rounded-lg bg-purple-600 flex items-center justify-center font-bold text-white shadow-lg shadow-purple-500/30">
+                📚
+            </div>
             <div>
-                <h1 class="text-white font-bold text-lg">The Hive Network</h1>
-                <p class="text-xs text-gray-400">Doctoral Research Logs & Media Publication Engine</p>
+                <h1 class="text-sm font-bold text-white tracking-wide">EDS-360 RESEARCH & REPORTS HUB</h1>
+                <p class="text-[10px] text-slate-400 mono">FIPS 140-3 Enclave Intelligence • Tier Isolation Active</p>
             </div>
         </div>
-        <nav class="flex items-center space-x-6 text-sm">
-            <a href="index.html" class="text-gray-400 hover:text-white">Home & Research</a>
-            <a href="blog.html" class="text-blue-400 font-semibold border-b-2 border-blue-500 pb-1">Research Logs & Media</a>
-            <a href="admin.html" class="bg-purple-600 hover:bg-purple-500 text-white px-4 py-2 rounded-lg font-semibold text-xs">Admin Console</a>
-        </nav>
+
+        <div class="flex items-center space-x-2 text-xs mono">
+            <a href="/portal.html" class="px-3 py-1 bg-slate-900 hover:bg-slate-800 border border-slate-800 rounded text-slate-300">Portal</a>
+            <a href="/admin.html" id="adminNav" class="px-3 py-1 bg-slate-900 hover:bg-slate-800 border border-slate-800 rounded text-slate-300">Admin Console</a>
+            <a href="/blog.html" class="px-3 py-1 bg-purple-600 text-white rounded font-bold border border-purple-400/30">Reports & Blogs</a>
+            <a href="/auth.html" class="px-3 py-1 bg-red-950/50 hover:bg-red-900/50 border border-red-800 text-red-300">Sign Out</a>
+        </div>
     </header>
 
-    <main class="max-w-7xl mx-auto space-y-8">
+    <main class="grid grid-cols-1 lg:grid-cols-3 gap-4 flex-1">
         
-        <!-- Super-Admin Creator Panel (Active for dassensebsu@pm.me) -->
-        <div id="adminPublisherBar" class="bg-gray-900 border-2 border-purple-500/80 rounded-2xl p-6 space-y-4">
-            <div class="flex justify-between items-center">
-                <div>
-                    <span class="bg-purple-950 text-purple-300 text-[10px] font-mono px-2.5 py-1 rounded-full border border-purple-800/50 uppercase font-bold">Super-Admin Publisher Mode</span>
-                    <h2 class="text-xl font-bold text-white mt-1">Publish Blog Entry, Documentation, or Social Media Embed</h2>
+        <!-- Main Publications & Research Feed -->
+        <div class="lg:col-span-2 space-y-4">
+            <div class="flex justify-between items-center tile p-3 rounded-xl">
+                <h2 class="text-xs font-bold text-slate-200 mono uppercase">Active Tier Publications</h2>
+                <div class="flex space-x-2 text-[10px] mono">
+                    <button onclick="filterPosts('all')" class="px-2 py-1 bg-slate-800 rounded text-slate-300 hover:text-white">All Tiers</button>
+                    <button onclick="filterPosts('academic')" class="px-2 py-1 bg-blue-950 text-blue-400 border border-blue-800 rounded">Academic / Defense</button>
+                    <button onclick="filterPosts('research')" class="px-2 py-1 bg-purple-950 text-purple-400 border border-purple-800 rounded">Research Enclave</button>
                 </div>
-                <span class="text-xs text-gray-400 font-mono">Active User: <strong class="text-purple-400">dassensebsu@pm.me</strong></span>
             </div>
 
-            <form id="publishForm" onsubmit="handleContentPublish(event)" class="space-y-4">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <input type="text" id="postTitle" placeholder="Post / Article Title..." required class="bg-gray-950 border border-gray-800 text-xs text-white rounded-xl p-3 focus:outline-none focus:border-purple-500">
-                    <select id="postCategory" class="bg-gray-950 border border-gray-800 text-xs text-gray-300 rounded-xl p-3 focus:outline-none focus:border-purple-500">
-                        <option value="Research Log">Doctoral Research Log</option>
-                        <option value="System Documentation">System Documentation & RAG Specs</option>
-                        <option value="Social Dispatch">Facebook / Social Media Video Dispatch</option>
-                        <option value="CUDA Benchmark">Air-Gapped CUDA Hardware Benchmarks</option>
-                    </select>
-                </div>
-
-                <input type="url" id="postMediaUrl" placeholder="Embed Media URL (Facebook Video/Post, YouTube Link, or Documentation PDF)..." class="w-full bg-gray-950 border border-gray-800 text-xs text-white rounded-xl p-3 focus:outline-none focus:border-purple-500 font-mono">
-
-                <textarea id="postContent" rows="4" placeholder="Write full documentation narrative or social commentary..." required class="w-full bg-gray-950 border border-gray-800 text-xs text-white rounded-xl p-3 focus:outline-none focus:border-purple-500"></textarea>
-
-                <div class="flex justify-between items-center">
-                    <div class="flex items-center space-x-4">
-                        <label class="flex items-center space-x-2 text-xs text-gray-400">
-                            <input type="checkbox" id="syndicateFacebook" class="rounded bg-gray-950 border-gray-800 text-purple-600 focus:ring-purple-500" checked>
-                            <span>Syndicate to Facebook</span>
-                        </label>
-                        <label class="flex items-center space-x-2 text-xs text-gray-400">
-                            <input type="checkbox" id="syndicateLinkedIn" class="rounded bg-gray-950 border-gray-800 text-purple-600 focus:ring-purple-500" checked>
-                            <span>Syndicate to LinkedIn</span>
-                        </label>
+            <div id="postsFeed" class="space-y-4">
+                <!-- Academic / Defense Tier Post -->
+                <article class="tile p-5 rounded-xl space-y-3 post-item" data-tier="academic">
+                    <div class="flex justify-between items-center">
+                        <span class="text-[10px] px-2 py-0.5 bg-blue-950 text-blue-400 border border-blue-800 rounded mono">ACADEMIC / DEFENSE TIER</span>
+                        <span class="text-[10px] text-slate-500 mono">Published: Oct 13, 2026</span>
                     </div>
-                    <button type="submit" class="bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs px-6 py-3 rounded-xl transition shadow-lg shadow-purple-950/40">Publish Article & Dispatch Social Media</button>
-                </div>
-            </form>
+                    <h3 class="text-base font-bold text-white">Mitigating Edge Vulnerabilities in FIPS 140-3 Enclaves</h3>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        An analysis of key decay algorithms and automated zero-trust peer containment under NIST SP 800-171 guidelines.
+                    </p>
+                    <div class="p-3 bg-slate-950 rounded-xl border border-slate-800 flex items-center space-x-3">
+                        <span class="text-xl">🎙️</span>
+                        <div>
+                            <p class="text-xs font-bold text-slate-200 mono">Podcast Ep. 04: Zero-Trust Key Decay</p>
+                            <p class="text-[10px] text-slate-500 mono">Audio Stream • 14 mins • Defense Enclave Research</p>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Research Tier Post -->
+                <article class="tile p-5 rounded-xl space-y-3 post-item" data-tier="research">
+                    <div class="flex justify-between items-center">
+                        <span class="text-[10px] px-2 py-0.5 bg-purple-950 text-purple-400 border border-purple-800 rounded mono">RESEARCH ENCLAVE TIER</span>
+                        <span class="text-[10px] text-slate-500 mono">Published: Oct 11, 2026</span>
+                    </div>
+                    <h3 class="text-base font-bold text-white">DAS Computer Science: Neural Threat Telemetry Optimization</h3>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        Evaluates edge worker latency for real-time SIEM ingestion under high packet throughput (12,000+ MPS).
+                    </p>
+                    <div class="aspect-video bg-slate-950 rounded-xl border border-slate-800 flex items-center justify-center text-xs text-slate-500 mono">
+                        <span>📹 [Embedded Research Demonstration Video]</span>
+                    </div>
+                </article>
+            </div>
         </div>
 
-        <!-- Published Posts Feed -->
-        <section class="space-y-6">
-            <h3 class="text-2xl font-bold text-white">Live Dispatches & Documentation Feed</h3>
-            <div id="postsFeed" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Posts injected dynamically via JavaScript -->
+        <!-- Post Creation & AI Assistant Panel -->
+        <div class="space-y-4">
+            <div class="tile p-4 rounded-xl space-y-3">
+                <h2 class="text-xs font-bold text-purple-400 mono uppercase border-b border-slate-800 pb-2">Publish New Report / Blog</h2>
+                <div class="space-y-2 text-xs mono">
+                    <div>
+                        <label class="block text-slate-400 mb-1">Target Access Tier</label>
+                        <select id="postTier" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-white">
+                            <option value="business">Business Tier ($99/mo)</option>
+                            <option value="academic">Academic / Defense Enclave ($249/mo)</option>
+                            <option value="enterprise">Enterprise SOC ($499/mo)</option>
+                            <option value="research">DAS Computer Science Research</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-slate-400 mb-1">Title</label>
+                        <input type="text" id="postTitle" placeholder="Report or Research Title..." class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-white">
+                    </div>
+                    <div>
+                        <label class="block text-slate-400 mb-1">Media Link (Video/Podcast URL)</label>
+                        <input type="text" id="postMedia" placeholder="https://..." class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-white">
+                    </div>
+                    <div>
+                        <label class="block text-slate-400 mb-1">Content Body</label>
+                        <textarea id="postBody" rows="4" placeholder="Type report content..." class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-white"></textarea>
+                    </div>
+                    <button onclick="publishNewPost()" class="w-full py-2 bg-purple-600 hover:bg-purple-500 text-white rounded-lg font-bold">Publish to Tier</button>
+                </div>
             </div>
-        </section>
-
+        </div>
     </main>
 
     <script>
-        let postsList = [
-            {
-                id: 1,
-                title: "Air-Gapped CUDA Benchmarks on RTX 4090 Workstations",
-                category: "CUDA Benchmark",
-                author: "dassensebsu@pm.me",
-                date: "Oct 12, 2026",
-                content: "Sub-10ms token generation achieved on local air-gapped llama3 70B quantizations. Full documentation attached below.",
-                mediaUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-            },
-            {
-                id: 2,
-                title: "Emerging Defense Solutions - Joint Research Dispatch",
-                category: "Social Dispatch",
-                author: "dassensebsu@pm.me",
-                date: "Oct 10, 2026",
-                content: "Highlights from our recent technical demonstration on tactical edge computing and zero-trust security.",
-                mediaUrl: "https://www.facebook.com/facebook/videos/10153231379946729/"
+        const userRole = localStorage.getItem('hive_user_role') || 'business';
+
+        (function enforceTierVisibility() {
+            if (userRole === 'business' || userRole === 'member') {
+                const adminNav = document.getElementById('adminNav');
+                if (adminNav) adminNav.style.display = 'none';
             }
-        ];
+        })();
 
-        function renderPosts() {
-            const feed = document.getElementById("postsFeed");
-            feed.innerHTML = "";
-
-            postsList.forEach(post => {
-                const mediaHtml = generateMediaEmbed(post.mediaUrl);
-                const card = document.createElement("article");
-                card.className = "bg-gray-900 border border-gray-800 rounded-2xl p-6 space-y-3 flex flex-col justify-between hover:border-gray-700 transition";
-
-                card.innerHTML = `
-                    <div>
-                        <div class="flex justify-between items-center mb-2">
-                            <span class="bg-blue-950 text-blue-400 text-[10px] font-mono px-2.5 py-0.5 rounded-full uppercase">${post.category}</span>
-                            <span class="text-xs text-gray-500">${post.date}</span>
-                        </div>
-                        <h4 class="text-lg font-bold text-white">${post.title}</h4>
-                        <p class="text-xs text-gray-400 mt-2 leading-relaxed">${post.content}</p>
-                        ${mediaHtml}
-                    </div>
-                    <div class="pt-4 border-t border-gray-800/60 flex justify-between items-center text-[11px] text-gray-500">
-                        <span>Published by: <strong class="text-gray-300">${post.author}</strong></span>
-                        <button onclick="deletePost(${post.id})" class="text-red-400 hover:text-red-300">Delete Post</button>
-                    </div>
-                `;
-                feed.appendChild(card);
+        function filterPosts(tier) {
+            const posts = document.querySelectorAll('.post-item');
+            posts.forEach(post => {
+                if (tier === 'all' || post.dataset.tier === tier) {
+                    post.style.display = 'block';
+                } else {
+                    post.style.display = 'none';
+                }
             });
         }
 
-        function handleContentPublish(e) {
-            e.preventDefault();
-            const newPost = {
-                id: Date.now(),
-                title: document.getElementById("postTitle").value,
-                category: document.getElementById("postCategory").value,
-                author: "dassensebsu@pm.me",
-                date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
-                content: document.getElementById("postContent").value,
-                mediaUrl: document.getElementById("postMediaUrl").value
-            };
+        async function publishNewPost() {
+            const title = document.getElementById('postTitle').value.trim();
+            const body = document.getElementById('postBody').value.trim();
+            const tier = document.getElementById('postTier').value;
+            const media = document.getElementById('postMedia').value.trim();
 
-            postsList.unshift(newPost);
-            renderPosts();
-            document.getElementById("publishForm").reset();
-            alert("Article & Social Media Embed published successfully!");
+            if (!title || !body) {
+                alert("Please enter a title and content body.");
+                return;
+            }
+
+            const feed = document.getElementById('postsFeed');
+            const newArticle = document.createElement('article');
+            newArticle.className = 'tile p-5 rounded-xl space-y-3 post-item';
+            newArticle.dataset.tier = tier;
+            newArticle.innerHTML = `
+                <div class="flex justify-between items-center">
+                    <span class="text-[10px] px-2 py-0.5 bg-emerald-950 text-emerald-400 border border-emerald-800 rounded mono">${tier.toUpperCase()} TIER</span>
+                    <span class="text-[10px] text-slate-500 mono">Just Now</span>
+                </div>
+                <h3 class="text-base font-bold text-white">${title}</h3>
+                <p class="text-xs text-slate-300 leading-relaxed">${body}</p>
+                ${media ? `<div class="p-3 bg-slate-950 rounded-xl border border-slate-800 text-xs mono text-purple-400">🎙️ Media Attached: ${media}</div>` : ''}
+            `;
+
+            feed.prepend(newArticle);
+            document.getElementById('postTitle').value = '';
+            document.getElementById('postBody').value = '';
+            alert("Report successfully published to " + tier + " tier feed!");
         }
-
-        function deletePost(id) {
-            postsList = postsList.filter(p => p.id !== id);
-            renderPosts();
-        }
-
-        window.onload = function() {
-            renderPosts();
-        };
     </script>
 </body>
 </html>
