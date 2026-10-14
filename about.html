@@ -148,21 +148,35 @@
         function About() {
             return (
                 <div className="overflow-x-hidden">
-                    <section className="py-20 bg-gradient-to-b from-black to-neutral-950">
+                                        <section className="py-16 bg-gradient-to-b from-black to-neutral-950">
                         <div className="max-w-7xl mx-auto px-6 text-center">
                             <motion.div
                                 initial={{ opacity: 0, y: 30 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.8 }}
+                                className="flex flex-col items-center"
                             >
+                                <div className="relative mb-6">
+                                    <div className="w-44 h-44 md:w-52 md:h-52 rounded-full overflow-hidden border-4 border-amber-500 shadow-2xl shadow-amber-500/30 glow-gold">
+                                        <img 
+                                            src="/assets/asaad-morman.jpg" 
+                                            alt="Asaad Morman" 
+                                            className="w-full h-full object-cover object-top"
+                                            onError={(e) => { e.target.src = "https://github.com/afrodojo.png"; }}
+                                        />
+                                    </div>
+                                    <span className="absolute bottom-2 right-2 w-5 h-5 bg-emerald-400 border-2 border-black rounded-full animate-pulse" title="Active Lab Enclave"></span>
+                                </div>
+
                                 <span className="inline-block px-3 py-1 bg-amber-950/80 border border-amber-500/50 rounded-full text-xs text-amber-400 mono font-bold mb-4">
                                     BOWIE STATE UNIVERSITY • DOCTORAL STUDENT
                                 </span>
-                                <h1 className="text-5xl md:text-6xl font-bold mb-6 text-white">
-                                    About <span className="text-amber-400">Asaad Morman</span>
+                                <h1 className="text-5xl md:text-6xl font-bold mb-4 text-white">
+                                    Asaad <span className="text-amber-400">Morman</span>
                                 </h1>
+                                <p class="text-xs text-slate-400 mono mb-6">Cybersecurity Expert • Military Veteran • 1st-Year Doctoral Student</p>
                                 <div className="w-24 h-1 bg-amber-500 mx-auto mb-8" />
-                                <p className="text-xl text-slate-300 max-w-4xl mx-auto leading-relaxed">
+                                <p className="text-lg text-slate-300 max-w-3xl mx-auto leading-relaxed">
                                     First-year Doctoral Student at Bowie State University combining military leadership, offensive cybersecurity expertise, and research dedicated to protecting critical infrastructure.
                                 </p>
                             </motion.div>
@@ -192,3 +206,4 @@
     </script>
 </body>
 </html>
+
