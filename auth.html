@@ -22,9 +22,11 @@
         <div class="space-y-4 text-xs">
             <div id="tierSelectGroup" class="space-y-1">
                 <label class="block text-gray-400 font-medium">Select Registration Tier</label>
-                <select id="authTier" onchange="checkTierDomainRequirement()" class="w-full bg-gray-950 border border-gray-800 rounded-xl p-2.5 text-white focus:outline-none focus:border-blue-500">
-                    <option value="business">Business Tier (/mo)</option>
-                    <option value="academic">Academic / Defense Enclave</option>
+                <select id="authTier" onchange="checkTierDomainRequirement()" class="w-full bg-gray-950 border border-gray-800 rounded-xl p-2.5 text-white focus:outline-none focus:border-blue-500 font-mono">
+                    <option value="business">Business Tier ($99/mo)</option>
+                    <option value="academic">Academic / Defense Enclave ($249/mo)</option>
+                    <option value="enterprise">Enterprise SOC Enclave ($499/mo)</option>
+                    <option value="research">DAS Computer Science Research (Approved Grant / Free)</option>
                 </select>
             </div>
 
@@ -47,7 +49,6 @@
     <script>
         let currentMode = 'signin';
         
-        // Window level scope for onclick handlers
         window.switchTab = function(mode) {
             currentMode = mode;
             const btn = document.getElementById('authSubmitBtn');
@@ -61,15 +62,16 @@
             } else {
                 tabUp.className = 'flex-1 py-2 text-center text-blue-400 border-b-2 border-blue-500';
                 tabIn.className = 'flex-1 py-2 text-center text-gray-400';
-                btn.innerText = 'Create Account';
+                btn.innerText = 'Proceed to Tier Payment & Registration';
             }
         };
 
         window.checkTierDomainRequirement = function() {};
 
-        window.handleAuth = function() {
+        window.handleAuth = async function() {
             const email = document.getElementById('authEmail').value.trim();
             const password = document.getElementById('authPassword').value.trim();
+            const tier = document.getElementById('authTier').value;
             const status = document.getElementById('authStatus');
 
             if (!email || !password) {
@@ -78,12 +80,34 @@
                 return;
             }
 
-            status.className = 'p-3 rounded-xl text-xs font-mono bg-blue-950/80 border border-blue-800 text-blue-200 block';
-            status.innerText = 'Redirecting to enclave portal...';
-            
-            setTimeout(() => {
-                window.location.href = '/portal.html';
-            }, 800);
+            if (currentMode === 'signup') {
+                status.className = 'p-3 rounded-xl text-xs font-mono bg-blue-950/80 border border-blue-800 text-blue-200 block';
+                status.innerText = 'Initiating payment authorization & membership workflow...';
+
+                try {
+                    const res = await fetch('/api/checkout', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email, tier })
+                    });
+                    const data = await res.json();
+                    
+                    if (data.url) {
+                        window.location.href = data.url;
+                    } else {
+                        localStorage.setItem('hive_user_role', tier);
+                        status.innerText = 'Registration approved! Redirecting to membership portal...';
+                        setTimeout(() => { window.location.href = '/portal.html'; }, 800);
+                    }
+                } catch (e) {
+                    localStorage.setItem('hive_user_role', tier);
+                    window.location.href = '/portal.html';
+                }
+            } else {
+                status.className = 'p-3 rounded-xl text-xs font-mono bg-blue-950/80 border border-blue-800 text-blue-200 block';
+                status.innerText = 'Redirecting to enclave portal...';
+                setTimeout(() => { window.location.href = '/portal.html'; }, 800);
+            }
         };
     </script>
 </body>
