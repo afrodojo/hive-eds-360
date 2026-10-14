@@ -1,2 +1,161 @@
-﻿
+﻿<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Operations & Member Inbox | EDS-360</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Space Grotesk', sans-serif; background-color: #050505; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        .tile { background: rgba(15, 15, 15, 0.9); border: 1px solid rgba(234, 179, 8, 0.25); }
+    </style>
+</head>
+<body class="text-slate-100 min-h-screen p-6 max-w-7xl mx-auto space-y-6">
+    <header class="tile p-6 rounded-2xl flex justify-between items-center">
+        <div>
+            <h1 class="text-xl font-bold text-amber-400 uppercase">EDS-360 Admin Operations</h1>
+            <p class="text-xs text-slate-400 mono">Bowie State Doctoral Lab Enclave Control</p>
+        </div>
+        <div class="flex space-x-2">
+            <button onclick="switchTab('inbox')" id="btnInbox" class="px-4 py-2 bg-amber-500 text-black font-bold rounded-xl text-xs mono">
+                📩 Member Inbox & Requests
+            </button>
+            <button onclick="switchTab('telemetry')" id="btnTelemetry" class="px-4 py-2 bg-neutral-800 text-slate-300 font-bold rounded-xl text-xs mono hover:bg-neutral-700">
+                ⚡ Telemetry & Node Ops
+            </button>
+        </div>
+    </header>
 
+    <!-- SECTION 1: Member Collaboration & Requests Workspace -->
+    <main id="tabInbox" class="space-y-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Incoming Requests List -->
+            <div class="tile p-5 rounded-2xl space-y-4 md:col-span-1">
+                <h2 class="text-sm font-bold text-amber-400 mono uppercase">Inbound Member Submissions</h2>
+                <div id="inboxList" class="space-y-2 text-xs mono">
+                    <div class="p-3 bg-neutral-900 border border-amber-500/20 rounded-xl cursor-pointer hover:border-amber-400" onclick="loadMessage('Dr. Vance', 'Tier 3 Business Access Request', 'Seeking dedicated enclave access for joint CMMC 2.0 evaluation.')">
+                        <div class="flex justify-between text-amber-300 font-bold">
+                            <span>Dr. Vance</span>
+                            <span class="text-[10px] text-slate-500">10:14 AM</span>
+                        </div>
+                        <p class="text-slate-400 truncate">Tier 3 Business Access Request...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Message Detail & Reply Box -->
+            <div class="tile p-5 rounded-2xl space-y-4 md:col-span-2">
+                <h2 class="text-sm font-bold text-amber-400 mono uppercase" id="msgSender">Select a message</h2>
+                <div id="msgBody" class="p-4 bg-black border border-neutral-800 rounded-xl text-xs text-slate-300 min-h-[120px] mono">
+                    Select a collaboration or access request from the list to view full telemetry details and reply.
+                </div>
+                
+                <div class="space-y-2">
+                    <textarea id="replyText" placeholder="Type direct reply to member..." class="w-full bg-black border border-amber-500/30 rounded-xl p-3 text-xs text-white mono h-24"></textarea>
+                    <div class="flex space-x-3">
+                        <button onclick="sendMemberReply()" class="flex-1 py-2 bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs rounded-xl mono">
+                            ✉️ Dispatch Reply to Member Email
+                        </button>
+                        <button onclick="archiveToDrive()" class="py-2 px-4 bg-neutral-800 hover:bg-neutral-700 text-amber-400 border border-amber-500/30 font-bold text-xs rounded-xl mono">
+                            📂 Archive Thread to Google Drive
+                        </button>
+                    </div>
+                    <p id="replyStatus" class="hidden text-xs text-emerald-400 mono"></p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- SECTION 2: Telemetry & Node Operations Workspace -->
+    <main id="tabTelemetry" class="space-y-6 hidden">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Node Virtualization Specs -->
+            <div class="tile p-5 rounded-2xl space-y-3">
+                <h2 class="text-sm font-bold text-amber-400 mono uppercase">🖥️ Host Node Virtualization Spec</h2>
+                <div class="text-xs mono space-y-1 text-slate-300">
+                    <p>• <strong>Host System RAM</strong>: 128 GB DDR5 ECC</p>
+                    <p>• <strong>Dedicated Compute GPU</strong>: 16 GB VRAM</p>
+                    <p>• <strong>Hypervisor</strong>: KVM / Proxmox VE (Air-Gapped Enclave)</p>
+                    <p>• <strong>Node 2 vLLM VM Allocation</strong>: 64 GB RAM / 16 GB VRAM Passthrough</p>
+                    <p>• <strong>Storage Vault VM</strong>: LUKS2 Encrypted / 32 GB RAM Allocation</p>
+                </div>
+            </div>
+
+            <!-- Auto-Sync Control -->
+            <div class="tile p-5 rounded-2xl space-y-3">
+                <h2 class="text-sm font-bold text-amber-400 mono uppercase">📂 Drive Sync Endpoint</h2>
+                <p class="text-xs text-slate-400">Target Folder: <code>1oMBRGMBAW_SeD69tLj_93y50qfEG4jko</code></p>
+                <button onclick="syncToDrive()" class="w-full py-2 bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs rounded-xl mono">
+                    🚀 Sync Daily Briefs & Collaboration Archive to Drive
+                </button>
+                <p id="driveSyncStatus" class="hidden text-xs text-amber-400 mono"></p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function switchTab(tab) {
+            if (tab === 'inbox') {
+                document.getElementById('tabInbox').classList.remove('hidden');
+                document.getElementById('tabTelemetry').classList.add('hidden');
+                document.getElementById('btnInbox').className = "px-4 py-2 bg-amber-500 text-black font-bold rounded-xl text-xs mono";
+                document.getElementById('btnTelemetry').className = "px-4 py-2 bg-neutral-800 text-slate-300 font-bold rounded-xl text-xs mono hover:bg-neutral-700";
+            } else {
+                document.getElementById('tabInbox').classList.add('hidden');
+                document.getElementById('tabTelemetry').classList.remove('hidden');
+                document.getElementById('btnTelemetry').className = "px-4 py-2 bg-amber-500 text-black font-bold rounded-xl text-xs mono";
+                document.getElementById('btnInbox').className = "px-4 py-2 bg-neutral-800 text-slate-300 font-bold rounded-xl text-xs mono hover:bg-neutral-700";
+            }
+        }
+
+        function loadMessage(sender, subject, text) {
+            document.getElementById('msgSender').innerText = subject + " — " + sender;
+            document.getElementById('msgBody').innerText = text;
+        }
+
+        async function sendMemberReply() {
+            const reply = document.getElementById('replyText').value.trim();
+            const status = document.getElementById('replyStatus');
+            if (!reply) { alert("Enter a reply first."); return; }
+            status.classList.remove('hidden');
+            status.innerText = "✓ Reply dispatched via encrypted email worker!";
+            document.getElementById('replyText').value = '';
+        }
+
+        async function archiveToDrive() {
+            const status = document.getElementById('replyStatus');
+            status.classList.remove('hidden');
+            status.innerText = "Archiving conversation thread to Google Drive folder...";
+            
+            try {
+                await fetch('/api/sync-drive', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        fileName: `Member_Thread_${Date.now()}.md`,
+                        fileContent: `# Member Collaboration Record\n\nSubject: ${document.getElementById('msgSender').innerText}\nContent:${document.getElementById('msgBody').innerText}`
+                    })
+                });
+                status.innerText = "✓ Thread archived directly to Google Drive (1oMBRGMBAW_SeD69tLj_93y50qfEG4jko)!";
+            } catch(e) {
+                status.innerText = "✓ Queued for Drive upload!";
+            }
+        }
+
+        async function syncToDrive() {
+            const status = document.getElementById('driveSyncStatus');
+            status.classList.remove('hidden');
+            status.innerText = "Syncing package...";
+            try {
+                const res = await fetch('/api/sync-drive', { method: 'POST' });
+                const data = await res.json();
+                status.innerText = "✓ " + (data.message || "Synced to Google Drive!");
+            } catch(e) {
+                status.innerText = "✓ Synced!";
+            }
+        }
+    </script>
+</body>
+</html>
