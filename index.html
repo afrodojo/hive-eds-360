@@ -217,7 +217,7 @@
         <p class="text-[10px] text-slate-600">Personal Doctoral Research Testbed • Non-Commercial Academic Enclave</p>
     </footer>
 
-            <script>
+                <script>
         async function sendChatQuery() {
             const input = document.getElementById('chatInput');
             const history = document.getElementById('chatHistory');
@@ -225,7 +225,7 @@
 
             if (!prompt) return;
 
-            // Render User Prompt
+            // Render User Message
             const userMsg = document.createElement('div');
             userMsg.className = 'p-2.5 bg-amber-950/40 border border-amber-800/40 rounded-lg text-slate-200 text-right';
             userMsg.innerHTML = `<strong>You:</strong> ${prompt}`;
@@ -233,27 +233,40 @@
             input.value = '';
             history.scrollTop = history.scrollHeight;
 
-            // Generate Dynamic Dynamic Response
+            // Prepare Dynamic Intelligence Resolution
             const q = prompt.toLowerCase();
             let reply = "";
 
-            if (q.includes("cmmc")) {
-                reply = "🛡️ <strong>CMMC 2.0 (DoD / 32 CFR Part 170)</strong>:<br/>• Requires mandatory 3rd-party C3PAO verification across 110 NIST SP 800-171 Rev 2/3 controls.<br/>• Protects Controlled Unclassified Information (CUI) within enclave boundaries.<br/>• Integrated with Hugging Face repository <code>afrodojo/cyberdojosensei</code>.";
-            } else if (q.includes("rag")) {
-                reply = "📚 <strong>Air-Gapped RAG (Retrieval-Augmented Generation)</strong>:<br/>• Queries private vector indices (Qdrant/pgvector) on offline hardware.<br/>• Zero Wi-Fi or Ethernet bridge connections—guarantees zero CUI cloud leakage.<br/>• Instant response latency (~18ms) over local defense manuals.";
-            } else if (q.includes("sovereign")) {
-                reply = "🏛️ <strong>Sovereign AI Infrastructure</strong>:<br/>• Owns 100% of physical hardware, model weights, and inference pipelines within sovereign borders.<br/>• Eliminates third-party supply-chain logging and external API outages.<br/>• Meets strict FIPS 140-3 physical and cryptographic isolation rules.";
-            } else if (q.includes("fips") || q.includes("key") || q.includes("decay")) {
-                reply = "🔑 <strong>FIPS 140-3 & Zero-Trust Key Decay</strong>:<br/>• Automated, high-frequency recycling of WireGuard peer session keys.<br/>• Prevents long-term session hijacking across edge workers.<br/>• Ingress telemetry logged live at <code>/api/webhook</code> into Wazuh HIDS/SIEM.";
-            } else if (q.includes("tier") || q.includes("price") || q.includes("cost") || q.includes("membership") || q.includes("business") || q.includes("academic") || q.includes("basic")) {
-                reply = "💳 <strong>Enclave Membership Tiers</strong>:<br/>• <strong>Basic Member ($10/mo)</strong>: Public dissertation logs & live SIEM telemetry ingress.<br/>• <strong>Academic Member ($15/mo)</strong>: 7-day early access to research papers, podcasts & videos.<br/>• <strong>Business Tier ($150/mo)</strong>: Enterprise SOC tools & Hugging Face dataset webhooks.<br/>• <strong>Donations ($5+)</strong>: Direct lab support for Bowie State research.";
-            } else if (q.includes("who") || q.includes("asaad") || q.includes("morman") || q.includes("bowie")) {
-                reply = "🎓 <strong>About Asaad Morman</strong>:<br/>1st-Year Doctoral Student at Bowie State University (pronounced <em>Boo-wee</em>), military veteran, and cybersecurity expert researching zero-trust enclaves, sovereign AI, and edge SIEM latency.";
-            } else {
-                reply = `🤖 <strong>EDS-360 AI Assistant</strong>:<br/>Analyzed query: "<em>${prompt}</em>".<br/><br/>Our lab integrates grounded data from NIST SP 800-171, DoD CMMC 2.0, FIPS 140-3, and Hugging Face repository <code>afrodojo/cyberdojosensei</code>. Ask specifically about CMMC, Air-Gapped RAG, Sovereign AI, or membership tiers!`;
+            // 1. Graduation / Timeline Queries
+            if (q.includes("graduat") || q.includes("year") || q.includes("finish") || q.includes("degree")) {
+                reply = "🎓 <strong>Graduation & Research Timeline</strong>:<br/>• Asaad Morman began his Doctor of Applied Science (DAS) in Computer Science at Bowie State University in 2026.<br/>• Standard doctoral completion is targeted for <strong>2029 - 2030</strong>, subject to dissertation defense, peer-reviewed publications, and FIPS 140-3 zero-trust lab milestone validations.";
+            } 
+            // 2. Quantum Encryption & Post-Quantum Cryptography (PQC)
+            else if (q.includes("quantum") || q.includes("pqc") || q.includes("lattice") || q.includes("encryption")) {
+                reply = "⚛️ <strong>Quantum Encryption & Post-Quantum Resilience</strong>:<br/>• Asaad's research on zero-trust state decay and rapid key rotation directly addresses Post-Quantum Cryptography (PQC).<br/>• Traditional RSA/ECC encryption will be vulnerable to Shor's algorithm on quantum computers. High-frequency key decay and NIST-standardized PQC algorithms (e.g., CRYSTALS-Kyber/Dilithium) inside isolated air-gapped enclaves ensure session security remains unbreakable even in a post-quantum environment.";
+            }
+            // 3. Core Research Goals / Problem Statement
+            else if (q.includes("solve") || q.includes("attempt") || q.includes("goal") || q.includes("purpose") || q.includes("problem") || q.includes("why")) {
+                reply = "🎯 <strong>Research Objective & Problem Statement</strong>:<br/>• <strong>The Problem</strong>: Current cloud AI systems leak Controlled Unclassified Information (CUI) and suffer from supply-chain vulnerabilities, while static zero-trust rules fail under load.<br/>• <strong>The Solution</strong>: Asaad's dissertation evaluates autonomous, self-healing zero-trust enclaves, sovereign AI pipelines, and sub-20ms air-gapped RAG retrieval to prove continuous compliance with NIST SP 800-171 Rev 3 and CMMC 2.0 Level 2.";
+            }
+            // 4. CMMC / Compliance
+            else if (q.includes("cmmc") || q.includes("nist") || q.includes("cui") || q.includes("compliance")) {
+                reply = "🛡️ <strong>CMMC 2.0 & NIST SP 800-171</strong>:<br/>• Requires mandatory C3PAO third-party verification across 110 security controls.<br/>• Ensures Controlled Unclassified Information (CUI) inside Bowie State's enclave is cryptographically protected under FIPS 140-3 guidelines.";
+            }
+            // 5. Air-Gapped RAG / Sovereign AI
+            else if (q.includes("rag") || q.includes("sovereign") || q.includes("air gap") || q.includes("hugging")) {
+                reply = "📚 <strong>Sovereign AI & Air-Gapped RAG Pipeline</strong>:<br/>• Models run locally on sovereign hardware with zero external internet connections.<br/>• Grounded directly using Hugging Face repository datasets (<code>afrodojo/cyberdojosensei</code>) to prevent hallucinations and eliminate data leakage.";
+            }
+            // 6. Pricing & Tiers
+            else if (q.includes("tier") || q.includes("price") || q.includes("cost") || q.includes("membership") || q.includes("upgrade")) {
+                reply = "💳 <strong>Enclave Membership Tiers</strong>:<br/>• Basic Member ($10/mo)<br/>• Academic Member ($15/mo)<br/>• Business Tier ($150/mo)<br/>• Support Lab Donations ($5+)";
+            }
+            // 7. General Off-The-Cuff Fallback Evaluation
+            else {
+                reply = `🤖 <strong>EDS-360 Intelligence Engine</strong>:<br/>Evaluating prompt: "<em>${prompt}</em>"<br/><br/>Asaad Morman's Bowie State research covers zero-trust state decay, FIPS 140-3 key rotation, post-quantum encryption resilience, and air-gapped RAG pipelines grounded in <code>afrodojo/cyberdojosensei</code>. Ask specifically about graduation timelines, quantum security, or dissertation goals!`;
             }
 
-            // Attempt async API fetch, fallback directly to dynamic local response
+            // Attempt Cloud API Call to Gemini / Hugging Face if Endpoint Key Present
             try {
                 const res = await fetch('/api/agent', {
                     method: 'POST',
@@ -262,22 +275,22 @@
                 });
                 if (res.ok) {
                     const data = await res.json();
-                    if (data && data.response && !data.response.includes("Active under Bowie")) {
+                    if (data && data.response && data.response.length > 20 && !data.response.includes("Active under Bowie State")) {
                         reply = data.response.replace(/\n/g, '<br/>');
                     }
                 }
-            } catch (e) {
-                // Ignore API network errors and use calculated dynamic reply
+            } catch (err) {
+                // Fallback directly to calculated context reply
             }
 
-            // Render Bot Response
+            // Render Response
             setTimeout(() => {
                 const botMsg = document.createElement('div');
                 botMsg.className = 'p-2.5 bg-neutral-900 border border-neutral-800 rounded-lg text-amber-300';
                 botMsg.innerHTML = reply;
                 history.appendChild(botMsg);
                 history.scrollTop = history.scrollHeight;
-            }, 200);
+            }, 250);
         }
 
         async function handleSubscribe() {
@@ -301,5 +314,6 @@
     </script>
 </body>
 </html>
+
 
 
