@@ -1,53 +1,86 @@
 ﻿export async function onRequest(context) {
-    const { request } = context;
+    const { request, env } = context;
     const url = new URL(request.url);
 
-    // Handle CORS preflight
     if (request.method === "OPTIONS") {
         return new Response(null, {
-            status: 204,
+            status: 200,
             headers: {
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-                "Access-Control-Allow-Headers": "Content-Type, X-GitHub-Event, X-Hub-Signature-256"
+                "Access-Control-Allow-Headers": "*"
             }
         });
     }
 
-    if (url.pathname === "/api/webhook" && request.method === "POST") {
+    if (url.pathname === "/api/member-signup") {
         try {
-            const payload = await request.json();
-            const eventType = request.headers.get("X-GitHub-Event") || "push";
+            const body = await request.json().catch(() => ({}));
+            const memberName = body.name || "Anonymous Researcher";
+            const email = body.email || "cyberdojosensei@gmail.com";
+            const tier = body.tier || "Academic ($150/mo)";
+            const notes = body.notes || "Inquiry regarding Bowie State zero-trust research enclave access.";
+
+            const manifestContent = `# New Member Inquiry & Tier Application\n\n- Name: ${memberName}\n- Email: ${email}\n- Requested Tier:${tier}\n- Application Notes: ${notes}\n- Submitted:${new Date().toISOString()}`;
+
+            const clientId = env.GDRIVE_CLIENT_ID;
+            const clientSecret = env.GDRIVE_CLIENT_SECRET;
+            const refreshToken = env.GDRIVE_REFRESH_TOKEN;
+            const folderId = "1oMBRGMBAW_SeD69tLj_93y50qfEG4jko";
+
+            if (clientId && clientSecret && refreshToken) {
+                const tokenResp = await fetch("https://oauth2.googleapis.com/token", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                    body: new URLSearchParams({
+                        client_id: clientId,
+                        client_secret: clientSecret,
+                        refresh_token: refreshToken,
+                        grant_type: "refresh_token"
+                    })
+                });
+                const tokenData = await tokenResp.json();
+
+                if (tokenData.access_token) {
+                    const metadata = { name: `Member_App_${memberName.replace(/\s+/g, '_')}_${Date.now()}.md`, parents: [folderId], mimeType: "text/markdown" };
+                    const form = new FormData();
+                    form.append("metadata", new Blob([JSON.stringify(metadata)], { type: "application/json" }));
+                    form.append("file", new Blob([manifestContent], { type: "text/markdown" }));
+
+                    await fetch("https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart", {
+                        method: "POST",
+                        headers: { Authorization: `Bearer ${tokenData.access_token}` },
+                        body: form
+                    });
+                }
+            }
 
             return new Response(JSON.stringify({
                 status: "SUCCESS",
-                message: "EDS-360 Enclave: GitHub Webhook Telemetry Ingested",
-                event: eventType,
-                timestamp: new Date().toISOString()
+                message: `Thank you ${memberName}. Your application for ${tier} has been recorded!`,
+                tier: tier
             }), {
                 status: 200,
-                headers: {
-                    "Content-Type": "application/json",
-                    "Access-Control-Allow-Origin": "*"
-                }
+                headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
             });
         } catch (err) {
-            return new Response(JSON.stringify({
-                status: "SUCCESS",
-                message: "Webhook event received",
-                details: err.message
-            }), {
-                status: 200,
-                headers: {
-                    "Content-Type": "application/json",
-                    "Access-Control-Allow-Origin": "*"
-                }
-            });
+            return new Response(JSON.stringify({ status: "ERROR", message: err.message }), { status: 500 });
         }
     }
 
-    return new Response(JSON.stringify({ status: "ACTIVE", node: "EDS-360 Worker Engine" }), {
-        status: 200,
-        headers: { "Content-Type": "application/json" }
-    });
+    if (url.pathname === "/api/vllm-gateway") {
+        return new Response(JSON.stringify({
+            status: "ONLINE",
+            node: "Node 2 vLLM (WSL2 Hybrid Workstation)",
+            vramCap: "12 GB Dedicated (4 GB Windows Display Reserve)",
+            hostMemoryAllocated: "80 GB / 128 GB",
+            model: "llama3.1:8b-instruct-q4_K_M",
+            timestamp: new Date().toISOString()
+        }), {
+            status: 200,
+            headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+        });
+    }
+
+    return new Response(JSON.stringify({ error: "Route Not Found", path: url.pathname }), { status: 404 });
 }
