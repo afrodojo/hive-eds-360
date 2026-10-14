@@ -21,6 +21,7 @@
 <body class="text-slate-100 min-h-screen flex flex-col p-3 space-y-3">
 
     <!-- Top Navigation Header -->
+        <!-- Top Role Navigation & Command Bar -->
     <header class="tile px-4 py-2.5 rounded-xl flex justify-between items-center">
         <div class="flex items-center space-x-3">
             <div class="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center font-bold text-white shadow-lg shadow-blue-500/30">
@@ -31,20 +32,17 @@
                     <h1 class="text-sm font-bold text-white tracking-wide">EDS-360 SOC COMMAND CENTER</h1>
                     <span class="text-[10px] px-2 py-0.5 bg-blue-950 text-blue-400 border border-blue-800 rounded mono">FIPS 140-3 ACTIVE</span>
                 </div>
-                <p class="text-[10px] text-slate-400 mono">Enclave Node: HIVE-EDGE-PRIMARY | NIST SP 800-171 / CMMC Level 2</p>
+                <p class="text-[10px] text-slate-400 mono">Enclave Node: HIVE-EDGE-PRIMARY | Role: Super Administrator</p>
             </div>
         </div>
 
-        <div class="flex items-center space-x-4 text-xs mono">
-            <div class="flex items-center space-x-2 bg-slate-900 border border-slate-800 px-3 py-1 rounded-lg">
-                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                <span class="text-slate-300">INGRESS: <strong class="text-emerald-400">8,304 MPS</strong></span>
-            </div>
-            <div class="flex items-center space-x-2 bg-slate-900 border border-slate-800 px-3 py-1 rounded-lg">
-                <span class="text-slate-400">THREAT LEVEL:</span>
-                <span class="text-amber-400 font-bold">DEFCON 4</span>
-            </div>
-            <a href="/auth.html" class="px-3 py-1 bg-slate-900 hover:bg-slate-800 border border-slate-800 rounded text-slate-300">Sign Out</a>
+        <!-- Role Switching Links -->
+        <div class="flex items-center space-x-2 text-xs mono">
+            <a href="/portal.html" class="px-3 py-1 bg-blue-600 text-white rounded font-bold border border-blue-400/30">Portal</a>
+            <a href="/admin.html" class="px-3 py-1 bg-slate-900 hover:bg-slate-800 border border-slate-800 rounded text-slate-300">Admin Console</a>
+            <a href="/RAG-console.html" class="px-3 py-1 bg-slate-900 hover:bg-slate-800 border border-slate-800 rounded text-purple-400 border-purple-900/50">RAG Studio</a>
+            <a href="/blog.html" class="px-3 py-1 bg-slate-900 hover:bg-slate-800 border border-slate-800 rounded text-slate-300">Reports & Blogs</a>
+            <a href="/auth.html" class="px-3 py-1 bg-red-950/50 hover:bg-red-900/50 border border-red-800 text-red-300">Sign Out</a>
         </div>
     </header>
 
@@ -299,3 +297,4 @@
     </script>
 </body>
 </html>
+
