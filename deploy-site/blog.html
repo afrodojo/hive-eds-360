@@ -36,7 +36,7 @@
 
     <main class="grid grid-cols-1 lg:grid-cols-3 gap-4 flex-1">
         
-        <!-- Main Publications & Research Feed -->
+        <!-- Publications & Research Feed -->
         <div class="lg:col-span-2 space-y-4">
             <div class="flex justify-between items-center tile p-3 rounded-xl">
                 <h2 class="text-xs font-bold text-slate-200 mono uppercase">Active Tier Publications</h2>
@@ -48,17 +48,17 @@
             </div>
 
             <div id="postsFeed" class="space-y-4">
-                <!-- Academic / Defense Tier Post -->
-                <article class="tile p-5 rounded-xl space-y-3 post-item" data-tier="academic">
+                <!-- Academic / Defense Tier Post (Early Access) -->
+                <article class="tile p-5 rounded-xl space-y-3 post-item" data-tier="academic" data-publish-date="2026-10-13">
                     <div class="flex justify-between items-center">
-                        <span class="text-[10px] px-2 py-0.5 bg-blue-950 text-blue-400 border border-blue-800 rounded mono">ACADEMIC / DEFENSE TIER</span>
+                        <div class="access-badge-container"></div>
                         <span class="text-[10px] text-slate-500 mono">Published: Oct 13, 2026</span>
                     </div>
                     <h3 class="text-base font-bold text-white">Mitigating Edge Vulnerabilities in FIPS 140-3 Enclaves</h3>
-                    <p class="text-xs text-slate-300 leading-relaxed">
+                    <p class="post-content text-xs text-slate-300 leading-relaxed">
                         An analysis of key decay algorithms and automated zero-trust peer containment under NIST SP 800-171 guidelines.
                     </p>
-                    <div class="p-3 bg-slate-950 rounded-xl border border-slate-800 flex items-center space-x-3">
+                    <div class="post-media p-3 bg-slate-950 rounded-xl border border-slate-800 flex items-center space-x-3">
                         <span class="text-xl">🎙️</span>
                         <div>
                             <p class="text-xs font-bold text-slate-200 mono">Podcast Ep. 04: Zero-Trust Key Decay</p>
@@ -68,23 +68,23 @@
                 </article>
 
                 <!-- Research Tier Post -->
-                <article class="tile p-5 rounded-xl space-y-3 post-item" data-tier="research">
+                <article class="tile p-5 rounded-xl space-y-3 post-item" data-tier="research" data-publish-date="2026-10-11">
                     <div class="flex justify-between items-center">
-                        <span class="text-[10px] px-2 py-0.5 bg-purple-950 text-purple-400 border border-purple-800 rounded mono">RESEARCH ENCLAVE TIER</span>
+                        <div class="access-badge-container"></div>
                         <span class="text-[10px] text-slate-500 mono">Published: Oct 11, 2026</span>
                     </div>
                     <h3 class="text-base font-bold text-white">DAS Computer Science: Neural Threat Telemetry Optimization</h3>
-                    <p class="text-xs text-slate-300 leading-relaxed">
+                    <p class="post-content text-xs text-slate-300 leading-relaxed">
                         Evaluates edge worker latency for real-time SIEM ingestion under high packet throughput (12,000+ MPS).
                     </p>
-                    <div class="aspect-video bg-slate-950 rounded-xl border border-slate-800 flex items-center justify-center text-xs text-slate-500 mono">
+                    <div class="post-media aspect-video bg-slate-950 rounded-xl border border-slate-800 flex items-center justify-center text-xs text-slate-500 mono">
                         <span>📹 [Embedded Research Demonstration Video]</span>
                     </div>
                 </article>
             </div>
         </div>
 
-        <!-- Post Creation & AI Assistant Panel -->
+        <!-- Post Creation Panel -->
         <div class="space-y-4">
             <div class="tile p-4 rounded-xl space-y-3">
                 <h2 class="text-xs font-bold text-purple-400 mono uppercase border-b border-slate-800 pb-2">Publish New Report / Blog</h2>
@@ -117,7 +117,7 @@
     </main>
 
     <script>
-        const userRole = localStorage.getItem('hive_user_role') || 'business';
+        const userRole = localStorage.getItem('hive_user_role') || 'free';
 
         (function enforceTierVisibility() {
             if (userRole === 'business' || userRole === 'member') {
@@ -125,6 +125,58 @@
                 if (adminNav) adminNav.style.display = 'none';
             }
         })();
+
+        function checkEarlyAccess(publishDateStr) {
+            const isPaidUser = ['business', 'academic', 'enterprise', 'research'].includes(userRole.toLowerCase());
+            const publishDate = new Date(publishDateStr);
+            const publicReleaseDate = new Date(publishDate.getTime() + (7 * 24 * 60 * 60 * 1000));
+            const now = new Date();
+            const isPublicYet = now >= publicReleaseDate;
+
+            return {
+                isPaidUser,
+                isPublicYet,
+                canAccessFull: isPaidUser || isPublicYet,
+                daysRemaining: Math.ceil((publicReleaseDate - now) / (1000 * 60 * 60 * 24))
+            };
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const posts = document.querySelectorAll('.post-item');
+            posts.forEach(post => {
+                const pubDate = post.dataset.publishDate || '2026-10-13';
+                const access = checkEarlyAccess(pubDate);
+                const badgeContainer = post.querySelector('.access-badge-container');
+                const contentBody = post.querySelector('.post-content');
+                const mediaBox = post.querySelector('.post-media');
+
+                if (badgeContainer) {
+                    if (!access.isPublicYet) {
+                        if (access.isPaidUser) {
+                            badgeContainer.innerHTML = `<span class="text-[10px] px-2 py-0.5 bg-emerald-950 text-emerald-400 border border-emerald-800 rounded mono font-bold">⚡ EARLY ACCESS (MEMBERS ONLY)</span>`;
+                        } else {
+                            badgeContainer.innerHTML = `<span class="text-[10px] px-2 py-0.5 bg-amber-950 text-amber-400 border border-amber-800 rounded mono font-bold">🔒 LOCKED • PUBLIC IN ${access.daysRemaining} DAYS</span>`;
+                        }
+                    } else {
+                        badgeContainer.innerHTML = `<span class="text-[10px] px-2 py-0.5 bg-slate-800 text-slate-300 border border-slate-700 rounded mono">🌐 PUBLIC ACCESS</span>`;
+                    }
+                }
+
+                if (!access.canAccessFull && contentBody) {
+                    contentBody.classList.add('blur-sm', 'select-none', 'pointer-events-none');
+                    if (mediaBox) mediaBox.style.display = 'none';
+
+                    const lockOverlay = document.createElement('div');
+                    lockOverlay.className = 'p-4 bg-amber-950/40 border border-amber-800/60 rounded-xl text-center space-y-2 mt-2';
+                    lockOverlay.innerHTML = `
+                        <p class="text-xs text-amber-300 font-bold mono">🔒 Early Access Preview (Members Only)</p>
+                        <p class="text-[11px] text-slate-400">Paid members get full research access 7 days before public release.</p>
+                        <a href="/auth.html" class="inline-block px-3 py-1.5 bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs rounded-lg mono transition-all">Upgrade Membership to Unlock</a>
+                    `;
+                    post.appendChild(lockOverlay);
+                }
+            });
+        });
 
         function filterPosts(tier) {
             const posts = document.querySelectorAll('.post-item');
@@ -158,8 +210,7 @@
                     <span class="text-[10px] text-slate-500 mono">Just Now</span>
                 </div>
                 <h3 class="text-base font-bold text-white">${title}</h3>
-                <p class="text-xs text-slate-300 leading-relaxed">${body}</p>
-                ${media ? `<div class="p-3 bg-slate-950 rounded-xl border border-slate-800 text-xs mono text-purple-400">🎙️ Media Attached: ${media}</div>` : ''}
+                <p class="text-xs text-slate-300 leading-relaxed">${body}</p>${media ? `<div class="p-3 bg-slate-950 rounded-xl border border-slate-800 text-xs mono text-purple-400">🎙️ Media Attached: ${media}</div>` : ''}
             `;
 
             feed.prepend(newArticle);
