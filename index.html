@@ -16,7 +16,7 @@
 </head>
 <body class="text-slate-100 min-h-screen flex flex-col selection:bg-amber-500 selection:text-black">
 
-    <!-- Public Header Navigation -->
+    <!-- Header Navigation -->
     <header class="sticky top-0 z-50 tile border-b border-amber-500/30 px-6 py-4 flex justify-between items-center bg-black/90">
         <div class="flex items-center space-x-3">
             <div class="w-9 h-9 rounded-xl bg-amber-500 flex items-center justify-center font-bold text-lg text-black shadow-lg shadow-amber-500/30">
@@ -30,6 +30,7 @@
 
         <nav class="flex items-center space-x-4 text-xs mono">
             <a href="/" class="text-amber-400 font-bold transition-colors">Home & Journey</a>
+            <a href="#tiers" class="text-slate-300 hover:text-amber-400 transition-colors">Membership Tiers</a>
             <a href="/about.html" class="text-slate-300 hover:text-amber-400 transition-colors">About Me</a>
             <a href="/blog.html" class="text-slate-300 hover:text-amber-400 transition-colors">Research Journal</a>
             <a href="/portal.html" class="text-slate-300 hover:text-amber-400 transition-colors">Telemetry Portal</a>
@@ -37,8 +38,8 @@
         </nav>
     </header>
 
-    <!-- Public Hero & Journey Overview -->
-    <main class="max-w-7xl mx-auto px-6 py-12 space-y-10 flex-1">
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-6 py-12 space-y-12 flex-1">
         
         <!-- Profile & Doctoral Statement Card -->
         <div class="tile p-8 rounded-3xl space-y-6 glow-gold">
@@ -59,43 +60,107 @@
                         <span class="text-amber-400">Zero-Trust Cybersecurity Research</span>
                     </h1>
                     <p class="text-xs md:text-sm text-slate-300 leading-relaxed font-mono">
-                        Welcome to my personal academic testbed. I am a 1st-year Doctoral Student at Bowie State University. This site serves as a private laboratory to track my doctoral progress, test SIEM and FIPS 140-3 zero-trust theories, and log research field notes.
+                        Welcome to my personal academic testbed. I am a 1st-Year Doctoral Student at Bowie State University. This site serves as a private laboratory to track my doctoral progress, test SIEM and FIPS 140-3 zero-trust theories, and log research field notes.
                     </p>
                     <div class="flex flex-wrap justify-center md:justify-start gap-3 pt-2 text-xs mono">
-                        <a href="/auth.html" class="px-5 py-2.5 bg-amber-500 hover:bg-amber-400 text-black font-bold rounded-xl transition-all shadow-lg shadow-amber-500/20">🔑 Sign In / Register Account</a>
-                        <a href="/about.html" class="px-5 py-2.5 bg-neutral-900 hover:bg-neutral-800 border border-amber-500/40 text-amber-400 rounded-xl transition-all">👤 About Me & Bio</a>
-                        <a href="/blog.html" class="px-5 py-2.5 bg-neutral-900 hover:bg-neutral-800 border border-amber-500/40 text-amber-400 rounded-xl transition-all">📓 Research Journal & Field Notes</a>
+                        <a href="/auth.html" class="px-5 py-2.5 bg-amber-500 hover:bg-amber-400 text-black font-bold rounded-xl transition-all shadow-lg shadow-amber-500/20">🔑 Sign In / Select Tier</a>
+                        <a href="#tiers" class="px-5 py-2.5 bg-neutral-900 hover:bg-neutral-800 border border-amber-500/40 text-amber-400 rounded-xl transition-all">💳 View Membership Tiers</a>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Doctoral Research Pillars Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="tile p-6 rounded-2xl space-y-3">
-                <div class="text-2xl">🧪</div>
-                <h3 class="text-sm font-bold text-amber-400 mono">Theory & Hypothesis Testing</h3>
-                <p class="text-xs text-slate-400 leading-relaxed">
-                    Evaluating zero-trust state decay, edge worker processing latency under high load, and automated peer containment algorithms.
-                </p>
+        <!-- Membership Tiers Section -->
+        <section id="tiers" class="space-y-6">
+            <div class="text-center space-y-2">
+                <h2 class="text-2xl font-bold text-amber-400 tracking-wide">Membership Tiers & Access Levels</h2>
+                <p class="text-xs text-slate-400 mono">Support doctoral research and unlock verified enclave access</p>
             </div>
 
-            <div class="tile p-6 rounded-2xl space-y-3">
-                <div class="text-2xl">📊</div>
-                <h3 class="text-sm font-bold text-amber-400 mono">SIEM Telemetry Ingestion</h3>
-                <p class="text-xs text-slate-400 leading-relaxed">
-                    Live ingestion endpoint at <code class="text-amber-400">/api/webhook</code> recording real-time payloads, audit streams, and FIPS compliance checks.
-                </p>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <!-- Basic Member -->
+                <div class="tile p-6 rounded-2xl space-y-4 flex flex-col justify-between">
+                    <div class="space-y-3">
+                        <span class="text-[10px] px-2 py-0.5 bg-neutral-900 text-amber-400 border border-amber-500/30 rounded mono font-bold">COMMUNITY</span>
+                        <h3 class="text-lg font-bold text-white">Basic Member</h3>
+                        <div class="text-2xl font-bold text-amber-400 mono">$10 <span class="text-xs text-slate-500 font-normal">/ month</span></div>
+                        <ul class="text-xs text-slate-400 space-y-2 pt-2 border-t border-neutral-800">
+                            <li>✓ Public Dissertation Logs</li>
+                            <li>✓ Live SIEM Telemetry Ingress</li>
+                            <li>✓ Standard AI Agent Prompts</li>
+                        </ul>
+                    </div>
+                    <a href="https://buy.stripe.com/9B6aERdRY0ygdVz40p5os05" target="_blank" class="w-full py-2.5 bg-neutral-800 hover:bg-neutral-700 text-amber-400 text-center font-bold text-xs rounded-xl border border-amber-500/30 transition-all">Join Basic ($10/mo)</a>
+                </div>
+
+                <!-- Academic Member -->
+                <div class="tile p-6 rounded-2xl space-y-4 flex flex-col justify-between glow-gold border-amber-500">
+                    <div class="space-y-3">
+                        <span class="text-[10px] px-2 py-0.5 bg-amber-500 text-black rounded mono font-bold">RECOMMENDED</span>
+                        <h3 class="text-lg font-bold text-white">Academic Member</h3>
+                        <div class="text-2xl font-bold text-amber-400 mono">$15 <span class="text-xs text-slate-500 font-normal">/ month</span></div>
+                        <ul class="text-xs text-slate-300 space-y-2 pt-2 border-t border-neutral-800">
+                            <li>✓ 7-Day Early Access Research Papers</li>
+                            <li>✓ Full Podcast Briefings & Videos</li>
+                            <li>✓ Bowie State CS Lab Toolkits</li>
+                        </ul>
+                    </div>
+                    <a href="https://buy.stripe.com/3cI6oB7tA94M3gV68x5os06" target="_blank" class="w-full py-2.5 bg-amber-500 hover:bg-amber-400 text-black text-center font-bold text-xs rounded-xl shadow-lg shadow-amber-500/30 transition-all">Join Academic ($15/mo)</a>
+                </div>
+
+                <!-- Business Tier -->
+                <div class="tile p-6 rounded-2xl space-y-4 flex flex-col justify-between">
+                    <div class="space-y-3">
+                        <span class="text-[10px] px-2 py-0.5 bg-neutral-900 text-amber-400 border border-amber-500/30 rounded mono font-bold">ENTERPRISE SOC</span>
+                        <h3 class="text-lg font-bold text-white">Business Tier</h3>
+                        <div class="text-2xl font-bold text-amber-400 mono">$150 <span class="text-xs text-slate-500 font-normal">/ month</span></div>
+                        <ul class="text-xs text-slate-400 space-y-2 pt-2 border-t border-neutral-800">
+                            <li>✓ Hugging Face Repo Dataset Ingestion</li>
+                            <li>✓ Custom Threat Simulation Scenarios</li>
+                            <li>✓ Multi-Node Telemetry Ingress</li>
+                        </ul>
+                    </div>
+                    <a href="https://buy.stripe.com/4gM8wJ5ls5SA4kZfJ75os07" target="_blank" class="w-full py-2.5 bg-neutral-800 hover:bg-neutral-700 text-amber-400 text-center font-bold text-xs rounded-xl border border-amber-500/30 transition-all">Join Business ($150/mo)</a>
+                </div>
+
+                <!-- Donations Card -->
+                <div class="tile p-6 rounded-2xl space-y-4 flex flex-col justify-between border-amber-500/40">
+                    <div class="space-y-3">
+                        <span class="text-[10px] px-2 py-0.5 bg-amber-950/80 text-amber-400 border border-amber-500/40 rounded mono font-bold">RESEARCH GRANT</span>
+                        <h3 class="text-lg font-bold text-white">Support Lab</h3>
+                        <div class="text-2xl font-bold text-amber-400 mono">Starting at $5</div>
+                        <ul class="text-xs text-slate-300 space-y-2 pt-2 border-t border-neutral-800">
+                            <li>✓ Direct Fund for Bowie State Doctoral Lab</li>
+                            <li>✓ Academic Recognition in Papers</li>
+                            <li>✓ Non-Profit Research Support</li>
+                        </ul>
+                    </div>
+                    <a href="https://donate.stripe.com/9B6bIVaFMep68BfgNb5os04" target="_blank" class="w-full py-2.5 bg-neutral-900 hover:bg-neutral-800 text-amber-400 border border-amber-500/40 text-center font-bold text-xs rounded-xl transition-all">♥ Donate ($5+)</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Homepage AI Assistant Chatbot Box -->
+        <section class="tile p-6 rounded-2xl space-y-4 border-amber-500/40">
+            <div class="flex justify-between items-center border-b border-neutral-800 pb-3">
+                <div class="flex items-center space-x-2">
+                    <span class="text-xl">🤖</span>
+                    <h3 class="text-sm font-bold text-amber-400 mono">EDS-360 AI Assistant • Ask Questions About Tiers, Terms & Research</h3>
+                </div>
+                <span class="text-[10px] px-2 py-0.5 bg-amber-950 text-amber-400 border border-amber-800 rounded mono">FIPS 140-3 Active</span>
             </div>
 
-            <div class="tile p-6 rounded-2xl space-y-3">
-                <div class="text-2xl">📓</div>
-                <h3 class="text-sm font-bold text-amber-400 mono">Doctoral Field Notes & Media</h3>
-                <p class="text-xs text-slate-400 leading-relaxed">
-                    Logging dissertation milestones, recording research podcasts, embedding video demonstrations, and publishing raw experimental logs.
-                </p>
+            <div id="chatHistory" class="h-48 overflow-y-auto space-y-3 p-3 bg-black rounded-xl border border-neutral-800 text-xs mono">
+                <div class="p-2.5 bg-neutral-900 border border-neutral-800 rounded-lg text-amber-300">
+                    🤖 <strong>EDS-360 AI Assistant</strong>: Welcome! Type your questions about our membership tiers ($10 Basic, $15 Academic, $150 Business, $5+ Donations) or terms like <em>Sovereign AI</em>, <em>Air-Gapped RAG</em>, or <em>CMMC compliance</em> below.
+                </div>
             </div>
-        </div>
+
+            <div class="flex gap-2">
+                <input type="text" id="chatInput" placeholder="Ask about pricing, terms, or research topics..." class="flex-1 bg-black border border-amber-500/30 rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-amber-400 mono" onkeydown="if(event.key==='Enter') sendChatQuery()">
+                <button onclick="sendChatQuery()" class="px-5 py-2.5 bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs rounded-xl mono transition-all shadow-lg shadow-amber-500/20">Ask AI</button>
+            </div>
+        </section>
 
     </main>
 
@@ -105,5 +170,42 @@
         <p class="text-[10px] text-slate-600">Personal Doctoral Research Testbed • Non-Commercial Academic Enclave</p>
     </footer>
 
+    <script>
+        async function sendChatQuery() {
+            const input = document.getElementById('chatInput');
+            const history = document.getElementById('chatHistory');
+            const prompt = input.value.trim();
+
+            if (!prompt) return;
+
+            const userMsg = document.createElement('div');
+            userMsg.className = 'p-2.5 bg-amber-950/40 border border-amber-800/40 rounded-lg text-slate-200 text-right';
+            userMsg.innerHTML = `<strong>You:</strong> ${prompt}`;
+            history.appendChild(userMsg);
+            input.value = '';
+            history.scrollTop = history.scrollHeight;
+
+            try {
+                const res = await fetch('/api/agent', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ prompt })
+                });
+                const data = await res.json();
+                
+                const botMsg = document.createElement('div');
+                botMsg.className = 'p-2.5 bg-neutral-900 border border-neutral-800 rounded-lg text-amber-300';
+                botMsg.innerHTML = data.response ? data.response.replace(/\n/g, '<br/>') : '🤖 Assistant active.';
+                history.appendChild(botMsg);
+                history.scrollTop = history.scrollHeight;
+            } catch (err) {
+                const errMsg = document.createElement('div');
+                errMsg.className = 'p-2.5 bg-neutral-900 border border-neutral-800 rounded-lg text-amber-300';
+                errMsg.innerHTML = '🤖 <strong>EDS-360 AI Assistant</strong>: Basic Member ($10/mo), Academic ($15/mo), Business ($150/mo), Donations ($5+). Ask about Sovereign AI or Air-Gapped RAG!';
+                history.appendChild(errMsg);
+                history.scrollTop = history.scrollHeight;
+            }
+        }
+    </script>
 </body>
 </html>
