@@ -3,143 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EDS-360 | Security Operations & Research Enclave</title>
+    <title>Asaad Morman | Doctoral Journey & Research Lab</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Space Grotesk', sans-serif; background-color: #030712; }
+        body { font-family: 'Space Grotesk', sans-serif; background-color: #050505; }
         .mono { font-family: 'JetBrains Mono', monospace; }
-        .tile { background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(51, 65, 85, 0.6); backdrop-filter: blur(12px); }
-        .tile:hover { border-color: rgba(59, 130, 246, 0.5); }
-        .glow-blue { box-shadow: 0 0 30px -5px rgba(59, 130, 246, 0.25); }
-        .glow-purple { box-shadow: 0 0 30px -5px rgba(168, 85, 247, 0.25); }
+        .tile { background: rgba(15, 15, 15, 0.9); border: 1px solid rgba(234, 179, 8, 0.25); backdrop-filter: blur(12px); }
+        .tile:hover { border-color: rgba(234, 179, 8, 0.6); }
+        .glow-gold { box-shadow: 0 0 30px -5px rgba(234, 179, 8, 0.3); }
     </style>
 </head>
-<body class="text-slate-100 min-h-screen flex flex-col selection:bg-blue-600 selection:text-white">
+<body class="text-slate-100 min-h-screen flex flex-col selection:bg-amber-500 selection:text-black">
 
-    <!-- Header Navigation -->
-    <header class="sticky top-0 z-50 tile border-b border-slate-800 px-6 py-4 flex justify-between items-center">
+    <!-- Public Header Navigation -->
+    <header class="sticky top-0 z-50 tile border-b border-amber-500/30 px-6 py-4 flex justify-between items-center bg-black/90">
         <div class="flex items-center space-x-3">
-            <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center font-bold text-lg text-white shadow-lg shadow-blue-500/30">
-                🛡️
+            <div class="w-9 h-9 rounded-xl bg-amber-500 flex items-center justify-center font-bold text-lg text-black shadow-lg shadow-amber-500/30">
+                🎓
             </div>
             <div>
-                <h1 class="text-base font-bold text-white tracking-wide">EDS-360 DEFENSE ENCLAVE</h1>
-                <p class="text-[10px] text-blue-400 mono">Doctor of Applied Science in Computer Science Research</p>
+                <h1 class="text-base font-bold text-amber-400 tracking-wide">BOWIE STATE UNIVERSITY • RESEARCH LAB</h1>
+                <p class="text-[10px] text-slate-400 mono">Asaad Morman • 1st-Year Doctoral Student</p>
             </div>
         </div>
 
-        <nav class="hidden md:flex items-center space-x-6 text-xs mono">
-            <a href="#features" class="text-slate-300 hover:text-white transition-colors">Features</a>
-            <a href="#tiers" class="text-slate-300 hover:text-white transition-colors">Membership Tiers</a>
-            <a href="https://donate.stripe.com/9B6bIVaFMep68BfgNb5os04" target="_blank" class="text-emerald-400 hover:text-emerald-300 transition-colors font-bold">♥ Support Research / Donate</a>
-            <a href="/blog.html" class="text-purple-400 hover:text-purple-300 transition-colors">Reports & Early Access</a>
-            <a href="/auth.html" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-bold transition-all shadow-lg shadow-blue-600/20">Sign In / Register</a>
+        <nav class="flex items-center space-x-4 text-xs mono">
+            <a href="/" class="text-amber-400 font-bold transition-colors">Home & Journey</a>
+            <a href="/about.html" class="text-slate-300 hover:text-amber-400 transition-colors">About Me</a>
+            <a href="/blog.html" class="text-slate-300 hover:text-amber-400 transition-colors">Research Journal</a>
+            <a href="/portal.html" class="px-3 py-1.5 bg-amber-500 text-black font-bold rounded-lg shadow-lg shadow-amber-500/20">Telemetry Portal</a>
         </nav>
     </header>
 
-    <!-- Hero Section -->
-    <section class="max-w-7xl mx-auto px-6 py-16 text-center space-y-6">
-        <div class="inline-flex items-center space-x-2 px-3 py-1 bg-blue-950 border border-blue-800 rounded-full text-xs text-blue-400 mono">
-            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span>FIPS 140-3 Compliant • NIST SP 800-171 & CMMC Level 2 Ready</span>
+    <!-- Public Hero & Journey Overview -->
+    <main class="max-w-7xl mx-auto px-6 py-12 space-y-10 flex-1">
+        
+        <!-- Profile & Doctoral Statement Card -->
+        <div class="tile p-8 rounded-3xl space-y-6 glow-gold">
+            <div class="flex flex-col md:flex-row items-center gap-8 text-center md:text-left">
+                <div class="relative flex-shrink-0">
+                    <div class="w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-amber-500 shadow-2xl shadow-amber-500/30">
+                        <img src="/assets/asaad-morman.jpg" alt="Asaad Morman" class="w-full h-full object-cover object-top" onError="this.src='https://github.com/afrodojo.png';"/>
+                    </div>
+                    <span class="absolute bottom-2 right-2 w-4 h-4 bg-emerald-400 border-2 border-black rounded-full animate-pulse" title="Active Lab Node"></span>
+                </div>
+
+                <div class="space-y-3 flex-1">
+                    <span class="inline-block px-3 py-1 bg-amber-950/80 border border-amber-500/50 rounded-full text-xs text-amber-400 mono font-bold">
+                        BOWIE STATE UNIVERSITY • DOCTORAL RESEARCH LAB
+                    </span>
+                    <h1 class="text-3xl md:text-5xl font-extrabold text-white tracking-tight">
+                        Documenting the Doctoral Journey & <br/>
+                        <span class="text-amber-400">Zero-Trust Cybersecurity Research</span>
+                    </h1>
+                    <p class="text-xs md:text-sm text-slate-300 leading-relaxed font-mono">
+                        Welcome to my personal academic testbed. I am a 1st-year Doctoral Student at Bowie State University. This site serves as a private laboratory to track my doctoral progress, test SIEM and FIPS 140-3 zero-trust theories, and log research field notes.
+                    </p>
+                    <div class="flex flex-wrap justify-center md:justify-start gap-3 pt-2 text-xs mono">
+                        <a href="/about.html" class="px-5 py-2.5 bg-amber-500 hover:bg-amber-400 text-black font-bold rounded-xl transition-all shadow-lg shadow-amber-500/20">👤 About Me & Bio</a>
+                        <a href="/blog.html" class="px-5 py-2.5 bg-neutral-900 hover:bg-neutral-800 border border-amber-500/40 text-amber-400 rounded-xl transition-all">📓 Research Journal & Field Notes</a>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <h1 class="text-4xl md:text-6xl font-extrabold text-white tracking-tight leading-tight">
-            Autonomous Security Operations & <br/>
-            <span class="bg-gradient-to-r from-blue-400 via-indigo-300 to-purple-400 bg-clip-text text-transparent">Zero-Trust Intelligence Portal</span>
-        </h1>
+        <!-- Doctoral Research Pillars Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="tile p-6 rounded-2xl space-y-3">
+                <div class="text-2xl">🧪</div>
+                <h3 class="text-sm font-bold text-amber-400 mono">Theory & Hypothesis Testing</h3>
+                <p class="text-xs text-slate-400 leading-relaxed">
+                    Evaluating zero-trust state decay, edge worker processing latency under high load, and automated peer containment algorithms.
+                </p>
+            </div>
 
-        <p class="max-w-3xl mx-auto text-sm md:text-base text-slate-400 leading-relaxed">
-            Real-time SIEM telemetry ingestion, automated threat simulation, Hugging Face connected dataset integration, and exclusive Doctor of Applied Science research publications.
-        </p>
+            <div class="tile p-6 rounded-2xl space-y-3">
+                <div class="text-2xl">📊</div>
+                <h3 class="text-sm font-bold text-amber-400 mono">SIEM Telemetry Ingestion</h3>
+                <p class="text-xs text-slate-400 leading-relaxed">
+                    Live ingestion endpoint at <code class="text-amber-400">/api/webhook</code> recording real-time payloads, audit streams, and FIPS compliance checks.
+                </p>
+            </div>
 
-        <div class="flex justify-center items-center space-x-4 pt-4 text-xs mono">
-            <a href="#tiers" class="px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl shadow-xl shadow-blue-600/30 transition-all transform hover:scale-105">
-                ⚡ View Tiers & Join Enclave
-            </a>
-            <a href="/portal.html" class="px-6 py-3 bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 rounded-xl transition-all">
-                🖥️ Live SOC Command Center
-            </a>
+            <div class="tile p-6 rounded-2xl space-y-3">
+                <div class="text-2xl">📓</div>
+                <h3 class="text-sm font-bold text-amber-400 mono">Doctoral Field Notes & Media</h3>
+                <p class="text-xs text-slate-400 leading-relaxed">
+                    Logging dissertation milestones, recording research podcasts, embedding video demonstrations, and publishing raw experimental logs.
+                </p>
+            </div>
         </div>
-    </section>
 
-    <!-- Exclusive Tiers Section with Active Stripe Payment Links -->
-    <section id="tiers" class="max-w-7xl mx-auto px-6 py-12 space-y-8">
-        <div class="text-center space-y-2">
-            <h2 class="text-2xl font-bold text-white tracking-wide">Active Membership Tiers</h2>
-            <p class="text-xs text-slate-400 mono">Direct Stripe authorization links enabled for enclave access</p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-            
-            <!-- Basic Member -->
-            <div class="tile p-6 rounded-2xl space-y-4 flex flex-col justify-between">
-                <div class="space-y-3">
-                    <span class="text-[10px] px-2 py-0.5 bg-slate-800 text-slate-300 rounded mono font-bold">COMMUNITY</span>
-                    <h3 class="text-lg font-bold text-white">Basic Member</h3>
-                    <p class="text-xs text-slate-400">Standard Access to Enclave Telemetry & Public Publications.</p>
-                    <ul class="text-xs text-slate-400 space-y-2 pt-2 border-t border-slate-800">
-                        <li>✓ Live SIEM Telemetry Console</li>
-                        <li>✓ Basic AI Agent Queries</li>
-                        <li>✓ Public Research Reports</li>
-                    </ul>
-                </div>
-                <a href="https://buy.stripe.com/9B6aERdRY0ygdVz40p5os05" target="_blank" class="w-full py-2.5 bg-slate-800 hover:bg-slate-700 text-white text-center font-bold text-xs rounded-xl transition-all">Join Basic Member</a>
-            </div>
-
-            <!-- Academic Member -->
-            <div class="tile p-6 rounded-2xl space-y-4 flex flex-col justify-between glow-blue border-blue-500/50">
-                <div class="space-y-3">
-                    <span class="text-[10px] px-2 py-0.5 bg-blue-950 text-blue-400 border border-blue-800 rounded mono font-bold">RECOMMENDED FOR RESEARCH</span>
-                    <h3 class="text-lg font-bold text-white">Academic Member</h3>
-                    <p class="text-xs text-slate-400">NIST SP 800-171 / CMMC Level 2 Tools & Full Early Access.</p>
-                    <ul class="text-xs text-slate-300 space-y-2 pt-2 border-t border-slate-800">
-                        <li>✓ NIST & CMMC Compliance Tools</li>
-                        <li>✓ Full Podcast & Research Video Access</li>
-                        <li>✓ 7-Day Early Access Previews</li>
-                    </ul>
-                </div>
-                <a href="https://buy.stripe.com/3cI6oB7tA94M3gV68x5os06" target="_blank" class="w-full py-2.5 bg-blue-600 hover:bg-blue-500 text-white text-center font-bold text-xs rounded-xl transition-all shadow-lg shadow-blue-600/30">Join Academic Member</a>
-            </div>
-
-            <!-- Business Tier -->
-            <div class="tile p-6 rounded-2xl space-y-4 flex flex-col justify-between">
-                <div class="space-y-3">
-                    <span class="text-[10px] px-2 py-0.5 bg-indigo-950 text-indigo-400 border border-indigo-800 rounded mono font-bold">COMMERCIAL SOC</span>
-                    <h3 class="text-lg font-bold text-white">Business Tier</h3>
-                    <p class="text-xs text-slate-400">Multi-Node Telemetry Ingestion & Hugging Face RAG Integration.</p>
-                    <ul class="text-xs text-slate-400 space-y-2 pt-2 border-t border-slate-800">
-                        <li>✓ Multi-Node Ingress Telemetry</li>
-                        <li>✓ Hugging Face Repo Dataset Ingestion</li>
-                        <li>✓ Threat Simulation Scenarios</li>
-                    </ul>
-                </div>
-                <a href="https://buy.stripe.com/4gM8wJ5ls5SA4kZfJ75os07" target="_blank" class="w-full py-2.5 bg-slate-800 hover:bg-slate-700 text-white text-center font-bold text-xs rounded-xl transition-all">Join Business Tier</a>
-            </div>
-
-            <!-- Support & Donations Card -->
-            <div class="tile p-6 rounded-2xl space-y-4 flex flex-col justify-between glow-purple border-purple-500/50">
-                <div class="space-y-3">
-                    <span class="text-[10px] px-2 py-0.5 bg-purple-950 text-purple-400 border border-purple-800 rounded mono font-bold">RESEARCH GRANT</span>
-                    <h3 class="text-lg font-bold text-white">Support Research</h3>
-                    <p class="text-xs text-slate-400">Directly fund the Doctor of Applied Science dissertation field testbed.</p>
-                    <ul class="text-xs text-slate-300 space-y-2 pt-2 border-t border-slate-800">
-                        <li>✓ Grants & Research Fund Contributions</li>
-                        <li>✓ Direct Support for Lab Infrastructure</li>
-                        <li>✓ Academic Recognition & Open Access</li>
-                    </ul>
-                </div>
-                <a href="https://donate.stripe.com/9B6bIVaFMep68BfgNb5os04" target="_blank" class="w-full py-2.5 bg-purple-600 hover:bg-purple-500 text-white text-center font-bold text-xs rounded-xl transition-all shadow-lg shadow-purple-600/30">♥ Donate / Support Research</a>
-            </div>
-
-        </div>
-    </section>
+    </main>
 
     <!-- Footer -->
-    <footer class="tile border-t border-slate-800 px-6 py-8 text-center text-xs text-slate-500 mono space-y-2">
-        <p>© 2026 EDS-360 Defense Enclave. Doctor of Applied Science in Computer Science Research Platform.</p>
-        <p><a href="https://donate.stripe.com/9B6bIVaFMep68BfgNb5os04" target="_blank" class="text-emerald-400 hover:underline">Support DAS Research via Stripe Donations</a></p>
+    <footer class="tile border-t border-amber-500/30 px-6 py-6 text-center text-xs text-slate-500 mono space-y-1 bg-black">
+        <p>© 2026 Asaad Morman • 1st-Year Doctoral Student at Bowie State University</p>
+        <p class="text-[10px] text-slate-600">Personal Doctoral Research Testbed • Non-Commercial Academic Enclave</p>
     </footer>
 
 </body>
