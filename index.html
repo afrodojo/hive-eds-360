@@ -1,2 +1,275 @@
-﻿
+﻿<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asaad Morman | Bowie State Research Lab</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Space Grotesk', sans-serif; background-color: #050505; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        .tile { background: rgba(15, 15, 15, 0.9); border: 1px solid rgba(234, 179, 8, 0.25); backdrop-filter: blur(12px); }
+        .tile:hover { border-color: rgba(234, 179, 8, 0.6); }
+        .glow-gold { box-shadow: 0 0 30px -5px rgba(234, 179, 8, 0.3); }
+    </style>
+</head>
+<body class="text-slate-100 min-h-screen flex flex-col selection:bg-amber-500 selection:text-black">
 
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-50 tile border-b border-amber-500/30 px-6 py-4 flex justify-between items-center bg-black/90">
+        <div class="flex items-center space-x-3">
+            <div class="w-9 h-9 rounded-xl bg-amber-500 flex items-center justify-center font-bold text-lg text-black shadow-lg shadow-amber-500/30">
+                🎓
+            </div>
+            <div>
+                <h1 class="text-base font-bold text-amber-400 tracking-wide">BOWIE STATE UNIVERSITY • RESEARCH LAB</h1>
+                <p class="text-[10px] text-slate-400 mono">Asaad Morman • 1st-Year Doctoral Student</p>
+            </div>
+        </div>
+
+        <nav class="flex items-center space-x-4 text-xs mono">
+            <a href="/" class="text-amber-400 font-bold transition-colors">Home & Journey</a>
+            <a href="#tiers" class="text-slate-300 hover:text-amber-400 transition-colors">Membership Tiers</a>
+            <a href="/about.html" class="text-slate-300 hover:text-amber-400 transition-colors">About Me</a>
+            <a href="/blog.html" class="text-slate-300 hover:text-amber-400 transition-colors">Research Journal</a>
+            <a href="/portal.html" class="text-slate-300 hover:text-amber-400 transition-colors">Telemetry Portal</a>
+            <a href="/auth.html" class="px-4 py-1.5 bg-amber-500 hover:bg-amber-400 text-black font-bold rounded-lg shadow-lg shadow-amber-500/20 transition-all">🔑 Sign In / Register</a>
+        </nav>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="max-w-7xl mx-auto px-6 py-12 space-y-12 flex-1">
+        
+        <!-- Hero Section -->
+        <div class="tile p-8 rounded-3xl space-y-6 glow-gold">
+            <div class="flex flex-col md:flex-row items-center gap-8 text-center md:text-left">
+                <div class="relative flex-shrink-0">
+                    <div class="w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-amber-500 shadow-2xl shadow-amber-500/30">
+                        <img src="/assets/asaad-morman.jpg" alt="Asaad Morman" class="w-full h-full object-cover object-top" onError="this.src='https://github.com/afrodojo.png';"/>
+                    </div>
+                    <span class="absolute bottom-2 right-2 w-4 h-4 bg-emerald-400 border-2 border-black rounded-full animate-pulse" title="Active Lab Node"></span>
+                </div>
+
+                <div class="space-y-3 flex-1">
+                    <span class="inline-block px-3 py-1 bg-amber-950/80 border border-amber-500/50 rounded-full text-xs text-amber-400 mono font-bold">
+                        BOWIE STATE UNIVERSITY • DOCTORAL RESEARCH LAB
+                    </span>
+                    <h1 class="text-3xl md:text-5xl font-extrabold text-white tracking-tight">
+                        Documenting the Doctoral Journey & <br/>
+                        <span class="text-amber-400">Zero-Trust Cybersecurity Research</span>
+                    </h1>
+                    <p class="text-xs md:text-sm text-slate-300 leading-relaxed font-mono">
+                        Welcome to my personal academic testbed. I am a 1st-Year Doctoral Student at Bowie State University. This site serves as a private laboratory to track my doctoral progress, test SIEM and FIPS 140-3 zero-trust theories, and log research field notes.
+                    </p>
+                    <div class="flex flex-wrap justify-center md:justify-start gap-3 pt-2 text-xs mono">
+                        <a href="/auth.html" class="px-5 py-2.5 bg-amber-500 hover:bg-amber-400 text-black font-bold rounded-xl transition-all shadow-lg shadow-amber-500/20">🔑 Sign In / Select Tier</a>
+                        <a href="#tiers" class="px-5 py-2.5 bg-neutral-900 hover:bg-neutral-800 border border-amber-500/40 text-amber-400 rounded-xl transition-all">💳 View Membership Tiers</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Membership Tiers Section -->
+        <section id="tiers" class="space-y-6">
+            <div class="text-center space-y-2">
+                <h2 class="text-2xl font-bold text-amber-400 tracking-wide">Membership Tiers & Access Levels</h2>
+                <p class="text-xs text-slate-400 mono">Support doctoral research and unlock verified enclave access</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <!-- Basic Member -->
+                <div class="tile p-6 rounded-2xl space-y-4 flex flex-col justify-between">
+                    <div class="space-y-3">
+                        <span class="text-[10px] px-2 py-0.5 bg-neutral-900 text-amber-400 border border-amber-500/30 rounded mono font-bold">COMMUNITY</span>
+                        <h3 class="text-lg font-bold text-white">Basic Member</h3>
+                        <div class="text-2xl font-bold text-amber-400 mono">$10 <span class="text-xs text-slate-500 font-normal">/ month</span></div>
+                        <ul class="text-xs text-slate-400 space-y-2 pt-2 border-t border-neutral-800">
+                            <li>✓ Public Dissertation Logs</li>
+                            <li>✓ Live SIEM Telemetry Ingress</li>
+                            <li>✓ Standard AI Agent Prompts</li>
+                        </ul>
+                    </div>
+                    <a href="https://buy.stripe.com/9B6aERdRY0ygdVz40p5os05" target="_blank" class="w-full py-2.5 bg-neutral-800 hover:bg-neutral-700 text-amber-400 text-center font-bold text-xs rounded-xl border border-amber-500/30 transition-all">Join Basic ($10/mo)</a>
+                </div>
+
+                <!-- Academic Member -->
+                <div class="tile p-6 rounded-2xl space-y-4 flex flex-col justify-between glow-gold border-amber-500">
+                    <div class="space-y-3">
+                        <span class="text-[10px] px-2 py-0.5 bg-amber-500 text-black rounded mono font-bold">RECOMMENDED</span>
+                        <h3 class="text-lg font-bold text-white">Academic Member</h3>
+                        <div class="text-2xl font-bold text-amber-400 mono">$15 <span class="text-xs text-slate-500 font-normal">/ month</span></div>
+                        <ul class="text-xs text-slate-300 space-y-2 pt-2 border-t border-neutral-800">
+                            <li>✓ 7-Day Early Access Research Papers</li>
+                            <li>✓ Full Podcast Briefings & Videos</li>
+                            <li>✓ Bowie State CS Lab Toolkits</li>
+                        </ul>
+                    </div>
+                    <a href="https://buy.stripe.com/3cI6oB7tA94M3gV68x5os06" target="_blank" class="w-full py-2.5 bg-amber-500 hover:bg-amber-400 text-black text-center font-bold text-xs rounded-xl shadow-lg shadow-amber-500/30 transition-all">Join Academic ($15/mo)</a>
+                </div>
+
+                <!-- Business Tier -->
+                <div class="tile p-6 rounded-2xl space-y-4 flex flex-col justify-between">
+                    <div class="space-y-3">
+                        <span class="text-[10px] px-2 py-0.5 bg-neutral-900 text-amber-400 border border-amber-500/30 rounded mono font-bold">ENTERPRISE SOC</span>
+                        <h3 class="text-lg font-bold text-white">Business Tier</h3>
+                        <div class="text-2xl font-bold text-amber-400 mono">$150 <span class="text-xs text-slate-500 font-normal">/ month</span></div>
+                        <ul class="text-xs text-slate-400 space-y-2 pt-2 border-t border-neutral-800">
+                            <li>✓ Hugging Face Repo Dataset Ingestion</li>
+                            <li>✓ Custom Threat Simulation Scenarios</li>
+                            <li>✓ Multi-Node Telemetry Ingress</li>
+                        </ul>
+                    </div>
+                    <a href="https://buy.stripe.com/4gM8wJ5ls5SA4kZfJ75os07" target="_blank" class="w-full py-2.5 bg-neutral-800 hover:bg-neutral-700 text-amber-400 text-center font-bold text-xs rounded-xl border border-amber-500/30 transition-all">Join Business ($150/mo)</a>
+                </div>
+
+                <!-- Donations Card -->
+                <div class="tile p-6 rounded-2xl space-y-4 flex flex-col justify-between border-amber-500/40">
+                    <div class="space-y-3">
+                        <span class="text-[10px] px-2 py-0.5 bg-amber-950/80 text-amber-400 border border-amber-500/40 rounded mono font-bold">RESEARCH GRANT</span>
+                        <h3 class="text-lg font-bold text-white">Support Lab</h3>
+                        <div class="text-2xl font-bold text-amber-400 mono">Starting at $5</div>
+                        <ul class="text-xs text-slate-300 space-y-2 pt-2 border-t border-neutral-800">
+                            <li>✓ Direct Fund for Bowie State Doctoral Lab</li>
+                            <li>✓ Academic Recognition in Papers</li>
+                            <li>✓ Non-Profit Research Support</li>
+                        </ul>
+                    </div>
+                    <a href="https://donate.stripe.com/9B6bIVaFMep68BfgNb5os04" target="_blank" class="w-full py-2.5 bg-neutral-900 hover:bg-neutral-800 text-amber-400 border border-amber-500/40 text-center font-bold text-xs rounded-xl transition-all">♥ Donate ($5+)</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI Assistant Chatbot -->
+        <section class="tile p-6 rounded-2xl space-y-4 border-amber-500/40">
+            <div class="flex justify-between items-center border-b border-neutral-800 pb-3">
+                <div class="flex items-center space-x-2">
+                    <span class="text-xl">🤖</span>
+                    <h3 class="text-sm font-bold text-amber-400 mono">EDS-360 AI Assistant • Ask Questions About Tiers, Terms & Research</h3>
+                </div>
+                <span class="text-[10px] px-2 py-0.5 bg-amber-950 text-amber-400 border border-amber-800 rounded mono">FIPS 140-3 Active</span>
+            </div>
+
+            <div id="chatHistory" class="h-48 overflow-y-auto space-y-3 p-3 bg-black rounded-xl border border-neutral-800 text-xs mono">
+                <div class="p-2.5 bg-neutral-900 border border-neutral-800 rounded-lg text-amber-300">
+                    🤖 <strong>EDS-360 AI Assistant</strong>: Welcome! Type your questions about our membership tiers ($10 Basic, $15 Academic, $150 Business, $5+ Donations) or terms like <em>Sovereign AI</em>, <em>Air-Gapped RAG</em>, or <em>CMMC compliance</em> below.
+                </div>
+            </div>
+
+            <div class="flex gap-2">
+                <input type="text" id="chatInput" placeholder="Ask about pricing, terms, or research topics..." class="flex-1 bg-black border border-amber-500/30 rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-amber-400 mono" onkeydown="if(event.key==='Enter') sendChatQuery()">
+                <button onclick="sendChatQuery()" class="px-5 py-2.5 bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs rounded-xl mono transition-all shadow-lg shadow-amber-500/20">Ask AI</button>
+            </div>
+        </section>
+
+        <!-- Subscriptions & Question Intake -->
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="tile p-6 rounded-2xl space-y-4 border-amber-500/40">
+                <div class="space-y-1">
+                    <span class="text-[10px] px-2 py-0.5 bg-amber-950 text-amber-400 border border-amber-800 rounded mono font-bold">STAY UPDATED</span>
+                    <h3 class="text-base font-bold text-white">Subscribe to Newsletters & Research Blogs</h3>
+                    <p class="text-xs text-slate-400">Receive weekly emails on cybersecurity legislative alerts, Bowie State doctoral lab updates, and blog entries.</p>
+                </div>
+
+                <div class="space-y-3 text-xs mono">
+                    <div>
+                        <label class="block text-slate-400 mb-1">Your Email</label>
+                        <input type="email" id="subEmail" placeholder="user@domain.com" class="w-full bg-black border border-amber-500/30 rounded-xl p-2.5 text-white focus:outline-none focus:border-amber-400">
+                    </div>
+                    <div class="flex gap-4 text-slate-300">
+                        <label class="flex items-center space-x-2"><input type="checkbox" id="subNewsletter" checked class="accent-amber-500"> <span>Weekly Newsletter</span></label>
+                        <label class="flex items-center space-x-2"><input type="checkbox" id="subBlog" checked class="accent-amber-500"> <span>Blog Entry Alerts</span></label>
+                    </div>
+                    <button onclick="handleSubscribe()" class="w-full py-2.5 bg-amber-500 hover:bg-amber-400 text-black font-bold rounded-xl transition-all shadow-lg shadow-amber-500/20">
+                        Subscribe for Email Alerts
+                    </button>
+                    <p id="subStatus" class="hidden text-[11px] text-amber-400 font-mono"></p>
+                </div>
+            </div>
+
+            <div class="tile p-6 rounded-2xl space-y-4 border-amber-500/40">
+                <div class="space-y-1">
+                    <span class="text-[10px] px-2 py-0.5 bg-amber-950 text-amber-400 border border-amber-800 rounded mono font-bold">DIRECT INTAKE</span>
+                    <h3 class="text-base font-bold text-white">Ask Asaad a Research Question</h3>
+                    <p class="text-xs text-slate-400">Questions are routed directly to Asaad Morman's Admin Dashboard panel for personalized answer or AI routing.</p>
+                </div>
+
+                <div class="space-y-3 text-xs mono">
+                    <div>
+                        <input type="text" id="qName" placeholder="Your Name or Role..." class="w-full bg-black border border-amber-500/30 rounded-xl p-2.5 text-white focus:outline-none focus:border-amber-400">
+                    </div>
+                    <div>
+                        <textarea id="qText" rows="2" placeholder="Ask your question regarding zero-trust, CMMC, or Bowie State research..." class="w-full bg-black border border-amber-500/30 rounded-xl p-2.5 text-white focus:outline-none focus:border-amber-400"></textarea>
+                    </div>
+                    <button onclick="handleQuestionSubmit()" class="w-full py-2.5 bg-neutral-900 hover:bg-neutral-800 border border-amber-500/40 text-amber-400 font-bold rounded-xl transition-all">
+                        Submit Question to Panel
+                    </button>
+                    <p id="qStatus" class="hidden text-[11px] text-amber-400 font-mono"></p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="tile border-t border-amber-500/30 px-6 py-6 text-center text-xs text-slate-500 mono space-y-1 bg-black">
+        <p>© 2026 Asaad Morman • 1st-Year Doctoral Student at Bowie State University</p>
+        <p class="text-[10px] text-slate-600">Personal Doctoral Research Testbed • Non-Commercial Academic Enclave</p>
+    </footer>
+
+    <script>
+        async function sendChatQuery() {
+            const input = document.getElementById('chatInput');
+            const history = document.getElementById('chatHistory');
+            const prompt = input.value.trim();
+            if (!prompt) return;
+
+            const userMsg = document.createElement('div');
+            userMsg.className = 'p-2.5 bg-amber-950/40 border border-amber-800/40 rounded-lg text-slate-200 text-right';
+            userMsg.innerHTML = `<strong>You:</strong> ${prompt}`;
+            history.appendChild(userMsg);
+            input.value = '';
+            history.scrollTop = history.scrollHeight;
+
+            try {
+                const res = await fetch('/api/agent', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ prompt })
+                });
+                const data = await res.json();
+                const botMsg = document.createElement('div');
+                botMsg.className = 'p-2.5 bg-neutral-900 border border-neutral-800 rounded-lg text-amber-300';
+                botMsg.innerHTML = `🤖 <strong>EDS-360 AI Assistant</strong>:<br/>` + (data.response ? data.response.replace(/\n/g, '<br/>') : 'Active.');
+                history.appendChild(botMsg);
+                history.scrollTop = history.scrollHeight;
+            } catch (err) {
+                const botMsg = document.createElement('div');
+                botMsg.className = 'p-2.5 bg-neutral-900 border border-neutral-800 rounded-lg text-amber-300';
+                botMsg.innerHTML = `🤖 <strong>EDS-360 AI Assistant</strong>: Active under Bowie State Black & Gold rules. Ask about pricing ($10/$15/$150) or CMMC compliance!`;
+                history.appendChild(botMsg);
+                history.scrollTop = history.scrollHeight;
+            }
+        }
+
+        async function handleSubscribe() {
+            const email = document.getElementById('subEmail').value.trim();
+            const status = document.getElementById('subStatus');
+            if (!email) { alert("Please enter your email."); return; }
+            status.classList.remove('hidden');
+            status.innerText = "✓ Subscribed " + email + " to email alerts!";
+            document.getElementById('subEmail').value = '';
+        }
+
+        async function handleQuestionSubmit() {
+            const text = document.getElementById('qText').value.trim();
+            const status = document.getElementById('qStatus');
+            if (!text) { alert("Please write a question."); return; }
+            status.classList.remove('hidden');
+            status.innerText = "✓ Question submitted directly to Asaad's Admin Panel inbox!";
+            document.getElementById('qText').value = '';
+            document.getElementById('qName').value = '';
+        }
+    </script>
+</body>
+</html>
