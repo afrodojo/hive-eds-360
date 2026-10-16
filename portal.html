@@ -1,328 +1,141 @@
-﻿<!DOCTYPE html>
-<html lang="en" class="dark">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EDS-360 Command Center | SIEM Dashboard</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Space Grotesk', sans-serif; background-color: #030712; }
-        .mono { font-family: 'JetBrains Mono', monospace; }
-        .tile { background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(51, 65, 85, 0.6); backdrop-filter: blur(8px); }
-        .tile:hover { border-color: rgba(59, 130, 246, 0.5); }
-        .glow-red { box-shadow: 0 0 15px -3px rgba(239, 68, 68, 0.25); }
-        .glow-blue { box-shadow: 0 0 15px -3px rgba(59, 130, 246, 0.25); }
-        ::-webkit-scrollbar { width: 4px; height: 4px; }
-        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
-    </style>
-</head>
-<body class="text-slate-100 min-h-screen flex flex-col p-3 space-y-3">
+<!-- UNIFIED ENCLAVE GOVERNANCE DASHBOARD -->
+<div class="max-w-7xl mx-auto p-6 space-y-8">
 
-    <!-- Top Navigation Header -->
-        <!-- Top Role Navigation & Command Bar -->
-    <header class="tile px-4 py-2.5 rounded-xl flex justify-between items-center">
-        <div class="flex items-center space-x-3">
-            <div class="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center font-bold text-white shadow-lg shadow-blue-500/30">
-                🛡️
-            </div>
-            <div>
-                <div class="flex items-center space-x-2">
-                    <h1 class="text-sm font-bold text-white tracking-wide">EDS-360 SOC COMMAND CENTER</h1>
-                    <span class="text-[10px] px-2 py-0.5 bg-blue-950 text-blue-400 border border-blue-800 rounded mono">FIPS 140-3 ACTIVE</span>
-                </div>
-                <p class="text-[10px] text-slate-400 mono">Enclave Node: HIVE-EDGE-PRIMARY | Role: Super Administrator</p>
-            </div>
+    <!-- 1. PAID MEMBERS: LIVE LAB ENVIRONMENT TELEMETRY -->
+    <section id="paid-lab-section" class="glass p-6 rounded-2xl border border-indigo-500/40 space-y-4">
+        <div class="flex justify-between items-center border-b border-gray-800 pb-3">
+            <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                <i class="fas fa-server text-indigo-400"></i> Lab Environment Status
+            </h3>
+            <span class="px-2.5 py-1 rounded bg-indigo-950 text-indigo-300 border border-indigo-800 text-[10px] font-mono">PAID TIER ACCESS</span>
         </div>
+        <div id="lab-nodes-grid" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <p class="text-xs text-gray-400 italic">Polling live cluster telemetry from Node 0...</p>
+        </div>
+    </section>
 
-        <!-- Role Switching Links -->
-        <div class="flex items-center space-x-2 text-xs mono">
-            <a href="/portal.html" class="px-3 py-1 bg-blue-600 text-white rounded font-bold border border-blue-400/30">Portal</a>
-            <a href="/admin.html" class="px-3 py-1 bg-slate-900 hover:bg-slate-800 border border-slate-800 rounded text-slate-300">Admin Console</a>
-            <a href="/RAG-console.html" class="px-3 py-1 bg-slate-900 hover:bg-slate-800 border border-slate-800 rounded text-purple-400 border-purple-900/50">RAG Studio</a>
-            <a href="/blog.html" class="px-3 py-1 bg-slate-900 hover:bg-slate-800 border border-slate-800 rounded text-slate-300">Reports & Blogs</a>
-            <a href="/auth.html" class="px-3 py-1 bg-red-950/50 hover:bg-red-900/50 border border-red-800 text-red-300">Sign Out</a>
+    <!-- 2. ACADEMIC & PARTNER COLLABORATION INGESTION ROUTE -->
+    <section class="glass p-6 rounded-2xl border border-emerald-500/40 space-y-4">
+        <div class="flex justify-between items-center border-b border-gray-800 pb-3">
+            <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                <i class="fas fa-graduation-cap text-emerald-400"></i> Academic & Partner Collaboration Ingestion Gateway
+            </h3>
+            <span class="px-2.5 py-1 rounded bg-emerald-950 text-emerald-300 border border-emerald-800 text-[10px] font-mono">REST & DATASET PIPELINE</span>
         </div>
-    </header>
+        <form id="partner-ingest-form" onsubmit="handlePartnerIngest(event)" class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+            <div class="space-y-1">
+                <label class="text-gray-300 font-mono">Institution / Enclave ID</label>
+                <input type="text" id="partner-id" required class="w-full bg-gray-950 border border-gray-800 rounded p-2 text-gray-200 focus:border-emerald-500 focus:outline-none" placeholder="e.g. MIT-CSAIL / DoD-SBIR-Node4">
+            </div>
+            <div class="space-y-1">
+                <label class="text-gray-300 font-mono">Collaboration Target</label>
+                <select id="collab-target" class="w-full bg-gray-950 border border-gray-800 rounded p-2 text-gray-200 focus:border-emerald-500 focus:outline-none">
+                    <option value="eds-formal-rag">eds-formal-rag (Formal Verification)</option>
+                    <option value="sat-constrained-decoding">sat-constrained-decoding-research</option>
+                    <option value="AOSINT">AOSINT (Threat Feeds)</option>
+                    <option value="compliance-engine">compliance-risk-engine</option>
+                </select>
+            </div>
+            <div class="md:col-span-2 space-y-1">
+                <label class="text-gray-300 font-mono">Research Data Payload / Dataset URL</label>
+                <textarea id="payload-url" rows="2" required class="w-full bg-gray-950 border border-gray-800 rounded p-2 text-gray-200 focus:border-emerald-500 focus:outline-none" placeholder="Paste IPFS hash, secure S3 URL, or research summary markdown..."></textarea>
+            </div>
+            <div class="md:col-span-2 flex justify-end">
+                <button type="submit" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-2 rounded transition text-xs">
+                    <i class="fas fa-upload"></i> Dispatch to Node 0 Ingestion Queue
+                </button>
+            </div>
+        </form>
+    </section>
 
-    <!-- Row 1: Key Metrics Tile Cards -->
-    <div class="grid grid-cols-2 md:grid-cols-6 gap-3">
-        <div class="tile p-3 rounded-xl">
-            <div class="flex justify-between text-[11px] text-slate-400"><span>Records Ingested</span><span class="text-blue-400">24h</span></div>
-            <div class="text-xl font-bold text-white mt-1 mono">7.9M</div>
-            <div class="text-[10px] text-emerald-400 mt-0.5">↑ +12.4% baseline</div>
+    <!-- 3. SIEM SECURITY SCANS & IZULUSENTINEL MONITORING -->
+    <section class="glass p-6 rounded-2xl border border-red-500/40 space-y-4">
+        <div class="flex justify-between items-center border-b border-gray-800 pb-3">
+            <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                <i class="fas fa-shield-alt text-red-400"></i> SIEM Security Dashboard & Audit Stream
+            </h3>
+            <span class="px-2.5 py-1 rounded bg-red-950 text-red-300 border border-red-800 text-[10px] font-mono">IZULUSENTINEL LIVE</span>
         </div>
-        <div class="tile p-3 rounded-xl">
-            <div class="flex justify-between text-[11px] text-slate-400"><span>Signals Detected</span><span class="text-amber-400">Live</span></div>
-            <div class="text-xl font-bold text-amber-400 mt-1 mono">111 k</div>
-            <div class="text-[10px] text-slate-400 mt-0.5">Automated Triaged</div>
+        <div id="siem-scans-container" class="space-y-2 text-xs font-mono">
+            <p class="text-gray-400 italic">Fetching security audit events...</p>
         </div>
-        <div class="tile p-3 rounded-xl">
-            <div class="flex justify-between text-[11px] text-slate-400"><span>Active Insights</span><span class="text-red-400">SOC</span></div>
-            <div class="text-xl font-bold text-red-400 mt-1 mono">3 High</div>
-            <div class="text-[10px] text-red-400/80 mt-0.5">Requires Analyst Review</div>
-        </div>
-        <div class="tile p-3 rounded-xl">
-            <div class="flex justify-between text-[11px] text-slate-400"><span>Log Processing Rate</span><span class="text-emerald-400">MPS</span></div>
-            <div class="text-xl font-bold text-emerald-400 mt-1 mono">8,304</div>
-            <div class="text-[10px] text-slate-400 mt-0.5">Peak: 12,410 MPS</div>
-        </div>
-        <div class="tile p-3 rounded-xl">
-            <div class="flex justify-between text-[11px] text-slate-400"><span>Key Decay Guard</span><span class="text-purple-400">FIPS</span></div>
-            <div class="text-xl font-bold text-purple-400 mt-1 mono">Active</div>
-            <div class="text-[10px] text-slate-400 mt-0.5">Zero-Trust Key Rotate</div>
-        </div>
-        <div class="tile p-3 rounded-xl">
-            <div class="flex justify-between text-[11px] text-slate-400"><span>Telemetry Node</span><span class="text-blue-400">API</span></div>
-            <div class="text-xl font-bold text-blue-400 mt-1 mono">200 OK</div>
-            <div class="text-[10px] text-slate-400 mt-0.5">/api/webhook Endpoint</div>
-        </div>
-    </div>
+    </section>
 
-    <!-- Row 2: Charts & Visual Matrix -->
-    <div class="grid grid-cols-1 lg:grid-cols-4 gap-3 flex-1">
-        
-        <!-- Tile 1: System Metrics & Circular Radar -->
-        <div class="tile p-4 rounded-xl flex flex-col justify-between">
-            <div class="flex justify-between items-center border-b border-slate-800 pb-2">
-                <h2 class="text-xs font-bold text-slate-200 mono">RADAR: ANOMALY SPECTRUM</h2>
-                <span class="text-[10px] text-slate-500 mono">24h Radar</span>
-            </div>
-            <div class="h-48 my-2">
-                <canvas id="radarChart"></canvas>
-            </div>
-            <div class="grid grid-cols-3 text-center text-[10px] mono border-t border-slate-800 pt-2 text-slate-400">
-                <div><span class="block text-slate-200">Detect</span>0.8s</div>
-                <div><span class="block text-slate-200">Respond</span>1.2s</div>
-                <div><span class="block text-slate-200">Remediate</span>0.4s</div>
-            </div>
-        </div>
+</div>
 
-        <!-- Tile 2: Log, Event & Alarm Trend -->
-        <div class="tile p-4 rounded-xl lg:col-span-2 flex flex-col justify-between">
-            <div class="flex justify-between items-center border-b border-slate-800 pb-2">
-                <h2 class="text-xs font-bold text-slate-200 mono">LOG, EVENT & ALARM TREND</h2>
-                <div class="flex space-x-2 text-[10px] mono">
-                    <span class="text-blue-400">■ Ingested</span>
-                    <span class="text-emerald-400">■ Processed</span>
-                    <span class="text-red-400">■ Alarms</span>
-                </div>
-            </div>
-            <div class="h-52 my-2">
-                <canvas id="trendChart"></canvas>
-            </div>
-            <div class="flex justify-between text-[10px] text-slate-400 mono border-t border-slate-800 pt-2">
-                <span>Top Impacted Hosts: 192.168.1.10 (AJ-Engine), 192.168.1.48 (LR-Server)</span>
-                <span class="text-emerald-400">Wazuh SIEM In Sync</span>
-            </div>
-        </div>
+<script>
+    // 1. Fetch Paid Member Lab Environment Status
+    async function loadLabStatus() {
+        const grid = document.getElementById('lab-nodes-grid');
+        try {
+            const res = await fetch('https://api.github.com/repos/afrodojo/hive-eds-360/contents/docs/feeds');
+            const files = await res.json();
+            const telemetryFiles = files.filter(f => f.name.startsWith('lab_telemetry_')).reverse();
 
-        <!-- Tile 3: Top Log Classification Doughnut -->
-        <div class="tile p-4 rounded-xl flex flex-col justify-between">
-            <div class="flex justify-between items-center border-b border-slate-800 pb-2">
-                <h2 class="text-xs font-bold text-slate-200 mono">LOG CLASSIFICATION</h2>
-                <span class="text-[10px] text-slate-500 mono">Last 6h</span>
-            </div>
-            <div class="h-44 my-2 flex items-center justify-center">
-                <canvas id="classificationChart"></canvas>
-            </div>
-            <div class="space-y-1 text-[10px] mono border-t border-slate-800 pt-2">
-                <div class="flex justify-between text-slate-400"><span>Malware / Exploit</span><span class="text-red-400">42%</span></div>
-                <div class="flex justify-between text-slate-400"><span>Denial of Service</span><span class="text-amber-400">28%</span></div>
-                <div class="flex justify-between text-slate-400"><span>Suspicious Auth</span><span class="text-blue-400">30%</span></div>
-            </div>
-        </div>
-    </div>
+            if (telemetryFiles.length === 0) throw new Error("No telemetry feeds found.");
 
-    <!-- Row 3: Recent Activity & Live SIEM Event Stream -->
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-3">
-        
-        <!-- Live Audit Activity Feed -->
-        <div class="tile p-4 rounded-xl lg:col-span-2 space-y-2">
-            <div class="flex justify-between items-center border-b border-slate-800 pb-2">
-                <h2 class="text-xs font-bold text-slate-200 mono">RECENT INCIDENT QUEUE & AUDIT EVENTS</h2>
-                <span class="text-[10px] bg-red-950 text-red-400 border border-red-800 px-2 py-0.5 rounded mono">3 ACTIVE INCIDENTS</span>
-            </div>
-            <div class="space-y-1.5 text-xs mono max-h-40 overflow-y-auto pr-1">
-                <div class="p-2 bg-slate-900/90 border-l-2 border-red-500 rounded flex justify-between items-center">
-                    <div>
-                        <span class="text-red-400 font-bold">[INSIGHT-688] Initial Access Attempt</span>
-                        <p class="text-[11px] text-slate-400">Source IP: 185.220.101.5 • Protocol: SSH Bruteforce</p>
+            const dataRes = await fetch(telemetryFiles[0].download_url);
+            const nodes = await dataRes.json();
+
+            grid.innerHTML = nodes.map(n => `
+                <div class="glass p-4 rounded-xl border border-gray-800 space-y-2">
+                    <div class="flex justify-between items-center">
+                        <span class="font-bold text-white">${n.node.toUpperCase()}</span>
+                        <span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800 text-[10px] font-mono">${n.status}</span>
                     </div>
-                    <span class="text-[10px] text-slate-500">14 mins ago</span>
-                </div>
-                <div class="p-2 bg-slate-900/90 border-l-2 border-amber-500 rounded flex justify-between items-center">
-                    <div>
-                        <span class="text-amber-400 font-bold">[WARN] Anomaly Detected in Key Decay</span>
-                        <p class="text-[11px] text-slate-400">Enclave Key Rotation Triggered under FIPS 140-3 Rules</p>
+                    <div class="text-[11px] text-gray-400 font-mono space-y-0.5">
+                        <div>Host: ${n.hostname}</div>
+                        <div>IP: ${n.ip}</div>
+                        <div>Free Memory: ${n.memory_free_mb} MB / ${n.memory_total_mb} MB</div>
                     </div>
-                    <span class="text-[10px] text-slate-500">32 mins ago</span>
                 </div>
-                <div class="p-2 bg-slate-900/90 border-l-2 border-emerald-500 rounded flex justify-between items-center">
-                    <div>
-                        <span class="text-emerald-400 font-bold">[INFO] Webhook Ingestion Synchronized</span>
-                        <p class="text-[11px] text-slate-400">GitHub Telemetry Ingested 200 OK via /api/webhook</p>
+            `).join('');
+        } catch (err) {
+            grid.innerHTML = `<p class="text-amber-400 text-xs font-mono">Lab Status: ${err.message}</p>`;
+        }
+    }
+
+    // 2. Fetch SIEM Security Scans
+    async function loadSiemScans() {
+        const container = document.getElementById('siem-scans-container');
+        try {
+            const res = await fetch('https://api.github.com/repos/afrodojo/hive-eds-360/contents/docs/feeds');
+            const files = await res.json();
+            const siemFiles = files.filter(f => f.name.startsWith('siem_scan_')).reverse();
+
+            if (siemFiles.length === 0) throw new Error("No SIEM scan logs found.");
+
+            const dataRes = await fetch(siemFiles[0].download_url);
+            const siem = await dataRes.json();
+
+            container.innerHTML = `
+                <div class="flex justify-between items-center text-gray-300 pb-2 border-b border-gray-800">
+                    <span>Audit Subnet: ${siem.audit_target}</span>
+                    <span class="text-emerald-400 font-bold">Compliance Score: ${siem.compliance_score}</span>
+                </div>
+                ${siem.scans.map(s => `
+                    <div class="flex justify-between items-center p-2 rounded bg-gray-950 border border-gray-800 text-gray-300">
+                        <span>[${s.engine}] ${s.target} &mdash; ${s.type}</span>
+                        <span class="text-emerald-400 font-bold">${s.result}</span>
                     </div>
-                    <span class="text-[10px] text-slate-500">1 hour ago</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Agent Trigger & Controls -->
-        <div class="tile p-4 rounded-xl flex flex-col justify-between space-y-3">
-            <div class="border-b border-slate-800 pb-2 flex justify-between items-center">
-                <h2 class="text-xs font-bold text-purple-400 mono">AI DEFENSE AGENT CONTROL</h2>
-                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            </div>
-            <p class="text-xs text-slate-400">Execute automated compliance audits or simulate attack responses via the Edge Assistant.</p>
-            <button onclick="toggleAgentDrawer()" class="w-full py-2.5 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white rounded-lg font-bold text-xs mono shadow-lg shadow-purple-600/20">
-                🤖 Launch AI Defense Agent
-            </button>
-        </div>
-    </div>
-
-    <!-- Floating AI Assistant Drawer -->
-    <div id="agentDrawer" class="hidden fixed bottom-6 right-6 w-96 tile border border-slate-700 rounded-2xl shadow-2xl p-4 space-y-3 z-50">
-        <div class="flex justify-between items-center border-b border-slate-800 pb-2">
-            <div class="flex items-center space-x-2">
-                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                <h3 class="text-xs font-bold text-blue-400 mono">EDS-360 AGENT INTERFACE</h3>
-            </div>
-            <button onclick="toggleAgentDrawer()" class="text-slate-400 hover:text-white text-xs">✕</button>
-        </div>
-
-        <div id="agentChatBox" class="h-60 overflow-y-auto space-y-2 text-xs mono bg-slate-950 p-3 rounded-xl border border-slate-800">
-            <p class="text-slate-400">🤖 Enclave AI Assistant ready. Type a command (e.g. "cmmc", "threat scenario", "webhook status").</p>
-        </div>
-
-        <div class="flex space-x-2">
-            <input type="text" id="agentInput" onkeydown="if(event.key==='Enter') sendAgentMessage()" placeholder="Type command..." class="flex-1 bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-blue-500 mono">
-            <button onclick="sendAgentMessage()" class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-xl text-xs font-bold mono">Send</button>
-        </div>
-    </div>
-
-    <script>
-        // Radar Chart (Anomaly Spectrum)
-        new Chart(document.getElementById('radarChart').getContext('2d'), {
-            type: 'radar',
-            data: {
-                labels: ['Initial Access', 'Execution', 'Persistence', 'Privilege Esc', 'Credential Access', 'Exfiltration'],
-                datasets: [{
-                    label: 'Threat Level',
-                    data: [65, 40, 20, 80, 55, 30],
-                    borderColor: '#ef4444',
-                    backgroundColor: 'rgba(239, 68, 68, 0.2)',
-                    borderWidth: 1.5
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { display: false } },
-                scales: { r: { grid: { color: 'rgba(255,255,255,0.08)' }, ticks: { display: false }, pointLabels: { color: '#94a3b8', font: { size: 8 } } } }
-            }
-        });
-
-        // Trend Chart (Line Chart)
-        new Chart(document.getElementById('trendChart').getContext('2d'), {
-            type: 'line',
-            data: {
-                labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', 'Now'],
-                datasets: [
-                    { label: 'Ingested', data: [400, 600, 800, 750, 1100, 950, 1300], borderColor: '#3b82f6', backgroundColor: 'rgba(59, 130, 246, 0.1)', fill: true, tension: 0.3 },
-                    { label: 'Processed', data: [380, 580, 770, 720, 1050, 910, 1260], borderColor: '#10b981', tension: 0.3 },
-                    { label: 'Alarms', data: [12, 18, 45, 22, 60, 30, 15], borderColor: '#ef4444', tension: 0.3 }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { display: false } },
-                scales: {
-                    x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#64748b', font: { size: 9 } } },
-                    y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#64748b', font: { size: 9 } } }
-                }
-            }
-        });
-
-        // Doughnut Chart (Classification)
-        new Chart(document.getElementById('classificationChart').getContext('2d'), {
-            type: 'doughnut',
-            data: {
-                labels: ['Malware', 'DoS', 'Suspicious Auth'],
-                datasets: [{
-                    data: [42, 28, 30],
-                    backgroundColor: ['#ef4444', '#f59e0b', '#3b82f6'],
-                    borderWidth: 0
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { display: false } },
-                cutout: '70%'
-            }
-        });
-
-        function toggleAgentDrawer() {
-            document.getElementById('agentDrawer').classList.toggle('hidden');
+                `).join('')}
+            `;
+        } catch (err) {
+            container.innerHTML = `<p class="text-amber-400 text-xs font-mono">SIEM Stream: ${err.message}</p>`;
         }
+    }
 
-        async function sendAgentMessage() {
-            const input = document.getElementById('agentInput');
-            const box = document.getElementById('agentChatBox');
-            const prompt = input.value.trim();
-            if (!prompt) return;
+    // 3. Handle Academic & Partner Ingestion
+    function handlePartnerIngest(e) {
+        e.preventDefault();
+        const partner = document.getElementById('partner-id').value;
+        const target = document.getElementById('collab-target').value;
+        alert(`Collaboration Request Dispatched!\n\nPartner: ${partner}\nRepository Target: ${target}\nStatus: Enqueued for Node 0 Ingestion Audit`);
+        document.getElementById('partner-ingest-form').reset();
+    }
 
-            box.innerHTML += `<div class="p-2 bg-blue-950/60 border border-blue-800 rounded text-blue-300">👤 ${prompt}</div>`;
-            input.value = '';
-            box.scrollTop = box.scrollHeight;
-
-            try {
-                const res = await fetch('https://hive.eds-360.com/api/agent', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ prompt: prompt })
-                });
-
-                const data = await res.json();
-                const reply = data.response || "🤖 EDS-360 Agent online and monitoring.";
-                box.innerHTML += `<div class="p-2 bg-emerald-950/60 border border-emerald-800 rounded text-emerald-300 mt-1">${reply}</div>`;
-            } catch (err) {
-                box.innerHTML += `<div class="p-2 bg-amber-950/60 border border-amber-800 rounded text-amber-300 mt-1">🤖 **EDS-360 Agent**: Verified input "${prompt}". Operating under FIPS 140-3 enclave rules.</div>`;
-            }
-            box.scrollTop = box.scrollHeight;
-        }
-    </script>
-    <script>
-        // Enforce Tier Boundaries on Load to Prevent Spillage
-        (function enforceTierIsolation() {
-            const userRole = localStorage.getItem('hive_user_role') || 'business';
-            const adminLinks = document.querySelectorAll('a[href*="admin"], a[href*="RAG-console"]');
-            
-            // Restrict lower tiers from admin/RAG routes
-            if (userRole === 'business' || userRole === 'member') {
-                adminLinks.forEach(link => {
-                    link.style.display = 'none'; // Prevent cross-tier navigation
-                });
-            }
-        })();
-
-        async function requestPasswordReset() {
-            const email = prompt("Enter your account email for password reset:");
-            if (!email) return;
-
-            const res = await fetch('/api/auth-manage', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ action: 'reset-request', email })
-            });
-            const data = await res.json();
-            alert(data.message || "Reset link sent.");
-        }
-    </script>
-</body>
-</html>
-
-
+    document.addEventListener('DOMContentLoaded', () => {
+        loadLabStatus();
+        loadSiemScans();
+    });
+</script>
