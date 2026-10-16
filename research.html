@@ -1,10 +1,11 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Research & Audience Hub | The Hive Network</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body { background-color: #030712; color: #f3f4f6; font-family: ui-sans-serif, system-ui, sans-serif; }
@@ -27,6 +28,19 @@
             <p class="text-sm text-gray-300 max-w-3xl leading-relaxed">
                 Exploring air-gapped Retrieval-Augmented Generation (RAG) architectures, threat vector analysis, and local AI agent execution for defense applications and doctoral computer science research.
             </p>
+        </section>
+
+        <!-- LIVE ENCLAVE RESEARCH DIGEST FEED (AUTOMATED SYNC FROM NODE 0) -->
+        <section class="glass p-8 rounded-2xl border border-indigo-500/40 space-y-4">
+            <div class="flex justify-between items-center border-b border-gray-800 pb-3">
+                <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                    <i class="fas fa-terminal text-indigo-400"></i> Active Enclave Research Digests
+                </h3>
+                <span class="px-2.5 py-1 rounded bg-indigo-950 text-indigo-300 border border-indigo-800 text-[10px] font-mono">NODE 0 AUTO-SYNC</span>
+            </div>
+            <div id="enclave-research-content" class="prose prose-invert max-w-none text-xs text-gray-300 space-y-3">
+                <p class="text-gray-500 italic">Fetching latest research log from Node 0 cluster...</p>
+            </div>
         </section>
 
         <!-- DOCTORAL RESEARCH PILLARS -->
@@ -137,7 +151,7 @@
             </div>
         </section>
 
-            <!-- SBIR / STTR DEFENSE CAPABILITY STATEMENT -->
+        <!-- SBIR / STTR DEFENSE CAPABILITY STATEMENT -->
         <section class="glass p-8 rounded-2xl border border-indigo-500/40 space-y-6">
             <div class="flex flex-wrap justify-between items-center gap-4 border-b border-gray-800 pb-4">
                 <div>
@@ -191,10 +205,36 @@
     <script src="assets/js/auth.js"></script>
     <script src="assets/js/nav.js"></script>
     <script>
+        async function loadLatestEnclaveDigest() {
+            const container = document.getElementById('enclave-research-content');
+            try {
+                // Query GitHub API for Markdown digests synced from Node 0 into /docs
+                const response = await fetch('https://api.github.com/repos/afrodojo/hive-eds-360/contents/docs');
+                if (!response.ok) throw new Error('No synced digests found');
+                
+                const files = await response.json();
+                const mdFiles = files.filter(file => file.name.endsWith('.md')).reverse();
+
+                if (mdFiles.length === 0) {
+                    container.innerHTML = '<p class="text-gray-400">No active research logs uploaded yet.</p>';
+                    return;
+                }
+
+                // Fetch and render the most recent research digest
+                const digestRes = await fetch(mdFiles[0].download_url);
+                const markdownText = await digestRes.text();
+                
+                // Convert Markdown to clean HTML using marked
+                container.innerHTML = marked.parse(markdownText);
+            } catch (err) {
+                container.innerHTML = `<p class="text-amber-400 font-mono">Telemetry Status: Offline or awaiting initial sync (${err.message}).</p>`;
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             renderHeader('research');
+            loadLatestEnclaveDigest();
         });
     </script>
 </body>
 </html>
-
