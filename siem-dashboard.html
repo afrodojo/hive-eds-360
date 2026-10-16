@@ -1,21 +1,141 @@
-﻿<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exabeam SIEM Command Center | EDS-360</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-[#0b0e14] text-gray-200 p-6 font-sans">
-    <div class="max-w-7xl mx-auto space-y-6">
-        <header class="flex justify-between items-center border-b border-gray-800 pb-4">
-            <h1 class="text-xl font-bold text-white">🛡️ SIEM Operations & Enclave Command Center</h1>
-            <span class="text-xs font-mono text-emerald-400">Node 4 Active (10.0.20.104)</span>
-        </header>
-        <div class="p-8 bg-gray-900/60 border border-gray-800 rounded-2xl text-center">
-            <h2 class="text-lg font-bold text-cyan-400">Exabeam Operational Telemetry Module Active</h2>
-            <p class="text-xs text-gray-400 mt-2">Access full UBA metrics, radar threat loops, and enclave simulation directly from portal.html.</p>
+<!-- UNIFIED ENCLAVE GOVERNANCE DASHBOARD -->
+<div class="max-w-7xl mx-auto p-6 space-y-8">
+
+    <!-- 1. PAID MEMBERS: LIVE LAB ENVIRONMENT TELEMETRY -->
+    <section id="paid-lab-section" class="glass p-6 rounded-2xl border border-indigo-500/40 space-y-4">
+        <div class="flex justify-between items-center border-b border-gray-800 pb-3">
+            <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                <i class="fas fa-server text-indigo-400"></i> Lab Environment Status
+            </h3>
+            <span class="px-2.5 py-1 rounded bg-indigo-950 text-indigo-300 border border-indigo-800 text-[10px] font-mono">PAID TIER ACCESS</span>
         </div>
-    </div>
-</body>
-</html>
+        <div id="lab-nodes-grid" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <p class="text-xs text-gray-400 italic">Polling live cluster telemetry from Node 0...</p>
+        </div>
+    </section>
+
+    <!-- 2. ACADEMIC & PARTNER COLLABORATION INGESTION ROUTE -->
+    <section class="glass p-6 rounded-2xl border border-emerald-500/40 space-y-4">
+        <div class="flex justify-between items-center border-b border-gray-800 pb-3">
+            <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                <i class="fas fa-graduation-cap text-emerald-400"></i> Academic & Partner Collaboration Ingestion Gateway
+            </h3>
+            <span class="px-2.5 py-1 rounded bg-emerald-950 text-emerald-300 border border-emerald-800 text-[10px] font-mono">REST & DATASET PIPELINE</span>
+        </div>
+        <form id="partner-ingest-form" onsubmit="handlePartnerIngest(event)" class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+            <div class="space-y-1">
+                <label class="text-gray-300 font-mono">Institution / Enclave ID</label>
+                <input type="text" id="partner-id" required class="w-full bg-gray-950 border border-gray-800 rounded p-2 text-gray-200 focus:border-emerald-500 focus:outline-none" placeholder="e.g. MIT-CSAIL / DoD-SBIR-Node4">
+            </div>
+            <div class="space-y-1">
+                <label class="text-gray-300 font-mono">Collaboration Target</label>
+                <select id="collab-target" class="w-full bg-gray-950 border border-gray-800 rounded p-2 text-gray-200 focus:border-emerald-500 focus:outline-none">
+                    <option value="eds-formal-rag">eds-formal-rag (Formal Verification)</option>
+                    <option value="sat-constrained-decoding">sat-constrained-decoding-research</option>
+                    <option value="AOSINT">AOSINT (Threat Feeds)</option>
+                    <option value="compliance-engine">compliance-risk-engine</option>
+                </select>
+            </div>
+            <div class="md:col-span-2 space-y-1">
+                <label class="text-gray-300 font-mono">Research Data Payload / Dataset URL</label>
+                <textarea id="payload-url" rows="2" required class="w-full bg-gray-950 border border-gray-800 rounded p-2 text-gray-200 focus:border-emerald-500 focus:outline-none" placeholder="Paste IPFS hash, secure S3 URL, or research summary markdown..."></textarea>
+            </div>
+            <div class="md:col-span-2 flex justify-end">
+                <button type="submit" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-2 rounded transition text-xs">
+                    <i class="fas fa-upload"></i> Dispatch to Node 0 Ingestion Queue
+                </button>
+            </div>
+        </form>
+    </section>
+
+    <!-- 3. SIEM SECURITY SCANS & IZULUSENTINEL MONITORING -->
+    <section class="glass p-6 rounded-2xl border border-red-500/40 space-y-4">
+        <div class="flex justify-between items-center border-b border-gray-800 pb-3">
+            <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                <i class="fas fa-shield-alt text-red-400"></i> SIEM Security Dashboard & Audit Stream
+            </h3>
+            <span class="px-2.5 py-1 rounded bg-red-950 text-red-300 border border-red-800 text-[10px] font-mono">IZULUSENTINEL LIVE</span>
+        </div>
+        <div id="siem-scans-container" class="space-y-2 text-xs font-mono">
+            <p class="text-gray-400 italic">Fetching security audit events...</p>
+        </div>
+    </section>
+
+</div>
+
+<script>
+    // 1. Fetch Paid Member Lab Environment Status
+    async function loadLabStatus() {
+        const grid = document.getElementById('lab-nodes-grid');
+        try {
+            const res = await fetch('https://api.github.com/repos/afrodojo/hive-eds-360/contents/docs/feeds');
+            const files = await res.json();
+            const telemetryFiles = files.filter(f => f.name.startsWith('lab_telemetry_')).reverse();
+
+            if (telemetryFiles.length === 0) throw new Error("No telemetry feeds found.");
+
+            const dataRes = await fetch(telemetryFiles[0].download_url);
+            const nodes = await dataRes.json();
+
+            grid.innerHTML = nodes.map(n => `
+                <div class="glass p-4 rounded-xl border border-gray-800 space-y-2">
+                    <div class="flex justify-between items-center">
+                        <span class="font-bold text-white">${n.node.toUpperCase()}</span>
+                        <span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800 text-[10px] font-mono">${n.status}</span>
+                    </div>
+                    <div class="text-[11px] text-gray-400 font-mono space-y-0.5">
+                        <div>Host: ${n.hostname}</div>
+                        <div>IP: ${n.ip}</div>
+                        <div>Free Memory: ${n.memory_free_mb} MB / ${n.memory_total_mb} MB</div>
+                    </div>
+                </div>
+            `).join('');
+        } catch (err) {
+            grid.innerHTML = `<p class="text-amber-400 text-xs font-mono">Lab Status: ${err.message}</p>`;
+        }
+    }
+
+    // 2. Fetch SIEM Security Scans
+    async function loadSiemScans() {
+        const container = document.getElementById('siem-scans-container');
+        try {
+            const res = await fetch('https://api.github.com/repos/afrodojo/hive-eds-360/contents/docs/feeds');
+            const files = await res.json();
+            const siemFiles = files.filter(f => f.name.startsWith('siem_scan_')).reverse();
+
+            if (siemFiles.length === 0) throw new Error("No SIEM scan logs found.");
+
+            const dataRes = await fetch(siemFiles[0].download_url);
+            const siem = await dataRes.json();
+
+            container.innerHTML = `
+                <div class="flex justify-between items-center text-gray-300 pb-2 border-b border-gray-800">
+                    <span>Audit Subnet: ${siem.audit_target}</span>
+                    <span class="text-emerald-400 font-bold">Compliance Score: ${siem.compliance_score}</span>
+                </div>
+                ${siem.scans.map(s => `
+                    <div class="flex justify-between items-center p-2 rounded bg-gray-950 border border-gray-800 text-gray-300">
+                        <span>[${s.engine}] ${s.target} &mdash; ${s.type}</span>
+                        <span class="text-emerald-400 font-bold">${s.result}</span>
+                    </div>
+                `).join('')}
+            `;
+        } catch (err) {
+            container.innerHTML = `<p class="text-amber-400 text-xs font-mono">SIEM Stream: ${err.message}</p>`;
+        }
+    }
+
+    // 3. Handle Academic & Partner Ingestion
+    function handlePartnerIngest(e) {
+        e.preventDefault();
+        const partner = document.getElementById('partner-id').value;
+        const target = document.getElementById('collab-target').value;
+        alert(`Collaboration Request Dispatched!\n\nPartner: ${partner}\nRepository Target: ${target}\nStatus: Enqueued for Node 0 Ingestion Audit`);
+        document.getElementById('partner-ingest-form').reset();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        loadLabStatus();
+        loadSiemScans();
+    });
+</script>
