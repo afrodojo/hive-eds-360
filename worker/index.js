@@ -4,6 +4,22 @@ export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
 
+    // Standard CORS headers for client-side API calls
+    const corsHeaders = {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-User-Role',
+      'Content-Type': 'application/json'
+    };
+
+    // 0. Handle CORS Preflight OPTIONS requests
+    if (request.method === 'OPTIONS') {
+      return new Response(null, {
+        status: 204,
+        headers: corsHeaders
+      });
+    }
+
     // Intercept telemetry endpoint requests
     if (url.pathname.startsWith('/api/v1/telemetry')) {
       const userRole = request.headers.get('X-User-Role') || 'PUBLIC';
@@ -18,7 +34,7 @@ export default {
           last_synced: new Date().toISOString()
         }), {
           status: 200,
-          headers: { 'Content-Type': 'application/json' }
+          headers: corsHeaders
         });
       }
 
@@ -32,11 +48,31 @@ export default {
           fips_mode: 'ACTIVE'
         }), {
           status: 200,
-          headers: { 'Content-Type': 'application/json' }
+          headers: corsHeaders
         });
       }
 
-      // 3. Admin & Super Admin: Pass through to full telemetry ingestion endpoint
+      // 3. Admin & Super Admin: Pass through or query origin backend directly
+      // If forwarding to a designated origin server, rewrite request or proxy here
+      try {
+        const originResponse = await fetch(request);
+        const newResponse = new Response(originResponse.body, originResponse);
+        
+        // Append CORS headers to the origin response
+        Object.keys(corsHeaders).forEach(key => {
+          newResponse.headers.set(key, corsHeaders[key]);
+        });
+
+        return newResponse;
+      } catch (err) {
+        return new Response(JSON.stringify({
+          error: 'Origin Ingestion Endpoint Unreachable',
+          details: err.message
+        }), {
+          status: 502,
+          headers: corsHeaders
+        });
+      }
     }
 
     return fetch(request);
