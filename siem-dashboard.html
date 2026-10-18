@@ -1,11 +1,34 @@
-<!-- VIS.JS NETWORK LIBRARY FOR TOPOLOGY MAPPER -->
-<script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EDS-360 Sovereign Enclave — SIEM Command Center</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Vis.js Network Library for Topology Mapper -->
+    <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+
+    <style>
+        .glass {
+            background: rgba(13, 17, 23, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+<body class="bg-gray-950 text-gray-100 font-sans antialiased min-h-screen">
 
 <!-- UNIFIED ENCLAVE GOVERNANCE DASHBOARD -->
 <div class="max-w-7xl mx-auto p-6 space-y-8">
 
     <!-- 0. INTERACTIVE ENCLAVE TOPOLOGY MAPPER -->
-    <section class="glass p-6 rounded-2xl border border-blue-500/40 space-y-4">
+    <section class="glass p-6 rounded-2xl border border-blue-500/40 space-y-4 shadow-xl">
         <div class="flex justify-between items-center border-b border-gray-800 pb-3">
             <h3 class="text-xl font-bold text-white flex items-center gap-2">
                 <i class="fas fa-project-diagram text-blue-400"></i> EDS-360 Real-Time Enclave Topology Mapper
@@ -25,7 +48,7 @@
     </section>
 
     <!-- 1. PAID MEMBERS: LIVE LAB ENVIRONMENT TELEMETRY -->
-    <section id="paid-lab-section" class="glass p-6 rounded-2xl border border-indigo-500/40 space-y-4">
+    <section id="paid-lab-section" class="glass p-6 rounded-2xl border border-indigo-500/40 space-y-4 shadow-xl">
         <div class="flex justify-between items-center border-b border-gray-800 pb-3">
             <h3 class="text-xl font-bold text-white flex items-center gap-2">
                 <i class="fas fa-server text-indigo-400"></i> Lab Environment Status
@@ -38,7 +61,7 @@
     </section>
 
     <!-- 2. ACADEMIC & PARTNER COLLABORATION INGESTION ROUTE -->
-    <section class="glass p-6 rounded-2xl border border-emerald-500/40 space-y-4">
+    <section class="glass p-6 rounded-2xl border border-emerald-500/40 space-y-4 shadow-xl">
         <div class="flex justify-between items-center border-b border-gray-800 pb-3">
             <h3 class="text-xl font-bold text-white flex items-center gap-2">
                 <i class="fas fa-graduation-cap text-emerald-400"></i> Academic & Partner Collaboration Ingestion Gateway
@@ -72,7 +95,7 @@
     </section>
 
     <!-- 3. SIEM SECURITY SCANS & IZULUSENTINEL MONITORING -->
-    <section class="glass p-6 rounded-2xl border border-red-500/40 space-y-4">
+    <section class="glass p-6 rounded-2xl border border-red-500/40 space-y-4 shadow-xl">
         <div class="flex justify-between items-center border-b border-gray-800 pb-3">
             <h3 class="text-xl font-bold text-white flex items-center gap-2">
                 <i class="fas fa-shield-alt text-red-400"></i> SIEM Security Dashboard & Audit Stream
@@ -87,9 +110,12 @@
 </div>
 
 <script>
+    // Global Reference for Vis.js Datasets to allow dynamic live updates
+    let topologyNodesDataSet = null;
+
     // 0. Initialize Vis.js Interactive Topology Mapper
     function initTopologyMapper() {
-        const nodes = new vis.DataSet([
+        topologyNodesDataSet = new vis.DataSet([
             { id: 0, label: 'vm-node0\nControl Plane\n(10.0.10.128)', shape: 'box', color: { background: '#1e293b', border: '#3b82f6' }, font: { color: '#f8fafc', face: 'monospace' } },
             { id: 1, label: 'vm-node1\nIngress Gateway\n(10.0.10.129)', shape: 'box', color: { background: '#064e3b', border: '#10b981' }, font: { color: '#f8fafc', face: 'monospace' } },
             { id: 2, label: 'vm-node2\nAICore / Llama 3.1\n(10.0.10.130)', shape: 'box', color: { background: '#3b0764', border: '#a855f7' }, font: { color: '#f8fafc', face: 'monospace' } },
@@ -110,7 +136,7 @@
         ]);
 
         const container = document.getElementById('enclave-topology-container');
-        const network = new vis.Network(container, { nodes, edges }, {
+        const network = new vis.Network(container, { nodes: topologyNodesDataSet, edges }, {
             physics: { barnesHut: { gravitationalConstant: -3500, springLength: 130 } },
             interaction: { hover: true, tooltipDelay: 100 }
         });
@@ -119,7 +145,7 @@
         network.on('click', (params) => {
             const inspector = document.getElementById('node-inspector-panel');
             if (params.nodes.length > 0) {
-                const node = nodes.get(params.nodes[0]);
+                const node = topologyNodesDataSet.get(params.nodes[0]);
                 inspector.innerHTML = `
                     <span class="text-emerald-400 font-bold">[NODE INSPECTOR]</span> <strong>${node.label.replace('\n', ' - ')}</strong><br>
                     • Enclave Status: <span class="text-emerald-400 font-bold">ONLINE</span> | Kernel FIPS Flag: <code class="text-blue-400">fips=1</code><br>
@@ -136,6 +162,21 @@
         });
     }
 
+    // Helper: Dynamically Update Topology Node Color based on Polled Status
+    function updateTopologyNodeStatus(nodeName, isOnline) {
+        const nodeMap = { 'node0': 0, 'node1': 1, 'node2': 2, 'node3': 3, 'node4': 4 };
+        const nodeId = nodeMap[nodeName.toLowerCase()];
+        
+        if (nodeId !== undefined && topologyNodesDataSet) {
+            topologyNodesDataSet.update({
+                id: nodeId,
+                color: isOnline 
+                    ? { background: '#064e3b', border: '#10b981' }  // Emerald Green (Online)
+                    : { background: '#450a0a', border: '#ef4444' }   // Red (Offline)
+            });
+        }
+    }
+
     // 1. Fetch Paid Member Lab Environment Status
     async function loadLabStatus() {
         const grid = document.getElementById('lab-nodes-grid');
@@ -148,6 +189,12 @@
 
             const dataRes = await fetch(telemetryFiles[0].download_url);
             const nodes = await dataRes.json();
+
+            // Update Topology Node visual states
+            nodes.forEach(n => {
+                const isOnline = n.status.toLowerCase() === 'ok' || n.status.toLowerCase() === 'online' || n.status.toLowerCase() === 'active';
+                updateTopologyNodeStatus(n.node, isOnline);
+            });
 
             grid.innerHTML = nodes.map(n => `
                 <div class="glass p-4 rounded-xl border border-gray-800 space-y-2">
@@ -212,3 +259,6 @@
         loadSiemScans();
     });
 </script>
+
+</body>
+</html>
