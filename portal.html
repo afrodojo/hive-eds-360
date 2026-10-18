@@ -38,11 +38,14 @@
             </div>
             <div>
                 <h1 class="text-sm font-bold tracking-wider text-white uppercase font-mono">EDS-360 SOC COMMAND CENTER</h1>
-                <p class="text-[10px] text-gray-400 font-mono">Enclave Node: HIVE-EDGE-PRIMARY | Role: Super Administrator</p>
+                <p class="text-[10px] text-gray-400 font-mono">Enclave Node: HIVE-EDGE-PRIMARY | Role: <span id="nav-user-role" class="text-emerald-400">Super Administrator</span></p>
             </div>
         </div>
         <div class="flex items-center gap-3 font-mono text-xs">
             <span class="px-2.5 py-1 rounded bg-blue-950 text-blue-300 border border-blue-800 text-[10px]">FIPS 140-3 ACTIVE</span>
+            <button onclick="openAccessModal()" class="px-3 py-1.5 rounded bg-blue-900/60 hover:bg-blue-800 text-blue-200 border border-blue-700/50 transition">
+                <i class="fas fa-key"></i> Request Access / Elevation
+            </button>
             <a href="/admin.html" class="px-3 py-1.5 rounded bg-gray-800 hover:bg-gray-700 text-gray-200 transition">Admin Console</a>
             <a href="/research.html" class="px-3 py-1.5 rounded bg-gray-800 hover:bg-gray-700 text-gray-200 transition">RAG Studio</a>
             <a href="/blog.html" class="px-3 py-1.5 rounded bg-gray-800 hover:bg-gray-700 text-gray-200 transition">Reports &amp; Blogs</a>
@@ -149,6 +152,44 @@
     </section>
 
 </main>
+
+<!-- ACCESS REQUEST SUBMISSION MODAL -->
+<div id="request-access-modal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="glass p-6 rounded-2xl border border-blue-500/40 max-w-md w-full space-y-4 font-sans text-xs">
+        <div class="flex justify-between items-center border-b border-gray-800 pb-2">
+            <h4 class="text-sm font-bold text-white font-mono flex items-center gap-2">
+                <i class="fas fa-key text-blue-400"></i> Request Enclave Access / Tier Elevation
+            </h4>
+            <button onclick="closeAccessModal()" class="text-gray-400 hover:text-white text-lg">&times;</button>
+        </div>
+        <form id="access-request-form" onsubmit="handleAccessRequestSubmit(event)" class="space-y-3">
+            <div class="space-y-1">
+                <label class="text-gray-300 font-mono">Full Name / Organization</label>
+                <input type="text" id="req-name" required class="w-full bg-gray-950 border border-gray-800 rounded p-2 text-gray-200 focus:border-blue-500 focus:outline-none font-mono" placeholder="Dr. Jane Doe / MIT CSAIL">
+            </div>
+            <div class="space-y-1">
+                <label class="text-gray-300 font-mono">Email Address</label>
+                <input type="email" id="req-email" required class="w-full bg-gray-950 border border-gray-800 rounded p-2 text-gray-200 focus:border-blue-500 focus:outline-none font-mono" placeholder="jdoe@mit.edu">
+            </div>
+            <div class="space-y-1">
+                <label class="text-gray-300 font-mono">Requested Tier</label>
+                <select id="req-tier" class="w-full bg-gray-950 border border-gray-800 rounded p-2 text-gray-200 focus:border-blue-500 focus:outline-none font-mono">
+                    <option value="ACADEMIC_PARTNERSHIP">Academic Partnership (DAS Research)</option>
+                    <option value="BUSINESS">Business Tier (Live Lab Telemetry)</option>
+                    <option value="ADMIN">Enclave Administrator</option>
+                </select>
+            </div>
+            <div class="space-y-1">
+                <label class="text-gray-300 font-mono">Justification / Research Purpose</label>
+                <textarea id="req-reason" rows="3" required class="w-full bg-gray-950 border border-gray-800 rounded p-2 text-gray-200 focus:border-blue-500 focus:outline-none font-mono" placeholder="Detail formal verification, SMT decoding research, or contract ID..."></textarea>
+            </div>
+            <div class="flex justify-end gap-2 pt-2">
+                <button type="button" onclick="closeAccessModal()" class="px-3 py-1.5 rounded bg-gray-800 text-gray-300">Cancel</button>
+                <button type="submit" class="px-4 py-1.5 rounded bg-blue-600 hover:bg-blue-500 text-white font-bold font-mono">Submit Request</button>
+            </div>
+        </form>
+    </div>
+</div>
 
 <!-- JAVASCRIPT: INTERACTIVE NETWORK HUD & LIVE API TELEMETRY -->
 <script>
@@ -343,7 +384,28 @@
         }
     }
 
-    // 3. Handle Academic & Partner Ingestion
+    // 3. Access Request Modal Handlers
+    function openAccessModal() {
+        document.getElementById('request-access-modal').classList.remove('hidden');
+    }
+
+    function closeAccessModal() {
+        document.getElementById('request-access-modal').classList.add('hidden');
+    }
+
+    function handleAccessRequestSubmit(e) {
+        e.preventDefault();
+        const name = document.getElementById('req-name').value;
+        const email = document.getElementById('req-email').value;
+        const tier = document.getElementById('req-tier').value;
+        const reason = document.getElementById('req-reason').value;
+
+        alert(`Access elevation request submitted for ${email} (${tier}).\n\nEnqueued for Node 0 Ingestion Audit & ACL Review.`);
+        document.getElementById('access-request-form').reset();
+        closeAccessModal();
+    }
+
+    // 4. Handle Academic & Partner Ingestion
     function handlePartnerIngest(e) {
         e.preventDefault();
         const partner = document.getElementById('partner-id').value;
