@@ -1,0 +1,29 @@
+﻿[
+    {
+        "id":  "yt_202",
+        "platform":  "YouTube",
+        "query":  "Can we integrate this with SBIR Phase I subcontracts?",
+        "priority_score":  1.410,
+        "suggested_response":  "Thank you for reaching out. The Hive Network supports dual-use SBIR/STTR partnerships. Please review our capability statement at https://hive.eds-360.com/research.html or contact us directly at dassenseibsu@pm.me.",
+        "status":  "DISPATCHED",
+        "dispatched_at":  "2026-10-12T11:52:05Z"
+    },
+    {
+        "id":  "fb_101",
+        "platform":  "Facebook",
+        "query":  "How does air-gapped RAG handle memory constraints?",
+        "priority_score":  1.320,
+        "suggested_response":  "Great question! Our local REST gateway uses quantized vector schemas running offline on port 8443. You can test a live simulation at https://hive.eds-360.com/RAG-console.html.",
+        "status":  "DISPATCHED",
+        "dispatched_at":  "2026-10-12T11:52:05Z"
+    },
+    {
+        "id":  "li_303",
+        "platform":  "LinkedIn",
+        "query":  "Is the local gateway compatible with Windows PowerShell 7?",
+        "priority_score":  0.72,
+        "suggested_response":  "Thanks for engaging! You can follow our CS Ph.D. dissertation logs and updates on https://hive.eds-360.com/blog.html.",
+        "status":  "DISPATCHED",
+        "dispatched_at":  "2026-10-12T11:52:05Z"
+    }
+]

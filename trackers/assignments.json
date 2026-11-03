@@ -1,0 +1,16 @@
+﻿[
+  {
+    "course": "CS 8000",
+    "title": "Qualifying Exam Literature Review",
+    "due_date": "2026-10-16",
+    "status": "In Progress",
+    "access_tier": "academic"
+  },
+  {
+    "course": "CS 8803",
+    "title": "Air-Gapped Vector Ingestion Benchmark",
+    "due_date": "2026-10-10",
+    "status": "Completed",
+    "access_tier": "member_free"
+  }
+]

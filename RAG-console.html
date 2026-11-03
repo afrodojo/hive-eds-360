@@ -1,0 +1,151 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tactical RAG & Hugging Face Repository Pipeline | The Hive Network</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="assets/js/auth.js"></script>
+</head>
+<body class="bg-[#0b0e14] text-gray-200 font-sans p-6">
+
+    <header class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between bg-gray-900 p-4 rounded-xl mb-8 border border-gray-800 gap-4">
+        <div class="flex items-center space-x-3">
+            <div class="bg-blue-600 text-white font-bold p-2.5 rounded-lg">RAG</div>
+            <div>
+                <h1 class="text-white font-bold text-lg">Tactical RAG & Model Ingestion Console</h1>
+                <p class="text-xs text-gray-400">Hugging Face Hub & Multi-Repository Pipeline Synchronization</p>
+            </div>
+        </div>
+        
+        <div class="flex items-center space-x-3">
+            <select id="hardwareTarget" class="bg-gray-950 border border-gray-800 text-xs text-purple-400 rounded-lg p-2 font-mono focus:outline-none focus:border-purple-500">
+                <option value="cloud_sim">Cloud Sandbox (Simulated)</option>
+                <option value="node1_ingress" selected>Node 1 Ingress (10.0.20.101 -> Node 2 vLLM)</option>
+            </select>
+            <span class="bg-emerald-950 text-emerald-400 border border-emerald-800/50 text-xs px-3 py-1.5 rounded-full font-mono font-bold">Node 2 Active</span>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto space-y-8">
+
+        <!-- Hugging Face Model Pull Engine -->
+        <section class="bg-gray-900 border border-gray-800 rounded-2xl p-6 space-y-4">
+            <div class="flex justify-between items-center border-b border-gray-800 pb-3">
+                <div>
+                    <span class="bg-amber-950 text-amber-400 border border-amber-800/50 text-[10px] font-mono px-2.5 py-0.5 rounded uppercase font-bold">Hugging Face Model Hub</span>
+                    <h2 class="text-lg font-bold text-white mt-1">Pull External Weights & Model Instances to Node 2 (vLLM)</h2>
+                </div>
+                <span class="text-xs font-mono text-gray-400">Target GPU Storage: /mnt/models/huggingface</span>
+            </div>
+
+            <form id="hfPullForm" onsubmit="triggerHuggingFacePull(event)" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <input type="text" id="hfModelId" placeholder="Hugging Face Model ID (e.g., meta-llama/Llama-3-70B-Instruct)..." required class="bg-gray-950 border border-gray-800 text-xs text-white p-3 rounded-xl focus:outline-none focus:border-amber-500 font-mono">
+                <input type="password" id="hfToken" placeholder="HF Access Token (hf_... optional for public)..." class="bg-gray-950 border border-gray-800 text-xs text-white p-3 rounded-xl focus:outline-none focus:border-amber-500 font-mono">
+                <button type="submit" class="bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs py-3 rounded-xl transition shadow-lg shadow-amber-950/40">Pull & Load to Node 2 vLLM</button>
+            </form>
+        </section>
+
+        <!-- GitHub Research Repositories Registry -->
+        <section class="bg-gray-900 border border-gray-800 rounded-2xl p-6 space-y-4">
+            <div class="flex justify-between items-center border-b border-gray-800 pb-3">
+                <div>
+                    <span class="bg-purple-950 text-purple-300 border border-purple-800/50 text-[10px] font-mono px-2.5 py-0.5 rounded uppercase font-bold">Active GitHub Research Registry</span>
+                    <h2 class="text-lg font-bold text-white mt-1">Synchronized Doctoral & Defense Codebases</h2>
+                </div>
+                <button onclick="syncAllRepos()" class="bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold px-4 py-2 rounded-lg">Sync All Repositories</button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
+                <!-- Repo 1 -->
+                <div class="bg-gray-950 border border-gray-800 p-4 rounded-xl space-y-2">
+                    <div class="flex justify-between items-center">
+                        <strong class="text-white font-mono">eds-formal-rag</strong>
+                        <span class="text-[10px] text-emerald-400 font-mono">✓ Synced</span>
+                    </div>
+                    <p class="text-gray-400 text-[11px]">Formal Verification & Defense RAG Architecture</p>
+                    <a href="https://github.com/afrodojo/eds-formal-rag" target="_blank" class="text-blue-400 hover:underline font-mono text-[10px]">github.com/afrodojo/eds-formal-rag</a>
+                </div>
+
+                <!-- Repo 2 -->
+                <div class="bg-gray-950 border border-gray-800 p-4 rounded-xl space-y-2">
+                    <div class="flex justify-between items-center">
+                        <strong class="text-white font-mono">AI-Lab-Hybrid-DASSensei</strong>
+                        <span class="text-[10px] text-emerald-400 font-mono">✓ Synced</span>
+                    </div>
+                    <p class="text-gray-400 text-[11px]">Hybrid AI Lab & Doctoral Research Core</p>
+                    <a href="https://github.com/afrodojo/AI-Lab-Hybrid-DASSensei" target="_blank" class="text-blue-400 hover:underline font-mono text-[10px]">github.com/afrodojo/AI-Lab-Hybrid-DASSensei</a>
+                </div>
+
+                <!-- Repo 3 -->
+                <div class="bg-gray-950 border border-gray-800 p-4 rounded-xl space-y-2">
+                    <div class="flex justify-between items-center">
+                        <strong class="text-white font-mono">sat-constrained-decoding</strong>
+                        <span class="text-[10px] text-emerald-400 font-mono">✓ Synced</span>
+                    </div>
+                    <p class="text-gray-400 text-[11px]">SAT-Constrained Decoding Research Engine</p>
+                    <a href="https://github.com/EDSSensei2026/sat-constrained-decoding-research" target="_blank" class="text-blue-400 hover:underline font-mono text-[10px]">github.com/.../sat-constrained-decoding-research</a>
+                </div>
+
+                <!-- Repo 4 -->
+                <div class="bg-gray-950 border border-gray-800 p-4 rounded-xl space-y-2">
+                    <div class="flex justify-between items-center">
+                        <strong class="text-white font-mono">eds-360-compliance-risk</strong>
+                        <span class="text-[10px] text-emerald-400 font-mono">✓ Synced</span>
+                    </div>
+                    <p class="text-gray-400 text-[11px]">CMMC L2 / DISA STIG Risk Engine</p>
+                    <a href="https://github.com/EDSSensei2026/eds-360-compliance-risk-engine" target="_blank" class="text-blue-400 hover:underline font-mono text-[10px]">github.com/.../eds-360-compliance-risk-engine</a>
+                </div>
+
+                <!-- Repo 5 -->
+                <div class="bg-gray-950 border border-gray-800 p-4 rounded-xl space-y-2">
+                    <div class="flex justify-between items-center">
+                        <strong class="text-white font-mono">cyberdojosensei</strong>
+                        <span class="text-[10px] text-emerald-400 font-mono">✓ Synced</span>
+                    </div>
+                    <p class="text-gray-400 text-[11px]">Cybersecurity Training & Defense Sandbox</p>
+                    <a href="https://github.com/afrodojo/cyberdojosensei" target="_blank" class="text-blue-400 hover:underline font-mono text-[10px]">github.com/afrodojo/cyberdojosensei</a>
+                </div>
+
+                <!-- Repo 6 -->
+                <div class="bg-gray-950 border border-gray-800 p-4 rounded-xl space-y-2">
+                    <div class="flex justify-between items-center">
+                        <strong class="text-white font-mono">sensei-phd</strong>
+                        <span class="text-[10px] text-emerald-400 font-mono">✓ Synced</span>
+                    </div>
+                    <p class="text-gray-400 text-[11px]">Doctoral CS Dissertation Research Logs</p>
+                    <a href="https://github.com/afrodojo/sensei-phd" target="_blank" class="text-blue-400 hover:underline font-mono text-[10px]">github.com/afrodojo/sensei-phd</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hardware Output Log -->
+        <div class="bg-gray-950 border border-gray-800 rounded-2xl p-6 space-y-3 font-mono">
+            <div class="flex justify-between items-center border-b border-gray-800 pb-2">
+                <span class="text-xs font-bold text-amber-400">Node 2 vLLM & Storage Vault Ingestion Log</span>
+                <span id="pullStatus" class="text-[10px] bg-gray-900 text-gray-400 px-2 py-0.5 rounded">Status: Idle</span>
+            </div>
+            <pre id="consoleOutput" class="text-xs text-emerald-400 whitespace-pre-wrap h-40 overflow-y-auto">HF Hub & Repository Ingestion Engine active. Ready for model weights pull...</pre>
+        </div>
+
+    </main>
+
+    <script>
+        function triggerHuggingFacePull(e) {
+            e.preventDefault();
+            const modelId = document.getElementById("hfModelId").value;
+            const output = document.getElementById("consoleOutput");
+            const status = document.getElementById("pullStatus");
+
+            status.innerText = "Pulling Weights...";
+            output.innerText = `[10.0.20.101 Ingress]: Initiating Hugging Face download request for '${modelId}'...\n[10.0.20.102 vLLM Engine]: Allocated GPU VRAM buffer. Streaming safetensors...\n\n[HF Sync Progress]: 100% complete.\n[Node 2 CUDA]: Model '${modelId}' loaded into active vLLM inference queue.`;
+        }
+
+        function syncAllRepos() {
+            const output = document.getElementById("consoleOutput");
+            output.innerText = `[Git Submodule Sync]: Pulling latest commits across all 6 research repositories...\n\n- Synced: afrodojo/eds-formal-rag\n- Synced: afrodojo/AI-Lab-Hybrid-DASSensei\n- Synced: EDSSensei2026/sat-constrained-decoding-research\n- Synced: EDSSensei2026/eds-360-compliance-risk-engine\n- Synced: afrodojo/cyberdojosensei\n- Synced: afrodojo/sensei-phd\n\n[LUKS2 Vault 10.0.20.103]: Repository codebases committed to encrypted storage vault.`;
+        }
+    </script>
+</body>
+</html>

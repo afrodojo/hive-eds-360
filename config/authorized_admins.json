@@ -1,0 +1,47 @@
+{
+  "system_domain": "eds-360.com",
+  "access_policy": "SUPER_ADMIN_EQUAL_ACCESS",
+  "authorized_super_admins": [
+    {
+      "email": "asaad.morman@eds-360.com",
+      "roles": ["SUPER_ADMIN", "CONTENT_AUTHOR", "CISO_COMPLIANCE", "MEMBER_PORTAL_ADMIN"],
+      "capabilities": [
+        "login_all_dashboards",
+        "post_blogs",
+        "upload_videos",
+        "manage_membership_tiers",
+        "view_siem_au2_logs",
+        "modify_poams"
+      ]
+    },
+    {
+      "email": "cyberdojosensei@gmail.com",
+      "roles": ["SUPER_ADMIN", "CONTENT_AUTHOR", "MEMBER_PORTAL_ADMIN"],
+      "capabilities": [
+        "login_all_dashboards",
+        "post_blogs",
+        "upload_videos",
+        "manage_membership_tiers",
+        "view_siem_au2_logs"
+      ]
+    },
+    {
+      "email": "dassensebsu@pm.me",
+      "roles": ["SUPER_ADMIN", "CONTENT_AUTHOR", "SOVEREIGN_COMMITTER"],
+      "capabilities": [
+        "login_all_dashboards",
+        "post_blogs",
+        "upload_videos",
+        "manage_membership_tiers",
+        "view_siem_au2_logs",
+        "commit_control_plane"
+      ]
+    }
+  ],
+  "portal_permissions": {
+    "blog_publishing": "ENABLED",
+    "video_uploads": "ENABLED",
+    "membership_management": "ENABLED",
+    "admin_dashboard_access": "ENABLED"
+  }
+}

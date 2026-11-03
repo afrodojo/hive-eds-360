@@ -1,0 +1,49 @@
+{
+  "endpoint": "hive.eds-360.com",
+  "public_visibility": {
+    "status_badge": "OPERATIONAL",
+    "enclave_health": "100% System Availability",
+    "fips_compliance": "FIPS 140-3 Active",
+    "cmmc_status": "CMMC Level 2 Verified",
+    "show_node_ips": false,
+    "show_raw_telemetry": false
+  },
+  "role_access_levels": {
+    "PUBLIC_OR_GUEST": {
+      "visible_metrics": ["overall_status", "uptime_percentage", "service_badges"],
+      "data_redaction": "COMPLETE_REDACTION"
+    },
+    "ACADEMIC_PARTNERSHIP": {
+      "visible_metrics": [
+        "overall_status",
+        "node_count",
+        "das_research_benchmarks",
+        "smt_decoder_latency",
+        "anonymized_cpu_memory_load",
+        "fips_kernel_mode_verification"
+      ],
+      "data_redaction": "ANONYMIZE_IPS_AND_SERIALS"
+    },
+    "ADMIN": {
+      "visible_metrics": [
+        "full_cluster_telemetry",
+        "node0_to_node4_health",
+        "ansible_run_logs",
+        "openssh_stig_audits",
+        "network_bandwidth_and_latency"
+      ],
+      "data_redaction": "NONE"
+    },
+    "SUPER_ADMIN": {
+      "visible_metrics": [
+        "full_cluster_telemetry",
+        "node0_to_node4_health",
+        "siem_au2_audit_vault",
+        "apricorn_aegis_hardware_vault",
+        "soar_watchdog_isolation_triggers",
+        "boe_hash_verification"
+      ],
+      "data_redaction": "NONE"
+    }
+  }
+}

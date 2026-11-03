@@ -1,0 +1,23 @@
+﻿[
+    {
+        "engagement_score":  0.88,
+        "platform":  "Facebook",
+        "hour":  14,
+        "id":  "fb_101",
+        "query":  "How does air-gapped RAG handle memory constraints?"
+    },
+    {
+        "engagement_score":  0.94,
+        "platform":  "YouTube",
+        "hour":  9,
+        "id":  "yt_202",
+        "query":  "Can we integrate this with SBIR Phase I subcontracts?"
+    },
+    {
+        "engagement_score":  0.72,
+        "platform":  "LinkedIn",
+        "hour":  11,
+        "id":  "li_303",
+        "query":  "Is the local gateway compatible with Windows PowerShell 7?"
+    }
+]

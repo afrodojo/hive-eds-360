@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #030712; color: #f3f4f6; padding: 20px; }
+        .card { background: #111827; border: 1px solid #1f2937; border-radius: 12px; padding: 24px; max-width: 600px; margin: 0 auto; }
+        .accent { color: #818cf8; font-weight: bold; }
+        .btn { display: inline-block; background: #4f46e5; color: #ffffff; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: bold; margin-top: 16px; }
+        .footer { font-size: 11px; color: #6b7280; text-align: center; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2 style="color: #ffffff; margin-top: 0;">{{SUBJECT}}</h2>
+        <p style="font-size: 13px; color: #9ca3af;">Recipient Tier: <span class="accent">{{RECIPIENT_TIER}}</span></p>
+        <hr style="border-color: #1f2937; margin: 16px 0;">
+        <div style="font-size: 14px; line-height: 1.6; color: #d1d5db;">
+            {{BODY_CONTENT}}
+        </div>
+        <a href="{{ACTION_URL}}" class="btn">{{ACTION_TEXT}}</a>
+        <div class="footer">
+            Sent by The Hive Network | Emerging Defense Solutions | hive.eds-360.com<br>
+            Direct Contact: dassenseibsu@pm.me
+        </div>
+    </div>
+</body>
+</html>
