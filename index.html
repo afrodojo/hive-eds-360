@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data: 'unsafe-inline' 'unsafe-eval';">
-    <title>HIVE-360 | Sovereign AI Research Enclave</title>
+    <title>HIVE-360 | Sovereign AI Research Enclave &bull; Bowie State University</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <script>
@@ -12,15 +12,14 @@
             theme: {
                 extend: {
                     colors: {
-                        cyber: {
-                            900: '#06090e',
-                            800: '#0b131e',
-                            700: '#142132',
-                            600: '#1e334d',
-                            accent: '#00f0ff',
-                            emerald: '#10b981',
-                            amber: '#f59e0b',
-                            rose: '#f43f5e'
+                        bsu: {
+                            gold: '#FFD100',      // Official BSU Athletic Gold
+                            amber: '#F59E0B',     // Deep Gold Accent
+                            goldhover: '#E5BC00', // Hover State
+                            black: '#070707',     // Pure Obsidian
+                            card: '#0f1013',      // Dark Neutral Surface
+                            cardborder: '#272930',// Subtle Structural Border
+                            textdim: '#9ca3af'
                         }
                     },
                     fontFamily: {
@@ -32,184 +31,199 @@
         }
     </script>
     <style>
-        .glow-accent { box-shadow: 0 0 20px rgba(0, 240, 255, 0.2); }
+        .glow-bsu-gold { box-shadow: 0 0 25px rgba(255, 209, 0, 0.18); }
+        .border-bsu-gold-glow { border-color: rgba(255, 209, 0, 0.45); }
     </style>
 </head>
-<body class="bg-cyber-900 text-slate-200 font-sans min-h-screen flex flex-col selection:bg-cyber-accent selection:text-cyber-900">
-    <header class="border-b border-cyber-700/60 bg-cyber-800/80 backdrop-blur sticky top-0 z-50">
+<body class="bg-bsu-black text-slate-200 font-sans min-h-screen flex flex-col selection:bg-bsu-gold selection:text-black">
+    <!-- Top Sovereign Enclave Banner (Bowie State Theme) -->
+    <header class="border-b border-bsu-cardborder bg-bsu-black/90 backdrop-blur sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <div class="flex items-center space-x-3">
-                <div class="w-9 h-9 rounded border border-cyber-accent/50 bg-cyber-700/40 flex items-center justify-center text-cyber-accent font-mono font-bold text-lg">
+                <div class="w-9 h-9 rounded border border-bsu-gold/60 bg-bsu-gold/10 flex items-center justify-center text-bsu-gold font-mono font-bold text-lg shadow-[0_0_10px_rgba(255,209,0,0.25)]">
                     ⬡
                 </div>
                 <div>
-                    <div class="text-sm font-bold tracking-wider text-slate-100 flex items-center gap-2">
+                    <div class="text-sm font-bold tracking-wider text-white flex items-center gap-2">
                         <span>HIVE-360 ENCLAVE</span>
-                        <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-950/80 text-emerald-400 border border-emerald-500/40">AIR-GAPPED</span>
+                        <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-bsu-gold/15 text-bsu-gold border border-bsu-gold/40">AIR-GAPPED</span>
                     </div>
-                    <div class="text-[11px] font-mono text-slate-400">hive.eds-360.com // High-Assurance Architecture</div>
+                    <div class="text-[11px] font-mono text-bsu-textdim">hive.eds-360.com // Bowie State University</div>
                 </div>
             </div>
 
-            <div class="flex items-center space-x-4 text-xs font-mono">
-                <div class="hidden md:flex items-center space-x-2 text-slate-400">
+            <div class="flex items-center space-x-5 text-xs font-mono">
+                <div class="hidden md:flex items-center space-x-2 text-bsu-textdim">
                     <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
                     <span>KERNEL: eBPF ACTIVE</span>
                 </div>
-                <div class="hidden lg:flex items-center space-x-2 text-slate-400 border-l border-cyber-700 pl-4">
+                <div class="hidden lg:flex items-center space-x-2 text-bsu-textdim border-l border-bsu-cardborder pl-4">
                     <span>SOLVER: SMT/SAT ENFORCED</span>
                 </div>
-                <a href="#simulator" class="px-3 py-1.5 rounded bg-cyber-accent/10 border border-cyber-accent/40 text-cyber-accent hover:bg-cyber-accent/20 transition-all">
+                <a href="#about" class="text-slate-300 hover:text-bsu-gold transition-colors font-medium">About Me</a>
+                <a href="#simulator" class="px-3.5 py-1.5 rounded bg-bsu-gold text-black font-bold hover:bg-bsu-goldhover transition-all shadow-[0_0_12px_rgba(255,209,0,0.25)]">
                     Launch Simulator
                 </a>
             </div>
         </div>
     </header>
 
+    <!-- Main Content Area -->
     <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
-        <section class="rounded-xl border border-cyber-700/70 bg-gradient-to-r from-cyber-800/90 via-cyber-800/50 to-cyber-700/30 p-6 md:p-8 glow-accent">
+        <!-- Academic Profile & Research Mission Banner (id="about" for smooth scroll) -->
+        <section id="about" class="rounded-xl border border-bsu-gold/40 bg-gradient-to-r from-bsu-card via-[#15161c] to-bsu-card p-6 md:p-8 glow-bsu-gold">
             <div class="flex flex-col lg:flex-row justify-between lg:items-center gap-6">
                 <div class="space-y-3">
-                    <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full text-xs font-mono bg-cyber-accent/10 text-cyber-accent border border-cyber-accent/30">
-                        <i class="ph ph-graduation-cap"></i> Doctoral Research Platform
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono bg-bsu-gold/10 text-bsu-gold border border-bsu-gold/30">
+                        <i class="ph ph-graduation-cap text-sm"></i> Bowie State University &bull; Computer Science
                     </div>
                     <h1 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
                         Asaad Morman
                     </h1>
-                    <p class="text-cyber-accent font-medium text-sm sm:text-base">
+                    <p class="text-bsu-gold font-semibold text-sm sm:text-base tracking-wide">
                         Doctor of Science in Computer Science Candidate &bull; Bowie State University
                     </p>
-                    <p class="text-slate-400 text-sm max-w-3xl leading-relaxed">
+                    <p class="text-slate-300 text-sm max-w-3xl leading-relaxed">
                         Investigating high-assurance sovereign AI architectures, air-gapped retrieval-augmented generation (RAG), eBPF kernel-level egress quarantine, and SMT/SAT-constrained decoding for formal verification of neural language models.
                     </p>
                 </div>
                 <div class="flex flex-col sm:flex-row lg:flex-col gap-3 font-mono text-xs">
-                    <div class="p-3 rounded bg-cyber-900/80 border border-cyber-700">
-                        <div class="text-slate-400">ENCLAVE SPEC</div>
-                        <div class="text-slate-200 font-bold">5-Node Isolated Cluster</div>
+                    <div class="p-3 rounded bg-black/80 border border-bsu-cardborder">
+                        <div class="text-bsu-textdim">ENCLAVE SPEC</div>
+                        <div class="text-white font-bold">5-Node Isolated Cluster</div>
                     </div>
-                    <div class="p-3 rounded bg-cyber-900/80 border border-cyber-700">
-                        <div class="text-slate-400">TELEMETRY LEAKAGE</div>
-                        <div class="text-emerald-400 font-bold">0.0000% (Non-Routable)</div>
+                    <div class="p-3 rounded bg-black/80 border border-bsu-cardborder">
+                        <div class="text-bsu-textdim">TELEMETRY LEAKAGE</div>
+                        <div class="text-bsu-gold font-bold">0.0000% (Non-Routable)</div>
                     </div>
                 </div>
             </div>
         </section>
 
+        <!-- 5-Node Enclave Telemetry Grid -->
         <section class="space-y-4">
             <div class="flex justify-between items-end">
                 <div>
-                    <h2 class="text-lg font-bold text-slate-100 flex items-center gap-2">
-                        <i class="ph ph-cpu text-cyber-accent"></i> 5-Node Enclave Cluster Topology
+                    <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                        <i class="ph ph-cpu text-bsu-gold"></i> 5-Node Enclave Cluster Topology
                     </h2>
-                    <p class="text-xs text-slate-400 font-mono">Live health status across isolated ring-0/ring-3 host nodes</p>
+                    <p class="text-xs text-bsu-textdim font-mono">Live health status across isolated ring-0/ring-3 host nodes</p>
                 </div>
-                <span class="text-xs font-mono text-slate-400">Auto-refresh: 1s</span>
+                <span class="text-xs font-mono text-bsu-textdim">Auto-refresh: 1s</span>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-                <div class="rounded-lg border border-cyber-700/80 bg-cyber-800/60 p-4 space-y-3 hover:border-cyber-accent/60 transition-all cursor-pointer" onclick="inspectNode('vm-node1')">
+                <!-- Node 1 -->
+                <div class="rounded-lg border border-bsu-cardborder bg-bsu-card p-4 space-y-3 hover:border-bsu-gold/60 transition-all cursor-pointer" onclick="inspectNode('vm-node1')">
                     <div class="flex justify-between items-start">
-                        <span class="text-xs font-mono font-bold text-cyber-accent">vm-node1</span>
+                        <span class="text-xs font-mono font-bold text-bsu-gold">vm-node1</span>
                         <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
                     </div>
-                    <div class="text-xs font-semibold text-slate-200">Gateway & eBPF Egress</div>
-                    <div class="text-[11px] font-mono text-slate-400 space-y-1">
+                    <div class="text-xs font-semibold text-white">Gateway & eBPF Egress</div>
+                    <div class="text-[11px] font-mono text-bsu-textdim space-y-1">
                         <div>Subnet: 192.168.10.10</div>
                         <div>Drops: 0 Syscalls</div>
-                        <div class="text-emerald-400">Quarantine: Active</div>
+                        <div class="text-bsu-gold">Quarantine: Active</div>
                     </div>
                 </div>
 
-                <div class="rounded-lg border border-cyber-700/80 bg-cyber-800/60 p-4 space-y-3 hover:border-cyber-accent/60 transition-all cursor-pointer" onclick="inspectNode('vm-node2')">
+                <!-- Node 2 -->
+                <div class="rounded-lg border border-bsu-cardborder bg-bsu-card p-4 space-y-3 hover:border-bsu-gold/60 transition-all cursor-pointer" onclick="inspectNode('vm-node2')">
                     <div class="flex justify-between items-start">
-                        <span class="text-xs font-mono font-bold text-cyber-accent">vm-node2</span>
+                        <span class="text-xs font-mono font-bold text-bsu-gold">vm-node2</span>
                         <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
                     </div>
-                    <div class="text-xs font-semibold text-slate-200">AICore (Local LLM)</div>
-                    <div class="text-[11px] font-mono text-slate-400 space-y-1">
+                    <div class="text-xs font-semibold text-white">AICore (Local LLM)</div>
+                    <div class="text-[11px] font-mono text-bsu-textdim space-y-1">
                         <div>Unified RAM: 96 GB</div>
                         <div>KV-Cache: Pinned</div>
-                        <div class="text-emerald-400">Execution: Ring-3 Isolated</div>
+                        <div class="text-bsu-gold">Execution: Ring-3 Isolated</div>
                     </div>
                 </div>
 
-                <div class="rounded-lg border border-cyber-700/80 bg-cyber-800/60 p-4 space-y-3 hover:border-cyber-accent/60 transition-all cursor-pointer" onclick="inspectNode('vm-node3')">
+                <!-- Node 3 -->
+                <div class="rounded-lg border border-bsu-cardborder bg-bsu-card p-4 space-y-3 hover:border-bsu-gold/60 transition-all cursor-pointer" onclick="inspectNode('vm-node3')">
                     <div class="flex justify-between items-start">
-                        <span class="text-xs font-mono font-bold text-cyber-accent">vm-node3</span>
+                        <span class="text-xs font-mono font-bold text-bsu-gold">vm-node3</span>
                         <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
                     </div>
-                    <div class="text-xs font-semibold text-slate-200">Crypt Vault & Vector</div>
-                    <div class="text-[11px] font-mono text-slate-400 space-y-1">
+                    <div class="text-xs font-semibold text-white">Crypt Vault & Vector</div>
+                    <div class="text-[11px] font-mono text-bsu-textdim space-y-1">
                         <div>Storage: LUKS2 Encrypted</div>
                         <div>Index: Merkle-DAG</div>
-                        <div class="text-emerald-400">Attestation: TPM 2.0</div>
+                        <div class="text-bsu-gold">Attestation: TPM 2.0</div>
                     </div>
                 </div>
 
-                <div class="rounded-lg border border-cyber-700/80 bg-cyber-800/60 p-4 space-y-3 hover:border-cyber-accent/60 transition-all cursor-pointer" onclick="inspectNode('vm-node4')">
+                <!-- Node 4 -->
+                <div class="rounded-lg border border-bsu-cardborder bg-bsu-card p-4 space-y-3 hover:border-bsu-gold/60 transition-all cursor-pointer" onclick="inspectNode('vm-node4')">
                     <div class="flex justify-between items-start">
-                        <span class="text-xs font-mono font-bold text-cyber-accent">vm-node4</span>
+                        <span class="text-xs font-mono font-bold text-bsu-gold">vm-node4</span>
                         <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
                     </div>
-                    <div class="text-xs font-semibold text-slate-200">Audit / SIEM Collector</div>
-                    <div class="text-[11px] font-mono text-slate-400 space-y-1">
+                    <div class="text-xs font-semibold text-white">Audit / SIEM Collector</div>
+                    <div class="text-[11px] font-mono text-bsu-textdim space-y-1">
                         <div>Logs: Zero-Plaintext</div>
                         <div>Certificates: SHA-384</div>
-                        <div class="text-emerald-400">FIPS Bound: Validated</div>
+                        <div class="text-bsu-gold">FIPS Bound: Validated</div>
                     </div>
                 </div>
 
-                <div class="rounded-lg border border-cyber-700/80 bg-cyber-800/60 p-4 space-y-3 hover:border-cyber-accent/60 transition-all cursor-pointer" onclick="inspectNode('vm-node5')">
+                <!-- Node 5 -->
+                <div class="rounded-lg border border-bsu-cardborder bg-bsu-card p-4 space-y-3 hover:border-bsu-gold/60 transition-all cursor-pointer" onclick="inspectNode('vm-node5')">
                     <div class="flex justify-between items-start">
-                        <span class="text-xs font-mono font-bold text-cyber-accent">vm-node5</span>
+                        <span class="text-xs font-mono font-bold text-bsu-gold">vm-node5</span>
                         <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
                     </div>
-                    <div class="text-xs font-semibold text-slate-200">SMT/SAT Invariant Engine</div>
-                    <div class="text-[11px] font-mono text-slate-400 space-y-1">
+                    <div class="text-xs font-semibold text-white">SMT/SAT Invariant Engine</div>
+                    <div class="text-[11px] font-mono text-bsu-textdim space-y-1">
                         <div>Constraint: Z3 Solver</div>
                         <div>Latency: &lt; 1.4 ms/tok</div>
-                        <div class="text-emerald-400">Semantic Gate: Armed</div>
+                        <div class="text-bsu-gold">Semantic Gate: Armed</div>
                     </div>
                 </div>
             </div>
 
-            <div id="nodeDetailBox" class="hidden rounded-lg border border-cyber-accent/40 bg-cyber-800/90 p-4 text-xs font-mono text-slate-300"></div>
+            <!-- Dynamic Node Detail Box -->
+            <div id="nodeDetailBox" class="hidden rounded-lg border border-bsu-gold/50 bg-black/90 p-4 text-xs font-mono text-slate-300"></div>
         </section>
 
-        <section id="simulator" class="rounded-xl border border-cyber-700/80 bg-cyber-800/70 p-6 space-y-6">
+        <!-- Air-Gapped RAG & SMT Guardrail Simulator -->
+        <section id="simulator" class="rounded-xl border border-bsu-cardborder bg-bsu-card p-6 space-y-6">
             <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2">
                 <div>
                     <h2 class="text-lg font-bold text-white flex items-center gap-2">
-                        <i class="ph ph-shield-check text-cyber-accent"></i> Deterministic Guardrail & RAG Execution Simulator
+                        <i class="ph ph-shield-check text-bsu-gold"></i> Deterministic Guardrail & RAG Execution Simulator
                     </h2>
-                    <p class="text-xs text-slate-400 font-mono">Test prompt injection resistance and SAT/SMT logit pruning</p>
+                    <p class="text-xs text-bsu-textdim font-mono">Test prompt injection resistance and SAT/SMT logit pruning</p>
                 </div>
                 <div class="flex gap-2">
-                    <button onclick="setSamplePrompt('injection')" class="text-[11px] font-mono px-2.5 py-1 rounded bg-cyber-700 hover:bg-cyber-600 text-slate-300">Adversarial Injection</button>
-                    <button onclick="setSamplePrompt('secure')" class="text-[11px] font-mono px-2.5 py-1 rounded bg-cyber-700 hover:bg-cyber-600 text-slate-300">Valid Spec Query</button>
+                    <button onclick="setSamplePrompt('injection')" class="text-[11px] font-mono px-3 py-1.5 rounded bg-bsu-black border border-bsu-cardborder hover:border-bsu-gold/50 text-slate-300 transition-colors">Adversarial Injection</button>
+                    <button onclick="setSamplePrompt('secure')" class="text-[11px] font-mono px-3 py-1.5 rounded bg-bsu-black border border-bsu-cardborder hover:border-bsu-gold/50 text-slate-300 transition-colors">Valid Spec Query</button>
                 </div>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Left: Query Input -->
                 <div class="space-y-3">
-                    <label class="block text-xs font-mono text-slate-300">INPUT INGESTION PROMPT</label>
-                    <textarea id="promptInput" rows="5" class="w-full bg-cyber-900 border border-cyber-700 rounded p-3 text-xs font-mono text-slate-200 focus:outline-none focus:border-cyber-accent" placeholder="Enter test prompt..."></textarea>
+                    <label class="block text-xs font-mono text-bsu-gold">INPUT INGESTION PROMPT</label>
+                    <textarea id="promptInput" rows="5" class="w-full bg-black border border-bsu-cardborder rounded p-3 text-xs font-mono text-slate-200 focus:outline-none focus:border-bsu-gold transition-colors" placeholder="Enter test prompt..."></textarea>
                     
-                    <button onclick="runSimulation()" id="simulateBtn" class="w-full py-2.5 rounded bg-cyber-accent text-cyber-900 font-bold text-xs uppercase tracking-wider hover:opacity-90 transition-opacity flex items-center justify-center gap-2">
-                        <i class="ph ph-play font-bold"></i> Execute Enclave Verification Pipeline
+                    <button onclick="runSimulation()" id="simulateBtn" class="w-full py-3 rounded bg-bsu-gold text-black font-extrabold text-xs uppercase tracking-wider hover:bg-bsu-goldhover transition-all flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(255,209,0,0.25)]">
+                        <i class="ph ph-play font-bold text-sm"></i> Execute Enclave Verification Pipeline
                     </button>
                 </div>
 
+                <!-- Right: Enclave State & Pipeline Output -->
                 <div class="space-y-3">
                     <div class="flex justify-between items-center">
                         <label class="block text-xs font-mono text-slate-300">ENCLAVE EXECUTION PIPELINE</label>
-                        <span id="pipelineStatus" class="text-[11px] font-mono text-slate-400">Awaiting input</span>
+                        <span id="pipelineStatus" class="text-[11px] font-mono text-bsu-textdim">Awaiting input</span>
                     </div>
 
-                    <div id="pipelineLog" class="h-44 bg-cyber-900 border border-cyber-700 rounded p-3 text-[11px] font-mono text-slate-400 overflow-y-auto space-y-1">
+                    <div id="pipelineLog" class="h-44 bg-black border border-bsu-cardborder rounded p-3 text-[11px] font-mono text-bsu-textdim overflow-y-auto space-y-1">
                         <div>[00:00:00] Enclave listening on loopback VMnet1...</div>
-                        <div>[00:00:00] Ready for vector attestation request.</div>
+                        <div>[00:00:00] Bowie State University research cluster ready.</div>
                     </div>
 
                     <div id="resultBanner" class="hidden p-3 rounded text-xs font-mono"></div>
@@ -217,30 +231,32 @@
             </div>
         </section>
 
-        <section class="rounded-xl border border-cyber-700/80 bg-cyber-800/40 p-6 space-y-4">
-            <h2 class="text-lg font-bold text-slate-100 flex items-center gap-2">
-                <i class="ph ph-books text-cyber-accent"></i> Academic Rigor & Spring 2027 Program of Study
+        <!-- Academic Rigor & Spring 2027 Program of Study -->
+        <section class="rounded-xl border border-bsu-cardborder bg-bsu-card/60 p-6 space-y-4">
+            <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                <i class="ph ph-books text-bsu-gold"></i> Academic Rigor & Spring 2027 Program of Study
             </h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
-                <div class="p-4 rounded border border-cyber-700 bg-cyber-900/60 space-y-2">
-                    <div class="font-mono text-cyber-accent font-bold">COSC 502: Computer Organization</div>
+                <div class="p-4 rounded border border-bsu-cardborder bg-black/60 space-y-2 hover:border-bsu-gold/40 transition-colors">
+                    <div class="font-mono text-bsu-gold font-bold">COSC 502: Computer Organization</div>
                     <p class="text-slate-400">Microarchitecture, instruction execution cycles, cache hierarchies, and memory-barrier security.</p>
                 </div>
-                <div class="p-4 rounded border border-cyber-700 bg-cyber-900/60 space-y-2">
-                    <div class="font-mono text-cyber-accent font-bold">COSC 504: Software Design & Dev 2</div>
+                <div class="p-4 rounded border border-bsu-cardborder bg-black/60 space-y-2 hover:border-bsu-gold/40 transition-colors">
+                    <div class="font-mono text-bsu-gold font-bold">COSC 504: Software Design & Dev 2</div>
                     <p class="text-slate-400">Modern C++ systems design, GoF patterns, SOLID principles, and low-latency modular software.</p>
                 </div>
-                <div class="p-4 rounded border border-cyber-700 bg-cyber-900/60 space-y-2">
-                    <div class="font-mono text-cyber-accent font-bold">COSC 522: Discrete Structures</div>
+                <div class="p-4 rounded border border-bsu-cardborder bg-black/60 space-y-2 hover:border-bsu-gold/40 transition-colors">
+                    <div class="font-mono text-bsu-gold font-bold">COSC 522: Discrete Structures</div>
                     <p class="text-slate-400">Formal logic, predicate calculus, graph theory, and proof engines powering SMT/SAT verification.</p>
                 </div>
             </div>
         </section>
     </main>
 
-    <footer class="border-t border-cyber-700/60 bg-cyber-800/60 py-6 text-center text-xs text-slate-500 font-mono">
+    <!-- Footer -->
+    <footer class="border-t border-bsu-cardborder bg-bsu-black py-6 text-center text-xs text-bsu-textdim font-mono">
         <p>&copy; 2026 Asaad Morman &bull; Doctor of Science in Computer Science &bull; Bowie State University</p>
-        <p class="mt-1">hive.eds-360.com &bull; Isolated Enclave &bull; eBPF Layer 0 Quarantine &bull; SMT Guardrails</p>
+        <p class="mt-1">hive.eds-360.com &bull; Sovereign AI Enclave &bull; eBPF Layer 0 Quarantine &bull; SMT Guardrails</p>
     </footer>
 
     <script>
@@ -255,7 +271,7 @@
         function inspectNode(nodeId) {
             const box = document.getElementById('nodeDetailBox');
             box.classList.remove('hidden');
-            box.innerHTML = `<span class="text-cyber-accent font-bold">${nodeId} ACTIVE TELEMETRY:</span> ${nodeInfo[nodeId]}`;
+            box.innerHTML = `<span class="text-bsu-gold font-bold">${nodeId} ACTIVE TELEMETRY:</span> ${nodeInfo[nodeId]}`;
         }
 
         function setSamplePrompt(type) {
@@ -288,7 +304,7 @@
             };
 
             status.textContent = 'Executing...';
-            status.className = 'text-[11px] font-mono text-cyber-accent animate-pulse';
+            status.className = 'text-[11px] font-mono text-bsu-gold animate-pulse font-bold';
 
             appendLog('Ingesting query payload at vm-node1 gateway...');
             await new Promise(r => setTimeout(r, 400));
@@ -309,9 +325,9 @@
                 appendLog('Quarantined candidate logits. Generating policy-compliant refusal.');
 
                 status.textContent = 'INTERCEPTED & CONSTRAINED';
-                status.className = 'text-[11px] font-mono text-cyber-rose font-bold';
+                status.className = 'text-[11px] font-mono text-red-500 font-bold';
 
-                result.className = 'p-3 rounded text-xs font-mono bg-rose-950/60 border border-cyber-rose text-rose-200';
+                result.className = 'p-3 rounded text-xs font-mono bg-red-950/60 border border-red-500 text-red-200';
                 result.innerHTML = '<strong>ADVERSARIAL INJECTION INTERCEPTED:</strong> SMT solver pruned violating candidate logits at the generation step. The system maintained 100% zero-trust invariant policy.';
                 result.classList.remove('hidden');
             } else {
@@ -322,9 +338,9 @@
                 appendLog('Inference successfully emitted under verified ground truth.');
 
                 status.textContent = 'VERIFIED & EMITTED';
-                status.className = 'text-[11px] font-mono text-emerald-400 font-bold';
+                status.className = 'text-[11px] font-mono text-bsu-gold font-bold';
 
-                result.className = 'p-3 rounded text-xs font-mono bg-emerald-950/60 border border-emerald-500 text-emerald-200';
+                result.className = 'p-3 rounded text-xs font-mono bg-bsu-gold/15 border border-bsu-gold text-amber-200';
                 result.innerHTML = '<strong>EXECUTION VERIFIED:</strong> Query grounded via air-gapped vector store, validated through SAT/SMT logic constraints, and attested without cloud reliance.';
                 result.classList.remove('hidden');
             }
